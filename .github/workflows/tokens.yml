@@ -1,0 +1,38 @@
+name: tokens
+
+# 토큰은 JSON 이 단일 원본이고 tokens.css·tokens.js·dist/ 는 build.mjs 산출물이다.
+# 이 워크플로는 (1) 빌드 가드가 전부 통과하는지 (2) 커밋된 산출물이 재빌드 결과와
+# 같은지 (3) DTCG 정합성과 접근성 대비를 확인한다.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 빌드 — 가드 8종
+        run: npm run build:tokens
+
+      - name: 산출물이 원본과 동기화돼 있는가
+        run: |
+          if ! git diff --exit-code -- tokens/tokens.css tokens/tokens.js tokens/dist; then
+            echo "::error::커밋된 산출물이 재빌드 결과와 다릅니다. 'npm run build:tokens' 후 다시 커밋하세요."
+            exit 1
+          fi
+
+      - name: DTCG 2025.10 정합성 — 소스
+        run: node tokens/checks/audit.mjs
+
+      - name: DTCG 2025.10 정합성 — 번들
+        run: node tokens/checks/audit.mjs bundle
+
+      - name: 접근성 — 텍스트 대비 AA (WCAG 1.4.3 / KWCAG 5.4.3)
+        run: node tokens/checks/surfaces.mjs

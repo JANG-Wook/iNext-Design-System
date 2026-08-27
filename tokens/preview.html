@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iNext DS — 디자인 토큰</title>
+<!-- 단일 원본: tokens.css(빌드 산출물) + *.json(DTCG 원본). 이 페이지에는 토큰 값을 박지 않는다. -->
+<link id="tokens-css" rel="stylesheet" href="./tokens.css">
+<style>
+  body {
+    font-family: var(--font-family-base);
+    background: var(--color-bg-normal);
+    color: var(--color-label-normal);
+    padding: 0 var(--spacing-24) var(--spacing-56);
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+
+  /* ── 상단 바 ── */
+  .bar {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--color-bg-normal);
+    border-bottom: var(--divider-1) solid var(--color-line-normal);
+    padding: var(--spacing-16) 0 var(--spacing-12);
+    margin-bottom: var(--spacing-8);
+  }
+  .bar-row { display: flex; flex-wrap: wrap; gap: var(--spacing-12); align-items: center; }
+  .bar h1 { margin: 0; margin-right: auto; }
+  nav { display: flex; flex-wrap: wrap; gap: var(--spacing-4); margin-top: var(--spacing-12); }
+  nav a {
+    padding: var(--spacing-4) var(--spacing-10);
+    border-radius: var(--radius-full);
+    background: var(--color-fill-alternative);
+    color: var(--color-label-neutral);
+    text-decoration: none;
+  }
+  nav a:hover { background: var(--color-fill-strong); color: var(--color-label-normal); }
+  .btn {
+    font: inherit;
+    padding: var(--spacing-8) var(--spacing-16);
+    border: var(--divider-1) solid var(--color-line-strong);
+    border-radius: var(--radius-full);
+    background: var(--color-fill-normal);
+    color: var(--color-label-normal);
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--color-fill-strong); }
+  #q {
+    font: inherit;
+    padding: var(--spacing-8) var(--spacing-12); min-width: 200px;
+    border: var(--divider-1) solid var(--color-line-strong);
+    border-radius: var(--radius-8);
+    background: var(--color-bg-elevated); color: var(--color-label-normal);
+  }
+  .btn:focus-visible, #q:focus-visible, .row:focus-visible, .chip:focus-visible, nav a:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-interaction-focus); outline-offset: var(--focus-ring-offset);
+  }
+  #count { color: var(--color-label-alternative); }
+
+  /* ── 섹션 ── */
+  section { padding-top: var(--spacing-40); }
+  h2 { margin: 0 0 var(--spacing-4); }
+  h3 { margin: var(--spacing-24) 0 var(--spacing-8); color: var(--color-label-neutral); }
+  .lede { color: var(--color-label-alternative); margin: 0 0 var(--spacing-16); max-width: 70ch; }
+  .desc { color: var(--color-label-alternative); margin: 0 0 var(--spacing-8); max-width: 80ch; }
+
+  /* ── 공통 행 ── */
+  .rows { display: flex; flex-direction: column; gap: var(--spacing-4); }
+  .row, .chip {
+    font: inherit; color: inherit; text-align: left; width: 100%;
+    background: var(--color-bg-elevated);
+    border: var(--divider-1) solid var(--color-line-alternative);
+    border-radius: var(--radius-8);
+    cursor: pointer;
+  }
+  .row:hover, .chip:hover { background: var(--color-fill-alternative); }
+  .row {
+    display: grid; gap: var(--spacing-12); align-items: center;
+    grid-template-columns: 64px minmax(160px, 1.1fr) minmax(150px, 1fr) minmax(130px, .9fr) minmax(130px, .9fr);
+    padding: var(--spacing-8);
+  }
+  .row.wide { grid-template-columns: 96px minmax(160px, 1fr) minmax(140px, .8fr) minmax(200px, 1.6fr); }
+  .row.trio { grid-template-columns: 96px minmax(160px, 1fr) minmax(160px, 1fr); }
+  @media (max-width: 920px) {
+    .row, .row.wide, .row.trio { grid-template-columns: 64px minmax(0, 1fr); row-gap: var(--spacing-2); }
+    .row > *:not(.vis) { grid-column: 2; }
+  }
+  .name { font-weight: var(--font-weight-semibold); word-break: break-all; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; word-break: break-all; }
+  .dim { color: var(--color-label-alternative); }
+  .note { color: var(--color-label-neutral); }
+
+  /* ── 시각 표현 ── */
+  .vis { display: flex; align-items: center; justify-content: flex-start; min-height: 40px; }
+  .sw {
+    width: 64px; height: 40px; border-radius: var(--radius-6);
+    border: var(--divider-1) solid var(--color-line-normal);
+    overflow: hidden;                 /* 색이 테두리 안쪽을 빈틈없이 채우게 한다 */
+    background-clip: padding-box;     /* 반투명 테두리 밑으로 체커보드가 비치지 않게 */
+  }
+  /* 체커보드는 알파가 있는 토큰에만 — 불투명 색에 깔면 테두리 틈으로 얼룩져 보인다 */
+  .sw.alpha {
+    background-image:
+      linear-gradient(45deg, rgba(128,128,128,.28) 25%, transparent 25%, transparent 75%, rgba(128,128,128,.28) 75%),
+      linear-gradient(45deg, rgba(128,128,128,.28) 25%, transparent 25%, transparent 75%, rgba(128,128,128,.28) 75%);
+    background-size: 12px 12px; background-position: 0 0, 6px 6px;
+  }
+  .sw > i { display: block; width: 100%; height: 100%; }
+  /* 길이·간격을 재는 막대. 파란색은 "치수 표시"라는 뜻이며 토큰의 색이 아니다. */
+  .barviz { height: 16px; background: var(--color-accent-fg-blue); border-radius: var(--radius-4); }
+  /* 구분선은 실제 UI 에 보이는 선이므로 진짜 색(line 토큰)으로 그린다 — 파란 막대로 그리면 색을 오해한다. */
+  .dividerviz { width: 88px; background: var(--color-line-solid-normal); }
+  .boxviz { width: 56px; height: 40px; background: var(--color-fill-strong); border: var(--divider-1) solid var(--color-line-strong); }
+  .shadowviz { width: 72px; height: 40px; border-radius: var(--radius-8); background: var(--color-bg-elevated); }
+  .ratioviz { width: 64px; background: var(--color-fill-strong); border-radius: var(--radius-4); }
+  .gradviz { width: 72px; height: 40px; border-radius: var(--radius-6); color: var(--color-label-normal); border: var(--divider-1) solid var(--color-line-alternative); }
+  .opaviz { width: 40px; height: 40px; border-radius: var(--radius-circle); background: var(--color-label-normal); }
+
+  /* ── primitive 색 그리드 ── */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: var(--spacing-8); }
+  .chip { overflow: hidden; padding: 0; }
+  .chip > i { display: block; height: 52px; border-bottom: var(--divider-1) solid var(--color-line-alternative); }
+  .chip > span { display: block; padding: var(--spacing-8); }
+
+  /* ── 타이포 ── */
+  .typo { border: var(--divider-1) solid var(--color-line-alternative); border-radius: var(--radius-12); padding: var(--spacing-16); background: var(--color-bg-elevated); margin-bottom: var(--spacing-8); }
+  .typo-head { display: flex; flex-wrap: wrap; gap: var(--spacing-8); align-items: baseline; margin-bottom: var(--spacing-8); }
+  .typo-head .name { margin-right: auto; }
+  .spec { display: flex; flex-wrap: wrap; gap: var(--spacing-12); }
+  .spec b { font-weight: var(--font-weight-semibold); color: var(--color-label-neutral); }
+  .sample { overflow-x: auto; padding-bottom: var(--spacing-4); }
+  .sample > span { white-space: nowrap; }
+
+  /* ── 요약 표 ── */
+  table { border-collapse: collapse; width: 100%; }
+  th, td { text-align: left; padding: var(--spacing-6) var(--spacing-8); border-bottom: var(--divider-1) solid var(--color-line-alternative); }
+  th { color: var(--color-label-neutral); }
+  td.num, th.num { text-align: right; }
+  .tag { display: inline-block; padding: 0 var(--spacing-6); border-radius: var(--radius-4); background: var(--color-fill-normal); color: var(--color-label-neutral); }
+
+  #toast {
+    position: fixed; left: 50%; bottom: var(--spacing-24); transform: translateX(-50%);
+    padding: var(--spacing-8) var(--spacing-16); border-radius: var(--radius-full);
+    background: var(--color-inverse-background); color: var(--color-inverse-label);
+    box-shadow: var(--shadow-md); opacity: 0; pointer-events: none; transition: opacity .18s; z-index: 30;
+  }
+  #toast[data-on] { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { #toast { transition: none; } }
+  .err { color: var(--color-status-negative); }
+  .empty { color: var(--color-label-assistive); padding: var(--spacing-16) 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="bar">
+  <div class="bar-row">
+    <h1 class="heading-sm">iNext DS — 디자인 토큰</h1>
+    <input id="q" type="search" placeholder="토큰명 검색" aria-label="토큰명 검색">
+    <span id="count" class="body-sm"></span>
+    <button id="theme" class="btn label-md" type="button" aria-pressed="false">다크로 전환</button>
+  </div>
+  <nav class="body-sm" id="nav"></nav>
+</div>
+
+<main id="app"><p class="body-md">불러오는 중…</p></main>
+</div>
+<div id="toast" class="label-md" role="status" aria-live="polite"></div>
+
+<script>
+const NS = 'net.infobank.ds.alpha'
+const DEC = 'net.infobank.ds.decoration'
+
+/* build.mjs 의 kebab/cssVar 규칙과 동일하게 유지 */
+const kebab = s => /^[0-9]+$/.test(s) ? s
+  : s.replace(/([a-z])([0-9]+)/g, '$1-$2').replace(/([A-Z]+)/g, m => '-' + m.toLowerCase()).replace(/\./g, '-').replace(/^-/, '')
+const cssVar = p => '--' + (p[0] === 'web' ? p.slice(1) : p).map(kebab).join('-')
+
+const isLeaf = v => v && typeof v === 'object' && v.$value !== undefined
+function walk(obj, base, out) {
+  for (const [k, v] of Object.entries(obj)) {
+    if (k.startsWith('$')) continue
+    if (isLeaf(v)) out.push([base.concat(k), v])
+    else if (v && typeof v === 'object') walk(v, base.concat(k), out)
+  }
+  return out
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
+
+/* DTCG 값 → CSS 문자열 (build.mjs 의 valueOf 와 같은 규칙) */
+/* primitive 내부 별칭({opacity.5} 등) 해석 — build.mjs 의 deref() 와 같은 동작.
+   별칭 자체는 aliasText() 가 따로 보여준다. */
+const ALIAS_TOK_RE = /^\{[^{}]+\}$/
+function resolveAliasTok(t) {
+  let cur = t
+  for (let i = 0; ALIAS_TOK_RE.test(cur.$value); i++) {
+    if (i > 8) return cur
+    const node = cur.$value.slice(1, -1).split('.')
+      .reduce((o, k) => (o == null ? o : o[k]), DATA && DATA.prim)
+    if (!node || node.$value === undefined) return cur
+    cur = node
+  }
+  return cur
+}
+function valueOf(t) {
+  const v = t.$value
+  if (t.$type === 'color' && v && typeof v === 'object') return hexOf(v)
+  if (t.$type === 'dimension') { const d = resolveAliasTok(t).$value; return `${d.value}${d.unit}` }
+  if (t.$type === 'number' || t.$type === 'fontWeight') return String(resolveAliasTok(t).$value)
+  if (t.$type === 'fontFamily') return v.map(n => /\s/.test(n) ? `'${n}'` : n).join(', ')
+  if (t.$type === 'shadow') return (Array.isArray(v) ? v : [v])
+    .map(l => `${l.offsetX.value}px ${l.offsetY.value}px ${l.blur.value}px ${l.spread.value}px ${l.color}`).join(', ')
+  return v
+}
+/* 색 $value 는 {colorSpace,components,hex} 객체다. 표시·합성은 hex 를 쓴다. */
+const hexOf = v => (v && typeof v === 'object' && typeof v.hex === 'string') ? v.hex : v
+const oklchText = v => (v && typeof v === 'object' && Array.isArray(v.components))
+  ? `oklch ${v.components.map(c => typeof c === 'number' ? +c.toFixed(4) : c).join(' ')}` : ''
+function aliasText(t) {
+  const a = t.$extensions && t.$extensions[NS]
+  return typeof t.$value === 'string' && t.$value.startsWith('{') ? t.$value + (a ? ' @' + a : '') : ''
+}
+/* 색 별칭 → 실제 값 (알파 합성 포함) */
+function resolveColor(prim, t) {
+  const m = String(t.$value).match(/^\{color\.([^.]+)\.([^.}]+)\}$/)
+  const hex = m && prim.color[m[1]] && prim.color[m[1]][m[2]] ? hexOf(prim.color[m[1]][m[2]].$value) : null
+  if (!hex) return t.$value
+  const a = t.$extensions && t.$extensions[NS]
+  if (!a) return hex
+  const om = String(a).match(/opacity\.([\d.]+)/)
+  const ov = om && prim.opacity[om[1]] ? prim.opacity[om[1]].$value : null
+  if (ov == null) return hex
+  const n = parseInt(hex.slice(1), 16)
+  return `rgba(${n >> 16 & 255}, ${n >> 8 & 255}, ${n & 255}, ${ov})`
+}
+const derefPrim = (prim, ref) => {
+  const t = ref.slice(1, -1).split('.').reduce((o, k) => o && o[k], prim)
+  return t ? valueOf(t) : ref
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast')
+  el.textContent = msg; el.setAttribute('data-on', '')
+  clearTimeout(toast._t); toast._t = setTimeout(() => el.removeAttribute('data-on'), 1400)
+}
+function copyFallback(v) {
+  const ta = document.createElement('textarea')
+  ta.value = v; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:-9999px'
+  document.body.appendChild(ta); ta.select()
+  let ok = false; try { ok = document.execCommand('copy') } catch (_) { ok = false }
+  ta.remove(); return ok
+}
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-copy]')
+  if (!el) return
+  const v = el.dataset.copy
+  const done = () => toast('복사됨 · ' + v)
+  const fail = () => toast(copyFallback(v) ? '복사됨 · ' + v : '복사 실패 · ' + v)
+  if (navigator.clipboard) navigator.clipboard.writeText(v).then(done, fail); else fail()
+})
+
+const themeBtn = document.getElementById('theme')
+themeBtn.addEventListener('click', () => {
+  const dark = document.documentElement.dataset.theme === 'dark'
+  document.documentElement.dataset.theme = dark ? 'light' : 'dark'
+  themeBtn.textContent = dark ? '다크로 전환' : '라이트로 전환'
+  themeBtn.setAttribute('aria-pressed', String(!dark))
+  render()
+})
+let query = ''
+document.getElementById('q').addEventListener('input', e => { query = e.target.value.trim().toLowerCase(); render() })
+
+let DATA = null
+
+/* ── 섹션 정의 ─────────────────────────────────────────────── */
+/* 내비게이션은 파운데이션 축과 1:1 이다. 색만 규모가 커서 Semantic/Primitive 로 나눈다.
+   어느 파운데이션에 어떤 그룹이 속하는지는 하드코딩하지 않고 JSON 의
+   $extensions."net.infobank.ds.foundation" 을 읽는다 — 배정의 원본은 JSON 이다. */
+const FND = 'net.infobank.ds.foundation'
+const FOUNDATIONS = ['Typography','Colors','Elevation','Spacing','Breakpoint','Radius',
+                     'Layout','Divider','Interaction','Effects','Ratio']
+const SECTIONS = [
+  { id: 'summary',   label: '개요' },
+  { id: 'type',      label: 'Typography · Composite' },
+  { id: 'type-prim', label: 'Typography · Primitive' },
+  { id: 'semantic',  label: 'Colors · Semantic' },
+  { id: 'palette',   label: 'Colors · Primitive' },
+  { id: 'elevation', label: 'Elevation' },
+  { id: 'f-Spacing',     label: 'Spacing' },
+  { id: 'f-Breakpoint',  label: 'Breakpoint' },
+  { id: 'f-Radius',      label: 'Radius' },
+  { id: 'f-Layout',      label: 'Layout' },
+  { id: 'f-Divider',     label: 'Divider' },
+  { id: 'f-Interaction', label: 'Interaction' },
+  { id: 'f-Effects',     label: 'Effects' },
+  { id: 'f-Ratio',       label: 'Ratio' },
+]
+/* 그룹의 파운데이션 배열. 첫 항목이 '주 소속'이고 그 섹션에서 한 번만 렌더한다.
+   공유 스케일(opacity)은 나머지 섹션에서 상호 참조 한 줄로 표시한다. */
+const fndOf   = g => (g && g.$extensions && g.$extensions[FND]) || []
+const ownedBy = (prim, f) => Object.keys(prim).filter(k => !k.startsWith('$'))
+  .filter(g => fndOf(prim[g])[0] === f)
+const sharedInto = (prim, f) => Object.keys(prim).filter(k => !k.startsWith('$'))
+  .filter(g => fndOf(prim[g])[0] !== f && fndOf(prim[g]).includes(f))
+/* Elevation 은 파운데이션 분류상 한 묶음이지만 $type 이 달라 파일에서는 두 곳에 있다.
+   dim = semantic color(rgba), 그림자 = semantic shadow(box-shadow). 여기서만 함께 보여준다. */
+const ELEVATION_COLOR_GROUP = 'elevation'
+
+function render() {
+  if (!DATA) return
+  const { prim, light, dark, typo } = DATA
+  const isDark = document.documentElement.dataset.theme === 'dark'
+  const sem = isDark ? dark : light
+  const hit = s => !query || String(s).toLowerCase().includes(query)
+  let shown = 0
+  const out = []
+  const groupDesc = o => o && o.$description ? `<p class="desc body-sm">${esc(o.$description)}</p>` : ''
+
+  /* ── 개요 ── */
+  const count = o => walk(o, [], []).length
+  const primTotal = Object.keys(prim).filter(k => !k.startsWith('$')).reduce((s, g) => s + count(prim[g]), 0)
+  const semTotal = count(sem.color) + count(sem.shadow || {})
+  const typoTotal = count(typo.typography)
+  out.push(`<section id="summary"><h2 class="heading-md">개요</h2>
+    <p class="lede body-md">DTCG 스펙으로 관리하는 디자인 토큰. <b>primitive</b>(테마 무관 원시값) → <b>semantic</b>(역할, 라이트/다크) → <b>생성물</b>(<code>tokens.css</code>·<code>tokens.js</code>) 계층이다.
+    이 페이지는 JSON 원본과 <code>tokens.css</code> 를 직접 읽으므로 재빌드하면 즉시 반영된다.</p>
+    <table class="body-md"><thead><tr><th>구분</th><th class="num">토큰</th><th>내용</th></tr></thead><tbody>
+    <tr><td>primitive</td><td class="num">${primTotal}</td><td class="dim">${Object.keys(prim).filter(k => !k.startsWith('$')).map(g => `${g} ${count(prim[g])}`).join(' · ')}</td></tr>
+    <tr><td>semantic</td><td class="num">${semTotal} × 2</td><td class="dim">라이트·다크 동일 키 — color ${count(sem.color)} · shadow ${count(sem.shadow || {})}</td></tr>
+    <tr><td>typography</td><td class="num">${typoTotal}</td><td class="dim">base ${count(typo.typography.base)} · compact ${count(typo.typography.compact)}</td></tr>
+    <tr><td><b>합계</b></td><td class="num"><b>${primTotal + semTotal * 2 + typoTotal}</b></td><td></td></tr>
+    </tbody></table></section>`)
+
+  /* ── 색 semantic ── */
+  out.push(`<section id="semantic"><h2 class="heading-md">색 · Semantic</h2>
+    <p class="lede body-md">역할 기반 색. 라이트/다크가 같은 키에 다른 primitive 를 참조한다. 현재 테마: <b>${isDark ? 'dark' : 'light'}</b>. 칩을 누르면 CSS 변수명이 복사된다.</p>`)
+  const semGroups = new Map()
+  for (const [p, t] of walk(sem.color, ['color'], [])) {
+    if (p[1] === ELEVATION_COLOR_GROUP) continue    // Elevation 섹션에서 그림자와 함께 보여준다
+    if (!hit(p.join('.'))) continue
+    const g = p.slice(1, p.length > 3 ? 3 : 2).join('.')
+    if (!semGroups.has(g)) semGroups.set(g, [])
+    semGroups.get(g).push([p, t])
+  }
+  for (const [g, items] of semGroups) {
+    out.push(`<h3 class="title-sm">${esc(g)}</h3><div class="rows">`)
+    for (const [p, t] of items) {
+      shown++
+      const v = cssVar(p)
+      out.push(`<button class="row" type="button" data-copy="${esc(v)}">
+        <span class="vis"><span class="sw${t.$extensions && t.$extensions[NS] ? ' alpha' : ''}"><i style="background: var(${esc(v)})"></i></span></span>
+        <span class="name body-md">${esc(p.join('.'))}</span>
+        <span class="mono body-sm">${esc(v)}</span>
+        <span class="mono body-sm dim">${esc(aliasText(t))}</span>
+        <span class="mono body-sm note">${esc(resolveColor(prim, t))}</span></button>`)
+    }
+    out.push('</div>')
+  }
+  out.push('</section>')
+
+  /* ── 색 primitive ── */
+  /* 시각화 헬퍼 — renderPrimGroups 가 palette 섹션에서 먼저 호출되므로 그보다 앞에 둔다. */
+  const VIS = {
+    spacing: t => `<span class="barviz" style="width:${valueOf(t)}"></span>`,
+    radius:  t => `<span class="boxviz" style="border-radius:${valueOf(t)}"></span>`,
+    // 두께만 토큰이고 색은 color.line.* 에서 온다. 실제 선 색으로 그려 오해를 막는다.
+    divider: t => `<span class="dividerviz" style="height:${valueOf(t)}"></span>`,
+    shadow:  t => `<span class="shadowviz" style="box-shadow:${valueOf(t)}"></span>`,
+    ratio:   t => `<span class="ratioviz" style="aspect-ratio:${valueOf(t)}"></span>`,
+    gradient: t => typeof t.$value === 'string' && t.$value.startsWith('linear-gradient')
+      ? `<span class="gradviz" style="background-image:${valueOf(t)}"></span>` : '',
+    opacity: t => `<span class="opaviz" style="opacity:${valueOf(t)}"></span>`,
+    interaction: t => `<span class="opaviz" style="opacity:${valueOf(t)}"></span>`,
+    fontWeight: t => `<span style="font-weight:${valueOf(t)};font-size:var(--font-size-20)">Ag</span>`,
+    fontSize: t => `<span style="font-size:${valueOf(t)}">Ag</span>`,
+    lineHeight: t => `<span class="barviz" style="width:8px;height:${valueOf(t)}"></span>`,
+    letterSpacing: t => `<span style="letter-spacing:${valueOf(t)};font-size:var(--font-size-18)">AVAV</span>`,
+    fontFamily: t => `<span style="font-family:${valueOf(t)};font-size:var(--font-size-18)">Ag 한글</span>`,
+  }
+  /* 전용 시각 표현이 없는 그룹 — 치수는 막대(넓으면 축척), 그 외는 값 자체를 보여준다 */
+  const visFallback = t => {
+    if (t.$type === 'dimension') {
+      const px = t.$value.unit === 'px' ? t.$value.value : null
+      if (px !== null && px > 0) {
+        const w = Math.min(px, 88), scaled = px > 88
+        return `<span class="barviz" style="width:${w}px${scaled ? ';opacity:.5' : ''}"></span>`
+      }
+    }
+    return `<span class="mono body-sm dim">${esc(valueOf(t))}</span>`
+  }
+  out.push(`<section id="palette"><h2 class="heading-md">색 · Primitive</h2>
+    <p class="lede body-md">테마 무관 원시 팔레트. CSS 변수로는 생성되지 않으므로 JSON 값을 그대로 표시한다. 칩을 누르면 토큰명이 복사된다.</p>${groupDesc(prim.color)}`)
+  for (const [fam, scale] of Object.entries(prim.color)) {
+    if (fam.startsWith('$')) continue
+    const items = Object.entries(scale).filter(([k]) => !k.startsWith('$')).filter(([k]) => hit(`color.${fam}.${k}`))
+    if (!items.length) continue
+    out.push(`<h3 class="title-sm">${esc(fam)}</h3><div class="grid">`)
+    for (const [k, t] of items) {
+      shown++
+      out.push(`<button class="chip" type="button" data-copy="color.${esc(fam)}.${esc(k)}" title="${esc(t.$description || '')}">
+        <i style="background:${esc(hexOf(t.$value))}"></i>
+        <span><span class="name body-sm">${esc(fam)}.${esc(k)}</span><br>
+        <span class="mono body-sm dim">${esc(hexOf(t.$value))}</span><br>
+        <span class="mono body-sm dim">${esc(oklchText(t.$value))}</span></span></button>`)
+    }
+    out.push('</div>')
+  }
+  // Colors 소속인데 palette 가 다루지 못하는 그룹(opacity)을 여기서 이어 붙인다.
+  shown += renderPrimGroups(out, ownedBy(prim, 'Colors').filter(g => g !== 'color'))
+  out.push('</section>')
+
+  /* ── 타이포그래피 ── */
+  out.push(`<section id="type"><h2 class="heading-md">타이포그래피</h2>
+    <p class="lede body-md">복합 토큰(<code>$type: typography</code>). 모든 속성이 primitive 별칭이며, 빌드가 CSS 유틸리티 클래스로 출력한다. 이 파운데이션의 primitive 그룹은 아래 <a href="#type-prim">Typography</a> 절에 있다.</p>${groupDesc(typo)}`)
+  for (const set of ['base', 'compact']) {
+    const entries = Object.entries(typo.typography[set]).filter(([k]) => !k.startsWith('$')).filter(([k]) => hit(k))
+    if (!entries.length) continue
+    out.push(`<h3 class="title-sm">${set}${set === 'compact' ? ' <span class="tag body-sm">뷰포트 &lt;768px</span>' : ''}</h3>`)
+    for (const [name, t] of entries) {
+      shown++
+      const v = t.$value
+      const fs = derefPrim(prim, v.fontSize), lh = derefPrim(prim, v.lineHeight), ls = derefPrim(prim, v.letterSpacing)
+      const fsPx = parseFloat(fs) * 16, lhPx = parseFloat(lh) * 16
+      const fw = v.fontWeight ? derefPrim(prim, v.fontWeight) : '—'
+      const dec = t.$extensions && t.$extensions[DEC]
+      const style = `font-size:${fs};line-height:${lh};letter-spacing:${ls};font-weight:${v.fontWeight ? fw : 'inherit'};`
+        + (dec ? `text-decoration-line:${dec.line};text-decoration-thickness:${dec.thickness};text-underline-offset:${dec.offset};` : '')
+      out.push(`<div class="typo">
+        <div class="typo-head">
+          <span class="name body-md">${esc(name)}</span>
+          <span class="mono body-sm dim">.${esc(name)}</span>
+        </div>
+        <div class="sample"><span style="${style}">다람쥐 헌 쳇바퀴에 타고파 Ag 123</span></div>
+        <div class="spec body-sm dim" style="margin-top:var(--spacing-8)">
+          <span><b>크기</b> ${fsPx}px (${esc(fs)})</span>
+          <span><b>행간</b> ${lhPx}px (${esc(lh)}) · ${Math.round(lhPx / fsPx * 100)}%</span>
+          <span><b>자간</b> ${esc(ls)}</span>
+          <span><b>굵기</b> ${esc(fw)}</span>
+        </div>
+        ${t.$description ? `<p class="desc body-sm" style="margin:var(--spacing-8) 0 0">${esc(t.$description)}</p>` : ''}
+      </div>`)
+    }
+  }
+  out.push('</section>')
+
+  /* ── 간격·크기 / 효과 / 기타 ── */
+  /* ── Elevation — 파일에서는 두 곳이지만 파운데이션 분류상 한 묶음이라 함께 보여준다 ── */
+  {
+    const shadows = sem.shadow ? walk(sem.shadow, ['shadow'], []).filter(([p]) => hit(p.join('.'))) : []
+    const dims = sem.color[ELEVATION_COLOR_GROUP]
+      ? walk(sem.color[ELEVATION_COLOR_GROUP], ['color', ELEVATION_COLOR_GROUP], []).filter(([p]) => hit(p.join('.')))
+      : []
+    out.push(`<section id="elevation"><h2 class="heading-md">Elevation</h2>
+      <p class="lede body-md">떠 있음을 표현하는 토큰. 둘 다 semantic 이라 테마별로 값이 다르다 — 현재 <b>${isDark ? 'dark' : 'light'}</b>.
+      <code>$type</code> 이 달라 파일에서는 <code>shadow</code> 그룹과 <code>color.elevation</code> 으로 나뉘어 있고, 이 화면에서만 함께 묶어 보여준다.</p>`)
+
+    if (shadows.length) {
+      out.push(`<h3 class="title-sm">그림자 <span class="tag body-sm">${walk(sem.shadow, [], []).length}</span></h3>${groupDesc(sem.shadow)}<div class="rows">`)
+      for (const [p, t] of shadows) {
+        shown++
+        const v = cssVar(p)
+        const a = t.$extensions && t.$extensions[NS]
+        const alias = (Array.isArray(t.$value) ? t.$value : [t.$value])[0].color +
+          (a ? ' @' + (Array.isArray(a) ? a.join(' / ') : a) : '')
+        out.push(`<button class="row wide" type="button" data-copy="${esc(v)}">
+          <span class="vis"><span class="shadowviz" style="box-shadow: var(${esc(v)})"></span></span>
+          <span class="name body-md">${esc(p.join('.'))}</span>
+          <span class="mono body-sm">${esc(v)}</span>
+          <span class="body-sm note">${esc(t.$description || '')}<br><span class="mono dim">${esc(alias)}</span></span>
+          </button>`)
+      }
+      out.push('</div>')
+    }
+    if (dims.length) {
+      out.push(`<h3 class="title-sm">가림막 <span class="tag body-sm">${dims.length}</span></h3><div class="rows">`)
+      for (const [p, t] of dims) {
+        shown++
+        const v = cssVar(p)
+        out.push(`<button class="row" type="button" data-copy="${esc(v)}">
+          <span class="vis"><span class="sw${t.$extensions && t.$extensions[NS] ? ' alpha' : ''}"><i style="background: var(${esc(v)})"></i></span></span>
+          <span class="name body-md">${esc(p.join('.'))}</span>
+          <span class="mono body-sm">${esc(v)}</span>
+          <span class="mono body-sm dim">${esc(aliasText(t))}</span>
+          <span class="mono body-sm note">${esc(resolveColor(prim, t))}</span></button>`)
+      }
+      out.push('</div>')
+    }
+    out.push('</section>')
+  }
+
+  // 전용 섹션이 이미 다루는 파운데이션은 여기서 건너뛴다(Typography 는 아래에서 합류).
+  const DEDICATED = ['Colors', 'Elevation']
+  const SEC = FOUNDATIONS.filter(f => !DEDICATED.includes(f)).map(f => ({
+    id: f === 'Typography' ? 'type-prim' : 'f-' + f,
+    title: f,
+    groups: ownedBy(prim, f),
+    shared: sharedInto(prim, f),
+  }))
+  // primitive 그룹 렌더 — 일반 파운데이션 섹션과 Colors · Primitive 양쪽에서 쓴다.
+  // palette 섹션이 이 정의보다 앞에서 호출하므로 함수 선언(호이스팅)이어야 한다.
+  function renderPrimGroups(out, groups) {
+    let n = 0
+    for (const g of groups) {
+      if (!prim[g]) continue
+      const items = walk(prim[g], [g], []).filter(([p]) => hit(p.join('.')))
+      if (!items.length) continue
+      out.push(`<h3 class="title-sm">${esc(g)} <span class="tag body-sm">${walk(prim[g], [], []).length}</span></h3>${groupDesc(prim[g])}<div class="rows">`)
+      for (const [p, t] of items) {
+        n++
+        const v = cssVar(p)
+        const vis = (VIS[g] ? VIS[g](t) : '') || visFallback(t)
+        out.push(`<button class="row ${t.$description ? 'wide' : 'trio'}" type="button" data-copy="${esc(v)}">
+          <span class="vis">${vis}</span>
+          <span class="name body-md">${esc(p.join('.'))}</span>
+          <span class="mono body-sm">${esc(v)}</span>
+          ${t.$description ? `<span class="body-sm note">${esc(t.$description)}</span>` : `<span class="mono body-sm dim">${esc(valueOf(t))}</span>`}
+          </button>`)
+      }
+      out.push('</div>')
+    }
+    return n
+  }
+  for (const { id, title, groups, shared } of SEC) {
+    out.push(`<section id="${id}"><h2 class="heading-md">${title}</h2>`)
+    if (shared.length) out.push(`<p class="lede body-md">공유 스케일 ${shared.map(g =>
+      `<code>${esc(g)}</code>`).join(' · ')} 도 이 파운데이션이 참조한다 — 주 소속 섹션에서 본다.</p>`)
+    shown += renderPrimGroups(out, groups)
+    out.push('</section>')
+  }
+
+  document.getElementById('count').textContent = shown + '개'
+  document.getElementById('app').innerHTML = shown ? out.join('') : '<p class="empty body-lg">검색 결과 없음.</p>'
+  document.getElementById('nav').innerHTML = SECTIONS.map(s => `<a href="#${s.id}">${s.label}</a>`).join('')
+}
+
+/* ── 데이터 로드 ── */
+/* 빌드 산출물을 다시 읽어야 하므로 CSS·JSON 모두 캐시를 우회한다 */
+function reloadCss() {
+  return new Promise(res => {
+    const el = document.getElementById('tokens-css')
+    el.addEventListener('load', res, { once: true })
+    el.addEventListener('error', res, { once: true })
+    el.href = './tokens.css?t=' + Date.now()
+  })
+}
+reloadCss()
+  .then(() => Promise.all(['primitive.json', 'semantic.light.json', 'semantic.dark.json', 'typography.json']
+    .map(f => fetch('./' + f, { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(f + ' — HTTP ' + r.status); return r.json() }))))
+  .then(([prim, light, dark, typo]) => { DATA = { prim, light, dark, typo }; render() })
+  .catch(err => {
+    document.getElementById('app').innerHTML =
+      '<p class="err body-lg">토큰 JSON 을 불러오지 못했습니다: ' + esc(err.message) + '</p>' +
+      '<p class="body-md">file:// 로 직접 열면 fetch 가 CORS 에 막힙니다. 정적 서버로 여세요:</p>' +
+      '<pre class="mono body-md">cd /Users/mac/iNext/DS &amp;&amp; python3 -m http.server 4321 --directory tokens</pre>'
+  })
+</script>
+</body>
+</html>

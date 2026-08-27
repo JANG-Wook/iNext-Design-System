@@ -1,0 +1,22 @@
+{
+  "name": "@infobank/next-ds-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "description": "iNext Design System — 디자인 토큰 (DTCG)",
+  "type": "module",
+  "files": [
+    "tokens/tokens.css",
+    "tokens/tokens.js",
+    "tokens/dist/tokens.light.json",
+    "tokens/dist/tokens.dark.json"
+  ],
+  "exports": {
+    ".": "./tokens/tokens.js",
+    "./css": "./tokens/tokens.css",
+    "./dtcg/light": "./tokens/dist/tokens.light.json",
+    "./dtcg/dark": "./tokens/dist/tokens.dark.json"
+  },
+  "scripts": {
+    "build:tokens": "node tokens/build.mjs"
+  }
+}

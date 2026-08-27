@@ -1,0 +1,398 @@
+{
+  "$description": "복합 타이포그래피 토큰(DTCG typography). base=웹 뷰포트≥768, compact=<768 & iOS/Android 오버라이드(display/heading만). 빌드가 CSS 유틸리티 클래스로 출력. 모든 속성은 primitive 별칭 — 행간은 2px 그리드(px 키/rem 값), 자간은 크기밴드. link는 $extensions 로 밑줄 지정. 각 토큰의 컴포넌트 매핑은 대표 예시이며 망라가 아니다 — 컴포넌트 구현 단계에서 다듬는다.",
+  "typography": {
+    "base": {
+      "display-lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.60}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.60-72}",
+          "letterSpacing": "{letterSpacing.60}"
+        },
+        "$description": "최상위 헤드라인. 랜딩 히어로·프로모션 등 페이지 레벨에서 쓴다 — 대응 컴포넌트 없음. PC 권장. 굵기는 bold 하나. 모바일(<768px) 오버라이드 있음."
+      },
+      "display-md": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.40}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.40-52}",
+          "letterSpacing": "{letterSpacing.40}"
+        },
+        "$description": "메인 타이틀. 랜딩 섹션 헤더·온보딩 등 페이지 레벨 — 대응 컴포넌트 없음. PC 권장. 굵기는 bold 하나. 모바일(<768px) 오버라이드 있음."
+      },
+      "heading-xl": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.36}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.36-44}",
+          "letterSpacing": "{letterSpacing.36}"
+        },
+        "$description": "강조형 헤드라인. 페이지 헤더·배너 등 페이지 레벨 — 대응 컴포넌트 없음. 굵기는 bold 하나. 모바일(<768px) 오버라이드 있음."
+      },
+      "heading-lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.32}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.32-40}",
+          "letterSpacing": "{letterSpacing.32}"
+        },
+        "$description": "페이지 상위 제목. Popup(Full Screen) 제목. 굵기는 bold 하나. 모바일(<768px) 오버라이드 있음."
+      },
+      "heading-md": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.28}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.28-36}",
+          "letterSpacing": "{letterSpacing.28}"
+        },
+        "$description": "섹션 제목. Popup(Full Screen)·Bottom Sheet(Promotion) 제목. 굵기는 bold 하나. 모바일(<768px) 오버라이드 있음."
+      },
+      "heading-sm": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.24}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.24-32}",
+          "letterSpacing": "{letterSpacing.24}"
+        },
+        "$description": "하위 제목·그룹 제목. Popup(Center)·Bottom Sheet 제목. 굵기는 bold 하나. 모바일(<768px) 오버라이드 있음."
+      },
+      "title-lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.20}",
+          "fontWeight": "{fontWeight.semibold}",
+          "lineHeight": "{lineHeight.20-28}",
+          "letterSpacing": "{letterSpacing.20}"
+        },
+        "$description": "콘텐츠 타이틀. Card·Bottom Sheet·Popup 제목, Accordion 헤더. 기본 semibold, 강조는 title-lg-strong."
+      },
+      "title-lg-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.20}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.20-28}",
+          "letterSpacing": "{letterSpacing.20}"
+        },
+        "$description": "title-lg 의 강조 변형(bold). 용도 동일, 굵기만 다르다."
+      },
+      "title-md": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.18}",
+          "fontWeight": "{fontWeight.semibold}",
+          "lineHeight": "{lineHeight.18-26}",
+          "letterSpacing": "{letterSpacing.18}"
+        },
+        "$description": "서브 제목. Accordion 헤더, List 섹션 제목, Item Tile 제목. 기본 semibold, 강조는 title-md-strong."
+      },
+      "title-md-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.18}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.18-26}",
+          "letterSpacing": "{letterSpacing.18}"
+        },
+        "$description": "title-md 의 강조 변형(bold). 용도 동일, 굵기만 다르다."
+      },
+      "title-sm": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.16}",
+          "fontWeight": "{fontWeight.semibold}",
+          "lineHeight": "{lineHeight.16-24}",
+          "letterSpacing": "{letterSpacing.16}"
+        },
+        "$description": "항목 제목. List 아이템·Item Tile 타이틀, Table 헤더 셀. 본문과 같은 크기이지만 굵기로 구분한다. 기본 semibold, 강조는 title-sm-strong."
+      },
+      "title-sm-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.16}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.16-24}",
+          "letterSpacing": "{letterSpacing.16}"
+        },
+        "$description": "title-sm 의 강조 변형(bold). 용도 동일, 굵기만 다르다."
+      },
+      "body-lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.16}",
+          "fontWeight": "{fontWeight.regular}",
+          "lineHeight": "{lineHeight.16-26}",
+          "letterSpacing": "{letterSpacing.16}"
+        },
+        "$description": "장문 본문 — 행간이 가장 넓다. Popup·Bottom Sheet(Text) 본문, Text Area. PC 권장. 기본 regular, 강조는 body-lg-strong."
+      },
+      "body-lg-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.16}",
+          "fontWeight": "{fontWeight.semibold}",
+          "lineHeight": "{lineHeight.16-26}",
+          "letterSpacing": "{letterSpacing.16}"
+        },
+        "$description": "body-lg 의 강조 변형(semibold). 용도 동일, 굵기만 다르다."
+      },
+      "body-md": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.14}",
+          "fontWeight": "{fontWeight.regular}",
+          "lineHeight": "{lineHeight.14-22}",
+          "letterSpacing": "{letterSpacing.14}"
+        },
+        "$description": "기본 본문 — 무엇을 쓸지 모르겠으면 이것. List 설명문, Card 본문, Toast·Snackbar 메시지, Table 셀, Text Field 입력값. 기본 regular, 강조는 body-md-strong."
+      },
+      "body-md-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.14}",
+          "fontWeight": "{fontWeight.semibold}",
+          "lineHeight": "{lineHeight.14-22}",
+          "letterSpacing": "{letterSpacing.14}"
+        },
+        "$description": "body-md 의 강조 변형(semibold). 용도 동일, 굵기만 다르다."
+      },
+      "body-sm": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.12}",
+          "fontWeight": "{fontWeight.regular}",
+          "lineHeight": "{lineHeight.12-18}",
+          "letterSpacing": "{letterSpacing.12}"
+        },
+        "$description": "보조 설명. Tooltip, Text Field 헬퍼·에러 문구, Data Visual 축 레이블. 기본 regular, 강조는 body-sm-strong."
+      },
+      "body-sm-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.12}",
+          "fontWeight": "{fontWeight.semibold}",
+          "lineHeight": "{lineHeight.12-18}",
+          "letterSpacing": "{letterSpacing.12}"
+        },
+        "$description": "body-sm 의 강조 변형(semibold). 용도 동일, 굵기만 다르다."
+      },
+      "label-lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.16}",
+          "fontWeight": "{fontWeight.medium}",
+          "lineHeight": "{lineHeight.16-24}",
+          "letterSpacing": "{letterSpacing.16}"
+        },
+        "$description": "UI 라벨(대). Button(대), Bottom Sheet CTA. PC 권장. 기본 medium, 강조는 label-lg-strong."
+      },
+      "label-lg-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.16}",
+          "fontWeight": "{fontWeight.semibold}",
+          "lineHeight": "{lineHeight.16-24}",
+          "letterSpacing": "{letterSpacing.16}"
+        },
+        "$description": "label-lg 의 강조 변형(semibold). 용도 동일, 굵기만 다르다."
+      },
+      "label-md": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.14}",
+          "fontWeight": "{fontWeight.medium}",
+          "lineHeight": "{lineHeight.14-20}",
+          "letterSpacing": "{letterSpacing.14}"
+        },
+        "$description": "UI 라벨(기본) — 라벨의 기준값. Button·Text Button, Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong."
+      },
+      "label-md-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.14}",
+          "fontWeight": "{fontWeight.semibold}",
+          "lineHeight": "{lineHeight.14-20}",
+          "letterSpacing": "{letterSpacing.14}"
+        },
+        "$description": "label-md 의 강조 변형(semibold). 용도 동일, 굵기만 다르다."
+      },
+      "label-sm": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.12}",
+          "fontWeight": "{fontWeight.medium}",
+          "lineHeight": "{lineHeight.12-16}",
+          "letterSpacing": "{letterSpacing.12}"
+        },
+        "$description": "UI 라벨(소). Bottom Navigation 라벨, Tag, Breadcrumb, Chip, Indicator(Number). 기본 medium, 강조는 label-sm-strong."
+      },
+      "label-sm-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.12}",
+          "fontWeight": "{fontWeight.semibold}",
+          "lineHeight": "{lineHeight.12-16}",
+          "letterSpacing": "{letterSpacing.12}"
+        },
+        "$description": "label-sm 의 강조 변형(semibold). 용도 동일, 굵기만 다르다."
+      },
+      "link-lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.16}",
+          "fontWeight": "{fontWeight.regular}",
+          "lineHeight": "{lineHeight.16-26}",
+          "letterSpacing": "{letterSpacing.16}"
+        },
+        "$extensions": {
+          "net.infobank.ds.decoration": {
+            "line": "underline",
+            "thickness": "1px",
+            "offset": "0.2em"
+          }
+        },
+        "$description": "본문 내 링크. body-lg 크기·행간에 밑줄. 굵기는 regular 하나."
+      },
+      "link-md": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.14}",
+          "fontWeight": "{fontWeight.regular}",
+          "lineHeight": "{lineHeight.14-22}",
+          "letterSpacing": "{letterSpacing.14}"
+        },
+        "$extensions": {
+          "net.infobank.ds.decoration": {
+            "line": "underline",
+            "thickness": "1px",
+            "offset": "0.2em"
+          }
+        },
+        "$description": "본문 내 링크. body-md 크기·행간에 밑줄. 굵기는 regular 하나."
+      },
+      "link-sm": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.12}",
+          "fontWeight": "{fontWeight.regular}",
+          "lineHeight": "{lineHeight.12-18}",
+          "letterSpacing": "{letterSpacing.12}"
+        },
+        "$extensions": {
+          "net.infobank.ds.decoration": {
+            "line": "underline",
+            "thickness": "1px",
+            "offset": "0.2em"
+          }
+        },
+        "$description": "보조 텍스트 내 링크. body-sm 크기·행간에 밑줄. 굵기는 regular 하나."
+      }
+    },
+    "compact": {
+      "display-lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.40}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.40-52}",
+          "letterSpacing": "{letterSpacing.40}"
+        },
+        "$description": "display-lg 의 모바일 오버라이드(뷰포트 <768px). 용도 동일, 크기·행간만 축소된다."
+      },
+      "display-md": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.32}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.32-40}",
+          "letterSpacing": "{letterSpacing.32}"
+        },
+        "$description": "display-md 의 모바일 오버라이드(뷰포트 <768px). 용도 동일, 크기·행간만 축소된다."
+      },
+      "heading-xl": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.32}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.32-40}",
+          "letterSpacing": "{letterSpacing.32}"
+        },
+        "$description": "heading-xl 의 모바일 오버라이드(뷰포트 <768px). 용도 동일, 크기·행간만 축소된다."
+      },
+      "heading-lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.28}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.28-36}",
+          "letterSpacing": "{letterSpacing.28}"
+        },
+        "$description": "heading-lg 의 모바일 오버라이드(뷰포트 <768px). 용도 동일, 크기·행간만 축소된다."
+      },
+      "heading-md": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.24}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.24-32}",
+          "letterSpacing": "{letterSpacing.24}"
+        },
+        "$description": "heading-md 의 모바일 오버라이드(뷰포트 <768px). 용도 동일, 크기·행간만 축소된다."
+      },
+      "heading-sm": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.20}",
+          "fontWeight": "{fontWeight.bold}",
+          "lineHeight": "{lineHeight.20-28}",
+          "letterSpacing": "{letterSpacing.20}"
+        },
+        "$description": "heading-sm 의 모바일 오버라이드(뷰포트 <768px). 용도 동일, 크기·행간만 축소된다."
+      }
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Typography"
+      ]
+    }
+  }
+}

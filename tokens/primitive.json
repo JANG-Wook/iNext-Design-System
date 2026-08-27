@@ -1,0 +1,2427 @@
+{
+  "color": {
+    "$description": "원시 색 팔레트 — 테마 무관. 유채색 13계열 × 6단계는 OKLCH 로 생성하며, 단계는 WCAG 상대휘도로 고정한다(200=0.620 / 300=0.440 / 400=0.278 / 500=0.200 / 600=0.156 / 700=0.098). 같은 단계는 계열이 달라도 대비가 같다 — 라이트 텍스트는 600, 다크 텍스트는 400 을 쓴다.",
+    "gray": {
+      "0": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            1,
+            0,
+            "none"
+          ],
+          "hex": "#FFFFFF"
+        }
+      },
+      "50": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.976419,
+            0.001323,
+            286.3755
+          ],
+          "hex": "#F7F7F8"
+        }
+      },
+      "75": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.970151,
+            0,
+            "none"
+          ],
+          "hex": "#F5F5F5"
+        }
+      },
+      "100": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.967153,
+            0,
+            "none"
+          ],
+          "hex": "#F4F4F4"
+        }
+      },
+      "150": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.936565,
+            0.001728,
+            247.8401
+          ],
+          "hex": "#E9EAEB"
+        }
+      },
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.909547,
+            0.002919,
+            264.5412
+          ],
+          "hex": "#E0E1E3"
+        }
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.816796,
+            0.006003,
+            264.5276
+          ],
+          "hex": "#C1C3C7"
+        }
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.756315,
+            0.007889,
+            260.7314
+          ],
+          "hex": "#ADB0B5"
+        }
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.688901,
+            0.009412,
+            264.5042
+          ],
+          "hex": "#989BA1"
+        }
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.471484,
+            0.00995,
+            271.2025
+          ],
+          "hex": "#595B61"
+        }
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.337924,
+            0.005192,
+            286.1186
+          ],
+          "hex": "#37373A"
+        }
+      },
+      "750": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.322627,
+            0.007013,
+            286.0001
+          ],
+          "hex": "#333337"
+        }
+      },
+      "800": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.305345,
+            0.005542,
+            271.2331
+          ],
+          "hex": "#2E2F32"
+        }
+      },
+      "850": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.248988,
+            0.005613,
+            285.9851
+          ],
+          "hex": "#212124"
+        }
+      },
+      "875": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.221454,
+            0.002478,
+            247.9382
+          ],
+          "hex": "#1A1B1C"
+        }
+      },
+      "900": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.200616,
+            0.001969,
+            286.2209
+          ],
+          "hex": "#161617"
+        }
+      },
+      "910": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.206854,
+            0.003102,
+            196.9166
+          ],
+          "hex": "#161818"
+        }
+      },
+      "925": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.187172,
+            0.002004,
+            286.2045
+          ],
+          "hex": "#131314"
+        }
+      },
+      "950": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.164205,
+            0.002072,
+            286.1694
+          ],
+          "hex": "#0E0E0F"
+        }
+      },
+      "1000": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0,
+            0,
+            "none"
+          ],
+          "hex": "#000000"
+        }
+      }
+    },
+    "coolGray": {
+      "450": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.574994,
+            0.010614,
+            286.0612
+          ],
+          "hex": "#78787F"
+        }
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.555626,
+            0.012857,
+            269.4485
+          ],
+          "hex": "#70737B"
+        }
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.39468,
+            0.00682,
+            274.8181
+          ],
+          "hex": "#45464A"
+        }
+      }
+    },
+    "blue": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.852933,
+            0.069521,
+            260.5803
+          ],
+          "hex": "#B5D0FD"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.763068,
+            0.114921,
+            259.5387
+          ],
+          "hex": "#86B3FB"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.657143,
+            0.17429,
+            259.9796
+          ],
+          "hex": "#4D8EFA"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.592457,
+            0.212069,
+            260.155
+          ],
+          "hex": "#2475F9"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.545847,
+            0.210951,
+            260.1367
+          ],
+          "hex": "#1266E8"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.470835,
+            0.179261,
+            259.8838
+          ],
+          "hex": "#0D53BD"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "cyan": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.841662,
+            0.121185,
+            214.7775
+          ],
+          "hex": "#5ADFFC"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.751155,
+            0.1257,
+            214.3504
+          ],
+          "hex": "#26C2DF"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.645232,
+            0.107981,
+            214.3646
+          ],
+          "hex": "#1D9EB6"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.578284,
+            0.096949,
+            214.3946
+          ],
+          "hex": "#17889D"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.531697,
+            0.088974,
+            214.537
+          ],
+          "hex": "#14798C"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.454206,
+            0.076027,
+            213.7336
+          ],
+          "hex": "#0D6170"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "teal": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.835028,
+            0.144226,
+            179.7538
+          ],
+          "hex": "#2EE7CC"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.743898,
+            0.128274,
+            179.9704
+          ],
+          "hex": "#26C6AF"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.6381,
+            0.110015,
+            179.9581
+          ],
+          "hex": "#1DA18E"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.570198,
+            0.098138,
+            180.3938
+          ],
+          "hex": "#178A7A"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.527695,
+            0.090959,
+            179.9391
+          ],
+          "hex": "#147C6D"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.452694,
+            0.078419,
+            179.2648
+          ],
+          "hex": "#0E6457"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "lightBlue": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.849643,
+            0.079108,
+            240.9088
+          ],
+          "hex": "#9FD5FD"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.755669,
+            0.132934,
+            239.8721
+          ],
+          "hex": "#54BAFB"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.648383,
+            0.140949,
+            239.889
+          ],
+          "hex": "#1C98DB"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.579253,
+            0.126648,
+            240.3378
+          ],
+          "hex": "#1782BD"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.533544,
+            0.116484,
+            240.1649
+          ],
+          "hex": "#1374A9"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.456797,
+            0.100155,
+            240.371
+          ],
+          "hex": "#0D5D89"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "green": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.83013,
+            0.241107,
+            146.0131
+          ],
+          "hex": "#2DEE59"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.736604,
+            0.213663,
+            146.0431
+          ],
+          "hex": "#25CB4B"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.631422,
+            0.183495,
+            145.9834
+          ],
+          "hex": "#1CA53B"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.568565,
+            0.165208,
+            145.9683
+          ],
+          "hex": "#178F32"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.521752,
+            0.151229,
+            146.0871
+          ],
+          "hex": "#137F2C"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.446354,
+            0.129165,
+            146.1687
+          ],
+          "hex": "#0D6622"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "lime": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.840793,
+            0.193128,
+            121.7639
+          ],
+          "hex": "#B7DD29"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.747743,
+            0.172067,
+            121.81
+          ],
+          "hex": "#9CBD21"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.642941,
+            0.147711,
+            121.6897
+          ],
+          "hex": "#7F9A19"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.574261,
+            0.132228,
+            121.936
+          ],
+          "hex": "#6C8414"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.530333,
+            0.121538,
+            121.5928
+          ],
+          "hex": "#617611"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.457126,
+            0.106162,
+            122.4578
+          ],
+          "hex": "#4D600B"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "red": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.861032,
+            0.071321,
+            26.1123
+          ],
+          "hex": "#FDC0B9"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.773613,
+            0.126826,
+            25.6583
+          ],
+          "hex": "#FC948B"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.677443,
+            0.200892,
+            26.0824
+          ],
+          "hex": "#FB5751"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.6125,
+            0.220337,
+            26.0705
+          ],
+          "hex": "#EB3134"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.563503,
+            0.209689,
+            26.0217
+          ],
+          "hex": "#D5242A"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.484339,
+            0.180618,
+            26.0651
+          ],
+          "hex": "#AE1B20"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "orange": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.858146,
+            0.092121,
+            61.3209
+          ],
+          "hex": "#FDC392"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.770175,
+            0.159339,
+            60.6825
+          ],
+          "hex": "#FC9936"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.662203,
+            0.146586,
+            60.6043
+          ],
+          "hex": "#D27A1A"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.593777,
+            0.130891,
+            61.0073
+          ],
+          "hex": "#B56915"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.546269,
+            0.120924,
+            60.7861
+          ],
+          "hex": "#A25D11"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.469469,
+            0.103057,
+            61.5033
+          ],
+          "hex": "#834B0C"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "yellow": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.852114,
+            0.168569,
+            100.3173
+          ],
+          "hex": "#E8D029"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.756828,
+            0.149174,
+            99.6717
+          ],
+          "hex": "#C7B122"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.65225,
+            0.129232,
+            100.437
+          ],
+          "hex": "#A29119"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.583642,
+            0.115307,
+            99.6369
+          ],
+          "hex": "#8C7C14"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.535414,
+            0.105661,
+            99.8815
+          ],
+          "hex": "#7C6E11"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.460862,
+            0.09143,
+            100.4633
+          ],
+          "hex": "#64590B"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "redOrange": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.859547,
+            0.075682,
+            41.0438
+          ],
+          "hex": "#FDC1AB"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.773594,
+            0.132438,
+            41.2056
+          ],
+          "hex": "#FC9771"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.673618,
+            0.196936,
+            41.029
+          ],
+          "hex": "#F5601A"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.604066,
+            0.176565,
+            41.0223
+          ],
+          "hex": "#D45215"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.554049,
+            0.162298,
+            40.9927
+          ],
+          "hex": "#BD4811"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.476006,
+            0.139594,
+            40.8486
+          ],
+          "hex": "#9A390C"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "violet": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.857968,
+            0.069218,
+            283.9405
+          ],
+          "hex": "#CACBFD"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.767791,
+            0.116379,
+            284.4235
+          ],
+          "hex": "#ABA9FB"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.66748,
+            0.174323,
+            283.9859
+          ],
+          "hex": "#8A81FA"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.603443,
+            0.213258,
+            284.1013
+          ],
+          "hex": "#7864F9"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.557263,
+            0.209647,
+            283.862
+          ],
+          "hex": "#6B56E7"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.477029,
+            0.180192,
+            284.0663
+          ],
+          "hex": "#5644BC"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "purple": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.863085,
+            0.090816,
+            312.9563
+          ],
+          "hex": "#E7C1FD"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.777796,
+            0.152555,
+            312.6265
+          ],
+          "hex": "#D898FC"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.677659,
+            0.210044,
+            313.2784
+          ],
+          "hex": "#C467F1"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.610844,
+            0.220883,
+            312.9277
+          ],
+          "hex": "#B04DDF"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.565514,
+            0.210153,
+            313.2152
+          ],
+          "hex": "#A042CB"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.484121,
+            0.179953,
+            312.97
+          ],
+          "hex": "#8134A5"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "pink": {
+      "200": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.865731,
+            0.100704,
+            335.2438
+          ],
+          "hex": "#FDBAED"
+        },
+        "$description": "밝은 틴트 — 흰 배경 대비 1.6:1"
+      },
+      "300": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.784496,
+            0.176597,
+            335.0812
+          ],
+          "hex": "#FC89E5"
+        },
+        "$description": "다크 테마 텍스트(여유) — #1A1B1C 대비 8.1:1"
+      },
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.680013,
+            0.210659,
+            334.8213
+          ],
+          "hex": "#E25ACB"
+        },
+        "$description": "다크 테마 텍스트 / 라이트 비텍스트 — 흰 배경 3.2:1, #1A1B1C 5.4:1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.614605,
+            0.219005,
+            335.116
+          ],
+          "hex": "#CE3FB7"
+        },
+        "$description": "균형점 — 양쪽 약 4.2:1"
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.567073,
+            0.209897,
+            335.0227
+          ],
+          "hex": "#BB33A6"
+        },
+        "$description": "라이트 테마 텍스트 / 다크 비텍스트 — 흰 배경 5.1:1, #1A1B1C 3.4:1"
+      },
+      "700": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.484079,
+            0.179825,
+            334.9125
+          ],
+          "hex": "#972786"
+        },
+        "$description": "라이트 테마 텍스트(여유) — 흰 배경 7.1:1"
+      }
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Colors"
+      ]
+    }
+  },
+  "opacity": {
+    "4": {
+      "$type": "number",
+      "$value": 0.04
+    },
+    "5": {
+      "$type": "number",
+      "$value": 0.05
+    },
+    "6": {
+      "$type": "number",
+      "$value": 0.06
+    },
+    "7": {
+      "$type": "number",
+      "$value": 0.07
+    },
+    "8": {
+      "$type": "number",
+      "$value": 0.08
+    },
+    "9": {
+      "$type": "number",
+      "$value": 0.09
+    },
+    "12": {
+      "$type": "number",
+      "$value": 0.12
+    },
+    "16": {
+      "$type": "number",
+      "$value": 0.16
+    },
+    "18": {
+      "$type": "number",
+      "$value": 0.18
+    },
+    "20": {
+      "$type": "number",
+      "$value": 0.2
+    },
+    "22": {
+      "$type": "number",
+      "$value": 0.22
+    },
+    "24": {
+      "$type": "number",
+      "$value": 0.24
+    },
+    "28": {
+      "$type": "number",
+      "$value": 0.28
+    },
+    "30": {
+      "$type": "number",
+      "$value": 0.3
+    },
+    "32": {
+      "$type": "number",
+      "$value": 0.32
+    },
+    "36": {
+      "$type": "number",
+      "$value": 0.36
+    },
+    "42": {
+      "$type": "number",
+      "$value": 0.42
+    },
+    "48": {
+      "$type": "number",
+      "$value": 0.48
+    },
+    "52": {
+      "$type": "number",
+      "$value": 0.52
+    },
+    "60": {
+      "$type": "number",
+      "$value": 0.6
+    },
+    "70": {
+      "$type": "number",
+      "$value": 0.7
+    },
+    "74": {
+      "$type": "number",
+      "$value": 0.74
+    },
+    "80": {
+      "$type": "number",
+      "$value": 0.8
+    },
+    "88": {
+      "$type": "number",
+      "$value": 0.88
+    },
+    "$description": "불투명도 스케일(키=백분율) — base 색과 합성해 반투명 토큰 생성. 알파는 상대 비율로 지각되므로 낮은 쪽이 촘촘하고 높은 쪽이 성기다(단계 비율 1.06~1.33). **1.03 미만으로 붙은 단계를 두지 않는다** — 육안으로 구분되지 않으면서 사다리만 흐린다(DECISIONS 0-12).",
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Colors",
+        "Elevation",
+        "Interaction"
+      ]
+    }
+  },
+  "fontFamily": {
+    "$description": "글꼴 패밀리",
+    "base": {
+      "$type": "fontFamily",
+      "$value": [
+        "Pretendard JP Variable",
+        "Pretendard JP",
+        "sans-serif"
+      ]
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Typography"
+      ]
+    }
+  },
+  "fontWeight": {
+    "$description": "글자 굵기",
+    "bold": {
+      "$type": "fontWeight",
+      "$value": 700
+    },
+    "semibold": {
+      "$type": "fontWeight",
+      "$value": 600
+    },
+    "medium": {
+      "$type": "fontWeight",
+      "$value": 500
+    },
+    "regular": {
+      "$type": "fontWeight",
+      "$value": 400
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Typography"
+      ]
+    }
+  },
+  "fontSize": {
+    "12": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.75,
+        "unit": "rem"
+      }
+    },
+    "14": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.875,
+        "unit": "rem"
+      }
+    },
+    "16": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1,
+        "unit": "rem"
+      }
+    },
+    "18": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1.125,
+        "unit": "rem"
+      }
+    },
+    "20": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1.25,
+        "unit": "rem"
+      }
+    },
+    "24": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1.5,
+        "unit": "rem"
+      }
+    },
+    "28": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1.75,
+        "unit": "rem"
+      }
+    },
+    "32": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "rem"
+      }
+    },
+    "36": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2.25,
+        "unit": "rem"
+      }
+    },
+    "40": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2.5,
+        "unit": "rem"
+      }
+    },
+    "60": {
+      "$type": "dimension",
+      "$value": {
+        "value": 3.75,
+        "unit": "rem"
+      }
+    },
+    "$description": "글자 크기 — 숫자 키 = px 기준 rem 스케일(복합 타이포용). 레거시 5180 px 토큰은 제거됨.",
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Typography"
+      ]
+    }
+  },
+  "lineHeight": {
+    "$description": "행간 — DTCG 2025.10 은 typography 의 lineHeight 를 `number`(fontSize 배수)로 요구한다. 키는 `글자px-행간px` 로, 2px 그리드에서 나온 설계 근거를 이름이 담는다. **짝지어진 글자 크기에서만 그리드에 떨어진다** — 다른 크기와 조합하면 안 되고, 빌드가 검사한다.",
+    "12-16": {
+      "$type": "number",
+      "$value": 1.333333,
+      "$description": "12px 글자에 16px 행간. 2개 토큰이 쓴다."
+    },
+    "12-18": {
+      "$type": "number",
+      "$value": 1.5,
+      "$description": "12px 글자에 18px 행간. 3개 토큰이 쓴다."
+    },
+    "14-20": {
+      "$type": "number",
+      "$value": 1.428571,
+      "$description": "14px 글자에 20px 행간. 2개 토큰이 쓴다."
+    },
+    "14-22": {
+      "$type": "number",
+      "$value": 1.571429,
+      "$description": "14px 글자에 22px 행간. 3개 토큰이 쓴다."
+    },
+    "16-24": {
+      "$type": "number",
+      "$value": 1.5,
+      "$description": "16px 글자에 24px 행간. 4개 토큰이 쓴다."
+    },
+    "16-26": {
+      "$type": "number",
+      "$value": 1.625,
+      "$description": "16px 글자에 26px 행간. 3개 토큰이 쓴다."
+    },
+    "18-26": {
+      "$type": "number",
+      "$value": 1.444444,
+      "$description": "18px 글자에 26px 행간. 2개 토큰이 쓴다."
+    },
+    "20-28": {
+      "$type": "number",
+      "$value": 1.4,
+      "$description": "20px 글자에 28px 행간. 3개 토큰이 쓴다."
+    },
+    "24-32": {
+      "$type": "number",
+      "$value": 1.333333,
+      "$description": "24px 글자에 32px 행간. 2개 토큰이 쓴다."
+    },
+    "28-36": {
+      "$type": "number",
+      "$value": 1.285714,
+      "$description": "28px 글자에 36px 행간. 2개 토큰이 쓴다."
+    },
+    "32-40": {
+      "$type": "number",
+      "$value": 1.25,
+      "$description": "32px 글자에 40px 행간. 3개 토큰이 쓴다."
+    },
+    "36-44": {
+      "$type": "number",
+      "$value": 1.222222,
+      "$description": "36px 글자에 44px 행간. 1개 토큰이 쓴다."
+    },
+    "40-52": {
+      "$type": "number",
+      "$value": 1.3,
+      "$description": "40px 글자에 52px 행간. 2개 토큰이 쓴다."
+    },
+    "60-72": {
+      "$type": "number",
+      "$value": 1.2,
+      "$description": "60px 글자에 72px 행간. 1개 토큰이 쓴다."
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Typography"
+      ]
+    }
+  },
+  "letterSpacing": {
+    "12": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0,
+        "unit": "rem"
+      },
+      "$description": "12px 전용 — none 밴드(0em) 파생. 5개 토큰이 쓴다."
+    },
+    "14": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0,
+        "unit": "rem"
+      },
+      "$description": "14px 전용 — none 밴드(0em) 파생. 5개 토큰이 쓴다."
+    },
+    "16": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.01,
+        "unit": "rem"
+      },
+      "$description": "16px 전용 — title 밴드(-0.01em) 파생. 7개 토큰이 쓴다."
+    },
+    "18": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.01125,
+        "unit": "rem"
+      },
+      "$description": "18px 전용 — title 밴드(-0.01em) 파생. 2개 토큰이 쓴다."
+    },
+    "20": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.0125,
+        "unit": "rem"
+      },
+      "$description": "20px 전용 — title 밴드(-0.01em) 파생. 3개 토큰이 쓴다."
+    },
+    "24": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.0225,
+        "unit": "rem"
+      },
+      "$description": "24px 전용 — heading 밴드(-0.015em) 파생. 2개 토큰이 쓴다."
+    },
+    "28": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.02625,
+        "unit": "rem"
+      },
+      "$description": "28px 전용 — heading 밴드(-0.015em) 파생. 2개 토큰이 쓴다."
+    },
+    "32": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.03,
+        "unit": "rem"
+      },
+      "$description": "32px 전용 — heading 밴드(-0.015em) 파생. 3개 토큰이 쓴다."
+    },
+    "36": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.03375,
+        "unit": "rem"
+      },
+      "$description": "36px 전용 — heading 밴드(-0.015em) 파생. 1개 토큰이 쓴다."
+    },
+    "40": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.05,
+        "unit": "rem"
+      },
+      "$description": "40px 전용 — display 밴드(-0.02em) 파생. 2개 토큰이 쓴다."
+    },
+    "60": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.075,
+        "unit": "rem"
+      },
+      "$description": "60px 전용 — display 밴드(-0.02em) 파생. 1개 토큰이 쓴다."
+    },
+    "$description": "자간 — **글자 크기의 종속 함수**다(DECISIONS 2-2). 키는 짝지어진 글자 크기(px)이며 값은 밴드 × 크기를 rem 으로 환산한 것이다. 밴드 원본은 `$extensions.\"net.infobank.ds.trackingBands\"` 에 있고 빌드가 파생 일치와 크기 짝을 검사한다. (이전에는 밴드 4개를 `em` 으로 뒀으나 DTCG `dimension` 이 `em` 을 담지 못해 예외였다 — DECISIONS 0-11)",
+    "$extensions": {
+      "net.infobank.ds.trackingBands": {
+        "display": -0.02,
+        "heading": -0.015,
+        "title": -0.01,
+        "none": 0
+      },
+      "net.infobank.ds.foundation": [
+        "Typography"
+      ]
+    }
+  },
+  "spacing": {
+    "1": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1,
+        "unit": "px"
+      }
+    },
+    "2": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      }
+    },
+    "4": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "6": {
+      "$type": "dimension",
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
+    },
+    "8": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "10": {
+      "$type": "dimension",
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      }
+    },
+    "12": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "14": {
+      "$type": "dimension",
+      "$value": {
+        "value": 14,
+        "unit": "px"
+      }
+    },
+    "16": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "20": {
+      "$type": "dimension",
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "24": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "32": {
+      "$type": "dimension",
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
+    },
+    "40": {
+      "$type": "dimension",
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      }
+    },
+    "48": {
+      "$type": "dimension",
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      }
+    },
+    "56": {
+      "$type": "dimension",
+      "$value": {
+        "value": 56,
+        "unit": "px"
+      }
+    },
+    "$description": "간격 스케일(px, dimension). 키=px 값. 4px 그리드를 기본으로 하되 1·2·6·10·14 는 미세 조정용.",
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Spacing"
+      ]
+    }
+  },
+  "radius": {
+    "0": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0,
+        "unit": "px"
+      },
+      "$description": "모서리 없음. 각진 요소."
+    },
+    "4": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      },
+      "$description": "작은 버튼·태그·체크박스 같은 매우 작은 요소."
+    },
+    "6": {
+      "$type": "dimension",
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      },
+      "$description": "툴팁 같이 작은 요소."
+    },
+    "8": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$description": "기본값 — 버튼·인풋·드롭다운."
+    },
+    "12": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      },
+      "$description": "카드·팝업 등 컨테이너 요소."
+    },
+    "16": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$description": "바텀시트 같이 화면에서 크게 느껴지는 요소."
+    },
+    "20": {
+      "$type": "dimension",
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$description": "카드 컨테이너 같이 12 보다 더 큰 컨테이너 요소."
+    },
+    "$description": "radius 스케일 — 값이 클수록 큰 면적에 쓴다. circle=50%(원형), full=9999px(알약). 각 토큰의 사용처는 $description 참조.",
+    "circle": {
+      "$value": "50%",
+      "$extensions": {
+        "net.infobank.ds.cssRecipe": true
+      },
+      "$description": "칩·인디케이터 같이 반원 형태가 필요할 때. 정사각형에 적용하면 원이 된다. `%` 는 DTCG dimension 이 담지 못해 CSS 문자열로 두고 예외 표시했다."
+    },
+    "full": {
+      "$type": "dimension",
+      "$value": {
+        "value": 9999,
+        "unit": "px"
+      },
+      "$description": "완전히 둥근 모서리(알약 형태). 높이와 무관하게 양 끝이 반원이 된다."
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Radius"
+      ]
+    }
+  },
+  "ratio": {
+    "$description": "종횡비 — 폭÷높이를 `number` 로 둔다. CSS `aspect-ratio` 는 단일 숫자를 받는다. **키가 `가로-세로` 이므로 방향이 키에 담긴다** — 조사한 네 시스템(Tailwind·Bootstrap·Open Props·Carbon) 모두 가로/세로를 하위 그룹으로 나누지 않는다(DECISIONS 0-13). DTCG 2025.10 에 종횡비 타입이 없어 `number` 로 표현하며, 소수 6자리로 반올림한다.",
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Ratio"
+      ]
+    },
+    "1-2": {
+      "$type": "number",
+      "$value": 0.5,
+      "$description": "세로 2배. 긴 세로 배너·사이드 이미지."
+    },
+    "9-16": {
+      "$type": "number",
+      "$value": 0.5625,
+      "$description": "모바일 전체 화면 비율. 스토리·숏폼 영상. `16-9` 의 역수."
+    },
+    "2-3": {
+      "$type": "number",
+      "$value": 0.666667,
+      "$description": "세로 포스터·도서 표지 비율."
+    },
+    "3-4": {
+      "$type": "number",
+      "$value": 0.75,
+      "$description": "세로 카드 이미지. `4-3` 의 역수로 세로 중 가장 흔하다."
+    },
+    "4-5": {
+      "$type": "number",
+      "$value": 0.8,
+      "$description": "소셜 세로 게시물 비율(인스타그램 표준)."
+    },
+    "1-1": {
+      "$type": "number",
+      "$value": 1,
+      "$description": "정사각형. 아바타·썸네일·그리드 타일."
+    },
+    "4-3": {
+      "$type": "number",
+      "$value": 1.333333,
+      "$description": "전통적 사진·화면 비율. 카드 이미지에 흔하다."
+    },
+    "3-2": {
+      "$type": "number",
+      "$value": 1.5,
+      "$description": "35mm 사진 비율. DSLR 기본값."
+    },
+    "golden": {
+      "$type": "number",
+      "$value": 1.618,
+      "$description": "황금비 1.618. 장식적 비례 — 키가 `W-H` 형식이 아닌 유일한 예외다."
+    },
+    "16-9": {
+      "$type": "number",
+      "$value": 1.777778,
+      "$description": "영상 표준. 히어로·미디어 썸네일. 네 시스템이 모두 채택."
+    },
+    "2-1": {
+      "$type": "number",
+      "$value": 2,
+      "$description": "와이드 배너."
+    },
+    "21-9": {
+      "$type": "number",
+      "$value": 2.333333,
+      "$description": "시네마틱 울트라와이드."
+    }
+  },
+  "gradient": {
+    "$description": "방향형(`solid`·`multiple`)은 `currentColor` 를 쓰는 **CSS 레시피**다 — 런타임 상속값이라 DTCG `color` 로 표현할 수 없어 `$extensions.\"net.infobank.ds.cssRecipe\"` 로 예외 표시했다(DECISIONS 0-3). `maskSize` 는 정상 `dimension` 이며 티어 키(`xs`~`xl`)를 쓴다. **값은 반드시 오름차순이어야 하고 빌드가 검사한다** — 과거 `xlarge`(56)가 `large`(64)보다 작은 상태로 방치된 적이 있다(DECISIONS 2-6).",
+    "solid": {
+      "top": {
+        "$value": "linear-gradient(to top, transparent, currentColor)",
+        "$extensions": {
+          "net.infobank.ds.cssRecipe": true
+        }
+      },
+      "right": {
+        "$value": "linear-gradient(to right, transparent, currentColor)",
+        "$extensions": {
+          "net.infobank.ds.cssRecipe": true
+        }
+      },
+      "bottom": {
+        "$value": "linear-gradient(to bottom, transparent, currentColor)",
+        "$extensions": {
+          "net.infobank.ds.cssRecipe": true
+        }
+      },
+      "left": {
+        "$value": "linear-gradient(to left, transparent, currentColor)",
+        "$extensions": {
+          "net.infobank.ds.cssRecipe": true
+        }
+      }
+    },
+    "multiple": {
+      "top": {
+        "$value": "linear-gradient(to top, currentColor, transparent)",
+        "$extensions": {
+          "net.infobank.ds.cssRecipe": true
+        }
+      },
+      "right": {
+        "$value": "linear-gradient(to right, currentColor, transparent)",
+        "$extensions": {
+          "net.infobank.ds.cssRecipe": true
+        }
+      },
+      "bottom": {
+        "$value": "linear-gradient(to bottom, currentColor, transparent)",
+        "$extensions": {
+          "net.infobank.ds.cssRecipe": true
+        }
+      },
+      "left": {
+        "$value": "linear-gradient(to left, currentColor, transparent)",
+        "$extensions": {
+          "net.infobank.ds.cssRecipe": true
+        }
+      }
+    },
+    "maskSize": {
+      "xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        }
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        }
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 56,
+          "unit": "px"
+        }
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 64,
+          "unit": "px"
+        }
+      }
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Effects"
+      ]
+    }
+  },
+  "interaction": {
+    "$description": "상호작용 상태 오버레이 불투명도.",
+    "opacity": {
+      "normal": {
+        "hovered": {
+          "$type": "number",
+          "$value": "{opacity.5}"
+        },
+        "focused": {
+          "$type": "number",
+          "$value": "{opacity.8}"
+        },
+        "pressed": {
+          "$type": "number",
+          "$value": "{opacity.12}"
+        }
+      },
+      "light": {
+        "hovered": {
+          "$type": "number",
+          "$value": "{opacity.4}"
+        },
+        "focused": {
+          "$type": "number",
+          "$value": "{opacity.6}"
+        },
+        "pressed": {
+          "$type": "number",
+          "$value": "{opacity.9}"
+        }
+      },
+      "strong": {
+        "hovered": {
+          "$type": "number",
+          "$value": "{opacity.8}"
+        },
+        "focused": {
+          "$type": "number",
+          "$value": "{opacity.12}"
+        },
+        "pressed": {
+          "$type": "number",
+          "$value": "{opacity.18}"
+        }
+      }
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Interaction"
+      ]
+    }
+  },
+  "divider": {
+    "1": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1,
+        "unit": "px"
+      },
+      "$description": "기본 구분선. 리스트 항목·섹션 사이의 얇은 선."
+    },
+    "8": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$description": "굵은 구분선. 섹션을 크게 가르는 띠. 색은 line 토큰보다 면 색(bg.normalAlternative 등)이 자연스럽다."
+    },
+    "$description": "구분선 두께 — 색은 이 토큰에 없고 color.line.* (solidNormal 등) 에서 가져온다. 키 = px 값.",
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Divider"
+      ]
+    }
+  },
+  "focusRing": {
+    "$description": "포커스 링 — 두께와 간격. 링은 offset 만큼 띄워 페이지 배경 위에 놓는다(컴포넌트 면 위에 직접 그리면 accent.bg 계열과 대비가 사라진다).",
+    "width": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$description": "링 두께. WCAG 2.4.13(AAA) 의 2px 기준을 따른다."
+    },
+    "offset": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$description": "요소와 링 사이 간격. 링이 컴포넌트 색 위에 겹치지 않게 한다."
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Interaction"
+      ]
+    }
+  },
+  "safeArea": {
+    "$description": "세이프에어리어 인셋(플랫폼 상수).",
+    "status": {
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        }
+      }
+    },
+    "bottom": {
+      "ios": {
+        "$type": "dimension",
+        "$value": {
+          "value": 34,
+          "unit": "px"
+        }
+      },
+      "android": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        }
+      }
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Layout"
+      ]
+    }
+  },
+  "breakpoint": {
+    "$description": "뷰포트 분기점 — 값은 min-width 임계값. 이름은 단계(tier)를 뜻하므로 임계값이 조정돼도 이름은 유효하다.",
+    "xs": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0,
+        "unit": "px"
+      },
+      "$description": "기준점 없음(0). 모바일 우선 설계의 기본 구간."
+    },
+    "sm": {
+      "$type": "dimension",
+      "$value": {
+        "value": 768,
+        "unit": "px"
+      },
+      "$description": "태블릿 세로 / 작은 화면 진입점. 타이포 compact 오버라이드가 이 값 미만에서 동작한다."
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": {
+        "value": 992,
+        "unit": "px"
+      },
+      "$description": "태블릿 가로 / 작은 데스크톱."
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1200,
+        "unit": "px"
+      },
+      "$description": "데스크톱."
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1600,
+        "unit": "px"
+      },
+      "$description": "와이드 데스크톱."
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Breakpoint"
+      ]
+    }
+  },
+  "layout": {
+    "$description": "레이아웃 그리드 — breakpoint 단계별로 최대폭·컬럼 수·좌우 여백·컬럼 간격을 정의한다. 키는 breakpoint 와 1:1 대응한다.",
+    "maxWidth": {
+      "$description": "컨테이너 최대폭. `lg`·`xl` 에만 둔다 — 그 아래 단계는 최대폭 제약이 없으며, \"제약 없음\"은 값이 아니라 **토큰의 부재**로 표현한다(DTCG `dimension` 은 키워드를 허용하지 않는다). 컴포넌트는 `lg` 이상에서만 `max-width` 를 건다.",
+      "lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1080,
+          "unit": "px"
+        },
+        "$description": "lg·xl 공통 — 1080px 고정"
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1080,
+          "unit": "px"
+        },
+        "$description": "lg·xl 공통 — 1080px 고정"
+      }
+    },
+    "columns": {
+      "$description": "그리드 컬럼 수.",
+      "xs": {
+        "$type": "number",
+        "$value": 4,
+        "$description": "xs·sm 공통 — 4컬럼"
+      },
+      "sm": {
+        "$type": "number",
+        "$value": 4,
+        "$description": "xs·sm 공통 — 4컬럼"
+      },
+      "md": {
+        "$type": "number",
+        "$value": 8,
+        "$description": "md — 8컬럼"
+      },
+      "lg": {
+        "$type": "number",
+        "$value": 12,
+        "$description": "lg·xl 공통 — 12컬럼"
+      },
+      "xl": {
+        "$type": "number",
+        "$value": 12,
+        "$description": "lg·xl 공통 — 12컬럼"
+      }
+    },
+    "margin": {
+      "$description": "뷰포트 좌우 여백. maxWidth 가 지정된 단계에서는 0 — 최대폭이 이미 여백을 만든다.",
+      "xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        },
+        "$description": "xs·sm 공통 — 20px"
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        },
+        "$description": "xs·sm 공통 — 20px"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        },
+        "$description": "md — 20px"
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "lg·xl 공통 — 여백 없음(maxWidth 가 대신함)"
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "lg·xl 공통 — 여백 없음(maxWidth 가 대신함)"
+      }
+    },
+    "gutter": {
+      "$description": "컬럼 사이 간격.",
+      "xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        },
+        "$description": "xs·sm 공통 — 12px"
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        },
+        "$description": "xs·sm 공통 — 12px"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        },
+        "$description": "md — 16px"
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        },
+        "$description": "lg·xl 공통 — 24px"
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        },
+        "$description": "lg·xl 공통 — 24px"
+      }
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Layout"
+      ]
+    }
+  }
+}

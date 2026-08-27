@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# 의존성 — 이 저장소는 의존성이 0이다(build.mjs 가 Node 표준 모듈만 쓴다)
+node_modules/
+package-lock.json
+
+# npm pack 산출물
+*.tgz
+
+# 에디터
+.vscode/
+.idea/

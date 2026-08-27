@@ -1,0 +1,604 @@
+{
+  "color": {
+    "$description": "라이트 semantic — primitive 참조. 컴포넌트는 역할 이름만 사용.",
+    "label": {
+      "strong": {
+        "$type": "color",
+        "$value": "{color.gray.1000}"
+      },
+      "normal": {
+        "$type": "color",
+        "$value": "{color.gray.900}"
+      },
+      "neutral": {
+        "$type": "color",
+        "$value": "{color.gray.800}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.88}"
+        }
+      },
+      "alternative": {
+        "$type": "color",
+        "$value": "{color.gray.700}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.70}"
+        }
+      },
+      "assistive": {
+        "$type": "color",
+        "$value": "{color.gray.700}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.28}"
+        }
+      },
+      "disable": {
+        "$type": "color",
+        "$value": "{color.gray.700}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.16}"
+        }
+      }
+    },
+    "bg": {
+      "normal": {
+        "$type": "color",
+        "$value": "{color.gray.0}"
+      },
+      "normalAlternative": {
+        "$type": "color",
+        "$value": "{color.gray.50}"
+      },
+      "elevated": {
+        "$type": "color",
+        "$value": "{color.gray.0}"
+      },
+      "elevatedAlternative": {
+        "$type": "color",
+        "$value": "{color.gray.50}"
+      },
+      "transparent": {
+        "$type": "color",
+        "$value": "{color.gray.0}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.8}"
+        }
+      },
+      "transparentAlternative": {
+        "$type": "color",
+        "$value": "{color.gray.0}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.28}"
+        }
+      }
+    },
+    "line": {
+      "normal": {
+        "$type": "color",
+        "$value": "{color.coolGray.500}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.22}"
+        }
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.coolGray.500}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.52}"
+        }
+      },
+      "neutral": {
+        "$type": "color",
+        "$value": "{color.coolGray.500}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.16}"
+        }
+      },
+      "alternative": {
+        "$type": "color",
+        "$value": "{color.coolGray.500}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.8}"
+        }
+      },
+      "solidNormal": {
+        "$type": "color",
+        "$value": "{color.gray.200}"
+      },
+      "solidNeutral": {
+        "$type": "color",
+        "$value": "{color.gray.150}"
+      },
+      "solidAlternative": {
+        "$type": "color",
+        "$value": "{color.gray.100}"
+      }
+    },
+    "fill": {
+      "normal": {
+        "$type": "color",
+        "$value": "{color.coolGray.500}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.8}"
+        }
+      },
+      "alternative": {
+        "$type": "color",
+        "$value": "{color.coolGray.500}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.5}"
+        }
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.coolGray.500}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.16}"
+        }
+      }
+    },
+    "interaction": {
+      "inactive": {
+        "$type": "color",
+        "$value": "{color.gray.500}"
+      },
+      "disable": {
+        "$type": "color",
+        "$value": "{color.gray.100}"
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{color.blue.600}",
+        "$description": "키보드 포커스 링 색. KWCAG 6.1.2(초점은 시각적으로 구별) · WCAG 2.4.7 대응. 배경 대비 3:1 이상을 유지한다."
+      }
+    },
+    "cool": {
+      "neutral30": {
+        "$type": "color",
+        "$value": "{color.coolGray.700}"
+      }
+    },
+    "atomic": {
+      "green60": {
+        "$type": "color",
+        "$value": "{color.green.600}"
+      },
+      "orange60": {
+        "$type": "color",
+        "$value": "{color.orange.600}"
+      },
+      "red60": {
+        "$type": "color",
+        "$value": "{color.red.600}"
+      }
+    },
+    "primary": {
+      "normal": {
+        "$type": "color",
+        "$value": "{color.gray.800}"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.gray.850}"
+      },
+      "heavy": {
+        "$type": "color",
+        "$value": "{color.gray.900}"
+      }
+    },
+    "status": {
+      "positive": {
+        "$type": "color",
+        "$value": "{color.green.600}"
+      },
+      "cautionary": {
+        "$type": "color",
+        "$value": "{color.orange.600}"
+      },
+      "negative": {
+        "$type": "color",
+        "$value": "{color.red.600}"
+      }
+    },
+    "accent": {
+      "bg": {
+        "redOrange": {
+          "$type": "color",
+          "$value": "{color.redOrange.600}"
+        },
+        "lime": {
+          "$type": "color",
+          "$value": "{color.lime.600}"
+        },
+        "cyan": {
+          "$type": "color",
+          "$value": "{color.cyan.600}"
+        },
+        "lightBlue": {
+          "$type": "color",
+          "$value": "{color.lightBlue.600}"
+        },
+        "violet": {
+          "$type": "color",
+          "$value": "{color.violet.600}"
+        },
+        "purple": {
+          "$type": "color",
+          "$value": "{color.purple.600}"
+        },
+        "pink": {
+          "$type": "color",
+          "$value": "{color.pink.600}"
+        }
+      },
+      "fg": {
+        "red": {
+          "$type": "color",
+          "$value": "{color.red.600}"
+        },
+        "redOrange": {
+          "$type": "color",
+          "$value": "{color.redOrange.600}"
+        },
+        "orange": {
+          "$type": "color",
+          "$value": "{color.orange.600}"
+        },
+        "lime": {
+          "$type": "color",
+          "$value": "{color.lime.600}"
+        },
+        "green": {
+          "$type": "color",
+          "$value": "{color.green.600}"
+        },
+        "cyan": {
+          "$type": "color",
+          "$value": "{color.cyan.600}"
+        },
+        "lightBlue": {
+          "$type": "color",
+          "$value": "{color.lightBlue.600}"
+        },
+        "blue": {
+          "$type": "color",
+          "$value": "{color.blue.600}"
+        },
+        "violet": {
+          "$type": "color",
+          "$value": "{color.violet.600}"
+        },
+        "purple": {
+          "$type": "color",
+          "$value": "{color.purple.600}"
+        },
+        "pink": {
+          "$type": "color",
+          "$value": "{color.pink.600}"
+        }
+      }
+    },
+    "inverse": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.gray.50}"
+      },
+      "background": {
+        "$type": "color",
+        "$value": "{color.gray.875}"
+      },
+      "label": {
+        "$type": "color",
+        "$value": "{color.gray.50}"
+      }
+    },
+    "static": {
+      "white": {
+        "$type": "color",
+        "$value": "{color.gray.0}"
+      },
+      "black": {
+        "$type": "color",
+        "$value": "{color.gray.1000}"
+      }
+    },
+    "elevation": {
+      "dim": {
+        "$type": "color",
+        "$value": "{color.gray.910}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.52}"
+        },
+        "$description": "콘텐츠를 가리는 어두운 막. 모달·바텀시트 뒤에 깔린다. Elevation 파운데이션에 속하지만 테마별 값이 달라 semantic 색으로 둔다."
+      },
+      "$extensions": {
+        "net.infobank.ds.foundation": [
+          "Elevation"
+        ]
+      }
+    },
+    "ios": {
+      "fillSecondary": {
+        "$type": "color",
+        "$value": "{color.coolGray.450}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.16}"
+        }
+      },
+      "glassBackground": {
+        "$type": "color",
+        "$value": "{color.gray.75}",
+        "$extensions": {
+          "net.infobank.ds.alpha": "{opacity.60}"
+        }
+      },
+      "accentPrimary": {
+        "$type": "color",
+        "$value": "{color.blue.600}",
+        "$description": "강조색. 이전에는 출처 불명의 고정값 #0088FF 였으나 blue 스케일로 이관 — 라이트 600 / 다크 400."
+      }
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Colors"
+      ]
+    }
+  },
+  "shadow": {
+    "$description": "그림자(elevation) — 값이 클수록 화면 위로 더 떠 있다. 기하(offset·blur·spread)는 라이트/다크 공통이고 색만 테마별로 다르다. 색은 base 별칭 + alpha(opacity 참조)로 두고 빌드가 rgba 로 합성한다.",
+    "xs": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": "{color.gray.925}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 3,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        {
+          "color": "{color.gray.925}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 0,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 1,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$extensions": {
+        "net.infobank.ds.alpha": [
+          "{opacity.8}",
+          "{opacity.4}"
+        ]
+      },
+      "$description": "가장 얕음 — 미세한 떠 있음(구분선 대체)."
+    },
+    "sm": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": "{color.gray.925}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 3,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 7,
+            "unit": "px"
+          },
+          "spread": {
+            "value": -1,
+            "unit": "px"
+          }
+        },
+        {
+          "color": "{color.gray.925}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 0,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 3,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$extensions": {
+        "net.infobank.ds.alpha": [
+          "{opacity.12}",
+          "{opacity.5}"
+        ]
+      },
+      "$description": "얕음 — 칩·작은 버튼처럼 살짝 떠 있는 요소."
+    },
+    "md": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": "{color.gray.925}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 6,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 14,
+            "unit": "px"
+          },
+          "spread": {
+            "value": -2,
+            "unit": "px"
+          }
+        },
+        {
+          "color": "{color.gray.925}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 0,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 6,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$extensions": {
+        "net.infobank.ds.alpha": [
+          "{opacity.16}",
+          "{opacity.6}"
+        ]
+      },
+      "$description": "기본 — 카드·드롭다운 등 일반적인 떠 있는 면."
+    },
+    "lg": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": "{color.gray.925}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 12,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 24,
+            "unit": "px"
+          },
+          "spread": {
+            "value": -4,
+            "unit": "px"
+          }
+        },
+        {
+          "color": "{color.gray.925}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 0,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 12,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$extensions": {
+        "net.infobank.ds.alpha": [
+          "{opacity.20}",
+          "{opacity.7}"
+        ]
+      },
+      "$description": "깊음 — 팝오버·바텀시트처럼 화면 위로 확실히 뜬 면."
+    },
+    "xl": {
+      "$type": "shadow",
+      "$value": [
+        {
+          "color": "{color.gray.925}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 20,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 36,
+            "unit": "px"
+          },
+          "spread": {
+            "value": -7,
+            "unit": "px"
+          }
+        },
+        {
+          "color": "{color.gray.925}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 0,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 20,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      ],
+      "$extensions": {
+        "net.infobank.ds.alpha": [
+          "{opacity.24}",
+          "{opacity.8}"
+        ]
+      },
+      "$description": "가장 깊음 — 모달·풀스크린 오버레이."
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Elevation"
+      ]
+    }
+  }
+}
