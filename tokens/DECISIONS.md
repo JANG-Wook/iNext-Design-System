@@ -50,6 +50,8 @@
 
 `$extensions."net.infobank.ds.cssRecipe": true` 로 표시하고, 컴포넌트 단계에서 토큰 밖으로 옮길지 재검토한다. 예외는 늘리지 않는다.
 
+> **갱신(2026-09-01):** 이 8건 중 절반이 나머지 절반의 중복이었다. `multiple` 4개를 제거하고 `solid` 을 `fade` 로 고쳐 **예외가 4건으로 줄었다**. 근거는 0-15.
+
 ### 0-4. 배포 형태 — `@infobank/next-ds-tokens`
 
 2026-08-25, 저장소 루트에 `package.json` 을 만들었다. 그전에는 `CLAUDE.md` 가 5곳에서 `npm run build:tokens` 를 지시했지만 `package.json` 이 없어 실행되지 않았다.
@@ -84,7 +86,7 @@
 |---|---:|---|---|
 | `layout.maxWidth.xs·sm·md` | 3 | **토큰 삭제** | `"none"` 은 값이 아니라 값의 부재다. `dimension` 은 키워드를 허용하지 않으므로 "제약 없음"은 토큰을 두지 않는 것으로 표현한다. `maxWidth` 는 `lg`·`xl` 만 남았다. 컴포넌트는 `lg` 이상에서만 `max-width` 를 건다. |
 | `ratio.*` | 21 | `$type: "number"` | 폭÷높이. CSS `aspect-ratio` 는 단일 숫자를 받는다. 비율의 의미는 키(`16-9`)가 담는다. |
-| `gradient.solid`·`multiple` | 8 | `cssRecipe` 예외 표시 | `currentColor` 는 표현 불가 — 0-3 참조. |
+| `gradient.solid`·`multiple` | 8 | `cssRecipe` 예외 표시 | `currentColor` 는 표현 불가 — 0-3 참조. **2026-09-01 에 중복 4건을 제거하고 `gradient.fade` 4건으로 줄였다(0-15).** |
 
 **`ratio` 값 형식이 바뀐 대가** — CSS 출력이 `16 / 9` 에서 `1.777778` 로 바뀌어 가독성이 내려갔다. 소수 6자리로 반올림했고 1920px 폭에서 오차는 0.0001px 미만이다. 대안으로 폭·높이를 `number` 두 개로 쪼개 빌드가 `16 / 9` 를 조립하는 방법이 있었으나, 토큰이 21 → 42개로 늘고 JS 소비자가 값을 직접 조립해야 해서 버렸다.
 
@@ -184,7 +186,7 @@
 
 | 대상 | 건수 | 이유 |
 |---|---:|---|
-| `gradient.solid`·`multiple` | 8 | `currentColor` — 런타임 상속값 |
+| `gradient.solid`·`multiple` | 8 | `currentColor` — 런타임 상속값. **2026-09-01 에 `gradient.fade` 4건으로 축소(0-15)** |
 | `letterSpacing` | 4 | `em` — 글자 크기 상대 단위 |
 | `radius.circle` | 1 | `%` |
 
@@ -512,6 +514,169 @@ CSS 변수가 `--ratio-horizontal-16-9` → `--ratio-16-9` 로 짧아졌다. `$d
 
 ---
 
+### 0-14. 상태 오버레이 — 강도만 있고 색이 없었다
+
+2026-09-01. `primitive.interaction` 을 점검하다 발견했다.
+
+#### 무엇이 비어 있었나
+
+`interaction.opacity.*` 9건은 **얼마나 얹을지**(0.05·0.08·0.12…)만 정의하고, **무엇을 얹을지**는 어디에도 없었다. 불투명도만으로는 렌더링할 수 없다. 토큰별 `$description` 도 0/9 였다 — `maskSize`·`ratio` 를 꼬이게 한 것과 같은 조건이다.
+
+#### 먼저 `color.fill` 과 중복인지 봤다 — 아니다
+
+| | `interaction.opacity` | `color.fill` |
+|---|---|---|
+| 계층 | primitive | semantic |
+| 산출 | **숫자** | **색**(rgba) |
+| 축 | 강도 3 × 상태 3 = 9 | 강도 3 |
+| 테마 | 무관 | 적응(라이트 8/5/16 · 다크 22/12/28) |
+| 역할 | 상호작용 시 얹는 층 | 정지 상태의 면 |
+
+값이 겹쳐 보이는 것(`fill.alternative` 0.05 = `normal.hovered` 0.05)은 둘 다 같은 `opacity` 사다리를 참조하기 때문이며 0-5 에서 의도한 것이다.
+
+이때 **"참조 0건은 `interaction` 의 결함"이라고 먼저 적었던 것을 취소한다.** 세어보니 `color.fill` 0건 · `color.interaction` 0건 — semantic 잎 토큰은 원래 다른 토큰이 참조하지 않고 컴포넌트가 소비한다.
+
+#### base 를 하나로 정할 수 없다는 것을 측정으로 확인했다
+
+`fill` 을 따라 base 를 `coolGray.500` 으로 두면 어떻게 되는지 OKLab 밝기변화(ΔL)로 쟀다.
+
+| 테마 | 면 | hover(0.05) ΔL | |
+|---|---|---:|---|
+| 라이트 | `bg.normal` #FFFFFF | −0.0209 | 어두워짐 ✔ |
+| 라이트 | `primary.normal` #2E2F32 | **+0.0123** | 밝아짐 ✘ |
+| 다크 | `bg.normal` #1A1B1C | +0.0176 | 밝아짐 ✔ |
+| 다크 | `primary.normal` #F7F7F8 | **−0.0207** | 어두워짐 ✘ |
+
+`primary` 는 **면이 테마와 반대로 뒤집힌다** — 라이트에서 `gray.800`(어두움), 다크에서 `gray.50`(밝음). 중립 회색 하나로는 버튼과 카드가 서로 반대로 움직인다. 오버레이 base 는 **테마가 아니라 얹히는 면의 밝기**를 따라야 한다.
+
+#### 결정 — `color.interaction.overlay.{darken,lighten}` 6키
+
+```
+darken.{hovered,focused,pressed}   base {color.gray.1000}  ← 밝은 면 위
+lighten.{hovered,focused,pressed}  base {color.gray.0}     ← 어두운 면 위
+alpha = {interaction.opacity.normal.<상태>}
+```
+
+이름은 **하는 일**을 말한다(`onLight`/`onDark` 는 용도라 헷갈린다). base 가 두 테마에서 같은 것은 의도이며 `color.static` 이 같은 성격의 선례다.
+
+**티어는 `normal` 만 올렸다.** `light`·`strong` 까지 올리면 18키 × 2파일 = 36항목인데 소비자가 0인 지금은 과하다. 두 티어는 primitive 숫자로 남아 있고 컴포넌트가 필요할 때 CSS 변수로 직접 고른다.
+
+#### 검증 — 10개 면 전부에서 방향이 맞다
+
+| 테마 | 면 | 고른 것 | hover ΔL | press ΔL |
+|---|---|---|---:|---:|
+| 라이트 | `bg.normal` / `elevated` | darken | −0.0388 | −0.0933 |
+| 라이트 | `bg.*Alternative` | darken | −0.0361 | −0.0908 |
+| 라이트 | `primary.normal` | lighten | +0.0394 | +0.0965 |
+| 다크 | `bg.normal` | lighten | +0.0465 | +0.1108 |
+| 다크 | `bg.normalAlternative` | lighten | +0.0540 | +0.1253 |
+| 다크 | `bg.elevated` / `elevatedAlternative` | lighten | +0.0453 / +0.0525 | +0.1079 / +0.1184 |
+| 다크 | `primary.normal` | darken | −0.0361 | −0.0908 |
+
+`coolGray.500` 안(ΔL 0.017~0.023, 방향 2건 오류)보다 **강도가 고르고**(0.036~0.054) 방향 오류가 없다.
+
+#### 빌드 수정 한 건
+
+`opacityVal` 이 `{opacity.N}` 을 정규식으로만 받아서 `{interaction.opacity.normal.hovered}` 를 넣으면 `null.match` 로 죽었다. `deref`/`primNode` 를 재사용해 **별칭 체인을 끝까지 따라가고 숫자가 아니면 실패**하도록 바꿨다. 교체 후 산출물이 바이트 동일한 것으로 기존 42건에 영향이 없음을 확인했다.
+
+#### DTCG 적합성 — 어기는 것 하나, 새로 생긴 것은 아니다
+
+Format Module 2025.10 대조: 별칭 체인 ✔(별칭이 별칭을 가리켜도 되고 도구는 끝까지 따라가야 한다) · 이름 규칙 ✔ · `$type` ✔(잎마다 직접 단다) · `$description` ✔.
+
+어기는 것은 **`$extensions` 안의 alpha** 다. 스펙은 확장 데이터를 "토큰 값을 이해하는 데 필수적이지 않은" 선택적 메타데이터로 제한하라고 하고(SHOULD), `$extensions` 안의 참조 해석은 정의하지 않는다. 제3자 도구는 `overlay.darken.hovered` 를 5% 검정이 아니라 **`#000000` 완전 불투명**으로 읽는다.
+
+다만 이건 **이번에 생긴 게 아니다** — 알파 확장을 쓰는 토큰이 이미 42건(라이트 21 · 다크 21) 있고 `fill.normal` 도 같은 방식으로 읽힌다. 6키를 다르게 만들면 오히려 42건과 어긋난다. native `alpha` 를 쓰지 않는 이유(0~1 숫자만 받아 `{opacity.N}` 참조를 못 담음)도 Color Module 원문과 일치한다.
+
+**미결로 남긴다** — 번들(`dist/`)은 해석된 산출물이라 거기서는 알파가 숫자다. 소스는 확장을 유지하고 **번들만 native `alpha` 로 내보내면** 48건 전부가 타 도구에서 제대로 읽힌다. 이번 범위 밖이라 손대지 않았다(미결 15).
+
+#### 결과
+
+토큰 421 → 433(semantic 색 67→73 × 2테마). `$description` 은 `interaction.opacity` 9건 + 하위 그룹 1건 + overlay 6건 + 그룹 1건을 새로 썼다. DTCG 오류 0 · 예외 9(소스)/18(번들) 변동 없음, AA 192건 미달 0 변동 없음.
+
+---
+
+### 0-15. `gradient` — 절반이 중복이었다
+
+2026-09-01. `interaction` 을 마치고 `gradient` 를 점검했다.
+
+#### `solid` 과 `multiple` 은 같은 그라디언트였다
+
+문자열이 달라 다른 토큰으로 보였지만, **방향과 stop 순서를 동시에 뒤집으면 같은 그림**이다.
+
+```
+solid.top       linear-gradient(to top,    transparent, currentColor)   위가 불투명
+multiple.bottom linear-gradient(to bottom, currentColor, transparent)   위가 불투명   ← 같다
+```
+
+흰 바탕에 합성해 불투명하게 만든 뒤 `mix-blend-mode: difference` 로 겹쳐 확인했다. **네 쌍 모두 완전히 검게** 나왔다 — 픽셀 차이 0.
+
+| | |
+|---|---|
+| `solid.top` | ≡ `multiple.bottom` |
+| `solid.right` | ≡ `multiple.left` |
+| `solid.bottom` | ≡ `multiple.top` |
+| `solid.left` | ≡ `multiple.right` |
+
+`ratio` 에서 `vertical` 4개가 `horizontal` 안에 그대로 또 있던 것과 같은 유형이다(0-13). 이름이 왜 안 맞았는지도 이걸로 설명된다 — `multiple` 은 여러 개가 아니라 **반대 방향 표기**였다.
+
+**첫 실측은 틀렸다.** 반투명 레이어끼리 `difference` 로 겹쳤더니 검게 나오지 않아 "다르다"고 볼 뻔했다. 알파가 있는 레이어에는 difference 가 등가 검사로 성립하지 않는다 — 불투명하게 만든 뒤 비교해야 한다.
+
+#### 이름 — `solid` → `fade`
+
+`solid` 는 단색을 뜻하는데 단색이 아니다. 하는 일이 가장자리 페이드이므로 `fade` 로 바꿨다.
+
+키 규약은 `solid` 쪽을 그대로 이어받았다 — **키 = 불투명한 가장자리 = 이 페이드를 놓는 자리**이며, CSS `to <방향>` 키워드와 일치한다. 값의 의미는 바뀌지 않았다.
+
+#### `currentColor` 는 유지한다 — 예외지만 의도다
+
+스펙 2025.10 에는 `gradient` 복합 타입(9.7 · `stops` + `angle`)이 있다. 우리 값 세 요소를 대조하면 `transparent` 는 alpha 0 인 color 로, 방향 4종은 `angle` 로 표현된다. **막는 것은 `currentColor` 하나뿐**이다.
+
+그럼에도 유지한다. 쓰는 쪽이 `color` 에 면 색을 넣으면 **토큰 하나가 어느 면에서든 맞기** 때문이다. 특정 색을 박으면 그 면에서만 맞다.
+
+```css
+.card        { color: var(--color-bg-elevated); }
+.card::after { background-image: var(--gradient-fade-bottom); }
+```
+
+`mask-image` 로 쓰면 알파만 읽혀 `currentColor` 가 무시된다. 실측했다 — 같은 마스크를 `currentColor`·`black`·`white` 로 만든 렌더 결과가 동일했다(`mask-mode: match-source` 는 그라디언트를 알파로 읽는다). 즉 **마스크 용도라면 예외를 없앨 수 있지만, 배경 페이드 용도에서는 `currentColor` 가 핵심 장치**다. 후자를 택했다.
+
+#### 용도 정리 — 실무에 필요한 셋 중 하나만 갖고 있다
+
+| | 용도 | 색 | 테마 | 현재 |
+|---|---|---|---|---|
+| A | **미디어 스크림** — 사진 위 어두운 층으로 글자 대비 확보 | 고정 검정 | 무관 | **없음** |
+| B | **면 페이드** — 잘리는 콘텐츠를 면 색으로 덮음 | `currentColor` | 적응 | `gradient.fade` |
+| C | **마스크 페이드** — 배경을 모를 때 가장자리를 녹임 | 무의미(알파만) | 무관 | 없음 (B 를 `mask-image` 에 써도 동작) |
+
+A 는 접근성 요구가 붙는다. 사진은 픽셀마다 밝기가 달라 **최악의 경우(완전히 흰 사진)** 를 기준으로 눌러야 한다. 흰 글자 4.5:1 을 보장하는 임계값을 계산했다.
+
+```
+검정 스크림 alpha   흰 사진 위 합성색   흰 글자 대비
+  0.48              #858585            3.71   ✘
+  0.52              #7a7a7a            4.27   ✘   ← elevation.dim(라이트)로도 부족
+  0.60              #666666            5.74   ✔   ← opacity 눈금에서 처음 통과
+정확한 임계 alpha 0.5347
+```
+
+**A 는 지금 만들지 않는다.** 미디어 컴포넌트가 없어 참조 0인 토큰만 늘어난다. 착수할 때 위 계산을 근거로 만든다(미결 16).
+
+#### `maskSize` 는 값을 건드리지 않았다
+
+`24 · 32 · 40 · 56 · 64` 에서 **48만 결번**이고 이유 기록이 없다(미결 13 유지). 티어 이름이 `xs`~`xl` 5개뿐이라 48을 넣으면 6단계가 되어 어휘가 깨지고, 값을 재배치하려면 원 의도를 알아야 한다. `$description` 만 썼다.
+
+#### 결과
+
+| | 전 | 후 |
+|---|---|---|
+| `gradient` 토큰 | 13 | **9** |
+| 토큰별 `$description` | 0/13 | **9/9** |
+| DTCG 예외 (소스) | 9 | **5** (gradient 4 + `radius.circle` 1) |
+| CSS 변수 | `--gradient-solid-*` · `--gradient-multiple-*` | `--gradient-fade-*` |
+
+참조 0건이라 색·대비에 영향 없다. 그룹 `$description` 이 잘못 가리키던 참조(2-6 → 0-10)도 함께 고쳤다.
+
+---
+
 ## 1. 색
 
 ### 1-1. 단계를 WCAG 상대휘도로 고정한다
@@ -635,7 +800,7 @@ CSS 변수가 `--ratio-horizontal-16-9` → `--ratio-16-9` 로 짧아졌다. `$d
 
 ### 2-3. 레거시 51개를 제거했다
 
-5180 세대의 px 기반 토큰 — `fontSize` 16 개(`display-1` 등), `lineHeight` 19 개, `letterSpacing` 16 개. 참조가 0 건이었고, px 라 글자 확대에 반응하지 않았으며, `tokens.css` 에는 그대로 출력되고 있어 신·구를 혼동할 위험이 있었다. 삭제 직전 참조 0 건을 재확인하고 제거했다.
+이전 세대의 px 기반 토큰 — `fontSize` 16 개(`display-1` 등), `lineHeight` 19 개, `letterSpacing` 16 개. 참조가 0 건이었고, px 라 글자 확대에 반응하지 않았으며, `tokens.css` 에는 그대로 출력되고 있어 신·구를 혼동할 위험이 있었다. 삭제 직전 참조 0 건을 재확인하고 제거했다.
 
 ---
 
@@ -894,8 +1059,9 @@ semantic 이 참조하는 것은 400 과 600 뿐이다. 200 · 300 · 500 · 700
 | 14 | **`opacity` 24개 용도 미기록** | 토큰별 `$description` 이 0/24 다. 사다리 자체는 건강하고(비율 1.057~1.333) 빌드가 지키지만, 어느 단계를 어디에 쓰는지는 적혀 있지 않다. `maskSize`·`ratio` 와 같은 조건이다. |
 | ~~12~~ | ~~**`ratio` 그룹 구조가 어긋남**~~ — **2026-08-27 해소(0-13)**. 평탄화 + 12개로 정리. |
 | 13 | **`gradient.maskSize` 용도 미기록** | 티어 5개에 `$description` 이 없다. 8단위 수열에서 48이 빠진 이유도 모른다. 순서는 빌드가 지키지만(0-10) 어느 상황에 어느 티어를 쓰는지는 쓰이기 시작할 때 정한다. |
-| 6 | **버전 관리 없음** | git 저장소가 아니다. 되돌리기 수단이 없으므로 파괴적 변경 전에는 별도 백업이 필요하다. |
-| 7 | **10px 라벨 단계 부재** | 스케일 최소가 12px 다. Bottom Navigation 아이콘 라벨·Data Visual 축 레이블은 통상 10~11px 를 쓰고, 이전 5180 스펙에도 10px 단계가 있었다. **일단 12px(`label-sm` · `body-sm`)로 두고 해당 컴포넌트 구현 시 판단**하기로 했다. 10px 는 접근성 권장 최소보다 작다는 점을 함께 고려할 것. |
+| 16 | **미디어 스크림 없음** | 사진·영상 위에 어두운 층을 깔아 글자 대비를 확보하는 그라디언트가 없다. `elevation.dim` 은 균일한 모달 백드롭이라 대체가 안 된다. 만들 때는 흰 사진(최악) 기준 흰 글자 4.5:1 을 보장해야 하고, 그 임계 alpha 는 0.5347 — `opacity` 눈금에서는 `60` 이 처음 통과한다(0-15). 미디어 컴포넌트 착수 시 만든다. |
+| 15 | **번들의 알파가 스펙 밖 표현** | `$extensions."net.infobank.ds.alpha"` 를 쓰는 48건(라이트 24 · 다크 24)을 제3자 DTCG 도구는 **완전 불투명**으로 읽는다. 스펙은 확장을 "값 이해에 필수적이지 않은" 메타데이터로 제한한다(SHOULD). 소스는 참조를 담아야 해서 바꿀 수 없지만, **번들(`dist/`)은 해석된 산출물이라 native `alpha`(0~1 숫자)로 내보낼 수 있다.** 0-14 참조. |
+| 7 | **10px 단계 추가 필요** | 스케일 최소가 12px 다. Bottom Navigation 아이콘 라벨·Data Visual 축 레이블에 10px 단계가 필요하다. 추가 시 10px 가 접근성 권장 최소보다 작다는 점을 함께 본다. |
 | 8 | **타이포–컴포넌트 매핑은 잠정** | 각 타이포 토큰의 `$description` 에 대표 컴포넌트를 적었으나, 컴포넌트가 아직 없어 크기만 보고 배분한 추정이다. 특히 `title-lg` / `title-md` / `title-sm` 의 경계가 약하다. 컴포넌트 구현 단계에서 다듬는다. |
 | 9 | **상위 3단계에 대응 컴포넌트 없음** | `display-lg`(60) · `display-md`(40) · `heading-xl`(36) 은 계획된 컴포넌트 29 종 어디에도 맞지 않는다(최대 수요는 Popup Full Screen 제목의 32px). 페이지 레이아웃 전용으로 남긴다. |
 

@@ -35,7 +35,19 @@ export const color = {
   "interaction": {
     "inactive": "#989BA1",
     "disable": "#F4F4F4",
-    "focus": "#1266E8"
+    "focus": "#1266E8",
+    "overlay": {
+      "darken": {
+        "hovered": "rgba(0, 0, 0, 0.05)",
+        "focused": "rgba(0, 0, 0, 0.08)",
+        "pressed": "rgba(0, 0, 0, 0.12)"
+      },
+      "lighten": {
+        "hovered": "rgba(255, 255, 255, 0.05)",
+        "focused": "rgba(255, 255, 255, 0.08)",
+        "pressed": "rgba(255, 255, 255, 0.12)"
+      }
+    }
   },
   "cool": {
     "neutral30": "#45464A"
@@ -132,7 +144,19 @@ export const darkColor = {
   "interaction": {
     "inactive": "#595B61",
     "disable": "#2E2F32",
-    "focus": "#4D8EFA"
+    "focus": "#4D8EFA",
+    "overlay": {
+      "darken": {
+        "hovered": "rgba(0, 0, 0, 0.05)",
+        "focused": "rgba(0, 0, 0, 0.08)",
+        "pressed": "rgba(0, 0, 0, 0.12)"
+      },
+      "lighten": {
+        "hovered": "rgba(255, 255, 255, 0.05)",
+        "focused": "rgba(255, 255, 255, 0.08)",
+        "pressed": "rgba(255, 255, 255, 0.12)"
+      }
+    }
   },
   "cool": {
     "neutral30": "#45464A"
@@ -313,17 +337,11 @@ export const ratio = {
 }
 
 export const gradient = {
-  "solid": {
+  "fade": {
     "top": "linear-gradient(to top, transparent, currentColor)",
     "right": "linear-gradient(to right, transparent, currentColor)",
     "bottom": "linear-gradient(to bottom, transparent, currentColor)",
     "left": "linear-gradient(to left, transparent, currentColor)"
-  },
-  "multiple": {
-    "top": "linear-gradient(to top, currentColor, transparent)",
-    "right": "linear-gradient(to right, currentColor, transparent)",
-    "bottom": "linear-gradient(to bottom, currentColor, transparent)",
-    "left": "linear-gradient(to left, currentColor, transparent)"
   },
   "maskSize": {
     "xs": "24px",

@@ -4,8 +4,9 @@
     {
       "name": "tokens-preview",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4321", "--directory", "tokens"],
-      "port": 4321
+      "runtimeArgs": ["-m", "http.server", "4321"],
+      "port": 4321,
+      "url": "http://localhost:4321"
     }
   ]
 }

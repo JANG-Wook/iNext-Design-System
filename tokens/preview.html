@@ -219,6 +219,18 @@ function aliasText(t) {
   const a = t.$extensions && t.$extensions[NS]
   return typeof t.$value === 'string' && t.$value.startsWith('{') ? t.$value + (a ? ' @' + a : '') : ''
 }
+/* 알파 참조 해석 — build.mjs 의 opacityVal 과 같은 규칙.
+   {opacity.N} 을 직접 가리킬 수도, 그것을 들고 있는 토큰({interaction.opacity.normal.hovered})
+   을 가리킬 수도 있으므로 별칭을 끝까지 따라간다. */
+function opacityRefVal(prim, ref) {
+  const at = r => r.slice(1, -1).split('.').reduce((o, k) => (o == null ? o : o[k]), prim)
+  let cur = at(ref)
+  for (let i = 0; cur && typeof cur.$value === 'string' && ALIAS_TOK_RE.test(cur.$value); i++) {
+    if (i > 8) return null
+    cur = at(cur.$value)
+  }
+  return cur && typeof cur.$value === 'number' ? cur.$value : null
+}
 /* 색 별칭 → 실제 값 (알파 합성 포함) */
 function resolveColor(prim, t) {
   const m = String(t.$value).match(/^\{color\.([^.]+)\.([^.}]+)\}$/)
@@ -226,8 +238,7 @@ function resolveColor(prim, t) {
   if (!hex) return t.$value
   const a = t.$extensions && t.$extensions[NS]
   if (!a) return hex
-  const om = String(a).match(/opacity\.([\d.]+)/)
-  const ov = om && prim.opacity[om[1]] ? prim.opacity[om[1]].$value : null
+  const ov = opacityRefVal(prim, String(a))
   if (ov == null) return hex
   const n = parseInt(hex.slice(1), 16)
   return `rgba(${n >> 16 & 255}, ${n >> 8 & 255}, ${n & 255}, ${ov})`

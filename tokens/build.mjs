@@ -2,7 +2,7 @@
 // DTCG(primitive.json + semantic.light/dark.json) → tokens.css + tokens.js 자동 생성.
 //   - 별칭 {color.gray.900} 해석, base+alpha 합성(rgba), dimension {value,unit}→"16px", shadow 조립
 //   - 색 semantic 은 라이트/다크 3중 셀렉터로, 나머지(테마 무관)는 :root 1회
-//   - 변수명은 5180 호환(kebab)
+//   - 변수명은 kebab
 // 사용: node tokens/build.mjs   (JSON 이 단일 원본, css/js 는 산출물이니 직접 편집 금지)
 import fs from 'node:fs'
 import path from 'node:path'
@@ -49,7 +49,6 @@ const h2r = h => { const n = parseInt(h.slice(1),16); return [n>>16&255, n>>8&25
 // 색 $value 는 2025.10 형식의 객체({colorSpace,components,hex}). 합성·출력은 hex 폴백을 쓴다.
 const hexOf = v => (v && typeof v === 'object' && typeof v.hex === 'string') ? v.hex : v
 const primColorHex = ref => { const p = ref.slice(1,-1).split('.'); return hexOf(prim.color[p[1]][p[2]].$value) }
-const opacityVal   = ref => prim.opacity[ref.match(/opacity\.([\d.]+)/)[1]].$value
 // primitive 내부 별칭 해석 — 같은 스케일이 두 곳에 살지 않도록, 상위 그룹이 원시 스케일을
 // {opacity.5} 처럼 참조할 수 있게 한다. 색·그림자는 별도 경로(primColorHex)로 처리한다.
 const ALIAS = /^\{[^{}]+\}$/
@@ -63,6 +62,14 @@ function deref(t){
     cur = primNode(cur.$value)
   }
   return cur
+}
+// 알파 참조는 {opacity.N} 을 직접 가리키거나, 그 별칭을 들고 있는 토큰
+// ({interaction.opacity.normal.hovered}) 을 가리킬 수 있다. 어느 쪽이든 끝까지 따라가
+// 숫자를 얻는다 — 강도 사다리가 opacity 한 곳에만 살게 하려는 것이다(DECISIONS 0-5).
+function opacityVal(ref){
+  const v = deref(primNode(ref)).$value
+  if (typeof v !== 'number') throw new Error(`알파 참조 ${ref} 가 숫자로 풀리지 않는다`)
+  return v
 }
 function colorVal(t){
   const raw = t.$value
@@ -110,7 +117,7 @@ function walk(obj, base, cb){
   }
 }
 
-// ── CSS 변수명(5180 호환) ──────────────────────────────────────────
+// ── CSS 변수명(kebab) ─────────────────────────────────────────────
 const kebab = seg => /^[0-9]+$/.test(seg) ? seg
   : seg.replace(/([a-z])([0-9]+)/g,'$1-$2').replace(/([A-Z]+)/g,m=>'-'+m.toLowerCase()).replace(/\./g,'-').replace(/^-/,'')
 function cssVar(pathArr){

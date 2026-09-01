@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iNext Design System</title>
+<!-- 단일 원본: tokens.css(빌드 산출물) + tokens/*.json(DTCG 원본) + package.json(버전).
+     이 페이지에는 토큰 값을 박지 않는다 — 표시하는 값·변수명·예시 코드는 전부 로드한 파일에서 뽑는다. -->
+<link id="tokens-css" rel="stylesheet" href="./tokens.css">
+<style>
+  /* ── 이 뷰어의 크롬(chrome) 치수 ───────────────────────────────
+     헤더 높이·LNB 폭 같은 값은 디자인 토큰이 아니라 이 문서 도구의 골격이다.
+     스케일에 없는 값이므로 여기 한 곳에 모아 두고, 본문에서는 토큰만 쓴다. */
+  :root {
+    --ui-lnb-w: 232px;
+    --ui-header-h: 56px;
+  }
+
+  body {
+    font-family: var(--font-family-base);
+    background: var(--color-bg-normal);
+    color: var(--color-label-normal);
+  }
+
+  /* ── 헤더 ── */
+  .hdr {
+    position: sticky; top: 0; z-index: 30;
+    height: var(--ui-header-h);
+    display: flex; align-items: center; gap: var(--spacing-8);
+    padding: 0 var(--spacing-24);
+    background: var(--color-bg-normal);
+    border-bottom: var(--divider-1) solid var(--color-line-normal);
+  }
+  .hdr .brand { margin: 0; }
+  .hdr .spacer { flex: 1; }
+  .tag {
+    padding: var(--spacing-2) var(--spacing-8);
+    border-radius: var(--radius-full);
+    background: var(--color-fill-alternative);
+    color: var(--color-label-neutral);
+  }
+  .icon-btn {
+    font: inherit; line-height: 1;
+    width: var(--spacing-32); height: var(--spacing-32);
+    display: grid; place-items: center;
+    border: var(--divider-1) solid var(--color-line-normal);
+    border-radius: var(--radius-8);
+    background: var(--color-bg-normal);
+    color: var(--color-label-normal);
+    cursor: pointer;
+  }
+  .icon-btn:hover { background: var(--color-fill-alternative); }
+  .icon-btn:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-interaction-focus);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* ── 셸 ── */
+  .shell { display: flex; align-items: flex-start; }
+
+  /* ── LNB ── */
+  .lnb {
+    position: sticky; top: var(--ui-header-h);
+    width: var(--ui-lnb-w); flex: none;
+    height: calc(100vh - var(--ui-header-h));
+    overflow-y: auto;
+    padding: var(--spacing-20) var(--spacing-12) var(--spacing-40);
+    border-right: var(--divider-1) solid var(--color-line-normal);
+  }
+  .lnb-label {
+    margin: var(--spacing-20) 0 var(--spacing-6);
+    padding: 0 var(--spacing-10);
+    color: var(--color-label-assistive);
+    text-transform: uppercase;
+  }
+  .lnb-label:first-child { margin-top: 0; }
+  .lnb a {
+    display: flex; align-items: center; gap: var(--spacing-8);
+    padding: var(--spacing-6) var(--spacing-10);
+    border-radius: var(--radius-6);
+    color: var(--color-label-neutral);
+    text-decoration: none;
+  }
+  .lnb a:hover { background: var(--color-interaction-overlay-darken-hovered); color: var(--color-label-normal); }
+  :root[data-theme="dark"] .lnb a:hover { background: var(--color-interaction-overlay-lighten-hovered); }
+  .lnb a[aria-current="page"] {
+    background: var(--color-fill-normal);
+    color: var(--color-label-normal);
+    font-weight: var(--font-weight-semibold);
+  }
+  .lnb a:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-interaction-focus);
+    outline-offset: var(--focus-ring-offset);
+  }
+  .lnb .n { margin-left: auto; color: var(--color-label-assistive); }
+
+  /* ── 본문 ── */
+  main { flex: 1; min-width: 0; padding: var(--spacing-40) var(--spacing-40) var(--spacing-56); }
+  .page { max-width: var(--layout-max-width-lg); }
+  .page > h2 { margin: 0 0 var(--spacing-8); }
+  .lede { color: var(--color-label-neutral); margin: 0 0 var(--spacing-24); max-width: 78ch; }
+  section { margin-top: var(--spacing-40); scroll-margin-top: calc(var(--ui-header-h) + var(--spacing-16)); }
+  section > h3 { margin: 0 0 var(--spacing-8); }
+  h4 { margin: var(--spacing-24) 0 var(--spacing-8); }
+  p { max-width: 80ch; }
+  .dim { color: var(--color-label-alternative); }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  /* 페이지 안 목차 */
+  .toc { display: flex; flex-wrap: wrap; gap: var(--spacing-4); margin-bottom: var(--spacing-8); }
+  .toc a {
+    padding: var(--spacing-4) var(--spacing-10);
+    border-radius: var(--radius-full);
+    background: var(--color-fill-alternative);
+    color: var(--color-label-neutral);
+    text-decoration: none;
+  }
+  .toc a:hover { background: var(--color-fill-strong); color: var(--color-label-normal); }
+
+  /* ── 카드 ── */
+  .cards { display: grid; gap: var(--spacing-12); grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  .card {
+    border: var(--divider-1) solid var(--color-line-normal);
+    border-radius: var(--radius-12);
+    padding: var(--spacing-16);
+    background: var(--color-bg-elevated);
+  }
+  .card .k { color: var(--color-label-neutral); }
+  .card .v { margin: var(--spacing-6) 0 var(--spacing-4); }
+  .card .v .u { color: var(--color-label-alternative); margin-left: var(--spacing-4); }
+  .card .s { color: var(--color-label-alternative); }
+
+  /* ── 표 ── */
+  table { border-collapse: collapse; width: 100%; margin-top: var(--spacing-12); }
+  th, td { text-align: left; vertical-align: top; padding: var(--spacing-8) var(--spacing-12);
+           border-bottom: var(--divider-1) solid var(--color-line-alternative); }
+  th { color: var(--color-label-neutral); font-weight: var(--font-weight-semibold); white-space: nowrap; }
+  td.ok { color: var(--color-status-positive); }
+  td.no { color: var(--color-status-negative); }
+  .scrollx { overflow-x: auto; }
+
+  /* ── 코드 ── */
+  pre {
+    margin: var(--spacing-8) 0 0;
+    padding: var(--spacing-16);
+    border-radius: var(--radius-8);
+    background: var(--color-fill-alternative);
+    overflow-x: auto;
+  }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  :not(pre) > code { padding: 0 var(--spacing-4); border-radius: var(--radius-4); background: var(--color-fill-alternative); }
+
+  /* ── 계층도 ── */
+  .layers { display: grid; gap: var(--spacing-12); }
+  .layer {
+    border: var(--divider-1) solid var(--color-line-normal);
+    border-radius: var(--radius-12);
+    padding: var(--spacing-16);
+    background: var(--color-bg-normal-alternative);
+  }
+  .layer-head { display: flex; flex-wrap: wrap; gap: var(--spacing-8); align-items: baseline; }
+  .layer-body { display: flex; flex-wrap: wrap; gap: var(--spacing-6); margin-top: var(--spacing-12); }
+  .chip { padding: var(--spacing-4) var(--spacing-10); border-radius: var(--radius-6);
+          background: var(--color-fill-alternative); color: var(--color-label-normal); }
+  .arrow { text-align: center; color: var(--color-label-assistive); }
+  .split { display: grid; gap: var(--spacing-12); grid-template-columns: 1fr 1fr; }
+  @media (max-width: 767.98px) { .split { grid-template-columns: 1fr; } }
+
+  /* ── 트리 ── */
+  .tree { border: var(--divider-1) solid var(--color-line-normal); border-radius: var(--radius-12); overflow: hidden; }
+  details { border-top: var(--divider-1) solid var(--color-line-alternative); }
+  details:first-child { border-top: 0; }
+  summary { cursor: pointer; list-style: none; padding: var(--spacing-8) var(--spacing-12);
+            display: flex; flex-wrap: wrap; gap: var(--spacing-8); align-items: baseline; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: '▸'; color: var(--color-label-assistive); width: 1em; flex: none; }
+  details[open] > summary::before { content: '▾'; }
+  summary:hover { background: var(--color-interaction-overlay-darken-hovered); }
+  :root[data-theme="dark"] summary:hover { background: var(--color-interaction-overlay-lighten-hovered); }
+  .d2 > summary { padding-left: var(--spacing-32); }
+  .d3 > summary { padding-left: var(--spacing-48); }
+  .cnt { color: var(--color-label-assistive); }
+  .gdesc { color: var(--color-label-neutral); padding: 0 var(--spacing-16) var(--spacing-8) var(--spacing-40); max-width: 90ch; }
+
+  .leaf {
+    display: grid;
+    grid-template-columns: minmax(180px, 1.3fr) 96px minmax(150px, 1.1fr) minmax(140px, 1fr);
+    gap: var(--spacing-8);
+    padding: var(--spacing-6) var(--spacing-16) var(--spacing-6) var(--spacing-48);
+    align-items: baseline;
+    border-top: var(--divider-1) solid var(--color-line-alternative);
+  }
+  .leaf.deep { padding-left: var(--spacing-56); }
+  .leaf:hover { background: var(--color-interaction-overlay-darken-hovered); }
+  :root[data-theme="dark"] .leaf:hover { background: var(--color-interaction-overlay-lighten-hovered); }
+  .leaf .ldesc { grid-column: 1 / -1; color: var(--color-label-alternative); }
+  .type { justify-self: start; padding: 0 var(--spacing-6); border-radius: var(--radius-4);
+          background: var(--color-fill-alternative); color: var(--color-label-neutral); }
+  .type.none { background: transparent; color: var(--color-label-assistive); }
+  .sw { display: inline-block; width: 1em; height: 1em; border-radius: var(--radius-4);
+        border: var(--divider-1) solid var(--color-line-normal); vertical-align: -0.15em; margin-right: var(--spacing-6); }
+
+  /* ── 파운데이션 토큰 표 ── */
+  .tokbox { border: var(--divider-1) solid var(--color-line-normal); border-radius: var(--radius-12); overflow: hidden; }
+  .tok { display: grid;
+         grid-template-columns: minmax(150px, 1fr) 88px minmax(120px, 0.9fr) minmax(140px, 1fr) 120px;
+         gap: var(--spacing-8); align-items: center;
+         padding: var(--spacing-8) var(--spacing-12);
+         border-top: var(--divider-1) solid var(--color-line-alternative); }
+  .tok:first-child { border-top: 0; }
+  .tok .tdesc { grid-column: 1 / -1; color: var(--color-label-alternative); }
+  .vis { justify-self: end; display: flex; align-items: center; justify-content: flex-end;
+         min-height: var(--spacing-24); overflow: hidden; }
+  .barviz { display: block; height: var(--spacing-8); border-radius: var(--radius-full); background: var(--color-primary-normal); }
+  .boxviz { display: block; width: var(--spacing-32); height: var(--spacing-32); background: var(--color-fill-strong); }
+  .shadowviz { display: block; width: var(--spacing-40); height: var(--spacing-24); border-radius: var(--radius-6);
+               background: var(--color-bg-elevated); }
+  .ratioviz { display: block; height: var(--spacing-24); background: var(--color-fill-strong); border-radius: var(--radius-4); }
+  .opaviz { display: block; width: var(--spacing-32); height: var(--spacing-16); border-radius: var(--radius-4);
+            background: var(--color-primary-normal); }
+  .gradviz { display: block; width: var(--spacing-48); height: var(--spacing-20); border-radius: var(--radius-4); }
+  .dividerviz { display: block; width: var(--spacing-48); background: var(--color-line-strong); }
+
+  .note { border-left: var(--divider-8) solid var(--color-line-strong);
+          padding: var(--spacing-4) 0 var(--spacing-4) var(--spacing-12); margin-top: var(--spacing-12);
+          color: var(--color-label-neutral); }
+  .soon { color: var(--color-label-alternative); }
+  .err { color: var(--color-status-negative); }
+  .empty { color: var(--color-label-alternative); }
+</style>
+</head>
+<body>
+<header class="hdr">
+  <h1 class="brand title-md-strong">iNext Design System</h1>
+  <span class="tag body-sm mono" id="ver">—</span>
+  <span class="spacer"></span>
+  <button class="icon-btn" id="theme" type="button" title="라이트/다크 전환" aria-label="라이트/다크 전환">◐</button>
+</header>
+<div class="shell">
+  <nav class="lnb body-md" id="lnb" aria-label="주 메뉴"></nav>
+  <main><div class="page" id="app"><p class="body-lg empty">불러오는 중…</p></div></main>
+</div>
+
+<script>
+'use strict'
+const FND = 'net.infobank.ds.foundation'
+const ALPHA = 'net.infobank.ds.alpha'
+const RECIPE = 'net.infobank.ds.cssRecipe'
+
+/* 파운데이션 정본 목록 — build.mjs 의 FOUNDATIONS 와 같은 순서.
+   실제 배정은 데이터에서 읽고, 목록과 어긋나면 화면에 드러낸다. */
+const FOUNDATIONS = ['Typography', 'Colors', 'Elevation', 'Spacing', 'Breakpoint', 'Radius',
+                     'Layout', 'Divider', 'Interaction', 'Effects', 'Ratio']
+
+const SRC = [
+  ['primitive.json',      '테마 무관 원시 값. 실제 hex·rem·숫자가 사는 유일한 곳.'],
+  ['semantic.light.json', '색 역할 — 라이트. primitive 를 별칭으로만 참조한다.'],
+  ['semantic.dark.json',  '색 역할 — 다크. 라이트와 같은 키, 다른 참조.'],
+  ['typography.json',     '복합 토큰. semantic 을 거치지 않고 primitive 를 직접 참조한다.'],
+]
+
+let DATA = null   // { files, css:Map, pkg }
+
+/* ── 헬퍼 (build.mjs 와 같은 규칙) ─────────────────────────────── */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
+const isLeaf = v => v && typeof v === 'object' && v.$value !== undefined
+function walk(obj, base, out) {
+  for (const [k, v] of Object.entries(obj)) {
+    if (k.startsWith('$')) continue
+    if (isLeaf(v)) out.push([base.concat(k), v])
+    else if (v && typeof v === 'object') walk(v, base.concat(k), out)
+  }
+  return out
+}
+const kebab = s => /^[0-9]+$/.test(s) ? s
+  : s.replace(/([a-z])([0-9]+)/g, '$1-$2').replace(/([A-Z]+)/g, m => '-' + m.toLowerCase())
+     .replace(/\./g, '-').replace(/^-/, '')
+const cssVar = p => '--' + p.map(kebab).join('-')
+const cssVal = v => DATA.css.get(v) || ''
+const hexOf = v => (v && typeof v === 'object' && typeof v.hex === 'string') ? v.hex : v
+const ALIAS_RE = /^\{[^{}]+\}$/
+const isAlias = v => typeof v === 'string' && ALIAS_RE.test(v)
+
+function derefPrim(ref) {
+  const prim = DATA.files['primitive.json']
+  const at = r => r.slice(1, -1).split('.').reduce((o, k) => (o == null ? o : o[k]), prim)
+  let cur = at(ref)
+  for (let i = 0; cur && isAlias(cur.$value); i++) { if (i > 8) return null; cur = at(cur.$value) }
+  return cur || null
+}
+function alphaVal(ref) { const t = derefPrim(ref); return t && typeof t.$value === 'number' ? t.$value : null }
+
+function shortVal(t) {
+  const v = t.$value
+  if (isAlias(v)) return v
+  if (v && typeof v === 'object' && !Array.isArray(v)) {
+    if (v.colorSpace) return v.colorSpace + '(' + v.components.join(' ') + ')' + (v.hex ? ' ' + v.hex : '')
+    if (v.unit !== undefined) return v.value + v.unit
+    return '복합 ' + Object.keys(v).length + '속성'
+  }
+  /* 배열은 두 종류다 — fontFamily(문자열 목록)와 shadow(레이어 객체 목록) */
+  if (Array.isArray(v)) return v.every(x => typeof x === 'string') ? v.join(' · ') : v.length + '개 레이어'
+  return String(v)
+}
+/* 복합 토큰(typography)의 하위 속성을 펼친다 — 구조를 보려는 문서이므로 감추지 않는다 */
+function subRow(t) {
+  const v = t.$value
+  if (!v || typeof v !== 'object' || Array.isArray(v) || v.colorSpace || v.unit !== undefined) return ''
+  return '<span class="ldesc body-sm mono">' + Object.entries(v)
+    .map(([k, x]) => '<b>' + esc(k) + '</b> ' + esc(typeof x === 'object' ? JSON.stringify(x) : String(x)))
+    .join(' · ') + '</span>'
+}
+/* 색 토큰의 최종 렌더 색 (알파 합성 포함) */
+function renderedColor(t) {
+  let hex = isAlias(t.$value) ? (derefPrim(t.$value) || {}).$value : t.$value
+  hex = hexOf(hex)
+  if (typeof hex !== 'string') return null
+  const a = t.$extensions && t.$extensions[ALPHA]
+  if (!a) return hex
+  const ov = alphaVal(String(a))
+  if (ov == null) return hex
+  const n = parseInt(hex.slice(1), 16)
+  return 'rgba(' + (n >> 16 & 255) + ', ' + (n >> 8 & 255) + ', ' + (n & 255) + ', ' + ov + ')'
+}
+const swatch = t => { const c = t.$type === 'color' ? renderedColor(t) : null
+  return c ? '<span class="sw" style="background:' + esc(c) + '"></span>' : '' }
+
+/* ── 집계 ─────────────────────────────────────────────────────── */
+function totals() {
+  let n = 0; const per = {}
+  for (const [f] of SRC) { const c = walk(DATA.files[f], [], []).length; per[f] = c; n += c }
+  return { n, per }
+}
+/* 파운데이션 → [{file, group, node, count}] */
+function byFoundation() {
+  const map = new Map(FOUNDATIONS.map(f => [f, []]))
+  const stray = []
+  for (const [file] of SRC) {
+    const doc = DATA.files[file]
+    for (const g of Object.keys(doc)) {
+      if (g.startsWith('$')) continue
+      const node = doc[g]
+      const fs = (node.$extensions || {})[FND] || []
+      const count = walk({ [g]: node }, [], []).length
+      if (!fs.length) { stray.push(file + '.' + g + ' (배정 없음)'); continue }
+      for (const f of fs) {
+        if (!map.has(f)) { stray.push(file + '.' + g + ' → ' + f + ' (모르는 파운데이션)'); continue }
+        map.get(f).push({ file, group: g, node, count })
+      }
+    }
+  }
+  return { map, stray }
+}
+
+/* ── 개요 ─────────────────────────────────────────────────────── */
+function pageOverview() {
+  const t = totals()
+  const prim = DATA.files['primitive.json']
+  const { map } = byFoundation()
+  const semL = DATA.files['semantic.light.json']
+  const typo = DATA.files['typography.json'].typography
+  const typoBase = Object.keys(typo.base).filter(k => !k.startsWith('$'))
+  const typoCompact = Object.keys(typo.compact || {}).filter(k => !k.startsWith('$'))
+  const primGroups = Object.keys(prim).filter(k => !k.startsWith('$'))
+  const colorCount = walk({ color: prim.color }, [], []).length
+  const semColor = walk({ color: semL.color }, [], []).length
+  const pkg = DATA.pkg || {}
+
+  const cards = [
+    ['토큰 총계', t.n, '개', SRC.length + '개 소스 · 단일 원본'],
+    ['색 · primitive', colorCount, '개', '테마 무관 팔레트'],
+    ['색 · semantic', semColor, '개 × 2', '라이트 / 다크 같은 키'],
+    ['타이포', typoBase.length, '개', 'compact ' + typoCompact.length + '개 오버라이드'],
+    ['CSS 변수', DATA.css.size, '개', 'tokens.css — 고유 이름'],
+    ['컴포넌트', 0, '개', '토큰 확정 후 착수'],
+  ].map(([k, v, u, s]) => `<div class="card">
+      <div class="k body-sm">${esc(k)}</div>
+      <div class="v heading-sm">${esc(String(v))}<span class="u body-md">${esc(u)}</span></div>
+      <div class="s body-sm">${esc(s)}</div></div>`).join('')
+
+  const pipeline = [
+    'iNext-Design-System 리포 (GitHub)   ← 단일 원본(SSOT)',
+    '     ├─ tokens/*.json           DTCG 소스 4개  (사람이 관리)',
+    '     ├─ tokens/DECISIONS.md     설계 기록 · 산문 (사람이 관리)',
+    '     ├─ CLAUDE.md               작업 규칙       (사람이 관리)',
+    '     │',
+    '     ├─ build → tokens.css      CSS 변수 + 타이포 유틸 클래스',
+    '     ├─ build → tokens.js       해석된 값 (ESM)',
+    '     └─ build → dist/*.json     테마별 단일 DTCG 문서',
+    '     │                          (셋 다 생성물이지만 커밋한다)',
+    '     ▼',
+    '  GitHub Actions — 빌드 가드 8종 · DTCG 정합성 · AA 대비',
+    '     │',
+    '     ▼  아직 배포 경로 없음  (package.json: "private": true)',
+    '소비 앱',
+    '     └─ 없음 — 컴포넌트 단계에서 정한다',
+  ].join('\n')
+
+  const repoTree = [
+    'iNext-Design-System/',
+    '├─ tokens/',
+    '│  ├─ primitive.json         원시값 — 색 · 크기 · 불투명도 …',
+    '│  ├─ semantic.light.json    역할 → {primitive}  (라이트)',
+    '│  ├─ semantic.dark.json     역할 → {primitive}  (다크)',
+    '│  ├─ typography.json        복합 토큰 → {primitive}',
+    '│  ├─ build.mjs              빌드 + 가드 8종',
+    '│  ├─ checks/                DTCG 정합성 · AA 대비 검사',
+    '│  ├─ dist/                  ← 생성물이지만 커밋',
+    '│  ├─ tokens.css             ← 생성물이지만 커밋',
+    '│  ├─ tokens.js              ← 생성물이지만 커밋',
+    '│  ├─ DECISIONS.md           설계 기록 (사람이 씀)',
+    '│  ├─ guide.html             이 문서',
+    '│  └─ preview.html           값 뷰어',
+    '├─ CLAUDE.md',
+    '├─ package.json',
+    '└─ .github/workflows/tokens.yml',
+  ].join('\n')
+
+  const gap = [
+    ['호스팅', 'GitHub', 'GitLab 로 옮기면 CI 파일과 레지스트리 주소가 바뀐다'],
+    ['배포', '없음 — <code>"private": true</code>', '패키지로 배포하려면 private 를 풀고 배포 워크플로가 필요하다'],
+    ['빌드 도구', '자체 <code>build.mjs</code>', 'Style Dictionary 는 검토했으나 쓰지 않는다 — 별칭 해석과 가드를 직접 갖고 있다'],
+    ['산문', '<code>DECISIONS.md</code> 한 파일', '조각 파일로 나눠 <code>DESIGN.md</code> 를 생성하는 방식은 아직 없다'],
+    ['컴포넌트 토큰', '없음', 'primitive → semantic 2계층. 컴포넌트 계층은 착수 시 판단한다'],
+    ['소스 배치', '파일 4개', '폴더로 쪼개는 것은 파일이 커지면 검토한다'],
+  ].map(([k, now, note]) => `<tr><td class="body-md">${k}</td><td class="body-md mono">${now}</td><td class="body-md dim">${note}</td></tr>`).join('')
+
+  const fndRows = FOUNDATIONS.map(f => {
+    const gs = map.get(f) || []
+    const n = gs.reduce((a, g) => a + g.count, 0)
+    return `<tr><td class="body-md"><a href="#/foundation/${encodeURIComponent(f)}">${esc(f)}</a></td>
+      <td class="body-md">${gs.length}</td><td class="body-md">${n}</td>
+      <td class="body-md mono dim">${gs.map(g => esc(g.group)).join(' · ')}</td></tr>`
+  }).join('')
+
+  return `<h2 class="heading-md">개요</h2>
+    <p class="lede body-lg">${esc(pkg.description || 'iNext Design System — 디자인 토큰 (DTCG)')}.
+      <b>현재 단계는 디자인 토큰</b>이고 컴포넌트는 토큰 확정 후 착수한다.
+      기준 스펙은 DTCG 2025.10 (Format · Color Module, Final Community Group Report).</p>
+    <div class="toc">
+      <a href="#o-inventory">자산 인벤토리</a><a href="#o-ssot">단일 원본과 파이프라인</a>
+      <a href="#o-repo">리포 구조</a><a href="#o-layers">토큰 계층</a>
+      <a href="#o-fnd">파운데이션</a><a href="#o-dtcg">DTCG 표기법</a>
+      <a href="#o-use">쓰는 법</a><a href="#o-tree">전체 구조 트리</a><a href="#o-rules">규칙</a>
+    </div>
+
+    <section id="o-inventory"><h3 class="title-lg">자산 인벤토리</h3>
+      <div class="cards">${cards}</div></section>
+
+    <section id="o-ssot"><h3 class="title-lg">단일 원본과 파이프라인</h3>
+      <p class="body-md">JSON 이 단일 원본이고 나머지는 전부 생성물이다.
+        생성물도 커밋하지만 <b>직접 편집하지 않는다</b> — CI 가 재빌드 결과와 다르면 실패시킨다.</p>
+      <pre class="body-sm"><code>${esc(pipeline)}</code></pre>
+      <h4 class="title-sm">흔한 구성과 무엇이 다른가</h4>
+      <p class="body-md">토큰 리포를 패키지로 배포하고, 산문을 조각 파일로 나눠 문서를 생성하는 구성이 일반적이다.
+        지금 우리와 다른 지점만 적는다 — <b>빈칸은 결함이 아니라 아직 필요가 없어 두지 않은 것</b>이다.</p>
+      <div class="scrollx"><table>
+        <thead><tr><th class="body-md">항목</th><th class="body-md">현재</th><th class="body-md">메모</th></tr></thead>
+        <tbody>${gap}</tbody></table></div>
+    </section>
+
+    <section id="o-repo"><h3 class="title-lg">리포 구조</h3>
+      <pre class="body-sm"><code>${esc(repoTree)}</code></pre>
+      <p class="note body-md"><b>생성물이지만 커밋한다.</b>
+        클론만 해도 바로 쓸 수 있고, CI 가 “커밋된 산출물 = 재빌드 결과”를 검사해 표류를 막는다.</p>
+    </section>
+
+    <section id="o-layers"><h3 class="title-lg">토큰 계층</h3>
+      <p class="body-md">원시 값은 <b>primitive 의 잎에만</b> 산다. 그 위 계층은 별칭 <code>{group.key}</code> 으로 참조만 한다.</p>
+      ${layersHtml(t, primGroups, Object.keys(semL).filter(k => !k.startsWith('$')),
+                   Object.keys(typo).filter(k => !k.startsWith('$')))}
+    </section>
+
+    <section id="o-fnd"><h3 class="title-lg">파운데이션 ${FOUNDATIONS.length}개</h3>
+      <p class="body-md">파운데이션은 <b>문서 축</b>이지 파일 구조가 아니다. 한 파운데이션이 여러 그룹을 갖고(1:N),
+        한 그룹이 여러 파운데이션에 속할 수도 있다 — <code>opacity</code> 가 그렇다.</p>
+      <div class="scrollx"><table>
+        <thead><tr><th class="body-md">파운데이션</th><th class="body-md">그룹</th><th class="body-md">토큰</th><th class="body-md">배정된 그룹</th></tr></thead>
+        <tbody>${fndRows}</tbody></table></div>
+    </section>
+
+    ${sectionDtcg()}
+    ${sectionUse()}
+
+    <section id="o-tree"><h3 class="title-lg">전체 구조 트리</h3>
+      <p class="body-md">소스 4개 아래로 그룹 → 하위 그룹 → 토큰이 이어진다.
+        네 번째 칸이 <span class="dim">비어 있으면</span> 그 토큰은 CSS 로 나가지 않는다는 뜻이다.</p>
+      ${treeHtml()}
+    </section>
+
+    ${sectionRules()}`
+}
+
+function layersHtml(t, primGroups, semGroups, typoSets) {
+  return `<div class="layers">
+    <div class="layer">
+      <div class="layer-head"><b class="title-sm">1. primitive</b>
+        <span class="tag body-sm mono">primitive.json</span>
+        <span class="dim body-sm">${t.per['primitive.json']}개 · 그룹 ${primGroups.length}개 · 실제 값이 있는 유일한 계층</span></div>
+      <div class="layer-body">${primGroups.map(g => `<span class="chip body-sm mono">${esc(g)}</span>`).join('')}</div>
+    </div>
+    <div class="arrow body-md">↓ 별칭 <code>{group.key}</code> 으로 참조</div>
+    <div class="split">
+      <div class="layer">
+        <div class="layer-head"><b class="title-sm">2. semantic</b><span class="tag body-sm mono">semantic.light / dark.json</span></div>
+        <p class="body-sm dim" style="margin:var(--spacing-8) 0 0">색 역할. 라이트·다크가 <b>같은 키에 다른 참조</b>를 갖는다 — 테마 전환의 유일한 축이다.</p>
+        <div class="layer-body">${semGroups.map(g => `<span class="chip body-sm mono">${esc(g)}</span>`).join('')}</div>
+      </div>
+      <div class="layer">
+        <div class="layer-head"><b class="title-sm">2'. typography</b><span class="tag body-sm mono">typography.json</span></div>
+        <p class="body-sm dim" style="margin:var(--spacing-8) 0 0">복합 토큰. <b>semantic 을 거치지 않는다</b> — 색만 역할 계층을 갖기 때문이다.</p>
+        <div class="layer-body">${typoSets.map(g => `<span class="chip body-sm mono">typography.${esc(g)}</span>`).join('')}</div>
+      </div>
+    </div>
+    <div class="arrow body-md">↓ <code>npm run build:tokens</code></div>
+    <div class="layer">
+      <div class="layer-head"><b class="title-sm">3. 생성물 — 직접 편집하지 않는다</b></div>
+      <div class="layer-body">
+        <span class="chip body-sm mono">tokens.css</span><span class="chip body-sm mono">tokens.js</span>
+        <span class="chip body-sm mono">dist/tokens.light.json</span><span class="chip body-sm mono">dist/tokens.dark.json</span></div>
+    </div>
+  </div>`
+}
+
+function pick(file, path) { return path.split('.').reduce((o, k) => (o == null ? o : o[k]), DATA.files[file]) }
+const jsonOf = o => JSON.stringify(o, null, 2)
+
+function sectionDtcg() {
+  const prim = DATA.files['primitive.json']
+  const ex = {
+    color: prim.color.blue[Object.keys(prim.color.blue).filter(k => !k.startsWith('$'))[0]],
+    dim: pick('primitive.json', 'spacing.16'),
+    num: Object.entries(prim.lineHeight).find(([k]) => !k.startsWith('$'))[1],
+    alias: pick('semantic.light.json', 'color.label.normal'),
+    alpha: pick('semantic.light.json', 'color.fill.normal'),
+    typo: pick('typography.json', 'typography.base.body-md'),
+  }
+  const subs = ex.typo ? Object.keys(ex.typo.$value).length : 0
+  return `<section id="o-dtcg"><h3 class="title-lg">DTCG 표기법</h3>
+    <p class="body-md">토큰이 쓰는 <code>$</code> 속성은 다섯 개뿐이고, 그 밖의 <code>$</code> 속성은 쓰지 않는다.</p>
+    <div class="scrollx"><table>
+      <thead><tr><th class="body-md">속성</th><th class="body-md">필수</th><th class="body-md">뜻</th></tr></thead><tbody>
+      <tr><td class="mono body-md">$value</td><td class="body-md">필수</td><td class="body-md">값 또는 별칭 <code>{group.key}</code></td></tr>
+      <tr><td class="mono body-md">$type</td><td class="body-md">필수</td><td class="body-md">토큰에 없으면 가장 가까운 상위 그룹에서 상속한다. <b>값에서 타입을 추론하는 것은 금지</b> — 우리는 잎마다 직접 단다</td></tr>
+      <tr><td class="mono body-md">$description</td><td class="body-md">선택</td><td class="body-md">평문 문자열. 이 토큰을 언제 쓰는지</td></tr>
+      <tr><td class="mono body-md">$extensions</td><td class="body-md">선택</td><td class="body-md">벤더 확장. <code>net.infobank.ds.*</code> 네임스페이스를 쓴다</td></tr>
+      <tr><td class="mono body-md">$deprecated</td><td class="body-md">선택</td><td class="body-md">폐기 표시. 현재 사용처 없음</td></tr>
+    </tbody></table></div>
+
+    <h4 class="title-sm">값 형식 세 가지</h4>
+    <p class="body-md"><b>hex 문자열 단독은 무효</b>이고, <code>dimension</code> 은 <code>px</code>·<code>rem</code> 만 받는다.</p>
+    <div class="split">
+      <div><p class="body-md"><b class="mono">color</b> — <code>{colorSpace, components, hex}</code></p>
+        <pre class="body-sm"><code>${esc(jsonOf(ex.color))}</code></pre></div>
+      <div><p class="body-md"><b class="mono">dimension</b> — <code>{value, unit}</code></p>
+        <pre class="body-sm"><code>${esc(jsonOf(ex.dim))}</code></pre>
+        <p class="body-md" style="margin-top:var(--spacing-16)"><b class="mono">number</b> — JSON 숫자</p>
+        <pre class="body-sm"><code>${esc(jsonOf(ex.num))}</code></pre></div>
+    </div>
+
+    <h4 class="title-sm">별칭 — 값을 복사하지 않는다</h4>
+    <p class="body-md">semantic·typography 는 원시 값을 인라인하지 않고 <code>{group.key}</code> 로 참조만 한다.
+      별칭이 다른 별칭을 가리켜도 되며, 도구는 실제 값이 나올 때까지 따라가야 한다.</p>
+    <pre class="body-sm"><code>${esc(jsonOf(ex.alias))}</code></pre>
+
+    <h4 class="title-sm">복합 토큰 — 타이포</h4>
+    <p class="body-md">하나의 토큰이 ${subs}개 속성을 함께 갖는다. 특히
+      <b><code>lineHeight</code> 는 <code>number</code></b> — <code>fontSize</code> 의 배수다(단위 없음).</p>
+    <pre class="body-sm"><code>${esc(jsonOf(ex.typo))}</code></pre>
+
+    <h4 class="title-sm">확장 — 반투명색</h4>
+    <p class="body-md">스펙 color 객체에 native <code>alpha</code> 가 있지만 <b>쓰지 않는다</b> — 0~1 숫자만 받아
+      <code>{opacity.N}</code> 같은 토큰 참조를 담지 못한다. base 색 별칭 + <code>${esc(ALPHA)}</code> 로 두고 빌드가 rgba 로 합성한다.</p>
+    <pre class="body-sm"><code>${esc(jsonOf(ex.alpha))}
+
+/* 빌드가 만드는 값 */
+--color-fill-normal: ${esc(cssVal('--color-fill-normal'))};</code></pre>
+    <p class="body-md dim">대가가 있다 — 제3자 DTCG 도구는 <code>$extensions</code> 안의 참조를 해석하지 않아
+      이 토큰을 <b>완전 불투명</b>으로 읽는다. 알려진 미결이다(DECISIONS 미결 15).</p>
+  </section>`
+}
+
+function sectionUse() {
+  const typo = DATA.files['typography.json'].typography
+  const base = Object.keys(typo.base).filter(k => !k.startsWith('$'))
+  const compact = Object.keys(typo.compact || {}).filter(k => !k.startsWith('$'))
+  return `<section id="o-use"><h3 class="title-lg">쓰는 법</h3>
+    <p class="body-md">소비 경로는 네 개다. 대부분의 컴포넌트는 <b>CSS 변수와 타이포 클래스</b>만 쓰면 된다.</p>
+    <div class="scrollx"><table>
+      <thead><tr><th class="body-md">경로</th><th class="body-md">무엇이 나오나</th><th class="body-md">언제 쓰나</th></tr></thead><tbody>
+      <tr><td class="mono body-md">tokens.css</td><td class="body-md">CSS 변수 ${DATA.css.size}개 + 타이포 클래스 ${base.length}개</td><td class="body-md">웹 컴포넌트의 기본</td></tr>
+      <tr><td class="mono body-md">tokens.js</td><td class="body-md">해석된 값 (문자열)</td><td class="body-md">CSS 를 못 읽는 곳 — 문서 · 네이티브 · 차트</td></tr>
+      <tr><td class="mono body-md">dist/tokens.{light,dark}.json</td><td class="body-md">테마별 단일 DTCG 문서</td><td class="body-md">제3자 DTCG 도구 · Figma 플러그인</td></tr>
+      <tr><td class="mono body-md">tokens/*.json</td><td class="body-md">소스 4개</td><td class="body-md">토큰을 <b>고칠 때만</b>. 소비용이 아니다</td></tr>
+    </tbody></table></div>
+
+    <h4 class="title-sm">CSS 변수 이름 규칙</h4>
+    <pre class="body-sm"><code>semantic  color.label.normal   →  --color-label-normal: ${esc(cssVal('--color-label-normal'))};
+primitive spacing.16           →  --spacing-16: ${esc(cssVal('--spacing-16'))};
+primitive radius.8             →  --radius-8: ${esc(cssVal('--radius-8'))};
+semantic  shadow.sm            →  --shadow-sm: ${esc(cssVal('--shadow-sm'))};</code></pre>
+    <p class="body-md"><b>primitive 색은 CSS 변수로 나가지 않는다.</b> 팔레트를 컴포넌트가 직접 고르면 테마 전환이 깨진다.
+      색은 반드시 semantic <code>--color-*</code> 를 쓴다.</p>
+
+    <h4 class="title-sm">타이포 — 변수가 아니라 클래스</h4>
+    <p class="body-md">복합 토큰이라 변수 하나로 표현할 수 없다. 뷰포트 <b>${esc(cssVal('--breakpoint-sm'))} 미만</b>에서는
+      <code>compact</code> ${compact.length}개가 자동으로 덮어쓴다.</p>
+    <pre class="body-sm"><code>&lt;h2 class="heading-md"&gt;제목&lt;/h2&gt;
+&lt;p class="body-md"&gt;본문&lt;/p&gt;</code></pre>
+
+    <h4 class="title-sm">라이트 · 다크</h4>
+    <p class="body-md">테마는 <b>semantic 색과 그림자에만</b> 있다. 컴포넌트는 테마를 신경 쓸 필요가 없다 — 같은 변수명이 알아서 다른 값을 갖는다.</p>
+    <pre class="body-sm"><code>&lt;html&gt;                      OS 설정을 따른다 (prefers-color-scheme)
+&lt;html data-theme="light"&gt;    라이트 강제
+&lt;html data-theme="dark"&gt;     다크 강제</code></pre>
+
+    <h4 class="title-sm">상태 오버레이와 포커스</h4>
+    <p class="body-md">오버레이는 <b>테마가 아니라 얹히는 면의 밝기</b>로 고른다. 포커스 링은 반드시 offset 을 둬 페이지 배경 위에 놓는다.</p>
+    <pre class="body-sm"><code>밝은 면 위   → --color-interaction-overlay-darken-{hovered,focused,pressed}
+어두운 면 위 → --color-interaction-overlay-lighten-{hovered,focused,pressed}
+
+outline: ${esc(cssVal('--focus-ring-width'))} solid var(--color-interaction-focus);
+outline-offset: ${esc(cssVal('--focus-ring-offset'))};</code></pre>
+  </section>`
+}
+
+function sectionRules() {
+  return `<section id="o-rules"><h3 class="title-lg">규칙</h3>
+    <h4 class="title-sm">하드코딩 금지</h4>
+    <div class="scrollx"><table>
+      <thead><tr><th class="body-md">이렇게 쓰지 않는다</th><th class="body-md">이렇게 쓴다</th></tr></thead><tbody>
+      <tr><td class="mono body-md no">color: ${esc(cssVal('--color-label-normal'))};</td><td class="mono body-md ok">color: var(--color-label-normal);</td></tr>
+      <tr><td class="mono body-md no">padding: ${esc(cssVal('--spacing-16'))};</td><td class="mono body-md ok">padding: var(--spacing-16);</td></tr>
+      <tr><td class="mono body-md no">font-size: 13px; line-height: 1.42;</td><td class="mono body-md ok">class="body-md"</td></tr>
+      <tr><td class="mono body-md no">background: rgba(0,0,0,.05);</td><td class="mono body-md ok">background: var(--color-interaction-overlay-darken-hovered);</td></tr>
+    </tbody></table></div>
+    <p class="body-md dim">왼쪽 값들은 이 문서가 <code>tokens.css</code> 에서 읽어 만든 것이다 — 여기에도 값을 박지 않는다.</p>
+
+    <h4 class="title-sm">새 값이 필요할 때</h4>
+    <ol class="body-md">
+      <li><b>먼저 찾는다.</b> 같은 값·역할이 이미 있는지 구조 트리에서 확인한다.</li>
+      <li><b>primitive 에 추가한다.</b> 원시 값은 여기에만 산다.</li>
+      <li><b>semantic·typography 에서 별칭으로 참조한다.</b> 값 복붙 금지.</li>
+      <li><b><code>npm run build:tokens</code></b> — 빌드가 가드 8종을 돌린다.</li>
+      <li>색을 바꿨으면 <code>node tokens/checks/surfaces.mjs</code> 로 <b>대비를 재검증</b>한다.</li>
+    </ol>
+
+    <h4 class="title-sm">접근성</h4>
+    <p class="body-md">WCAG 2.2 AA + KWCAG 2.2 를 충족한다. 텍스트 <b>4.5:1</b>, 비텍스트·UI <b>3:1</b>,
+      라이트·다크 동등. 대비는 <code>bg.normal</code>·<code>normalAlternative</code>·<code>elevated</code>·<code>elevatedAlternative</code>
+      <b>4개 면 전부</b>에서 검사하며, 반투명색은 배경에 합성한 뒤 계산한다.</p>
+
+    <h4 class="title-sm">더 읽을 것</h4>
+    <p class="body-md">왜 그렇게 정했는지는 <code>tokens/DECISIONS.md</code>, 작업 규칙은 <code>CLAUDE.md</code>,
+      값을 눈으로 보려면 <a href="./preview.html">preview.html</a>.</p>
+  </section>`
+}
+
+/* ── 전체 구조 트리 ───────────────────────────────────────────── */
+function treeHtml() {
+  const out = ['<div class="tree">']
+  for (const [file, fdesc] of SRC) {
+    const json = DATA.files[file]
+    const total = walk(json, [], []).length
+    const parts = []
+    for (const g of Object.keys(json)) {
+      if (g.startsWith('$')) continue
+      const node = json[g]
+      const leaves = walk({ [g]: node }, [], [])
+      const fnd = (node.$extensions || {})[FND] || []
+      const sub = Object.keys(node).filter(k => !k.startsWith('$') && !isLeaf(node[k]))
+      parts.push(`<details class="d1"><summary><b class="title-sm mono">${esc(g)}</b>`
+        + `<span class="cnt body-sm">${leaves.length}</span>`
+        + (fnd.length ? `<span class="tag body-sm">${fnd.map(esc).join(' · ')}</span>` : '')
+        + (sub.length ? `<span class="dim body-sm">하위 ${sub.length}</span>` : '') + `</summary>`
+        + (node.$description ? `<p class="gdesc body-sm">${esc(node.$description)}</p>` : '')
+        + treeNode(node, [g], 2) + `</details>`)
+    }
+    out.push(`<details class="d0"><summary><b class="title-sm mono">${esc(file)}</b>`
+      + `<span class="cnt body-sm">${total}</span><span class="dim body-sm">${esc(fdesc)}</span></summary>${parts.join('')}</details>`)
+  }
+  out.push('</div>')
+  return out.join('')
+}
+function treeNode(node, path, depth) {
+  const rows = []
+  for (const [k, v] of Object.entries(node)) {
+    if (k.startsWith('$')) continue
+    const p = path.concat(k)
+    if (isLeaf(v)) rows.push(leafRow(p, v, depth))
+    else if (v && typeof v === 'object') {
+      const inner = walk({ [k]: v }, path, [])
+      rows.push(`<details class="d${Math.min(depth, 3)}"><summary><b class="body-md mono">${esc(k)}</b>`
+        + `<span class="cnt body-sm">${inner.length}</span></summary>`
+        + (v.$description ? `<p class="gdesc body-sm">${esc(v.$description)}</p>` : '')
+        + treeNode(v, p, depth + 1) + `</details>`)
+    }
+  }
+  return rows.join('')
+}
+function leafRow(p, t, depth) {
+  const v = cssVar(p), has = DATA.css.has(v)
+  const recipe = t.$extensions && t.$extensions[RECIPE]
+  const alpha = t.$extensions && t.$extensions[ALPHA]
+  return `<div class="leaf${depth > 2 ? ' deep' : ''}">
+    <span class="body-md mono">${swatch(t)}${esc(p[p.length - 1])}</span>
+    <span class="type body-sm mono${t.$type ? '' : ' none'}">${esc(t.$type || (recipe ? 'cssRecipe' : '—'))}</span>
+    <span class="body-sm mono dim">${esc(shortVal(t))}${alpha ? ' @' + esc(String(alpha)) : ''}</span>
+    <span class="body-sm mono ${has ? '' : 'dim'}">${has ? esc(v) : ''}</span>
+    ${subRow(t)}
+    ${t.$description ? `<span class="ldesc body-sm">${esc(t.$description)}</span>` : ''}
+  </div>`
+}
+
+/* ── 파운데이션 ───────────────────────────────────────────────── */
+/* 파운데이션마다 앞에 붙는 안내. 토큰 값이 아니라 이 문서의 산문이다. */
+const FND_LEDE = {
+  Typography: '글자 크기·굵기·행간·자간. 복합 토큰이라 CSS 변수가 아니라 <b>유틸리티 클래스</b>로 나간다. 행간은 <code>number</code>(글자 크기의 배수), 자간은 크기별 <code>rem</code> 이다.',
+  Colors: '색 역할과 원시 팔레트. <b>컴포넌트는 semantic 만 쓴다</b> — primitive 팔레트는 CSS 변수로 나가지 않는다. 라이트·다크가 같은 키에 다른 참조를 갖는다.',
+  Elevation: '떠 있음의 표현. 그림자는 테마별 색을 쓰므로 semantic 에 있고, 불투명도는 <code>opacity</code> 눈금을 참조한다.',
+  Spacing: '여백 눈금. 값 하나에 용도를 1:1 로 묶기 어려워 토큰별 설명은 컴포넌트 단계로 미뤘다 — 의도된 공백이다.',
+  Breakpoint: '뷰포트 분기점. 값은 <code>min-width</code> 임계값이고, 이름은 단계를 뜻하므로 임계값이 조정돼도 유효하다.',
+  Radius: '모서리 둥글기. <code>circle</code> 은 <code>%</code> 라 DTCG <code>dimension</code> 으로 표현할 수 없어 예외 표시가 붙어 있다.',
+  Layout: '컨테이너 폭·컬럼·여백·거터, 그리고 안전 영역. “제약 없음”은 값이 아니라 <b>토큰의 부재</b>로 표현한다.',
+  Divider: '구분선 두께. 색은 <code>color.line.*</code> 에서 온다 — 두께와 색이 다른 그룹에 있다.',
+  Interaction: '상태 오버레이의 강도(숫자)와 색, 그리고 포커스 링. 오버레이는 <b>테마가 아니라 얹히는 면의 밝기</b>로 고른다.',
+  Effects: '가장자리 페이드와 그 길이. 키는 <b>불투명한 가장자리</b>, 곧 페이드를 놓는 자리다. 색이 <code>currentColor</code> 인 것은 의도로, 쓰는 쪽이 <code>color</code> 에 면 색을 넣으면 토큰 하나가 어느 면에서든 맞는다 — 대신 DTCG 타입에 맞지 않아 예외 표시가 붙는다.',
+  Ratio: '종횡비. 폭÷높이를 <code>number</code> 로 두며, 키 <code>가로-세로</code> 에 방향이 담긴다.',
+}
+/* 그룹별 시각 표현. 해당 없으면 빈 칸이다. */
+function visFor(group, p, t) {
+  const v = cssVar(p), has = DATA.css.has(v)
+  const val = has ? cssVal(v) : null
+  const px = t.$type === 'dimension' && t.$value && t.$value.unit === 'px' ? t.$value.value : null
+  const num = isAlias(t.$value) ? (derefPrim(t.$value) || {}).$value : t.$value
+  if (group === 'color') { const c = renderedColor(t)
+    return c ? `<span class="sw" style="background:${esc(c)};width:var(--spacing-32)"></span>` : '' }
+  if (group === 'radius') return val ? `<span class="boxviz" style="border-radius:${esc(val)}"></span>` : ''
+  if (group === 'divider') return val ? `<span class="dividerviz" style="height:${esc(val)}"></span>` : ''
+  if (group === 'shadow') return val ? `<span class="shadowviz" style="box-shadow:${esc(val)}"></span>` : ''
+  if (group === 'ratio') return typeof num === 'number' ? `<span class="ratioviz" style="aspect-ratio:${num}"></span>` : ''
+  if (group === 'opacity' || group === 'interaction')
+    return typeof num === 'number' ? `<span class="opaviz" style="opacity:${num}"></span>` : ''
+  if (group === 'gradient') return typeof t.$value === 'string' && t.$value.startsWith('linear-gradient')
+    ? `<span class="gradviz" style="background-image:${esc(t.$value)}"></span>` : ''
+  if (group === 'fontSize') return val ? `<span style="font-size:${esc(val)}">Ag</span>` : ''
+  if (group === 'fontWeight') return val ? `<span style="font-weight:${esc(val)};font-size:var(--font-size-18)">Ag</span>` : ''
+  if (group === 'fontFamily') return val ? `<span style="font-family:${esc(val)};font-size:var(--font-size-16)">Ag 한글</span>` : ''
+  if (group === 'letterSpacing') return val ? `<span style="letter-spacing:${esc(val)};font-size:var(--font-size-16)">AVAV</span>` : ''
+  if (group === 'lineHeight') return val ? `<span class="barviz" style="width:var(--spacing-8);height:${esc(val)}em"></span>` : ''
+  if (group === 'typography') return `<span class="${esc(p[p.length - 1])}">Ag 한글</span>`
+  if (px !== null && px > 0) { const w = Math.min(px, 96)
+    return `<span class="barviz" style="width:${w}px${px > 96 ? ';opacity:.5' : ''}"></span>` }
+  return ''
+}
+function pageFoundation(name) {
+  const { map, stray } = byFoundation()
+  const groups = map.get(name)
+  if (!groups) return `<h2 class="heading-md">${esc(name)}</h2><p class="err body-lg">모르는 파운데이션입니다.</p>`
+  const total = groups.reduce((a, g) => a + g.count, 0)
+  const idx = FOUNDATIONS.indexOf(name)
+  const prev = FOUNDATIONS[idx - 1], next = FOUNDATIONS[idx + 1]
+
+  const blocks = groups.map(({ file, group, node, count }) => {
+    const rows = walk({ [group]: node }, [], []).map(([p, t]) => {
+      const v = cssVar(p), has = DATA.css.has(v)
+      const key = p.length > 1 ? p.slice(1).join('.') : p[0]
+      return `<div class="tok">
+        <span class="body-md mono">${esc(key)}</span>
+        <span class="type body-sm mono${t.$type ? '' : ' none'}">${esc(t.$type || 'cssRecipe')}</span>
+        <span class="body-sm mono dim">${esc(shortVal(t))}</span>
+        <span class="body-sm mono ${has ? '' : 'dim'}">${has ? esc(v) : 'CSS 변수 없음'}</span>
+        <span class="vis">${visFor(group, p, t)}</span>
+        ${t.$description ? `<span class="tdesc body-sm">${esc(t.$description)}</span>` : ''}
+      </div>`
+    }).join('')
+    const shared = ((node.$extensions || {})[FND] || []).filter(f => f !== name)
+    return `<section id="g-${esc(group)}"><h3 class="title-lg mono">${esc(group)}</h3>
+      <p class="body-sm dim">${esc(file)} · 토큰 ${count}개${shared.length
+        ? ' · ' + esc(shared.join(' · ')) + ' 파운데이션과 공유' : ''}</p>
+      ${node.$description ? `<p class="body-md">${esc(node.$description)}</p>` : ''}
+      <div class="tokbox">${rows}</div></section>`
+  }).join('')
+
+  return `<h2 class="heading-md">${esc(name)}</h2>
+    <p class="lede body-md">${FND_LEDE[name] || ''}</p>
+    <p class="body-sm dim">그룹 ${groups.length}개 · 토큰 ${total}개${stray.length
+      ? ' · <span class="err">배정 이상: ' + stray.map(esc).join(', ') + '</span>' : ''}</p>
+    <div class="toc">${groups.map(g => `<a href="#g-${esc(g.group)}">${esc(g.group)}</a>`).join('')}</div>
+    ${blocks}
+    <section><div class="toc">
+      ${prev ? `<a href="#/foundation/${encodeURIComponent(prev)}">← ${esc(prev)}</a>` : ''}
+      ${next ? `<a href="#/foundation/${encodeURIComponent(next)}">${esc(next)} →</a>` : ''}
+    </div></section>`
+}
+
+/* ── 컴포넌트 (아직 없음) ─────────────────────────────────────── */
+const COMPONENTS = [
+  ['Button', '버튼'], ['Input', '입력 필드'], ['Select', '선택'], ['Checkbox · Radio', '선택 컨트롤'],
+  ['Card', '카드'], ['Modal', '모달'], ['Toast · Snackbar', '알림'], ['Tooltip', '툴팁'],
+  ['Tabs', '탭'], ['Table', '표'], ['Navigation', '내비게이션'], ['Badge · Chip', '배지'],
+]
+function pageComponents() {
+  return `<h2 class="heading-md">컴포넌트</h2>
+    <p class="lede body-md"><b>아직 착수하지 않았다.</b> 현재 단계는 디자인 토큰이고, 컴포넌트는 토큰이 확정된 뒤 시작한다.
+      아래는 자리만 잡아둔 목록이며 확정된 범위가 아니다.</p>
+    <div class="cards">${COMPONENTS.map(([en, ko]) => `<div class="card">
+      <div class="k body-sm mono">${esc(en)}</div>
+      <div class="v title-md soon">${esc(ko)}</div>
+      <div class="s body-sm">예정</div></div>`).join('')}</div>
+    <section><h3 class="title-lg">컴포넌트 단계에서 확인할 것</h3>
+      <p class="body-md">지금은 토큰으로 정할 수 없어 미뤄둔 항목이다.</p>
+      <div class="scrollx"><table>
+        <thead><tr><th class="body-md">항목</th><th class="body-md">기준</th></tr></thead><tbody>
+        <tr><td class="body-md">조작 영역 크기</td><td class="body-md">KWCAG 6.1.3 <b>6.0mm 이상</b>(물리) · WCAG 2.5.8 <b>24×24 CSS px</b> — 단위가 달라 각각 확인한다</td></tr>
+        <tr><td class="body-md">2.4.11 Focus Not Obscured</td><td class="body-md">WCAG 2.2 신설 AA — 포커스된 요소가 가려지지 않아야 한다</td></tr>
+        <tr><td class="body-md">2.5.7 Dragging Movements</td><td class="body-md">WCAG 2.2 신설 AA — 끌기 동작에 대안이 있어야 한다</td></tr>
+        <tr><td class="body-md">3.3.7 Redundant Entry</td><td class="body-md">WCAG 2.2 신설 AA — 같은 정보를 다시 입력하게 하지 않는다</td></tr>
+        <tr><td class="body-md">타이포–컴포넌트 매핑</td><td class="body-md">현재 <code>$description</code> 의 대표 컴포넌트는 크기만 보고 배분한 추정이다</td></tr>
+        <tr><td class="body-md">오버레이 방향</td><td class="body-md"><code>primary</code> 처럼 테마와 반대로 뒤집히는 면은 오버레이도 테마별로 바꿔야 한다</td></tr>
+        <tr><td class="body-md">semantic 계층 비대칭</td><td class="body-md">색·그림자만 semantic 이 있다. <code>spacing</code>·<code>radius</code> 등은 primitive 를 직접 고른다</td></tr>
+      </tbody></table></div>
+    </section>`
+}
+
+/* ── 라우팅 ───────────────────────────────────────────────────── */
+function routes() {
+  const { map } = byFoundation()
+  return [
+    { label: 'Overview', items: [{ hash: '#/overview', label: '개요', render: pageOverview }] },
+    { label: 'Foundation', items: FOUNDATIONS.map(f => ({
+        hash: '#/foundation/' + encodeURIComponent(f), label: f,
+        n: (map.get(f) || []).reduce((a, g) => a + g.count, 0),
+        render: () => pageFoundation(f) })) },
+    { label: 'Components', items: [{ hash: '#/components', label: '컴포넌트', n: 0, render: pageComponents }] },
+  ]
+}
+function currentRoute(all) {
+  const h = location.hash || '#/overview'
+  for (const sec of all) for (const it of sec.items) if (it.hash === h) return it
+  return all[0].items[0]
+}
+function renderLnb(all, active) {
+  document.getElementById('lnb').innerHTML = all.map(sec =>
+    `<p class="lnb-label body-sm">${esc(sec.label)}</p>` + sec.items.map(it =>
+      `<a href="${it.hash}"${it === active ? ' aria-current="page"' : ''}>${esc(it.label)}`
+      + (it.n !== undefined ? `<span class="n body-sm">${it.n}</span>` : '') + `</a>`).join('')).join('')
+}
+function render() {
+  const all = routes()
+  const active = currentRoute(all)
+  renderLnb(all, active)
+  document.getElementById('app').innerHTML = active.render()
+  document.title = active.label === '개요' ? 'iNext Design System' : 'iNext DS — ' + active.label
+}
+addEventListener('hashchange', () => { render(); scrollTo(0, 0) })
+
+document.getElementById('theme').addEventListener('click', e => {
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark'
+  document.documentElement.setAttribute('data-theme', dark ? 'light' : 'dark')
+  e.currentTarget.textContent = dark ? '◐' : '◑'
+})
+
+/* ── 데이터 로드 ──────────────────────────────────────────────── */
+/* tokens.css 는 스타일로도 쓰고 텍스트로도 읽는다 — 변수명·값을 규칙으로 재현하지 않고
+   실제 산출물에서 그대로 가져오기 위해서다. */
+function parseCss(text) {
+  const map = new Map()
+  const root = text.match(/:root\s*\{([\s\S]*?)\}/)
+  if (!root) return map
+  for (const m of root[1].matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/gi)) map.set(m[1], m[2].trim())
+  return map
+}
+function reloadCss() {
+  return new Promise(res => {
+    const el = document.getElementById('tokens-css')
+    el.addEventListener('load', res, { once: true })
+    el.addEventListener('error', res, { once: true })
+    el.href = './tokens.css?t=' + Date.now()
+  })
+}
+const get = f => fetch(f, { cache: 'no-store' })
+  .then(r => { if (!r.ok) throw new Error(f + ' — HTTP ' + r.status); return r })
+
+reloadCss()
+  .then(() => Promise.all([
+    ...SRC.map(([f]) => get('./' + f).then(r => r.json())),
+    get('./tokens.css').then(r => r.text()),
+    /* 버전은 package.json 이 원본이다. 못 읽으면 태그를 감춘다 — 값을 지어내지 않는다. */
+    get('../package.json').then(r => r.json()).catch(() => null),
+  ]))
+  .then(res => {
+    const files = {}
+    SRC.forEach(([f], i) => { files[f] = res[i] })
+    DATA = { files, css: parseCss(res[SRC.length]), pkg: res[SRC.length + 1] }
+    const ver = document.getElementById('ver')
+    if (DATA.pkg && DATA.pkg.version) ver.textContent = 'v' + DATA.pkg.version
+    else ver.remove()
+    render()
+  })
+  .catch(err => {
+    document.getElementById('app').innerHTML =
+      '<p class="err body-lg">토큰 파일을 불러오지 못했습니다: ' + esc(err.message) + '</p>' +
+      '<p class="body-md">이 페이지는 <b>리포 루트</b>를 서빙하는 정적 서버에서 열어야 합니다:</p>' +
+      '<pre class="mono body-md">python3 -m http.server 4321\n→ http://localhost:4321/tokens/guide.html</pre>'
+  })
+</script>
+</body>
+</html>
