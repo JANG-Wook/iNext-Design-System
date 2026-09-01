@@ -69,13 +69,13 @@ export const color = {
   },
   "accent": {
     "bg": {
-      "redOrange": "#BD4811",
-      "lime": "#617611",
-      "cyan": "#14798C",
-      "lightBlue": "#1374A9",
-      "violet": "#6B56E7",
-      "purple": "#A042CB",
-      "pink": "#BB33A6"
+      "redOrange": "#D45215",
+      "lime": "#6C8414",
+      "cyan": "#17889D",
+      "lightBlue": "#1782BD",
+      "violet": "#7864F9",
+      "purple": "#B04DDF",
+      "pink": "#CE3FB7"
     },
     "fg": {
       "red": "#D5242A",
@@ -167,19 +167,19 @@ export const darkColor = {
     "heavy": "#E0E1E3"
   },
   "status": {
-    "positive": "#1CA53B",
-    "cautionary": "#D27A1A",
-    "negative": "#FB5751"
+    "positive": "#25CB4B",
+    "cautionary": "#FC9936",
+    "negative": "#FC948B"
   },
   "accent": {
     "bg": {
-      "redOrange": "#BD4811",
-      "lime": "#617611",
-      "cyan": "#14798C",
-      "lightBlue": "#1374A9",
-      "violet": "#6B56E7",
-      "purple": "#A042CB",
-      "pink": "#BB33A6"
+      "redOrange": "#D45215",
+      "lime": "#6C8414",
+      "cyan": "#17889D",
+      "lightBlue": "#1782BD",
+      "violet": "#7864F9",
+      "purple": "#B04DDF",
+      "pink": "#CE3FB7"
     },
     "fg": {
       "red": "#FB5751",

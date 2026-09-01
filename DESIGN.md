@@ -365,34 +365,44 @@ color:
     dark: "#E0E1E3"
   status-positive:
     light: "#137F2C"
-    dark: "#1CA53B"
+    dark: "#25CB4B"
+    note: 성공·완료. 저장됨·연결됨 같은 긍정 피드백.
   status-cautionary:
     light: "#A25D11"
-    dark: "#D27A1A"
+    dark: "#FC9936"
+    note: 주의. 되돌릴 수 있지만 확인이 필요한 상태.
   status-negative:
     light: "#D5242A"
-    dark: "#FB5751"
+    dark: "#FC948B"
+    note: 오류·실패·파괴적 동작. 삭제 확인처럼 되돌릴 수 없는 곳.
   accent-bg-redOrange:
-    light: "#BD4811"
-    dark: "#BD4811"
+    light: "#D45215"
+    dark: "#D45215"
+    note: 장식용 주황빨강 면. 글자를 올리지 않는다.
   accent-bg-lime:
-    light: "#617611"
-    dark: "#617611"
+    light: "#6C8414"
+    dark: "#6C8414"
+    note: 장식용 라임 면. 글자를 올리지 않는다.
   accent-bg-cyan:
-    light: "#14798C"
-    dark: "#14798C"
+    light: "#17889D"
+    dark: "#17889D"
+    note: 장식용 청록 면. 글자를 올리지 않는다.
   accent-bg-lightBlue:
-    light: "#1374A9"
-    dark: "#1374A9"
+    light: "#1782BD"
+    dark: "#1782BD"
+    note: 장식용 하늘 면. 글자를 올리지 않는다.
   accent-bg-violet:
-    light: "#6B56E7"
-    dark: "#6B56E7"
+    light: "#7864F9"
+    dark: "#7864F9"
+    note: 장식용 보라 면. 글자를 올리지 않는다.
   accent-bg-purple:
-    light: "#A042CB"
-    dark: "#A042CB"
+    light: "#B04DDF"
+    dark: "#B04DDF"
+    note: 장식용 자주 면. 글자를 올리지 않는다.
   accent-bg-pink:
-    light: "#BB33A6"
-    dark: "#BB33A6"
+    light: "#CE3FB7"
+    dark: "#CE3FB7"
+    note: 장식용 분홍 면. 글자를 올리지 않는다.
   accent-fg-red:
     light: "#D5242A"
     dark: "#FB5751"

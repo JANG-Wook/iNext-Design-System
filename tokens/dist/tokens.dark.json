@@ -1739,48 +1739,60 @@
       }
     },
     "status": {
+      "$description": "상태 색 — 성공·주의·오류. **텍스트로 쓰이므로 4개 면 전부에서 4.5:1 을 지킨다.**\n라이트는 600, 다크는 300 이다. 비대칭인 이유는 여유가 다르기 때문이다 — 라이트 600 은 4.77 로 하한에 붙어 있어 한 단계만 밝혀도 3.91 로 미달이고, 다크는 300 이 7.44 라 여유가 넉넉하다(DECISIONS 0-22).",
       "positive": {
         "$type": "color",
-        "$value": "{color.green.400}"
+        "$value": "{color.green.300}",
+        "$description": "성공·완료. 저장됨·연결됨 같은 긍정 피드백."
       },
       "cautionary": {
         "$type": "color",
-        "$value": "{color.orange.400}"
+        "$value": "{color.orange.300}",
+        "$description": "주의. 되돌릴 수 있지만 확인이 필요한 상태."
       },
       "negative": {
         "$type": "color",
-        "$value": "{color.red.400}"
+        "$value": "{color.red.300}",
+        "$description": "오류·실패·파괴적 동작. 삭제 확인처럼 되돌릴 수 없는 곳."
       }
     },
     "accent": {
       "bg": {
+        "$description": "장식용 면 — 카테고리 구분·차트 조각처럼 **글자가 올라가지 않는** 색 면이다(미결 1 해소). 글자를 올려야 하면 이 토큰이 아니라 대비를 검증한 조합을 따로 정한다.\n단계는 **500** 이다. 이 그룹은 라이트·다크가 같은 값이라 한쪽에 맞추면 반대쪽이 어긋나는데, 500 이 두 테마 면대비 차이가 0.11 로 가장 고르다(600 은 1.61 · 400 은 2.04). 면끼리의 대비는 규정 요건이 아니다(DECISIONS 4-1).",
         "redOrange": {
           "$type": "color",
-          "$value": "{color.redOrange.600}"
+          "$value": "{color.redOrange.500}",
+          "$description": "장식용 주황빨강 면. 글자를 올리지 않는다."
         },
         "lime": {
           "$type": "color",
-          "$value": "{color.lime.600}"
+          "$value": "{color.lime.500}",
+          "$description": "장식용 라임 면. 글자를 올리지 않는다."
         },
         "cyan": {
           "$type": "color",
-          "$value": "{color.cyan.600}"
+          "$value": "{color.cyan.500}",
+          "$description": "장식용 청록 면. 글자를 올리지 않는다."
         },
         "lightBlue": {
           "$type": "color",
-          "$value": "{color.lightBlue.600}"
+          "$value": "{color.lightBlue.500}",
+          "$description": "장식용 하늘 면. 글자를 올리지 않는다."
         },
         "violet": {
           "$type": "color",
-          "$value": "{color.violet.600}"
+          "$value": "{color.violet.500}",
+          "$description": "장식용 보라 면. 글자를 올리지 않는다."
         },
         "purple": {
           "$type": "color",
-          "$value": "{color.purple.600}"
+          "$value": "{color.purple.500}",
+          "$description": "장식용 자주 면. 글자를 올리지 않는다."
         },
         "pink": {
           "$type": "color",
-          "$value": "{color.pink.600}"
+          "$value": "{color.pink.500}",
+          "$description": "장식용 분홍 면. 글자를 올리지 않는다."
         }
       },
       "fg": {
