@@ -33,9 +33,9 @@ const SKIP = ['disable', 'assistive']
 const SURF = ['normal', 'normalAlternative', 'elevated', 'elevatedAlternative']
 /* 면 위에 올라가는 텍스트 역할 그룹. accent.bg / static 은 텍스트가 아니라 제외.
    inverse.label 은 inverse.background 위에만 놓이므로 이 검사 대상이 아니다. */
-// cool.neutral30 은 제외 — 라이트·다크가 같은 색(coolGray.700)이라 테마 적응형 텍스트가 아니다.
-// 역할이 정의돼 있지 않다(미결 5). 텍스트로 쓰인다면 다크에서 1.70~2.05:1 로 미달이다.
-const TEXT_GROUPS = ['label', 'status', 'primary', 'atomic']
+// cool.neutral30 과 atomic.* 은 2026-09-01 에 제거됐다(DECISIONS 0-23) — 목록에서도 뺐다.
+// cool 은 역할이 없고 다크에서 1.70:1 이었으며, atomic 은 status 와 값이 같은 팔레트식 이름이었다.
+const TEXT_GROUPS = ['label', 'status', 'primary']
 const TEXT_NESTED = [['accent', 'fg']]
 
 let n = 0, bad = 0

@@ -6,7 +6,7 @@ spec: DTCG 2025.10 (Format · Color Module, Final Community Group Report)
 source: tokens/primitive.json + tokens/semantic.light.json + tokens/semantic.dark.json + tokens/typography.json
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
-scope: 색·그림자 70 · 그 외 144 · 타이포 클래스 33. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
+scope: 색·그림자 66 · 그 외 144 · 타이포 클래스 33. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
 typography:
   "base.display-lg":
     class: display-lg
@@ -277,17 +277,17 @@ color:
     light: rgba(255, 255, 255, 0.28)
     dark: rgba(33, 33, 36, 0.6)
   line-normal:
-    light: rgba(112, 115, 123, 0.22)
-    dark: rgba(112, 115, 123, 0.32)
+    light: rgba(113, 115, 121, 0.22)
+    dark: rgba(113, 115, 121, 0.32)
   line-strong:
-    light: rgba(112, 115, 123, 0.52)
+    light: rgba(113, 115, 121, 0.52)
     dark: rgba(193, 195, 199, 0.52)
   line-neutral:
-    light: rgba(112, 115, 123, 0.16)
-    dark: rgba(112, 115, 123, 0.28)
+    light: rgba(113, 115, 121, 0.16)
+    dark: rgba(113, 115, 121, 0.28)
   line-alternative:
-    light: rgba(112, 115, 123, 0.08)
-    dark: rgba(112, 115, 123, 0.22)
+    light: rgba(113, 115, 121, 0.08)
+    dark: rgba(113, 115, 121, 0.22)
   line-solidNormal:
     light: "#E0E1E3"
     dark: "#37373A"
@@ -298,14 +298,14 @@ color:
     light: "#F4F4F4"
     dark: "#2E2F32"
   fill-normal:
-    light: rgba(112, 115, 123, 0.08)
-    dark: rgba(112, 115, 123, 0.22)
+    light: rgba(113, 115, 121, 0.08)
+    dark: rgba(113, 115, 121, 0.22)
   fill-alternative:
-    light: rgba(112, 115, 123, 0.05)
-    dark: rgba(112, 115, 123, 0.12)
+    light: rgba(113, 115, 121, 0.05)
+    dark: rgba(113, 115, 121, 0.12)
   fill-strong:
-    light: rgba(112, 115, 123, 0.16)
-    dark: rgba(112, 115, 123, 0.28)
+    light: rgba(113, 115, 121, 0.16)
+    dark: rgba(113, 115, 121, 0.28)
   interaction-inactive:
     light: "#989BA1"
     dark: "#595B61"
@@ -342,18 +342,6 @@ color:
     light: rgba(255, 255, 255, 0.12)
     dark: rgba(255, 255, 255, 0.12)
     note: 어두운 면 위 press 상태 오버레이. 면을 밝게 한다. 강도는 `interaction.opacity.normal.pressed` 를 따른다.
-  cool-neutral30:
-    light: "#45464A"
-    dark: "#45464A"
-  atomic-green60:
-    light: "#137F2C"
-    dark: "#1CA53B"
-  atomic-orange60:
-    light: "#A25D11"
-    dark: "#D27A1A"
-  atomic-red60:
-    light: "#D5242A"
-    dark: "#FB5751"
   primary-normal:
     light: "#2E2F32"
     dark: "#F7F7F8"

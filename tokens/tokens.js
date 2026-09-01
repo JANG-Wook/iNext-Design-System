@@ -19,18 +19,18 @@ export const color = {
     "transparentAlternative": "rgba(255, 255, 255, 0.28)"
   },
   "line": {
-    "normal": "rgba(112, 115, 123, 0.22)",
-    "strong": "rgba(112, 115, 123, 0.52)",
-    "neutral": "rgba(112, 115, 123, 0.16)",
-    "alternative": "rgba(112, 115, 123, 0.08)",
+    "normal": "rgba(113, 115, 121, 0.22)",
+    "strong": "rgba(113, 115, 121, 0.52)",
+    "neutral": "rgba(113, 115, 121, 0.16)",
+    "alternative": "rgba(113, 115, 121, 0.08)",
     "solidNormal": "#E0E1E3",
     "solidNeutral": "#E9EAEB",
     "solidAlternative": "#F4F4F4"
   },
   "fill": {
-    "normal": "rgba(112, 115, 123, 0.08)",
-    "alternative": "rgba(112, 115, 123, 0.05)",
-    "strong": "rgba(112, 115, 123, 0.16)"
+    "normal": "rgba(113, 115, 121, 0.08)",
+    "alternative": "rgba(113, 115, 121, 0.05)",
+    "strong": "rgba(113, 115, 121, 0.16)"
   },
   "interaction": {
     "inactive": "#989BA1",
@@ -48,14 +48,6 @@ export const color = {
         "pressed": "rgba(255, 255, 255, 0.12)"
       }
     }
-  },
-  "cool": {
-    "neutral30": "#45464A"
-  },
-  "atomic": {
-    "green60": "#137F2C",
-    "orange60": "#A25D11",
-    "red60": "#D5242A"
   },
   "primary": {
     "normal": "#2E2F32",
@@ -123,18 +115,18 @@ export const darkColor = {
     "transparentAlternative": "rgba(33, 33, 36, 0.6)"
   },
   "line": {
-    "normal": "rgba(112, 115, 123, 0.32)",
+    "normal": "rgba(113, 115, 121, 0.32)",
     "strong": "rgba(193, 195, 199, 0.52)",
-    "neutral": "rgba(112, 115, 123, 0.28)",
-    "alternative": "rgba(112, 115, 123, 0.22)",
+    "neutral": "rgba(113, 115, 121, 0.28)",
+    "alternative": "rgba(113, 115, 121, 0.22)",
     "solidNormal": "#37373A",
     "solidNeutral": "#333337",
     "solidAlternative": "#2E2F32"
   },
   "fill": {
-    "normal": "rgba(112, 115, 123, 0.22)",
-    "alternative": "rgba(112, 115, 123, 0.12)",
-    "strong": "rgba(112, 115, 123, 0.28)"
+    "normal": "rgba(113, 115, 121, 0.22)",
+    "alternative": "rgba(113, 115, 121, 0.12)",
+    "strong": "rgba(113, 115, 121, 0.28)"
   },
   "interaction": {
     "inactive": "#595B61",
@@ -152,14 +144,6 @@ export const darkColor = {
         "pressed": "rgba(255, 255, 255, 0.12)"
       }
     }
-  },
-  "cool": {
-    "neutral30": "#45464A"
-  },
-  "atomic": {
-    "green60": "#1CA53B",
-    "orange60": "#D27A1A",
-    "red60": "#FB5751"
   },
   "primary": {
     "normal": "#F7F7F8",

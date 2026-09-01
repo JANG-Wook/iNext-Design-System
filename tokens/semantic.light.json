@@ -74,28 +74,28 @@
     "line": {
       "normal": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.22}"
         }
       },
       "strong": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.52}"
         }
       },
       "neutral": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.16}"
         }
       },
       "alternative": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.8}"
         }
@@ -116,21 +116,21 @@
     "fill": {
       "normal": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.8}"
         }
       },
       "alternative": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.5}"
         }
       },
       "strong": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.16}"
         }
@@ -207,26 +207,6 @@
             }
           }
         }
-      }
-    },
-    "cool": {
-      "neutral30": {
-        "$type": "color",
-        "$value": "{color.coolGray.700}"
-      }
-    },
-    "atomic": {
-      "green60": {
-        "$type": "color",
-        "$value": "{color.green.600}"
-      },
-      "orange60": {
-        "$type": "color",
-        "$value": "{color.orange.600}"
-      },
-      "red60": {
-        "$type": "color",
-        "$value": "{color.red.600}"
       }
     },
     "primary": {

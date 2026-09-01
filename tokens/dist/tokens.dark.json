@@ -107,6 +107,19 @@
         },
         "$description": "중간값. 라이트 비활성 전경(`interaction.inactive`)과 다크 비활성 글자(`label.disable`). **양쪽 테마에서 모두 \"비활성\"을 뜻하는 유일한 단계**다."
       },
+      "550": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.555626,
+            0.009742,
+            268.6102
+          ],
+          "hex": "#717379"
+        },
+        "$description": "선과 면의 단일 base — `line.*` 4종과 `fill.*` 3종이 두 테마 모두 이것을 쓰고 차이는 알파로만 낸다(13곳). 원래 `coolGray.500`(#70737B) 이던 것을 gray 로 합쳤다 — 두 계열이 같은 색 축 위에 있었고 이 밝기가 gray 스케일의 빈 자리였다. chroma 는 `gray.500`↔`600` 을 밝기로 보간해 스케일 추세에 맞췄다(DECISIONS 0-23)."
+      },
       "600": {
         "$type": "color",
         "$value": {
@@ -251,34 +264,6 @@
         "$description": "순흑. **가장 많이 참조된다(19곳).** 두 테마 `static.black`, **밝은 면 위 오버레이의 base**(`overlay.darken`), 라이트의 최강 글자(`label.strong`), 그리고 **다크 그림자 5단계 전원의 base**(각 2레이어)."
       },
       "$description": "무채색 — semantic 이 가장 많이 참조하는 계열이다. 유채색과 달리 **목표 휘도로 생성한 눈금이 아니라 역할에서 역산한 값**이라 단계 간격이 고르지 않다(0·50·75·100·150·200 … 900·910·925·950·1000).\n**라이트와 다크가 사다리의 양 끝을 나눠 쓴다** — 라이트는 위쪽(면)과 아래쪽(글자)을, 다크는 그 반대를 쓴다. `875` 처럼 한 색이 라이트의 반전 배경이자 다크의 기본 면인 경우가 그 구조 때문이다. 토큰별 `$description` 은 지어낸 용도가 아니라 **실제 참조처**다(0-17)."
-    },
-    "coolGray": {
-      "500": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.555626,
-            0.012857,
-            269.4485
-          ],
-          "hex": "#70737B"
-        },
-        "$description": "**선과 면의 단일 base(13곳).** `line.*` 4종과 `fill.*` 3종이 두 테마 모두 이 색을 쓰고, 차이는 알파로만 낸다. 한 색이 이렇게 많은 역할을 받치는 것은 스케일이 하는 일이지 결함이 아니다(DECISIONS 0-12)."
-      },
-      "700": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.39468,
-            0.00682,
-            274.8181
-          ],
-          "hex": "#45464A"
-        },
-        "$description": "`cool.neutral30` 전용. **두 테마가 같은 색을 쓰는 유일한 텍스트 계열**이라 테마 적응형이 아니며, 역할이 정의돼 있지 않다(미결 5)."
-      }
     },
     "blue": {
       "200": {
@@ -1456,11 +1441,11 @@
           "colorSpace": "oklch",
           "components": [
             0.555626,
-            0.012857,
-            269.4485
+            0.009742,
+            268.6102
           ],
           "alpha": 0.32,
-          "hex": "#70737B"
+          "hex": "#717379"
         },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.32}"
@@ -1488,11 +1473,11 @@
           "colorSpace": "oklch",
           "components": [
             0.555626,
-            0.012857,
-            269.4485
+            0.009742,
+            268.6102
           ],
           "alpha": 0.28,
-          "hex": "#70737B"
+          "hex": "#717379"
         },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.28}"
@@ -1504,11 +1489,11 @@
           "colorSpace": "oklch",
           "components": [
             0.555626,
-            0.012857,
-            269.4485
+            0.009742,
+            268.6102
           ],
           "alpha": 0.22,
-          "hex": "#70737B"
+          "hex": "#717379"
         },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.22}"
@@ -1534,11 +1519,11 @@
           "colorSpace": "oklch",
           "components": [
             0.555626,
-            0.012857,
-            269.4485
+            0.009742,
+            268.6102
           ],
           "alpha": 0.22,
-          "hex": "#70737B"
+          "hex": "#717379"
         },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.22}"
@@ -1550,11 +1535,11 @@
           "colorSpace": "oklch",
           "components": [
             0.555626,
-            0.012857,
-            269.4485
+            0.009742,
+            268.6102
           ],
           "alpha": 0.12,
-          "hex": "#70737B"
+          "hex": "#717379"
         },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.12}"
@@ -1566,11 +1551,11 @@
           "colorSpace": "oklch",
           "components": [
             0.555626,
-            0.012857,
-            269.4485
+            0.009742,
+            268.6102
           ],
           "alpha": 0.28,
-          "hex": "#70737B"
+          "hex": "#717379"
         },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.28}"
@@ -1702,26 +1687,6 @@
             }
           }
         }
-      }
-    },
-    "cool": {
-      "neutral30": {
-        "$type": "color",
-        "$value": "{color.coolGray.700}"
-      }
-    },
-    "atomic": {
-      "green60": {
-        "$type": "color",
-        "$value": "{color.green.400}"
-      },
-      "orange60": {
-        "$type": "color",
-        "$value": "{color.orange.400}"
-      },
-      "red60": {
-        "$type": "color",
-        "$value": "{color.red.400}"
       }
     },
     "primary": {

@@ -74,7 +74,7 @@
     "line": {
       "normal": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.32}"
         }
@@ -88,14 +88,14 @@
       },
       "neutral": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.28}"
         }
       },
       "alternative": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.22}"
         }
@@ -116,21 +116,21 @@
     "fill": {
       "normal": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.22}"
         }
       },
       "alternative": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.12}"
         }
       },
       "strong": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": "{color.gray.550}",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.28}"
         }
@@ -207,26 +207,6 @@
             }
           }
         }
-      }
-    },
-    "cool": {
-      "neutral30": {
-        "$type": "color",
-        "$value": "{color.coolGray.700}"
-      }
-    },
-    "atomic": {
-      "green60": {
-        "$type": "color",
-        "$value": "{color.green.400}"
-      },
-      "orange60": {
-        "$type": "color",
-        "$value": "{color.orange.400}"
-      },
-      "red60": {
-        "$type": "color",
-        "$value": "{color.red.400}"
       }
     },
     "primary": {
