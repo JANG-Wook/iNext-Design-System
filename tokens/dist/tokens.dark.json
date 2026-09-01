@@ -1723,27 +1723,6 @@
           "Elevation"
         ]
       }
-    },
-    "ios": {
-      "fillSecondary": {
-        "$type": "color",
-        "$value": "{color.coolGray.450}",
-        "$extensions": {
-          "net.infobank.ds.alpha": "{opacity.16}"
-        }
-      },
-      "glassBackground": {
-        "$type": "color",
-        "$value": "{color.gray.75}",
-        "$extensions": {
-          "net.infobank.ds.alpha": "{opacity.60}"
-        }
-      },
-      "accentPrimary": {
-        "$type": "color",
-        "$value": "{color.blue.400}",
-        "$description": "강조색. 이전에는 출처 불명의 고정값 #0088FF 였으나 blue 스케일로 이관 — 라이트 600 / 다크 400."
-      }
     }
   },
   "opacity": {
@@ -2458,7 +2437,7 @@
     }
   },
   "gradient": {
-    "$description": "그라디언트 — 가장자리 페이드(`fade`)와 그 길이(`maskSize`).\n`fade` 는 `currentColor` 를 쓰는 **CSS 레시피**다. 런타임 상속값이라 DTCG `color` 로 표현할 수 없어 `$extensions.\"net.infobank.ds.cssRecipe\"` 로 예외 표시했다(DECISIONS 0-3). 스펙 2025.10 에는 `gradient` 복합 타입(9.7 · stops + angle)이 있고 `transparent` 와 방향은 그것으로 표현되지만, `currentColor` 하나가 막는다 — 그 대신 토큰 하나가 모든 면에서 동작한다(DECISIONS 0-15).\n`maskSize` 는 정상 `dimension` 이며 티어 키(`xs`~`xl`)를 쓴다. **값은 반드시 오름차순이어야 하고 빌드가 검사한다** — 과거 `xl`(56)이 `lg`(64)보다 작은 상태로 방치된 적이 있다(DECISIONS 0-10).",
+    "$description": "가장자리 페이드. `currentColor` 를 쓰는 **CSS 레시피**다 — 런타임 상속값이라 DTCG `color` 로 표현할 수 없어 `$extensions.\"net.infobank.ds.cssRecipe\"` 로 예외 표시했다(DECISIONS 0-3). 스펙 2025.10 에는 `gradient` 복합 타입(9.7 · stops + angle)이 있고 `transparent` 와 방향은 그것으로 표현되지만, `currentColor` 하나가 막는다 — 그 대신 토큰 하나가 모든 면에서 동작한다(DECISIONS 0-15).\n**페이드 길이 토큰은 두지 않는다.** 과거 `maskSize` 5단계가 있었으나 값 4/5 가 `spacing` 과 같아 새 눈금이 아니었다 — 제거하고 `spacing` 을 쓴다(DECISIONS 0-18).",
     "fade": {
       "$description": "가장자리 페이드 — 콘텐츠가 잘리는 자리를 **면 색으로 덮어** 부드럽게 끊는다. 키는 **불투명한 가장자리**, 곧 이 페이드를 놓는 자리다(CSS `to <방향>` 키워드와 같다). 색을 `currentColor` 로 둔 것은 의도다 — 쓰는 쪽에서 `color` 에 면 색을 넣으면 토큰 하나가 어느 면에서든 맞는다. 특정 색을 박으면 그 면에서만 맞다.\n`mask-image` 로 쓰면 알파만 읽히므로 `currentColor` 는 무시된다 — 그때는 색을 신경 쓰지 않아도 된다.",
       "top": {
@@ -2488,49 +2467,6 @@
         "$extensions": {
           "net.infobank.ds.cssRecipe": true
         }
-      }
-    },
-    "maskSize": {
-      "$description": "페이드가 차지하는 길이 — `fade.*` 를 놓을 때의 `background-size`(또는 `mask-size`) 다. 값은 반드시 오름차순이며 빌드가 검사한다. **48이 비어 있는 이유는 기록이 없다**(미결 13) — 근거 없이 값을 바꾸지 않고 그대로 둔다.",
-      "xs": {
-        "$type": "dimension",
-        "$value": {
-          "value": 24,
-          "unit": "px"
-        },
-        "$description": "가장 좁은 페이드. 칩·태그처럼 높이가 작은 요소의 한 줄 잘림."
-      },
-      "sm": {
-        "$type": "dimension",
-        "$value": {
-          "value": 32,
-          "unit": "px"
-        },
-        "$description": "좁은 페이드. 한 줄 텍스트·인라인 목록."
-      },
-      "md": {
-        "$type": "dimension",
-        "$value": {
-          "value": 40,
-          "unit": "px"
-        },
-        "$description": "기본값. 본문 문단이 접힐 때 쓰는 기준 크기."
-      },
-      "lg": {
-        "$type": "dimension",
-        "$value": {
-          "value": 56,
-          "unit": "px"
-        },
-        "$description": "넓은 페이드. 카드 본문·긴 리스트 하단."
-      },
-      "xl": {
-        "$type": "dimension",
-        "$value": {
-          "value": 64,
-          "unit": "px"
-        },
-        "$description": "가장 넓은 페이드. 전체 화면 스크롤 영역의 가장자리."
       }
     },
     "$extensions": {

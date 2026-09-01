@@ -102,11 +102,6 @@ export const color = {
   },
   "elevation": {
     "dim": "rgba(22, 24, 24, 0.52)"
-  },
-  "ios": {
-    "fillSecondary": "rgba(120, 120, 127, 0.16)",
-    "glassBackground": "rgba(245, 245, 245, 0.6)",
-    "accentPrimary": "#1266E8"
   }
 }
 
@@ -211,11 +206,6 @@ export const darkColor = {
   },
   "elevation": {
     "dim": "rgba(22, 22, 23, 0.74)"
-  },
-  "ios": {
-    "fillSecondary": "rgba(120, 120, 127, 0.16)",
-    "glassBackground": "rgba(245, 245, 245, 0.6)",
-    "accentPrimary": "#4D8EFA"
   }
 }
 
@@ -342,13 +332,6 @@ export const gradient = {
     "right": "linear-gradient(to right, transparent, currentColor)",
     "bottom": "linear-gradient(to bottom, transparent, currentColor)",
     "left": "linear-gradient(to left, transparent, currentColor)"
-  },
-  "maskSize": {
-    "xs": "24px",
-    "sm": "32px",
-    "md": "40px",
-    "lg": "56px",
-    "xl": "64px"
   }
 }
 

@@ -31,7 +31,7 @@ const flat = (t, bg) => {
 const SKIP = ['disable', 'assistive']
 /* 배경 면 4종 */
 const SURF = ['normal', 'normalAlternative', 'elevated', 'elevatedAlternative']
-/* 면 위에 올라가는 텍스트 역할 그룹. accent.bg / static / ios 는 텍스트가 아니라 제외.
+/* 면 위에 올라가는 텍스트 역할 그룹. accent.bg / static 은 텍스트가 아니라 제외.
    inverse.label 은 inverse.background 위에만 놓이므로 이 검사 대상이 아니다. */
 // cool.neutral30 은 제외 — 라이트·다크가 같은 색(coolGray.700)이라 테마 적응형 텍스트가 아니다.
 // 역할이 정의돼 있지 않다(미결 5). 텍스트로 쓰인다면 다크에서 1.70~2.05:1 로 미달이다.

@@ -374,27 +374,6 @@
         ]
       }
     },
-    "ios": {
-      "fillSecondary": {
-        "$type": "color",
-        "$value": "{color.coolGray.450}",
-        "$extensions": {
-          "net.infobank.ds.alpha": "{opacity.16}"
-        }
-      },
-      "glassBackground": {
-        "$type": "color",
-        "$value": "{color.gray.75}",
-        "$extensions": {
-          "net.infobank.ds.alpha": "{opacity.60}"
-        }
-      },
-      "accentPrimary": {
-        "$type": "color",
-        "$value": "{color.blue.600}",
-        "$description": "강조색. 이전에는 출처 불명의 고정값 #0088FF 였으나 blue 스케일로 이관 — 라이트 600 / 다크 400."
-      }
-    },
     "$extensions": {
       "net.infobank.ds.foundation": [
         "Colors"
