@@ -575,8 +575,14 @@ function sectionDtcg() {
 
 /* 빌드가 만드는 값 */
 --color-fill-normal: ${esc(cssVal('--color-fill-normal'))};</code></pre>
-    <p class="body-md dim">대가가 있다 — 제3자 DTCG 도구는 <code>$extensions</code> 안의 참조를 해석하지 않아
-      이 토큰을 <b>완전 불투명</b>으로 읽는다. 알려진 미결이다(DECISIONS 미결 15).</p>
+    <p class="body-md"><b>번들에서는 이 확장에 기대지 않는다.</b> 소스는 참조를 담아야 하지만
+      <code>dist/</code> 는 배포용이라 알파가 이미 숫자다. 빌드가 스펙 <code>alpha</code> 로 해소해 넣으므로,
+      제3자 도구가 <code>$extensions</code> 를 통째로 무시해도 값이 올바르게 읽힌다(DECISIONS 0-19).</p>
+    <pre class="body-sm"><code>/* dist/tokens.light.json — 같은 토큰 */
+{ "$type": "color",
+  "$value": { "colorSpace": "oklch", "components": [...], "alpha": 0.08, "hex": "#70737B" },
+  "$extensions": { "net.infobank.ds.alpha": "{opacity.8}" } }
+                   ↑ 남겨두지만, 없어도 값은 완전하다</code></pre>
   </section>`
 }
 

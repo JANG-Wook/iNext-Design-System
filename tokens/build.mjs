@@ -507,8 +507,71 @@ function bundleFor(theme){
   }
   return { $description:
     `iNext DS 토큰 — ${theme} 테마 · DTCG 2025.10 단일 문서 (자동 생성 · 편집 금지). ` +
-    `모든 별칭이 이 문서 안에서 해석된다. 원본은 ${listSources().join(' + ')} 이며 ` +
+    `모든 별칭이 이 문서 안에서 해석된다. 반투명색은 native alpha 로 해소돼 있어 ` +
+    `$extensions 를 전부 무시해도 값이 올바르다. 원본은 ${listSources().join(' + ')} 이며 ` +
     `합성 규칙은 build.mjs 의 COMPOSITION 에 있다.`, ...out }
+}
+// ── 번들의 반투명색을 native alpha 로 해소한다 ─────────────────────
+// 소스는 base 별칭 + $extensions 알파로 둔다 — 불투명도를 opacity 눈금 한 곳에서
+// 관리하려면 참조가 필요하고, 스펙 color 의 alpha 는 0~1 숫자만 받기 때문이다(0-14).
+// 하지만 번들은 배포용 산출물이라 거기서는 알파가 이미 숫자다. 스펙은 확장을
+// "값을 이해하는 데 필수적이지 않은 메타데이터"로 제한하라고 하므로(SHOULD),
+// 번들에서는 값을 완성시켜 확장 없이도 읽히게 한다(0-19).
+// 별칭 자체는 스펙이 지원하는 정상 표현이라 그대로 둔다 — 표현 불가능한 것만 해소한다.
+const primColorObj = ref => { const p = ref.slice(1,-1).split('.'); return prim.color[p[1]][p[2]].$value }
+function withAlpha(ref, a){
+  const c = primColorObj(ref)
+  return { colorSpace: c.colorSpace, components: c.components, alpha: a, ...(c.hex ? { hex: c.hex } : {}) }
+}
+function materializeAlpha(doc){
+  const visit = node => {
+    if (!node || typeof node !== 'object') return
+    if (node.$value !== undefined){
+      const ax = node.$extensions && node.$extensions[NS]
+      if (ax){
+        if (node.$type === 'color' && typeof node.$value === 'string' && ALIAS.test(node.$value))
+          node.$value = withAlpha(node.$value, opacityVal(ax))
+        else if (node.$type === 'shadow'){
+          const ls = Array.isArray(node.$value) ? node.$value : [node.$value]
+          ls.forEach((l, i) => {
+            const r = Array.isArray(ax) ? ax[i] : ax
+            if (r !== undefined && typeof l.color === 'string' && ALIAS.test(l.color))
+              l.color = withAlpha(l.color, opacityVal(r))
+          })
+        }
+      }
+      return
+    }
+    for (const [k, v] of Object.entries(node)) if (!k.startsWith('$')) visit(v)
+  }
+  visit(doc)
+  return doc
+}
+// 해소가 끝난 뒤, 알파 확장을 들고 있으면서 값이 여전히 별칭인 토큰이 없어야 한다.
+// 하나라도 남으면 그 토큰은 제3자 도구에서 완전 불투명으로 읽힌다.
+function assertBundleAlphaMaterialized(theme, doc){
+  const bad = []
+  let n = 0
+  const visit = (node, path) => {
+    if (!node || typeof node !== 'object') return
+    if (node.$value !== undefined){
+      if (node.$extensions && node.$extensions[NS]){
+        n++
+        const v = node.$value
+        if (node.$type === 'color'){
+          if (typeof v !== 'object' || typeof v.alpha !== 'number') bad.push(path)
+        } else if (node.$type === 'shadow'){
+          for (const l of [].concat(v))
+            if (typeof l.color !== 'object' || typeof l.color.alpha !== 'number') { bad.push(path); break }
+        }
+      }
+      return
+    }
+    for (const [k, v] of Object.entries(node)) if (!k.startsWith('$')) visit(v, path ? `${path}.${k}` : k)
+  }
+  visit(doc, '')
+  if (bad.length) throw new Error(`번들(${theme}) 알파 미해소 ${bad.length}건: ${bad.slice(0,3).join(' · ')}`)
+  return n
 }
 // 번들 안에서 풀리지 않는 별칭이 있으면 실패시킨다 — 번들의 존재 이유가 자기완결성이다.
 function assertBundleSelfContained(theme, doc){
@@ -535,9 +598,12 @@ function assertBundleSelfContained(theme, doc){
 fs.mkdirSync(`${DIR}/dist`, { recursive: true })
 const bundleReport = []
 for (const theme of THEMES){
-  const doc = bundleFor(theme)
+  // mergeInto 는 잎 토큰을 공유 참조로 넘긴다 — 복제하지 않고 고치면 소스와
+  // 다른 테마 번들까지 오염된다.
+  const doc = structuredClone(bundleFor(theme))
+  const alphas = assertBundleAlphaMaterialized(theme, materializeAlpha(doc))
   const aliases = assertBundleSelfContained(theme, doc)
   fs.writeFileSync(`${DIR}/dist/tokens.${theme}.json`, JSON.stringify(doc, null, 2) + '\n')
-  bundleReport.push(`${theme} 별칭 ${aliases}건 전부 내부 해석`)
+  bundleReport.push(`${theme} 별칭 ${aliases}건 해석 · 알파 ${alphas}건 native 화`)
 }
 console.log(`소스 ${srcCount}개 · 번들 dist/tokens.{${THEMES.join(',')}}.json — ${bundleReport.join(' / ')}`)

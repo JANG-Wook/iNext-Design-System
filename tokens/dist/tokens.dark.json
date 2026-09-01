@@ -1336,28 +1336,64 @@
       },
       "neutral": {
         "$type": "color",
-        "$value": "{color.gray.300}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.816796,
+            0.006003,
+            264.5276
+          ],
+          "alpha": 0.88,
+          "hex": "#C1C3C7"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.88}"
         }
       },
       "alternative": {
         "$type": "color",
-        "$value": "{color.gray.400}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.756315,
+            0.007889,
+            260.7314
+          ],
+          "alpha": 0.74,
+          "hex": "#ADB0B5"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.74}"
         }
       },
       "assistive": {
         "$type": "color",
-        "$value": "{color.gray.400}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.756315,
+            0.007889,
+            260.7314
+          ],
+          "alpha": 0.28,
+          "hex": "#ADB0B5"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.28}"
         }
       },
       "disable": {
         "$type": "color",
-        "$value": "{color.gray.500}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.688901,
+            0.009412,
+            264.5042
+          ],
+          "alpha": 0.16,
+          "hex": "#989BA1"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.16}"
         }
@@ -1382,14 +1418,32 @@
       },
       "transparent": {
         "$type": "color",
-        "$value": "{color.gray.850}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.248988,
+            0.005613,
+            285.9851
+          ],
+          "alpha": 0.6,
+          "hex": "#212124"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.60}"
         }
       },
       "transparentAlternative": {
         "$type": "color",
-        "$value": "{color.gray.850}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.248988,
+            0.005613,
+            285.9851
+          ],
+          "alpha": 0.6,
+          "hex": "#212124"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.60}"
         }
@@ -1398,28 +1452,64 @@
     "line": {
       "normal": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.555626,
+            0.012857,
+            269.4485
+          ],
+          "alpha": 0.32,
+          "hex": "#70737B"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.32}"
         }
       },
       "strong": {
         "$type": "color",
-        "$value": "{color.gray.300}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.816796,
+            0.006003,
+            264.5276
+          ],
+          "alpha": 0.52,
+          "hex": "#C1C3C7"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.52}"
         }
       },
       "neutral": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.555626,
+            0.012857,
+            269.4485
+          ],
+          "alpha": 0.28,
+          "hex": "#70737B"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.28}"
         }
       },
       "alternative": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.555626,
+            0.012857,
+            269.4485
+          ],
+          "alpha": 0.22,
+          "hex": "#70737B"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.22}"
         }
@@ -1440,21 +1530,48 @@
     "fill": {
       "normal": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.555626,
+            0.012857,
+            269.4485
+          ],
+          "alpha": 0.22,
+          "hex": "#70737B"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.22}"
         }
       },
       "alternative": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.555626,
+            0.012857,
+            269.4485
+          ],
+          "alpha": 0.12,
+          "hex": "#70737B"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.12}"
         }
       },
       "strong": {
         "$type": "color",
-        "$value": "{color.coolGray.500}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.555626,
+            0.012857,
+            269.4485
+          ],
+          "alpha": 0.28,
+          "hex": "#70737B"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.28}"
         }
@@ -1482,7 +1599,16 @@
         "darken": {
           "hovered": {
             "$type": "color",
-            "$value": "{color.gray.1000}",
+            "$value": {
+              "colorSpace": "oklch",
+              "components": [
+                0,
+                0,
+                "none"
+              ],
+              "alpha": 0.05,
+              "hex": "#000000"
+            },
             "$description": "밝은 면 위 hover 상태 오버레이. 면을 어둡게 한다. 강도는 `interaction.opacity.normal.hovered` 를 따른다.",
             "$extensions": {
               "net.infobank.ds.alpha": "{interaction.opacity.normal.hovered}"
@@ -1490,7 +1616,16 @@
           },
           "focused": {
             "$type": "color",
-            "$value": "{color.gray.1000}",
+            "$value": {
+              "colorSpace": "oklch",
+              "components": [
+                0,
+                0,
+                "none"
+              ],
+              "alpha": 0.08,
+              "hex": "#000000"
+            },
             "$description": "밝은 면 위 focus 상태 오버레이. 면을 어둡게 한다. 강도는 `interaction.opacity.normal.focused` 를 따른다.",
             "$extensions": {
               "net.infobank.ds.alpha": "{interaction.opacity.normal.focused}"
@@ -1498,7 +1633,16 @@
           },
           "pressed": {
             "$type": "color",
-            "$value": "{color.gray.1000}",
+            "$value": {
+              "colorSpace": "oklch",
+              "components": [
+                0,
+                0,
+                "none"
+              ],
+              "alpha": 0.12,
+              "hex": "#000000"
+            },
             "$description": "밝은 면 위 press 상태 오버레이. 면을 어둡게 한다. 강도는 `interaction.opacity.normal.pressed` 를 따른다.",
             "$extensions": {
               "net.infobank.ds.alpha": "{interaction.opacity.normal.pressed}"
@@ -1508,7 +1652,16 @@
         "lighten": {
           "hovered": {
             "$type": "color",
-            "$value": "{color.gray.0}",
+            "$value": {
+              "colorSpace": "oklch",
+              "components": [
+                1,
+                0,
+                "none"
+              ],
+              "alpha": 0.05,
+              "hex": "#FFFFFF"
+            },
             "$description": "어두운 면 위 hover 상태 오버레이. 면을 밝게 한다. 강도는 `interaction.opacity.normal.hovered` 를 따른다.",
             "$extensions": {
               "net.infobank.ds.alpha": "{interaction.opacity.normal.hovered}"
@@ -1516,7 +1669,16 @@
           },
           "focused": {
             "$type": "color",
-            "$value": "{color.gray.0}",
+            "$value": {
+              "colorSpace": "oklch",
+              "components": [
+                1,
+                0,
+                "none"
+              ],
+              "alpha": 0.08,
+              "hex": "#FFFFFF"
+            },
             "$description": "어두운 면 위 focus 상태 오버레이. 면을 밝게 한다. 강도는 `interaction.opacity.normal.focused` 를 따른다.",
             "$extensions": {
               "net.infobank.ds.alpha": "{interaction.opacity.normal.focused}"
@@ -1524,7 +1686,16 @@
           },
           "pressed": {
             "$type": "color",
-            "$value": "{color.gray.0}",
+            "$value": {
+              "colorSpace": "oklch",
+              "components": [
+                1,
+                0,
+                "none"
+              ],
+              "alpha": 0.12,
+              "hex": "#FFFFFF"
+            },
             "$description": "어두운 면 위 press 상태 오버레이. 면을 밝게 한다. 강도는 `interaction.opacity.normal.pressed` 를 따른다.",
             "$extensions": {
               "net.infobank.ds.alpha": "{interaction.opacity.normal.pressed}"
@@ -1686,7 +1857,16 @@
     "elevation": {
       "dim": {
         "$type": "color",
-        "$value": "{color.gray.900}",
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.200616,
+            0.001969,
+            286.2209
+          ],
+          "alpha": 0.74,
+          "hex": "#161617"
+        },
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.74}"
         },
@@ -3195,7 +3375,16 @@
       "$type": "shadow",
       "$value": [
         {
-          "color": "{color.gray.1000}",
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              "none"
+            ],
+            "alpha": 0.48,
+            "hex": "#000000"
+          },
           "offsetX": {
             "value": 0,
             "unit": "px"
@@ -3214,7 +3403,16 @@
           }
         },
         {
-          "color": "{color.gray.1000}",
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              "none"
+            ],
+            "alpha": 0.24,
+            "hex": "#000000"
+          },
           "offsetX": {
             "value": 0,
             "unit": "px"
@@ -3245,7 +3443,16 @@
       "$type": "shadow",
       "$value": [
         {
-          "color": "{color.gray.1000}",
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              "none"
+            ],
+            "alpha": 0.7,
+            "hex": "#000000"
+          },
           "offsetX": {
             "value": 0,
             "unit": "px"
@@ -3264,7 +3471,16 @@
           }
         },
         {
-          "color": "{color.gray.1000}",
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              "none"
+            ],
+            "alpha": 0.3,
+            "hex": "#000000"
+          },
           "offsetX": {
             "value": 0,
             "unit": "px"
@@ -3295,7 +3511,16 @@
       "$type": "shadow",
       "$value": [
         {
-          "color": "{color.gray.1000}",
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              "none"
+            ],
+            "alpha": 0.8,
+            "hex": "#000000"
+          },
           "offsetX": {
             "value": 0,
             "unit": "px"
@@ -3314,7 +3539,16 @@
           }
         },
         {
-          "color": "{color.gray.1000}",
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              "none"
+            ],
+            "alpha": 0.36,
+            "hex": "#000000"
+          },
           "offsetX": {
             "value": 0,
             "unit": "px"
@@ -3345,7 +3579,16 @@
       "$type": "shadow",
       "$value": [
         {
-          "color": "{color.gray.1000}",
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              "none"
+            ],
+            "alpha": 0.88,
+            "hex": "#000000"
+          },
           "offsetX": {
             "value": 0,
             "unit": "px"
@@ -3364,7 +3607,16 @@
           }
         },
         {
-          "color": "{color.gray.1000}",
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              "none"
+            ],
+            "alpha": 0.42,
+            "hex": "#000000"
+          },
           "offsetX": {
             "value": 0,
             "unit": "px"
@@ -3395,7 +3647,16 @@
       "$type": "shadow",
       "$value": [
         {
-          "color": "{color.gray.1000}",
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              "none"
+            ],
+            "alpha": 0.88,
+            "hex": "#000000"
+          },
           "offsetX": {
             "value": 0,
             "unit": "px"
@@ -3414,7 +3675,16 @@
           }
         },
         {
-          "color": "{color.gray.1000}",
+          "color": {
+            "colorSpace": "oklch",
+            "components": [
+              0,
+              0,
+              "none"
+            ],
+            "alpha": 0.52,
+            "hex": "#000000"
+          },
           "offsetX": {
             "value": 0,
             "unit": "px"
