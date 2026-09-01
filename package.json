@@ -19,6 +19,8 @@
   },
   "scripts": {
     "build:tokens": "node tokens/build.mjs && node tokens/build-design-md.mjs",
-    "build:designmd": "node tokens/build-design-md.mjs"
+    "build:designmd": "node tokens/build-design-md.mjs",
+    "lint:hardcode": "node tokens/checks/hardcode.mjs",
+    "check": "npm run build:tokens && node tokens/checks/audit.mjs && node tokens/checks/audit.mjs bundle && node tokens/checks/surfaces.mjs && npm run lint:hardcode"
   }
 }

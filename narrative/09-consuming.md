@@ -25,6 +25,33 @@ shadow.sm            →  --shadow-sm
 올바르다.** 소스는 참조를 유지하지만(불투명도를 한 곳에서 관리하려고) 번들은 배포용이라
 값을 완성시킨다.
 
+### 하드코딩은 검사가 막는다
+
+이 문서는 "쓰지 마라"고 설득할 뿐이다. 막는 것은 검사다.
+
+```bash
+npm run lint:hardcode     # 토큰 대신 값을 직접 쓴 곳을 찾는다
+npm run check             # 빌드 + DTCG + 대비 + 하드코딩 전부
+```
+
+CSS 선언(`속성: 값`)만 본다 — `.css` 전체, `.html` 의 `<style>` 과 `style=`,
+`.jsx`·`.tsx`·`.vue`·`.svelte` 전 줄. **템플릿 보간(`${...}`)과 `var()` 는 검사하지 않는다** —
+토큰에서 계산된 값이다.
+
+| 규칙 | 잡는 것 |
+|---|---|
+| `color` | `color`·`background`·`border`·`box-shadow` 등에 hex·rgb·hsl 리터럴 |
+| `typo` | `font-size`·`line-height`·`letter-spacing`·`font-weight` 에 리터럴 |
+| `dim` | `padding`·`margin`·`gap`·`border-radius`·`inset` 등에 px·rem 리터럴 |
+
+`0`·`auto`·`50%`·`100%`·`1px` 은 구조적 상수라 통과한다.
+
+정당한 예외는 **이유와 함께** 표시한다. 이유 없는 예외는 두지 않는다.
+
+```css
+.widget { padding: 13px; } /* ds-allow: 외부 위젯 규격에 맞춘 값 */
+```
+
 ### 새 값이 필요할 때
 
 1. **먼저 찾는다.** 같은 값·역할이 이미 있는지 확인한다.
