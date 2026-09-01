@@ -5,6 +5,7 @@
   "description": "iNext Design System — 디자인 토큰 (DTCG)",
   "type": "module",
   "files": [
+    "DESIGN.md",
     "tokens/tokens.css",
     "tokens/tokens.js",
     "tokens/dist/tokens.light.json",
@@ -17,6 +18,7 @@
     "./dtcg/dark": "./tokens/dist/tokens.dark.json"
   },
   "scripts": {
-    "build:tokens": "node tokens/build.mjs"
+    "build:tokens": "node tokens/build.mjs && node tokens/build-design-md.mjs",
+    "build:designmd": "node tokens/build-design-md.mjs"
   }
 }

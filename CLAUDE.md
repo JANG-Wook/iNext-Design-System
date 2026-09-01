@@ -24,11 +24,11 @@
 - 값 형식 — `color` = `{colorSpace:"oklch", components:[L,C,H], hex:"#rrggbb"}` (**hex 문자열 단독은 무효**) · `dimension` = `{value, unit}` (`px`·`rem` 만, `none` 같은 키워드 불가) · `number` = JSON 숫자.
 - 계층: **primitive**(테마 무관 원시 값) → **semantic.light / semantic.dark**(색 역할, 같은 키·다른 참조) → **생성물**.
   `typography.json` 은 semantic 을 거치지 않고 **primitive 를 직접 참조**한다(색만 semantic 계층을 갖는다).
-  생성물은 `tokens.css` · `tokens.js` · `dist/tokens.{light,dark}.json`(테마별 단일 DTCG 문서) 셋이다.
+  생성물은 `tokens.css` · `tokens.js` · `dist/tokens.{light,dark}.json`(테마별 단일 DTCG 문서) · `DESIGN.md` 넷이다.
 - 타이포는 **복합 토큰**(`$type:"typography"`, `typography.json`) 으로 관리한다. 스펙 9.8 이 요구하는 **5속성을 모두** 갖춰야 하고, 하위 타입이 정해져 있다.
   `fontFamily`=fontFamily · `fontSize`=dimension · `fontWeight`=fontWeight · `letterSpacing`=dimension · **`lineHeight`=number(fontSize 배수)**.
   행간 토큰 키는 `글자px-행간px`(예: `lineHeight.14-22`)이며 **짝지어진 글자 크기에서만 2px 그리드에 떨어진다** — 빌드가 짝을 검사한다.
-- **단일 원본은 `tokens/` 의 소스 JSON 4개.** `tokens.css`·`tokens.js`·`dist/` 는 `build.mjs` 산출물이므로 **직접 편집하지 않는다.**
+- **값의 단일 원본은 `tokens/` 의 소스 JSON 4개.** `tokens.css`·`tokens.js`·`dist/`·`DESIGN.md` 는 산출물이므로 **직접 편집하지 않는다.** (산문의 원본은 `narrative/` — 아래 절)
 - 변경 절차: **JSON 수정 → `npm run build:tokens` 로 재생성.**
 - **새 소스 JSON 을 만들면 `build.mjs` 의 `COMPOSITION` 에 등록한다.** 빌드가 디스크와 등록 목록을 양방향으로 검사해 누락 시 실패한다. (DTCG Resolver Module 의 sets/modifiers 개념만 차용했고 resolver 파일은 두지 않는다 — DECISIONS 0-9)
 - **토큰 값의 형식을 바꾸면 JSON 을 직접 읽는 소비자 전부를 같이 고친다.** 목록은 `build.mjs` · `preview.html` · 검증 스크립트다. `preview.html` 은 브라우저에서 JSON 과 `tokens.css` 를 직접 읽으므로 빌드가 잡아주지 못한다 — 실제로 두 번 놓쳤다(DECISIONS 0-6 · 0-7).
@@ -46,6 +46,39 @@
 **스펙 밖의 값**
 - DTCG 타입으로 표현할 수 없는 값은 `$extensions."net.infobank.ds.cssRecipe": true` 로 표시하고 `DECISIONS.md` 에 근거를 남긴다.
 - **예외를 늘리지 않는다.** 먼저 스펙 타입으로 표현할 방법을 찾고, 정말 없을 때만 예외로 둔다.
+
+## DESIGN.md — DTCG 에서 생성한다
+
+**`DESIGN.md` 는 생성물이다. 직접 편집하지 않는다** — 다음 빌드에 사라진다.
+front matter 는 토큰에서, 본문은 `narrative/*.md` 에서 온다.
+
+**사람이 쓰는 것 둘**
+- `tokens/*.json` — 값과 `$description`
+- `narrative/*.md` — 산문. 왜 그 값인지·금지사항. 파일명 순서대로 이어 붙는다
+
+**고칠 곳을 헷갈리지 않는다**
+
+| 고치려는 것 | 고칠 곳 |
+|---|---|
+| 값 | `tokens/*.json` |
+| 토큰 하나의 짧은 설명 | 그 토큰의 `$description` |
+| 왜 그렇게 정했는지 · 금지사항 | `narrative/*.md` |
+| 설계 결정의 전체 이력 | `tokens/DECISIONS.md` |
+
+**자동 반영** — `npm run build:tokens` 가 토큰 빌드와 `DESIGN.md` 생성을 함께 돌린다.
+CI 가 `DESIGN.md` 를 다시 만들어 커밋된 것과 다르면 실패시킨다(`tokens.css`·`dist/` 와 같은 방식).
+**토큰만 고치고 `DESIGN.md` 를 안 고친 변경은 머지되지 않는다.**
+
+**front matter 에 들어가는 것 = CSS 변수가 되는 것 + 타이포 클래스**
+- 곧 **컴포넌트가 실제로 쓰는 API 면**이다. primitive 팔레트 99개는 CSS 로 나가지 않으므로 제외한다 — 다 넣으면 읽는 쪽(사람·에이전트)에 노이즈다.
+- **이름 접두사로 거르지 않는다.** 우리 번들에는 `semantic.` 접두사가 없다.
+- **`$type` 으로 분류하지 않는다.** `dimension` 이 9개 그룹에 흩어져 있다 — 그룹으로 나눈다.
+- 색은 **라이트·다크 두 값**을 함께 낸다. 반투명색은 `rgba()` 로 낸다.
+- `$description` 이 그대로 `note` 로 실려 나간다. **그래서 설명을 지어내면 안 된다** — 실제 근거만 쓴다.
+
+**생성기를 고칠 때** — `tokens/build-design-md.mjs` 는 **결정적이어야 한다.** 타임스탬프·난수를
+넣으면 drift 검사가 매번 실패한다. YAML 을 손으로 만들므로 **왕복 검사**가 들어 있다 —
+되읽은 결과가 원본과 다르면 쓰기 전에 실패한다.
 
 ## 하드코딩 절대 금지
 값을 직접 박지 않고 **토큰으로만** 표현한다.
