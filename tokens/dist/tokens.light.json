@@ -13,7 +13,8 @@
             "none"
           ],
           "hex": "#FFFFFF"
-        }
+        },
+        "$description": "순백. 라이트의 기본 면(`bg.normal`·`elevated`)이자 두 테마의 `static.white`, 그리고 **어두운 면 위 오버레이의 base**(`overlay.lighten`)다. 다크에서는 가장 강한 글자(`label.strong`)로 쓰인다. 14곳 — 무채색 중 두 번째로 많다."
       },
       "50": {
         "$type": "color",
@@ -25,7 +26,8 @@
             286.3755
           ],
           "hex": "#F7F7F8"
-        }
+        },
+        "$description": "라이트의 보조 면(`bg.*Alternative`)이자 다크의 기본 글자·주요색(`label.normal`·`primary.normal`). **라이트의 면이 다크에서는 글자가 된다** — 반전 쌍의 한쪽이다. 6곳."
       },
       "75": {
         "$type": "color",
@@ -37,7 +39,8 @@
             "none"
           ],
           "hex": "#F5F5F5"
-        }
+        },
+        "$description": "iOS 유리 배경(`ios.glassBackground`) 전용. 두 테마가 같은 값을 쓴다."
       },
       "100": {
         "$type": "color",
@@ -49,7 +52,8 @@
             "none"
           ],
           "hex": "#F4F4F4"
-        }
+        },
+        "$description": "라이트의 가장 옅은 실선(`line.solidAlternative`)과 비활성 컨트롤 면(`interaction.disable`)."
       },
       "150": {
         "$type": "color",
@@ -61,7 +65,8 @@
             247.8401
           ],
           "hex": "#E9EAEB"
-        }
+        },
+        "$description": "라이트 실선 중간 단계(`line.solidNeutral`)와 다크 `primary.strong`."
       },
       "200": {
         "$type": "color",
@@ -73,7 +78,8 @@
             264.5412
           ],
           "hex": "#E0E1E3"
-        }
+        },
+        "$description": "라이트의 기본 실선(`line.solidNormal`)과 다크 `primary.heavy`. 실선 3단계(100·150·200) 중 가장 진하다."
       },
       "300": {
         "$type": "color",
@@ -85,7 +91,8 @@
             264.5276
           ],
           "hex": "#C1C3C7"
-        }
+        },
+        "$description": "**다크에서만 쓰인다.** 보조 글자(`label.neutral`)와 강한 선(`line.strong`). 다크 배경 대비 9.77:1."
       },
       "400": {
         "$type": "color",
@@ -97,7 +104,8 @@
             260.7314
           ],
           "hex": "#ADB0B5"
-        }
+        },
+        "$description": "**다크에서만 쓰인다.** 흐린 글자(`label.alternative`·`assistive`). 다크 배경 대비 7.93:1 — AA 를 넉넉히 넘는다."
       },
       "500": {
         "$type": "color",
@@ -109,7 +117,8 @@
             264.5042
           ],
           "hex": "#989BA1"
-        }
+        },
+        "$description": "중간값. 라이트 비활성 전경(`interaction.inactive`)과 다크 비활성 글자(`label.disable`). **양쪽 테마에서 모두 \"비활성\"을 뜻하는 유일한 단계**다."
       },
       "600": {
         "$type": "color",
@@ -121,7 +130,8 @@
             271.2025
           ],
           "hex": "#595B61"
-        }
+        },
+        "$description": "다크 비활성 전경(`interaction.inactive`) 전용. 라이트의 `500` 과 짝을 이룬다."
       },
       "700": {
         "$type": "color",
@@ -133,7 +143,8 @@
             286.1186
           ],
           "hex": "#37373A"
-        }
+        },
+        "$description": "라이트의 흐린 글자 3종(`label.alternative`·`assistive`·`disable`)이 이 색에 알파를 얹어 만들어진다. 다크에서는 기본 실선(`line.solidNormal`). 4곳."
       },
       "750": {
         "$type": "color",
@@ -145,7 +156,8 @@
             286.0001
           ],
           "hex": "#333337"
-        }
+        },
+        "$description": "다크 실선 중간 단계(`line.solidNeutral`) 전용."
       },
       "800": {
         "$type": "color",
@@ -157,7 +169,8 @@
             271.2331
           ],
           "hex": "#2E2F32"
-        }
+        },
+        "$description": "라이트의 주요 면(`primary.normal`)과 본문 글자(`label.neutral`), 다크의 옅은 실선·비활성 면·반전 주요색. 5곳 — **라이트에서는 어두운 면, 다크에서는 밝은 쪽 역할**로 갈린다."
       },
       "850": {
         "$type": "color",
@@ -169,7 +182,8 @@
             285.9851
           ],
           "hex": "#212124"
-        }
+        },
+        "$description": "라이트 `primary.strong` 과 **다크의 떠 있는 면**(`bg.elevated`·`transparent`·`transparentAlternative`). 4곳."
       },
       "875": {
         "$type": "color",
@@ -181,7 +195,8 @@
             247.9382
           ],
           "hex": "#1A1B1C"
-        }
+        },
+        "$description": "다크의 기본 면(`bg.normal`)이자 라이트의 반전 배경(`inverse.background`). **두 테마가 서로의 반대편으로 쓰는 한 색**이다."
       },
       "900": {
         "$type": "color",
@@ -193,7 +208,8 @@
             286.2209
           ],
           "hex": "#161617"
-        }
+        },
+        "$description": "라이트의 기본 글자(`label.normal`)와 `primary.heavy`, 다크의 반전 글자와 모달 백드롭(`elevation.dim`). 4곳."
       },
       "910": {
         "$type": "color",
@@ -205,7 +221,8 @@
             196.9166
           ],
           "hex": "#161818"
-        }
+        },
+        "$description": "라이트 모달 백드롭(`elevation.dim`) 전용. `900` 과 휘도가 거의 같지만 색 기운이 달라 따로 둔다."
       },
       "925": {
         "$type": "color",
@@ -217,7 +234,8 @@
             286.2045
           ],
           "hex": "#131314"
-        }
+        },
+        "$description": "**라이트 그림자 5단계 전원의 base 색**(각 2레이어). 다크에서는 가장 깊은 면(`bg.elevatedAlternative`). 11곳."
       },
       "950": {
         "$type": "color",
@@ -229,7 +247,8 @@
             286.1694
           ],
           "hex": "#0E0E0F"
-        }
+        },
+        "$description": "다크의 보조 면(`bg.normalAlternative`) 전용. 다크에서 기본 면보다 더 낮은 층이다."
       },
       "1000": {
         "$type": "color",
@@ -241,8 +260,10 @@
             "none"
           ],
           "hex": "#000000"
-        }
-      }
+        },
+        "$description": "순흑. **가장 많이 참조된다(19곳).** 두 테마 `static.black`, **밝은 면 위 오버레이의 base**(`overlay.darken`), 라이트의 최강 글자(`label.strong`), 그리고 **다크 그림자 5단계 전원의 base**(각 2레이어)."
+      },
+      "$description": "무채색 — semantic 이 가장 많이 참조하는 계열이다. 유채색과 달리 **목표 휘도로 생성한 눈금이 아니라 역할에서 역산한 값**이라 단계 간격이 고르지 않다(0·50·75·100·150·200 … 900·910·925·950·1000).\n**라이트와 다크가 사다리의 양 끝을 나눠 쓴다** — 라이트는 위쪽(면)과 아래쪽(글자)을, 다크는 그 반대를 쓴다. `875` 처럼 한 색이 라이트의 반전 배경이자 다크의 기본 면인 경우가 그 구조 때문이다. 토큰별 `$description` 은 지어낸 용도가 아니라 **실제 참조처**다(0-17)."
     },
     "coolGray": {
       "450": {
@@ -255,7 +276,8 @@
             286.0612
           ],
           "hex": "#78787F"
-        }
+        },
+        "$description": "iOS 반투명 채움(`ios.fillSecondary`) 전용. 두 테마가 같은 값을 쓴다."
       },
       "500": {
         "$type": "color",
@@ -267,7 +289,8 @@
             269.4485
           ],
           "hex": "#70737B"
-        }
+        },
+        "$description": "**선과 면의 단일 base(13곳).** `line.*` 4종과 `fill.*` 3종이 두 테마 모두 이 색을 쓰고, 차이는 알파로만 낸다. 한 색이 이렇게 많은 역할을 받치는 것은 스케일이 하는 일이지 결함이 아니다(DECISIONS 0-12)."
       },
       "700": {
         "$type": "color",
@@ -279,7 +302,8 @@
             274.8181
           ],
           "hex": "#45464A"
-        }
+        },
+        "$description": "`cool.neutral30` 전용. **두 테마가 같은 색을 쓰는 유일한 텍스트 계열**이라 테마 적응형이 아니며, 역할이 정의돼 있지 않다(미결 5)."
       }
     },
     "blue": {
@@ -1725,101 +1749,125 @@
   "opacity": {
     "4": {
       "$type": "number",
-      "$value": 0.04
+      "$value": 0.04,
+      "$description": "사다리의 최소값. 연한 면 hover 오버레이 · 라이트 `shadow.xs` 의 번짐 층."
     },
     "5": {
       "$type": "number",
-      "$value": 0.05
+      "$value": 0.05,
+      "$description": "기본 hover 오버레이 · 라이트 `fill.alternative` · 라이트 `shadow.sm` 번짐 층."
     },
     "6": {
       "$type": "number",
-      "$value": 0.06
+      "$value": 0.06,
+      "$description": "연한 면 focus 오버레이 · 라이트 `shadow.md` 번짐 층."
     },
     "7": {
       "$type": "number",
-      "$value": 0.07
+      "$value": 0.07,
+      "$description": "라이트 `shadow.lg` 번짐 층 전용. 그림자에서만 쓴다."
     },
     "8": {
       "$type": "number",
-      "$value": 0.08
+      "$value": 0.08,
+      "$description": "**가장 많이 쓰이는 단계(7곳).** 기본 focus · 진한 면 hover 오버레이 · 라이트 `bg.transparent` · `line.alternative` · `fill.normal` · `shadow.xs`/`xl`."
     },
     "9": {
       "$type": "number",
-      "$value": 0.09
+      "$value": 0.09,
+      "$description": "연한 면 press 오버레이 전용."
     },
     "12": {
       "$type": "number",
-      "$value": 0.12
+      "$value": 0.12,
+      "$description": "기본 press · 진한 면 focus 오버레이 · 라이트 `shadow.sm` · 다크 `fill.alternative`."
     },
     "16": {
       "$type": "number",
-      "$value": 0.16
+      "$value": 0.16,
+      "$description": "비활성 글자(`label.disable`, 두 테마) · 라이트 `line.neutral` · `fill.strong` · `ios.fillSecondary` · `shadow.md`."
     },
     "18": {
       "$type": "number",
-      "$value": 0.18
+      "$value": 0.18,
+      "$description": "진한 면 press 오버레이 전용. **상호작용 사다리의 최대값**이다."
     },
     "20": {
       "$type": "number",
-      "$value": 0.2
+      "$value": 0.2,
+      "$description": "라이트 `shadow.lg` 전용."
     },
     "22": {
       "$type": "number",
-      "$value": 0.22
+      "$value": 0.22,
+      "$description": "라이트 `line.normal` · 다크 `line.alternative` · 다크 `fill.normal`."
     },
     "24": {
       "$type": "number",
-      "$value": 0.24
+      "$value": 0.24,
+      "$description": "라이트 `shadow.xl` · 다크 `shadow.xs`. 같은 값이 테마에 따라 다른 단계의 그림자에 쓰인다."
     },
     "28": {
       "$type": "number",
-      "$value": 0.28
+      "$value": 0.28,
+      "$description": "보조 글자(`label.assistive`, 두 테마) · 라이트 `bg.transparentAlternative` · 다크 `line.neutral` · `fill.strong`."
     },
     "30": {
       "$type": "number",
-      "$value": 0.3
+      "$value": 0.3,
+      "$description": "다크 `shadow.sm` 전용."
     },
     "32": {
       "$type": "number",
-      "$value": 0.32
+      "$value": 0.32,
+      "$description": "다크 `line.normal` 전용."
     },
     "36": {
       "$type": "number",
-      "$value": 0.36
+      "$value": 0.36,
+      "$description": "다크 `shadow.md` 전용."
     },
     "42": {
       "$type": "number",
-      "$value": 0.42
+      "$value": 0.42,
+      "$description": "다크 `shadow.lg` 전용."
     },
     "48": {
       "$type": "number",
-      "$value": 0.48
+      "$value": 0.48,
+      "$description": "다크 `shadow.xs` 전용."
     },
     "52": {
       "$type": "number",
-      "$value": 0.52
+      "$value": 0.52,
+      "$description": "`line.strong`(두 테마) · 라이트 모달 백드롭(`elevation.dim`) · 다크 `shadow.xl`."
     },
     "60": {
       "$type": "number",
-      "$value": 0.6
+      "$value": 0.6,
+      "$description": "`ios.glassBackground`(두 테마) · 다크 `bg.transparent` 와 `bg.transparentAlternative`."
     },
     "70": {
       "$type": "number",
-      "$value": 0.7
+      "$value": 0.7,
+      "$description": "라이트 `label.alternative` · 다크 `shadow.sm`."
     },
     "74": {
       "$type": "number",
-      "$value": 0.74
+      "$value": 0.74,
+      "$description": "다크 `label.alternative` · 다크 모달 백드롭(`elevation.dim`)."
     },
     "80": {
       "$type": "number",
-      "$value": 0.8
+      "$value": 0.8,
+      "$description": "다크 `shadow.md` 전용."
     },
     "88": {
       "$type": "number",
-      "$value": 0.88
+      "$value": 0.88,
+      "$description": "사다리의 최대값. `label.neutral`(두 테마) · 다크 `shadow.lg`/`xl`."
     },
-    "$description": "불투명도 스케일(키=백분율) — base 색과 합성해 반투명 토큰 생성. 알파는 상대 비율로 지각되므로 낮은 쪽이 촘촘하고 높은 쪽이 성기다(단계 비율 1.06~1.33). **1.03 미만으로 붙은 단계를 두지 않는다** — 육안으로 구분되지 않으면서 사다리만 흐린다(DECISIONS 0-12).",
+    "$description": "불투명도 스케일(키=백분율) — base 색과 합성해 반투명 토큰 생성. 알파는 상대 비율로 지각되므로 낮은 쪽이 촘촘하고 높은 쪽이 성기다(단계 비율 1.06~1.33). **1.03 미만으로 붙은 단계를 두지 않는다** — 육안으로 구분되지 않으면서 사다리만 흐린다(DECISIONS 0-12).\n\n소비자는 네 갈래다 — **상호작용 오버레이**(4~18) · **그림자**(4~88, 테마별로 다른 구간) · **선·면**(8~60) · **글자**(16~88). 한 단계를 여러 갈래가 함께 쓰는 것은 정상이다. 값이 겹치는 것이 아니라 같은 눈금을 참조하는 것이다(DECISIONS 0-5). **새 반투명 토큰이 필요하면 이 눈금에서 고르고, 없으면 여기에 단계를 추가한 뒤 참조한다** — 사용처에 숫자를 직접 적지 않는다. 각 단계의 `$description` 은 지어낸 용도가 아니라 **실제 참조처**다(0-17).",
     "$extensions": {
       "net.infobank.ds.foundation": [
         "Colors",
@@ -1829,14 +1877,15 @@
     }
   },
   "fontFamily": {
-    "$description": "글꼴 패밀리",
+    "$description": "글꼴 패밀리. **하나뿐이며 타이포 33개 전부가 이것을 참조한다** — 대체 글꼴 축이 없다는 뜻이다. 새 패밀리가 필요하면 여기에 추가하고 `typography.json` 에서 참조한다.",
     "base": {
       "$type": "fontFamily",
       "$value": [
         "Pretendard JP Variable",
         "Pretendard JP",
         "sans-serif"
-      ]
+      ],
+      "$description": "유일한 패밀리. 폴백 순서는 가변 → 정적 → 시스템이다 — 가변 글꼴이 있으면 굵기 4단계를 한 파일로 덮고, 없으면 정적판, 그마저 없으면 시스템 산세리프로 내려간다. 타이포 33개 전부가 참조한다."
     },
     "$extensions": {
       "net.infobank.ds.foundation": [
@@ -1845,22 +1894,26 @@
     }
   },
   "fontWeight": {
-    "$description": "글자 굵기",
+    "$description": "글자 굵기. 네 단계이며 `typography.json` 이 전부 소비한다. **역할군마다 기본 굵기가 다르다** — `title` 은 semibold 가 기본이고 `-strong` 이 bold, `body`·`link` 는 regular 가 기본이고 `-strong` 이 semibold, `label` 은 medium 이 기본이고 `-strong` 이 semibold 다.",
     "bold": {
       "$type": "fontWeight",
-      "$value": 700
+      "$value": 700,
+      "$description": "가장 굵다. `display` 2 · `heading` 4 · `title` 계열의 `-strong` 3, 그리고 compact 6 — 총 15곳. 제목 전용이다."
     },
     "semibold": {
       "$type": "fontWeight",
-      "$value": 600
+      "$value": 600,
+      "$description": "`title` 3개의 기본 굵기이자 `body`·`label` 계열 `-strong` 6개의 강조 굵기 — 총 9곳."
     },
     "medium": {
       "$type": "fontWeight",
-      "$value": 500
+      "$value": 500,
+      "$description": "`label` 3개의 기본 굵기 전용. 본문보다 살짝 무겁게 해 조작 요소의 글자를 구분한다."
     },
     "regular": {
       "$type": "fontWeight",
-      "$value": 400
+      "$value": 400,
+      "$description": "본문 기본. `body` 3 · `link` 3 — 총 6곳. 긴 글에 쓰는 유일한 굵기다."
     },
     "$extensions": {
       "net.infobank.ds.foundation": [
@@ -1874,79 +1927,90 @@
       "$value": {
         "value": 0.75,
         "unit": "rem"
-      }
+      },
+      "$description": "가장 작다. `body-sm` · `label-sm` · `link-sm` — 5곳. 스케일 최소값이며 그 아래 단계는 없다(미결 7)."
     },
     "14": {
       "$type": "dimension",
       "$value": {
         "value": 0.875,
         "unit": "rem"
-      }
+      },
+      "$description": "`body-md` · `label-md` · `link-md` — 5곳. 목록·표처럼 밀도가 필요한 본문."
     },
     "16": {
       "$type": "dimension",
       "$value": {
         "value": 1,
         "unit": "rem"
-      }
+      },
+      "$description": "**가장 많이 쓰인다(7곳).** `title-sm` · `body-lg` · `label-lg` · `link-lg`. 기본 본문 크기이자 작은 제목 크기다."
     },
     "18": {
       "$type": "dimension",
       "$value": {
         "value": 1.125,
         "unit": "rem"
-      }
+      },
+      "$description": "`title-md` 전용(2곳, 기본/강조). 16과 20 사이를 메운다."
     },
     "20": {
       "$type": "dimension",
       "$value": {
         "value": 1.25,
         "unit": "rem"
-      }
+      },
+      "$description": "base `title-lg` 와 **compact `heading-sm`** — 3곳. 여기서부터 compact 와 겹치기 시작한다."
     },
     "24": {
       "$type": "dimension",
       "$value": {
         "value": 1.5,
         "unit": "rem"
-      }
+      },
+      "$description": "base `heading-sm` 과 compact `heading-md` — 2곳."
     },
     "28": {
       "$type": "dimension",
       "$value": {
         "value": 1.75,
         "unit": "rem"
-      }
+      },
+      "$description": "base `heading-md` 와 compact `heading-lg` — 2곳."
     },
     "32": {
       "$type": "dimension",
       "$value": {
         "value": 2,
         "unit": "rem"
-      }
+      },
+      "$description": "base `heading-lg` 와 compact `display-md`·`heading-xl` — 3곳. compact 가 가장 많이 모이는 크기다."
     },
     "36": {
       "$type": "dimension",
       "$value": {
         "value": 2.25,
         "unit": "rem"
-      }
+      },
+      "$description": "base `heading-xl` 전용. compact 에서는 32로 내려간다."
     },
     "40": {
       "$type": "dimension",
       "$value": {
         "value": 2.5,
         "unit": "rem"
-      }
+      },
+      "$description": "base `display-md` 와 compact `display-lg` — 2곳."
     },
     "60": {
       "$type": "dimension",
       "$value": {
         "value": 3.75,
         "unit": "rem"
-      }
+      },
+      "$description": "가장 크다. base `display-lg` 전용. compact 에서는 40으로 내려간다."
     },
-    "$description": "글자 크기 — 숫자 키 = px 기준 rem 스케일(복합 타이포용).",
+    "$description": "글자 크기 — 숫자 키 = px 기준 rem 스케일(복합 타이포용). 키는 px 이고 값은 rem 이다 — 사용자 글자 확대에 반응하게 하려는 것이다. **compact 세트가 같은 눈금을 한 단계씩 내려 쓰므로 한 크기를 base 와 compact 가 함께 참조한다**(예: 32 는 base `heading-lg` 와 compact `display-md`·`heading-xl`).",
     "$extensions": {
       "net.infobank.ds.foundation": [
         "Typography"
@@ -2586,37 +2650,43 @@
     }
   },
   "safeArea": {
-    "$description": "세이프에어리어 인셋(플랫폼 상수).",
+    "$description": "세이프에어리어 인셋 — **눈금이 아니라 플랫폼 상수**다. 값 사이에 비율 관계가 없으므로 티어 검사 대상이 아니다.\n**웹에서는 쓰지 않는다.** 브라우저는 `env(safe-area-inset-*)` 로 실제 기기 값을 준다. 이 토큰은 그 함수를 못 쓰는 곳(네이티브 · 디자인 산출물 · 목업)에서 쓰는 공칭값이다.\n참조 0건이며 컴포넌트가 직접 고른다. **iOS 값(44 · 34)은 노치 기기의 통상값이지만 Android 값(36 · 14)의 근거는 기록이 없다** — 기기마다 달라 하나로 못 박기 어려운 값이라 컴포넌트 단계에서 재확인이 필요하다.",
     "status": {
+      "$description": "화면 위쪽 인셋 — 상태 표시줄·노치 영역. 상단 고정 헤더의 위 여백이 여기서 시작한다.",
       "ios": {
         "$type": "dimension",
         "$value": {
           "value": 44,
           "unit": "px"
-        }
+        },
+        "$description": "iOS 상단 인셋 공칭값. 노치·다이내믹 아일랜드 기기의 통상값이다."
       },
       "android": {
         "$type": "dimension",
         "$value": {
           "value": 36,
           "unit": "px"
-        }
+        },
+        "$description": "Android 상단 인셋 공칭값. 기기·제스처 설정마다 달라 근거 기록이 없다 — 컴포넌트 단계에서 재확인한다."
       }
     },
     "bottom": {
+      "$description": "화면 아래쪽 인셋 — 홈 인디케이터·제스처 바 영역. 하단 고정 바의 아래 여백이 여기서 시작한다.",
       "ios": {
         "$type": "dimension",
         "$value": {
           "value": 34,
           "unit": "px"
-        }
+        },
+        "$description": "iOS 하단 인셋 공칭값. 홈 인디케이터 영역이다."
       },
       "android": {
         "$type": "dimension",
         "$value": {
           "value": 14,
           "unit": "px"
-        }
+        },
+        "$description": "Android 하단 인셋 공칭값. 제스처 바 유무에 따라 달라 근거 기록이 없다 — 컴포넌트 단계에서 재확인한다."
       }
     },
     "$extensions": {

@@ -818,7 +818,7 @@ function pageComponents() {
         <tr><td class="body-md">3.3.7 Redundant Entry</td><td class="body-md">WCAG 2.2 신설 AA — 같은 정보를 다시 입력하게 하지 않는다</td></tr>
         <tr><td class="body-md">타이포–컴포넌트 매핑</td><td class="body-md">현재 <code>$description</code> 의 대표 컴포넌트는 크기만 보고 배분한 추정이다</td></tr>
         <tr><td class="body-md">오버레이 방향</td><td class="body-md"><code>primary</code> 처럼 테마와 반대로 뒤집히는 면은 오버레이도 테마별로 바꿔야 한다</td></tr>
-        <tr><td class="body-md">semantic 계층 비대칭</td><td class="body-md">색·그림자만 semantic 이 있다. <code>spacing</code>·<code>radius</code> 등은 primitive 를 직접 고른다</td></tr>
+        <tr><td class="body-md">컴포넌트 토큰 계층</td><td class="body-md">비색 토큰은 primitive 에서 컴포넌트로 바로 간다. 필요한 것은 semantic(테마 축)이 아니라 <b>의도 이름 계층</b>(<code>stack-gap</code>·<code>control-padding</code> 류)이며, 이름이 컴포넌트 문맥에서 나오므로 함께 만든다</td></tr>
       </tbody></table></div>
     </section>`
 }
