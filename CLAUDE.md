@@ -24,7 +24,7 @@
 - 값 형식 — `color` = `{colorSpace:"oklch", components:[L,C,H], hex:"#rrggbb"}` (**hex 문자열 단독은 무효**) · `dimension` = `{value, unit}` (`px`·`rem` 만, `none` 같은 키워드 불가) · `number` = JSON 숫자.
 - 계층: **primitive**(테마 무관 원시 값) → **semantic.light / semantic.dark**(색 역할, 같은 키·다른 참조) → **생성물**.
   `typography.json` 은 semantic 을 거치지 않고 **primitive 를 직접 참조**한다(색만 semantic 계층을 갖는다).
-  생성물은 `tokens.css` · `tokens.js` · `dist/tokens.{light,dark}.json`(테마별 단일 DTCG 문서) 셋이며, `DESIGN.md` 가 넷째로 추가될 예정이다(아래 절).
+  생성물은 `tokens.css` · `tokens.js` · `dist/tokens.{light,dark}.json`(테마별 단일 DTCG 문서) 셋이다.
 - 타이포는 **복합 토큰**(`$type:"typography"`, `typography.json`) 으로 관리한다. 스펙 9.8 이 요구하는 **5속성을 모두** 갖춰야 하고, 하위 타입이 정해져 있다.
   `fontFamily`=fontFamily · `fontSize`=dimension · `fontWeight`=fontWeight · `letterSpacing`=dimension · **`lineHeight`=number(fontSize 배수)**.
   행간 토큰 키는 `글자px-행간px`(예: `lineHeight.14-22`)이며 **짝지어진 글자 크기에서만 2px 그리드에 떨어진다** — 빌드가 짝을 검사한다.
@@ -46,30 +46,6 @@
 **스펙 밖의 값**
 - DTCG 타입으로 표현할 수 없는 값은 `$extensions."net.infobank.ds.cssRecipe": true` 로 표시하고 `DECISIONS.md` 에 근거를 남긴다.
 - **예외를 늘리지 않는다.** 먼저 스펙 타입으로 표현할 방법을 찾고, 정말 없을 때만 예외로 둔다.
-
-## DESIGN.md — DTCG 에서 생성한다
-
-**단일 원본은 DTCG JSON 이고 `DESIGN.md` 는 그걸로 만든 생성물이다.** 두 벌을 손으로 맞추지 않는다.
-
-**사람이 쓰는 것 두 가지**
-- `tokens/*.json` — 값과 `$description`
-- `narrative/*.md` — 산문 조각. 번호 접두사 순서대로 이어 붙인다 (**아직 없다**)
-
-**생성물 — 직접 편집하지 않는다**
-- `DESIGN.md` = front matter(토큰에서 추출) + 본문(`narrative/` 연결). 커밋한다 (**아직 없다**)
-- `tokens.css` · `tokens.js` · `dist/tokens.{light,dark}.json`
-
-**생성 규칙**
-- **front matter 에는 semantic 만 넣는다.** primitive 수백 개를 다 넣으면 읽는 쪽(사람·에이전트)에 노이즈이고 컨텍스트만 잡아먹는다. 우리 번들은 `semantic.` 접두사가 없으므로 **그룹 이름으로 걸러야 한다** — 이름 접두사로 거르는 코드는 우리 구조에서 동작하지 않는다.
-- **색은 hex 문자열로 변환한다.** DTCG 2025.10 의 `color` 는 `{colorSpace, components}` 구조이고 front matter 는 문자열을 기대한다. 반투명색은 `alpha` 가 있으므로 `rgba()` 로 낸다.
-- **`$description` 을 Do's and Don'ts 의 원천으로 쓴다.** "이 색은 파괴적 액션에만" 같은 규칙을 토큰 옆에 두고 생성 시점에 뽑아낸다. 그래서 `$description` 은 **지어내지 않고 실제 참조처·근거로 쓴다**(DECISIONS 0-17).
-- `$type` 만 보고 분류하지 않는다. `dimension` 은 `spacing` 뿐 아니라 `radius`·`breakpoint`·`layout`·`divider`·`focusRing`·`fontSize`·`letterSpacing`·`safeArea` 에도 걸린다 — **그룹으로 분류한다.**
-
-**표류 검사 (drift)**
-- CI 가 `DESIGN.md` 를 다시 만들어 커밋된 것과 다르면 실패시킨다. `tokens.css`·`dist/` 에 이미 쓰는 방식과 같다.
-- **토큰만 고치고 `DESIGN.md` 를 안 고친 변경은 머지되지 않게 한다.**
-
-**아직 정하지 않은 것** — front matter 는 색 하나에 값 하나인데 우리는 라이트·다크 두 벌이다. 어느 쪽을 넣을지, 둘 다 넣을지 정해야 한다(DECISIONS 미결 20).
 
 ## 하드코딩 절대 금지
 값을 직접 박지 않고 **토큰으로만** 표현한다.
