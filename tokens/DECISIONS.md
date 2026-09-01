@@ -958,6 +958,49 @@ DTCG 예외는 5건 그대로다(`gradient.fade` 4 + `radius.circle` 1). AA 192�
 
 ---
 
+### 0-20. `DESIGN.md` 를 생성물로 둔다 — 참고 스크립트의 전제 4건이 우리와 다르다
+
+2026-09-01. 방향을 정하고 `CLAUDE.md` 에 반영했다. **DTCG JSON 이 단일 원본이고 `DESIGN.md` 는 그걸로 만드는 생성물**이다.
+
+#### "DTCG 만 사람이 관리"는 정확하지 않다
+
+검토한 구성에서 사람이 쓰는 것은 **둘**이다.
+
+| | |
+|---|---|
+| `tokens/*.json` | 값과 `$description` |
+| `narrative/*.md` | 산문 조각 (아직 없음) |
+| ~~`DESIGN.md`~~ | **생성물** — front matter(토큰) + 본문(narrative 연결) |
+
+#### 참고 스크립트를 우리 리포에 대보니 네 곳이 맞지 않는다
+
+아직 만들지 않았지만, 만들 때 그대로 쓰면 조용히 빈 결과가 나오거나 CI 가 깨진다.
+
+| # | 참고안 | 우리 실제 |
+|---|---|---|
+| 1 | `dist/tokens.resolved.json` 을 읽는다 | **그 파일이 없다.** 우리는 `dist/tokens.light.json` · `tokens.dark.json` 둘이다 |
+| 2 | `name.startsWith('semantic.')` 로 거른다 | **번들에 `semantic.` 접두사가 없다.** 최상위가 `color`·`spacing`·`shadow` … 로 평탄하다. 이 필터는 **0건**을 반환한다 |
+| 3 | `$type === 'dimension'` → `spacing` | dimension 이 **70개**이고 `fontSize` 11 · `letterSpacing` 11 · `spacing` 15 · `radius` 8 · `layout` 12 · `breakpoint` 5 · `safeArea` 4 · `divider` 2 · `focusRing` 2 로 흩어진다. 타입이 아니라 **그룹으로 분류**해야 한다 |
+| 4 | CI 가 `npm ci` 를 쓴다 | `package-lock.json` 이 `.gitignore` 에 있어 **`npm ci` 가 실패한다.** `npm install` 을 쓰거나 lockfile 을 커밋해야 한다 |
+
+5번째로, 참고안은 GitLab CI(`.gitlab-ci.yml` · protected branch merge 조건)이고 우리는 GitHub Actions 다. drift 검사 자체는 **이미 같은 방식을 쓰고 있다** — `tokens.css`·`tokens.js`·`dist/` 가 재빌드 결과와 다르면 CI 가 실패한다. `DESIGN.md` 를 그 목록에 추가하면 된다.
+
+#### 채택하는 세 가지 판단
+
+참고안에서 그대로 가져올 만한 것들이다.
+
+1. **front matter 에는 semantic 만.** primitive 수백 개를 다 넣으면 사람에게도 에이전트에게도 노이즈다.
+2. **색은 hex 로 변환.** DTCG `color` 는 구조화된 값이고 front matter 는 문자열을 기대한다. 반투명색은 번들에 `alpha` 가 있으므로(0-19) `rgba()` 로 낸다.
+3. **`$description` 을 Do's and Don'ts 의 원천으로.** 규칙을 토큰 옆에 두고 생성 시점에 뽑는다. 이 판단은 `$description` 을 **지어내지 않고 실제 근거로 쓴다**는 0-17 의 방침과 맞물린다 — 지어낸 설명이 문서로 새어 나가면 더 나쁘다.
+
+#### 아직 정하지 않은 것
+
+front matter 는 색 하나에 값 하나인데 **우리는 라이트·다크 두 벌**이다. 어느 쪽을 넣을지, 둘 다 넣을지, 아니면 `DESIGN.md` 를 테마별로 둘 만들지 정해야 한다. 미결 20 으로 올렸다.
+
+**지금 만들지 않는다.** `narrative/` 도 없고 위 결정도 안 났다. 방향과 제약만 `CLAUDE.md` 에 박아두어, 만들 때 같은 함정을 다시 밟지 않게 했다.
+
+---
+
 ## 1. 색
 
 ### 1-1. 단계를 WCAG 상대휘도로 고정한다
@@ -1341,6 +1384,7 @@ semantic 이 참조하는 것은 400 과 600 뿐이다. 200 · 300 · 500 · 700
 | ~~12~~ | ~~**`ratio` 그룹 구조가 어긋남**~~ — **2026-08-27 해소(0-13)**. 평탄화 + 12개로 정리. |
 | ~~13~~ | ~~**`gradient.maskSize` 용도 미기록**~~ — **2026-09-01 해소(0-18)**. 5개 중 4개가 `spacing` 과 같은 값이라 새 눈금이 아니었다. 제거하고 페이드 길이는 `spacing` 을 쓴다. 48 결번도 이걸로 설명된다. |
 | 19 | **플랫폼 축 미도입** | `COMPOSITION` 의 modifier 는 `theme` 하나뿐이다. 플랫폼별로 값이 갈리는 역할(`safeArea` 4개)은 지금 **키 안에 플랫폼이 박혀 있다**(`safeArea.status.ios`). 임시 표현이며, 실제 iOS·Android 타깃이 생기면 테마처럼 **modifier 로 올려** `dist/tokens.ios.light.json` 처럼 갈라 내야 한다. **역할 이름에 플랫폼 접두사를 붙이지 않는다** — `color.ios.*` 가 그렇게 만들어졌다가 제거됐다(0-18). 소비자가 없는 지금 만들면 파일만 3배가 되므로 미룬다. |
+| 20 | **`DESIGN.md` 의 테마 축** | front matter 는 색 하나에 값 하나인데 우리는 라이트·다크 두 벌이다. ① 라이트만 넣기 ② 두 값을 함께 넣기(`{light, dark}`) ③ `DESIGN.light.md`·`DESIGN.dark.md` 로 나누기 중 정해야 한다. ①은 다크가 문서에서 사라지고, ②는 front matter 소비자가 문자열을 기대할 때 깨지며, ③은 산문이 두 번 복제된다. `DESIGN.md` 를 실제로 만들 때 정한다(0-20). |
 | 16 | **미디어 스크림 없음** | 사진·영상 위에 어두운 층을 깔아 글자 대비를 확보하는 수단이 없다. `elevation.dim` 은 균일한 모달 백드롭이라 대체가 안 된다. 미디어 컴포넌트 착수 시 만든다(0-15).<br>**어디에 두나 — `gradient` 안이 아니다.** `gradient.fade` 는 색이 없는(`currentColor`) 모양 레시피여서 primitive 에 있을 수 있다. 스크림은 특정 색을 갖고 AA 검증 대상이므로 **semantic** 이다 — `shadow` 가 같은 이유로 semantic 에 있는 것과 같다.<br>**형태 — 새 그라디언트 토큰이 아니라 색 토큰 하나면 된다.** `currentColor` 는 알파까지 실어 나른다(실측). `background-image: var(--gradient-fade-bottom); color: var(--color-scrim-…)` 로 모양은 재사용하고 색만 새로 둔다.<br>**불투명도** — 흰 사진(최악) 위 흰 글자 4.5:1 을 보장하는 임계 alpha 는 **0.5347**, `opacity` 눈금에서는 **`60`** 이 처음 통과한다.<br>**단서** — 위는 stop 2개짜리 단순 선형 페이드 기준이다. 밴딩을 피하려 곡선을 다듬어야 하면 새 그라디언트 토큰이 필요하고, 그때 두 가지가 걸린다 — `build.mjs` 가 `$type:"gradient"`(스펙 9.7)를 처리하지 못하고, `net.infobank.ds.alpha` 가 **토큰당 하나**라 stop 별로 다른 알파를 담을 그릇이 없다. |
 | 17 | **컴포넌트 토큰 계층 없음** | 비색 토큰은 primitive 에서 컴포넌트로 바로 간다 — 컴포넌트가 `--spacing-16` 을 직접 고른다. 필요한 것은 semantic(테마 축)이 아니라 **의도 이름 계층**이다: Primer 의 `--stack-gap-normal`·`--control-medium-paddingInline`, M3 의 `md.comp.*` 가 그 자리다. **컴포넌트 착수와 함께 만든다** — 이름이 컴포넌트 문맥에서 나오므로 먼저 지으면 추측이 된다(0-16). 그전까지는 primitive `$description` 으로 버틴다. |
 | ~~18~~ | ~~**무채색 팔레트 설명 없음**~~ — **2026-09-01 해소(0-17)**. `gray` 20 · `coolGray` 3 + 그룹 설명 1건을 실제 참조처 기준으로 작성했다. 값 변경 없음. |
