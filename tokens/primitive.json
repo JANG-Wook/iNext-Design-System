@@ -29,19 +29,6 @@
         },
         "$description": "라이트의 보조 면(`bg.*Alternative`)이자 다크의 기본 글자·주요색(`label.normal`·`primary.normal`). **라이트의 면이 다크에서는 글자가 된다** — 반전 쌍의 한쪽이다. 6곳."
       },
-      "75": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.970151,
-            0,
-            "none"
-          ],
-          "hex": "#F5F5F5"
-        },
-        "$description": "iOS 유리 배경(`ios.glassBackground`) 전용. 두 테마가 같은 값을 쓴다."
-      },
       "100": {
         "$type": "color",
         "$value": {
@@ -265,19 +252,6 @@
       }
     },
     "coolGray": {
-      "450": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "oklch",
-          "components": [
-            0.574994,
-            0.010614,
-            286.0612
-          ],
-          "hex": "#78787F"
-        },
-        "$description": "iOS 반투명 채움(`ios.fillSecondary`) 전용. 두 테마가 같은 값을 쓴다."
-      },
       "500": {
         "$type": "color",
         "$value": {
@@ -1390,7 +1364,7 @@
     "16": {
       "$type": "number",
       "$value": 0.16,
-      "$description": "비활성 글자(`label.disable`, 두 테마) · 라이트 `line.neutral` · `fill.strong` · `ios.fillSecondary` · `shadow.md`."
+      "$description": "비활성 글자(`label.disable`, 두 테마) · 라이트 `line.neutral` · `fill.strong` · `shadow.md`. 5곳."
     },
     "18": {
       "$type": "number",
@@ -1450,7 +1424,7 @@
     "60": {
       "$type": "number",
       "$value": 0.6,
-      "$description": "`ios.glassBackground`(두 테마) · 다크 `bg.transparent` 와 `bg.transparentAlternative`."
+      "$description": "다크 `bg.transparent` 와 `bg.transparentAlternative` 전용. 두 곳 다 같은 면의 반투명 변형이다."
     },
     "70": {
       "$type": "number",
