@@ -83,6 +83,17 @@ function colorVal(t){
 function valueOf(t){
   if (t.$type === 'color')       return colorVal(t)
   if (t.$type === 'dimension')   { const v = deref(t).$value; return `${v.value}${v.unit}` }
+  // duration 은 dimension 과 값 형태가 같다({value, unit}) — 단위만 ms·s 로 다르다(스펙 8.5).
+  if (t.$type === 'duration')    { const v = deref(t).$value; return `${v.value}${v.unit}` }
+  // cubicBezier 는 [P1x,P1y,P2x,P2y] 4수 배열이다(스펙 8.6).
+  if (t.$type === 'cubicBezier'){
+    const v = deref(t).$value
+    if (!Array.isArray(v) || v.length !== 4 || v.some(n => typeof n !== 'number'))
+      throw new Error(`cubicBezier 는 숫자 4개 배열이어야 한다(스펙 8.6): ${JSON.stringify(v)}`)
+    if (v[0] < 0 || v[0] > 1 || v[2] < 0 || v[2] > 1)
+      throw new Error(`cubicBezier 의 x 좌표는 [0,1] 이어야 한다(스펙 8.6): ${JSON.stringify(v)}`)
+    return `cubic-bezier(${v.join(', ')})`
+  }
   if (t.$type === 'number' || t.$type === 'fontWeight') return String(deref(t).$value)
   if (t.$type === 'fontFamily')  return t.$value.map(n => /\s/.test(n) ? `'${n}'` : n).join(', ')
   if (t.$type === 'shadow'){
@@ -126,7 +137,7 @@ function cssVar(pathArr){
 
 // ── CSS 생성 ───────────────────────────────────────────────────────
 // shadow 는 테마별 색을 쓰므로 primitive 가 아니라 semantic 에 있다(아래 semLines 참조).
-const NONCOLOR = ['fontFamily','fontWeight','fontSize','lineHeight','letterSpacing','spacing','radius','ratio','gradient','interaction','divider','focusRing','breakpoint','layout','safeArea','opacity']
+const NONCOLOR = ['fontFamily','fontWeight','fontSize','lineHeight','letterSpacing','spacing','radius','ratio','gradient','interaction','divider','focusRing','duration','cubicBezier','zIndex','breakpoint','layout','safeArea','opacity']
 // primitive 에 그룹을 추가하면 이 목록에도 넣어야 CSS·JS 로 나간다.
 for (const g of Object.keys(prim)) if (!g.startsWith('$') && g !== 'color' && !NONCOLOR.includes(g))
   throw new Error(`primitive.${g} 가 NONCOLOR 목록에 없어 산출물에서 누락된다`)

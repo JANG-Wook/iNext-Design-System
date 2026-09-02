@@ -76,6 +76,28 @@ function checkValue(type, v, where) {
         add('오류','Color 4.1',where,`hex 가 6자리 표기가 아님: ${v.hex}`)
       break }
     case 'dimension': dimOK(v, where, '$value'); break
+    // 8.5 duration — {value, unit} 이며 단위는 ms·s 뿐이다. dimension 과 형태만 같고 단위 집합이 다르다.
+    case 'duration': {
+      if (isAlias(v)) { const n = look(v)
+        if (!isTok(n)) add('오류','3.8',where,`별칭 대상 없음: ${v}`)
+        else if (rType(n) !== 'duration') add('오류','8.5',where,'별칭이 duration 이 아님')
+        break }
+      if (!v || typeof v !== 'object' || typeof v.value !== 'number' || typeof v.unit !== 'string')
+        add('오류','8.5 duration',where,`{value,unit} 객체가 아님: ${JSON.stringify(v)}`)
+      else if (!['ms','s'].includes(v.unit))
+        add('오류','8.5 duration 단위',where,`단위가 ms·s 가 아님: "${v.unit}"`)
+      break }
+    // 8.6 cubicBezier — 숫자 4개 [P1x,P1y,P2x,P2y], x 좌표만 [0,1] 로 제한된다.
+    case 'cubicBezier': {
+      if (isAlias(v)) { const n = look(v)
+        if (!isTok(n)) add('오류','3.8',where,`별칭 대상 없음: ${v}`)
+        else if (rType(n) !== 'cubicBezier') add('오류','8.6',where,'별칭이 cubicBezier 가 아님')
+        break }
+      if (!Array.isArray(v) || v.length !== 4 || !v.every(n => typeof n === 'number'))
+        add('오류','8.6 cubicBezier',where,`숫자 4개 배열이 아님: ${JSON.stringify(v)}`)
+      else if (v[0] < 0 || v[0] > 1 || v[2] < 0 || v[2] > 1)
+        add('오류','8.6 cubicBezier',where,`x 좌표가 [0,1] 밖: ${JSON.stringify(v)}`)
+      break }
     case 'number': if (typeof v !== 'number') add('오류','8.7 number',where,`JSON 숫자가 아님: ${JSON.stringify(v)}`); break
     case 'fontFamily':
       if (typeof v === 'string') break

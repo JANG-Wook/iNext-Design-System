@@ -298,7 +298,9 @@ function shortVal(t) {
     if (v.unit !== undefined) return v.value + v.unit
     return '복합 ' + Object.keys(v).length + '속성'
   }
-  /* 배열은 두 종류다 — fontFamily(문자열 목록)와 shadow(레이어 객체 목록) */
+  /* 배열은 세 종류다 — cubicBezier(수 4개)·fontFamily(문자열 목록)·shadow(레이어 객체 목록).
+     타입으로 먼저 가른다. 값 모양만 보면 cubicBezier 가 shadow 로 오인된다. */
+  if (t.$type === 'cubicBezier' && Array.isArray(v)) return 'cubic-bezier(' + v.join(', ') + ')'
   if (Array.isArray(v)) return v.every(x => typeof x === 'string') ? v.join(' · ') : v.length + '개 레이어'
   return String(v)
 }

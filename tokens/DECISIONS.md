@@ -1417,6 +1417,77 @@ Pretendard JP Variable 이 `wght` 외 축을 갖는지는 **확인하지 못했�
 
 ---
 
+### 0-27. 모션·쌓임 토큰을 신설한다 — 컴포넌트 착수 전 마지막 공백
+
+2026-09-02. 컴포넌트 P0 목록을 검토하다 **모션 토큰과 쌓임 순서 토큰이 0개**임을 확인했다. 저장소 전체 검색에서 `duration` · `cubicBezier` · `transition` · `zIndex` 어느 것도 없었다.
+
+그런데 P0 가 전부 요구한다 — Loading(스피너 회전) · Switch(thumb 전환) · Tooltip(페이드 + 쌓임 순서 전부) · `prefers-reduced-motion`(끌 대상이 있어야 한다).
+
+#### 예외를 만들지 않았다 — 셋 다 스펙 안이다
+
+처음에는 *"z-index 는 `cssRecipe` 예외가 된다"* 고 적었다. **틀렸다.** z-index 는 단위 없는 수라 DTCG `number` 가 그대로 덮는다(`lineHeight` · `interaction.opacity` 와 같다).
+
+| 그룹 | 타입 | 스펙 |
+|---|---|---|
+| `duration` | `duration` | 8.5 — `{value, unit}`, 단위는 `ms`·`s` |
+| `cubicBezier` | `cubicBezier` | 8.6 — `[P1x, P1y, P2x, P2y]`, x 는 [0,1] |
+| `zIndex` | `number` | 8.7 |
+
+**새 `cssRecipe` 예외 0건.** 예외는 5건 그대로다.
+
+#### 곡선 값을 지어내지 않았다
+
+`cubicBezier` 4개는 **CSS `<easing-function>` 키워드의 정의값을 그대로** 썼다 — `linear` `[0,0,1,1]` · `standard`=`ease-in-out` `[0.42,0,0.58,1]` · `enter`=`ease-out` `[0,0,0.58,1]` · `exit`=`ease-in` `[0.42,0,1,1]`. 출처가 명확하고 브라우저 기본 동작과 어긋나지 않는다. 이름은 곡선 모양이 아니라 **하는 일**로 지었다(`overlay.darken/lighten` 과 같은 규칙).
+
+#### 파운데이션 — Motion 을 신설하지 않고 Interaction 에 넣었다
+
+12번째 파운데이션(Motion) 신설을 먼저 제안했으나 **Interaction 편입으로 결정했다.** 파운데이션 수가 11 로 유지되고 `CLAUDE.md` 수정이 사라진다.
+
+**대가는 정직하게 적었다** — 스피너 루프·토스트 자동 닫힘은 조작과 무관한데 Interaction 아래 있게 된다. `duration` 그룹 `$description` 에 이 범위를 명시했다. `opacity` 가 `Colors · Elevation · Interaction` 셋에 걸치면서 공유 사실을 적어둔 것과 같은 처리다.
+
+`zIndex` 는 **Elevation** 이다 — `shadow` · `color.elevation.dim` 과 같은 z축 개념이라 자연스럽게 맞는다. 덕분에 산문 배치도 파운데이션을 따라간다(모션 → `07-interaction.md`, 쌓임 → `06-elevation.md`).
+
+#### `transition` 복합은 만들지 않았다
+
+스펙 9.5 는 `duration` + `delay` + `timingFunction` 을 **셋 다 필수**로 요구한다(그래서 `duration.0` 이 필요하다 — 지연이 없어도 값을 넣어야 하고 원시값 인라인은 금지다).
+
+만들려면 `transition.enter` 같은 **의도 이름**을 지어야 하는데 그게 미결 17 이 경고하는 지점이다 — *"이름이 컴포넌트 문맥에서 나오므로 먼저 지으면 추측이 된다."* `duration`·`cubicBezier` 는 **눈금**이라 지금 만들어도 추측이 아니다. 조합은 Button 을 만들면서 짓는다.
+
+#### `prefers-reduced-motion` 을 토큰으로 끄지 않는다
+
+빌드가 `@media (prefers-reduced-motion: reduce) { :root { --duration-*: 0ms } }` 를 낼 수도 있었다. **하지 않았다 — 스피너까지 멈춘다.** 로딩 표시는 진행 중이라는 정보를 전달하므로 reduced-motion 에서도 살려두거나 회전이 아닌 형태로 바꾸는 것이 접근성 관점의 정답이다. 일괄 0ms 는 틀린 처리다. 컴포넌트가 각자 판단하고, 규칙만 산문에 적었다.
+
+#### 검사기도 함께 고쳤다
+
+감사 스크립트가 두 새 타입을 검증하지 않고 *"검사기가 다루지 않는 타입"* 정보 11건으로 흘려보내고 있었다. 8.5·8.6 검증을 추가했다(단위 집합 · 배열 길이 · x 좌표 범위 · 별칭 타입 일치).
+
+**검사기가 실제로 잡는지 일부러 깨뜨려 확인했다** — `cubicBezier` x 를 1.5 로, `duration` 단위를 `px` 로 바꾸니 감사 오류 2건, 빌드도 실패했다. 복원 후 오류 0. 검출기를 검증 없이 두지 않는다(0-21 에서 하드코딩 린터에 같은 절차를 밟았다).
+
+#### 뷰어 둘이 새 타입을 몰랐다 — 세 번째 같은 사고
+
+`CLAUDE.md` 가 경고하는 그대로였다. *"토큰 값의 형식을 바꾸면 JSON 을 직접 읽는 소비자 전부를 같이 고친다."*
+
+- `guide.html` — 배열을 **fontFamily 아니면 shadow** 둘 중 하나로 가정해 `cubicBezier` 를 **"4개 레이어"** 로 표시했다. 값 모양만 보면 구분이 안 된다.
+- `preview.html` — `$type` 으로 분기하는데 새 타입이 없어 `duration` 이 `[object Object]`, `cubicBezier` 가 원본 배열로 새어 나왔다.
+
+둘 다 **`$type` 으로 먼저 가르도록** 고쳤다. 빌드가 잡아주지 못하는 부류이고 0-6 · 0-7 에 이어 세 번째다.
+
+#### 곁들여 — 산문의 자기모순을 고쳤다
+
+`narrative/07-interaction.md` 가 본문에서 *"오버레이 방향도 테마별로 바꿔야 한다"* 라 하고 "하지 말 것"에서 *"오버레이를 테마로 고르지 마라"* 라 하고 있었다. 사용자 문서의 오해가 여기서 나온 것으로 보인다. 규칙은 면 밝기이고, 뒤집히는 면에서는 **결과적으로** 테마별 선택자가 필요해진다는 것으로 다시 썼다(0-14 보강과 같은 내용).
+
+#### 결과
+
+```
+프리미티브 +18   duration 7 · cubicBezier 4 · zIndex 7
+그룹        22 → 25 (파운데이션은 11 그대로)
+토큰 합계   415 → 433
+CSS 변수    150 → 168
+검증        DTCG 오류 0 · 예외 5 · 정보 0 / AA 168건 미달 0 / 하드코딩 0건
+```
+
+---
+
 ## 1. 색
 
 ### 1-1. 단계를 WCAG 상대휘도로 고정한다

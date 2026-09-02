@@ -355,6 +355,33 @@ export const focusRing = {
   "offset": "2px"
 }
 
+export const duration = {
+  "0": "0ms",
+  "100": "100ms",
+  "150": "150ms",
+  "200": "200ms",
+  "300": "300ms",
+  "500": "500ms",
+  "1000": "1000ms"
+}
+
+export const cubicBezier = {
+  "linear": "cubic-bezier(0, 0, 1, 1)",
+  "standard": "cubic-bezier(0.42, 0, 0.58, 1)",
+  "enter": "cubic-bezier(0, 0, 0.58, 1)",
+  "exit": "cubic-bezier(0.42, 0, 1, 1)"
+}
+
+export const zIndex = {
+  "base": "0",
+  "sticky": "100",
+  "dropdown": "200",
+  "backdrop": "300",
+  "modal": "400",
+  "toast": "500",
+  "tooltip": "600"
+}
+
 export const breakpoint = {
   "xs": "0px",
   "sm": "768px",

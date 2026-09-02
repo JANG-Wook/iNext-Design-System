@@ -2212,6 +2212,161 @@
       ]
     }
   },
+  "duration": {
+    "$description": "전환 길이 — DTCG `duration`(ms). 키는 ms 이고 값도 ms 다. **Interaction 파운데이션에 두었으나 조작 피드백 전용은 아니다** — 스피너 루프·토스트 자동 닫힘처럼 사용자 조작과 무관한 모션도 이 눈금을 공유한다(`opacity` 가 세 파운데이션에 걸쳐 있는 것과 같은 사정이다). **아직 소비자가 없다** — 컴포넌트 착수 전이라 참조 0건이며, 의도 이름 조합(`transition` 복합)은 컴포넌트 문맥에서 짓는다(미결 17).",
+    "0": {
+      "$type": "duration",
+      "$value": {
+        "value": 0,
+        "unit": "ms"
+      },
+      "$description": "지연 없음. DTCG `transition` 은 `delay` 를 필수로 요구하므로 지연이 없어도 쓸 값이 필요하다. 즉시 완료에도 쓴다."
+    },
+    "100": {
+      "$type": "duration",
+      "$value": {
+        "value": 100,
+        "unit": "ms"
+      },
+      "$description": "상태 오버레이(hover·press). 가장 빈번한 전환이라 가장 짧다."
+    },
+    "150": {
+      "$type": "duration",
+      "$value": {
+        "value": 150,
+        "unit": "ms"
+      },
+      "$description": "작은 컨트롤 — Switch thumb, Tooltip 페이드. 이탈(exit)은 진입보다 짧게 잡는 것이 정석이라 여기서 고른다."
+    },
+    "200": {
+      "$type": "duration",
+      "$value": {
+        "value": 200,
+        "unit": "ms"
+      },
+      "$description": "패널 열림 — Dropdown, Accordion."
+    },
+    "300": {
+      "$type": "duration",
+      "$value": {
+        "value": 300,
+        "unit": "ms"
+      },
+      "$description": "큰 표면 — Popup, Bottom Sheet, Toast. 이동 거리가 길어 더 걸린다."
+    },
+    "500": {
+      "$type": "duration",
+      "$value": {
+        "value": 500,
+        "unit": "ms"
+      },
+      "$description": "느린 강조 · Skeleton 셔머 1주기."
+    },
+    "1000": {
+      "$type": "duration",
+      "$value": {
+        "value": 1000,
+        "unit": "ms"
+      },
+      "$description": "루프 1주기 — Loading 스피너 1회전. **1회성 전환이 아니라 무한 반복이라 자릿수가 다르다.**"
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Interaction"
+      ]
+    }
+  },
+  "cubicBezier": {
+    "$description": "가속 곡선 — DTCG `cubicBezier` `[P1x, P1y, P2x, P2y]`. **값을 새로 만들지 않고 CSS `<easing-function>` 키워드의 정의값을 그대로 쓴다** — 출처가 명확하고 브라우저 기본 동작과 어긋나지 않는다. 이름은 곡선 모양이 아니라 **하는 일**이다(`color.interaction.overlay.darken/lighten` 과 같은 규칙). `duration` 과 같은 이유로 Interaction 에 두었고, 아직 소비자가 없다.",
+    "linear": {
+      "$type": "cubicBezier",
+      "$value": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "$description": "등속 = CSS `linear`. 루프 전용 — 스피너가 등속이 아니면 이음매에서 끊겨 보인다."
+    },
+    "standard": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.42,
+        0,
+        0.58,
+        1
+      ],
+      "$description": "기본 = CSS `ease-in-out`. 양끝이 부드럽다. 상태 전환의 기본값."
+    },
+    "enter": {
+      "$type": "cubicBezier",
+      "$value": [
+        0,
+        0,
+        0.58,
+        1
+      ],
+      "$description": "진입 = CSS `ease-out`. 빠르게 시작해 부드럽게 멈춘다 — 나타나는 요소."
+    },
+    "exit": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.42,
+        0,
+        1,
+        1
+      ],
+      "$description": "이탈 = CSS `ease-in`. 부드럽게 시작해 빠르게 사라진다 — 사라지는 요소."
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Interaction"
+      ]
+    }
+  },
+  "zIndex": {
+    "$description": "쌓임 순서 — DTCG `number`. 단위 없는 수라 스펙 타입이 그대로 덮는다(예외 아님). **100 간격**으로 두어 사이에 끼워 넣을 여지를 남긴다. `shadow`·`color.elevation.dim` 과 같은 z축 개념이라 Elevation 에 속한다. 포털·스크롤 잠금·중첩 오버레이 닫힘 순서는 토큰이 아니라 컴포넌트 규약이다. 아직 소비자가 없다.",
+    "base": {
+      "$type": "number",
+      "$value": 0,
+      "$description": "일반 콘텐츠. 쌓임 맥락을 만들지 않는 기준선."
+    },
+    "sticky": {
+      "$type": "number",
+      "$value": 100,
+      "$description": "고정 요소 — Top Navigation, 테이블 헤더. 콘텐츠 위, 팝오버 아래."
+    },
+    "dropdown": {
+      "$type": "number",
+      "$value": 200,
+      "$description": "앵커에 붙는 팝오버 — Select, Dropdown, Date Picker. 모달 배경막보다 아래라 모달이 열리면 가려진다."
+    },
+    "backdrop": {
+      "$type": "number",
+      "$value": 300,
+      "$description": "모달 뒤 어두운 막. `color.elevation.dim` 과 짝이다."
+    },
+    "modal": {
+      "$type": "number",
+      "$value": 400,
+      "$description": "Popup, Bottom Sheet. 배경막 바로 위."
+    },
+    "toast": {
+      "$type": "number",
+      "$value": 500,
+      "$description": "Toast, Snackbar. **모달보다 위다** — 모달이 열린 상태에서 뜬 알림이 가려지면 안 된다."
+    },
+    "tooltip": {
+      "$type": "number",
+      "$value": 600,
+      "$description": "최상위. **토스트보다 위다** — 모달 안 요소의 툴팁이 모달 위에 그려져야 한다."
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Elevation"
+      ]
+    }
+  },
   "safeArea": {
     "$description": "세이프에어리어 인셋 — **눈금이 아니라 플랫폼 상수**다. 값 사이에 비율 관계가 없으므로 티어 검사 대상이 아니다.\n**웹에서는 쓰지 않는다.** 브라우저는 `env(safe-area-inset-*)` 로 실제 기기 값을 준다. 이 토큰은 그 함수를 못 쓰는 곳(네이티브 · 디자인 산출물 · 목업)에서 쓰는 공칭값이다.\n참조 0건이며 컴포넌트가 직접 고른다. **iOS 값(44 · 34)은 노치 기기의 통상값이지만 Android 값(36 · 14)의 근거는 기록이 없다** — 기기마다 달라 하나로 못 박기 어려운 값이라 컴포넌트 단계에서 재확인이 필요하다.",
     "status": {

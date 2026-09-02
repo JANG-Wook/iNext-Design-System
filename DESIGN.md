@@ -6,7 +6,7 @@ spec: DTCG 2025.10 (Format · Color Module, Final Community Group Report)
 source: tokens/primitive.json + tokens/semantic.light.json + tokens/semantic.dark.json + tokens/typography.json
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
-scope: 색·그림자 66 · 그 외 150 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
+scope: 색·그림자 66 · 그 외 168 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
 typography:
   "base.display-lg":
     class: display-lg
@@ -812,6 +812,63 @@ focusRing:
   offset:
     value: "2px"
     note: 요소와 링 사이 간격. 링이 컴포넌트 색 위에 겹치지 않게 한다.
+duration:
+  0:
+    value: "[object Object]"
+    note: 지연 없음. DTCG `transition` 은 `delay` 를 필수로 요구하므로 지연이 없어도 쓸 값이 필요하다. 즉시 완료에도 쓴다.
+  100:
+    value: "[object Object]"
+    note: 상태 오버레이(hover·press). 가장 빈번한 전환이라 가장 짧다.
+  150:
+    value: "[object Object]"
+    note: 작은 컨트롤 — Switch thumb, Tooltip 페이드. 이탈(exit)은 진입보다 짧게 잡는 것이 정석이라 여기서 고른다.
+  200:
+    value: "[object Object]"
+    note: 패널 열림 — Dropdown, Accordion.
+  300:
+    value: "[object Object]"
+    note: 큰 표면 — Popup, Bottom Sheet, Toast. 이동 거리가 길어 더 걸린다.
+  500:
+    value: "[object Object]"
+    note: 느린 강조 · Skeleton 셔머 1주기.
+  1000:
+    value: "[object Object]"
+    note: 루프 1주기 — Loading 스피너 1회전. **1회성 전환이 아니라 무한 반복이라 자릿수가 다르다.**
+cubicBezier:
+  linear:
+    value: "0,0,1,1"
+    note: 등속 = CSS `linear`. 루프 전용 — 스피너가 등속이 아니면 이음매에서 끊겨 보인다.
+  standard:
+    value: "0.42,0,0.58,1"
+    note: 기본 = CSS `ease-in-out`. 양끝이 부드럽다. 상태 전환의 기본값.
+  enter:
+    value: "0,0,0.58,1"
+    note: 진입 = CSS `ease-out`. 빠르게 시작해 부드럽게 멈춘다 — 나타나는 요소.
+  exit:
+    value: "0.42,0,1,1"
+    note: 이탈 = CSS `ease-in`. 부드럽게 시작해 빠르게 사라진다 — 사라지는 요소.
+zIndex:
+  base:
+    value: 0
+    note: 일반 콘텐츠. 쌓임 맥락을 만들지 않는 기준선.
+  sticky:
+    value: 100
+    note: 고정 요소 — Top Navigation, 테이블 헤더. 콘텐츠 위, 팝오버 아래.
+  dropdown:
+    value: 200
+    note: 앵커에 붙는 팝오버 — Select, Dropdown, Date Picker. 모달 배경막보다 아래라 모달이 열리면 가려진다.
+  backdrop:
+    value: 300
+    note: 모달 뒤 어두운 막. `color.elevation.dim` 과 짝이다.
+  modal:
+    value: 400
+    note: Popup, Bottom Sheet. 배경막 바로 위.
+  toast:
+    value: 500
+    note: Toast, Snackbar. **모달보다 위다** — 모달이 열린 상태에서 뜬 알림이 가려지면 안 된다.
+  tooltip:
+    value: 600
+    note: 최상위. **토스트보다 위다** — 모달 안 요소의 툴팁이 모달 위에 그려져야 한다.
 safeArea:
   status-ios:
     value: "44px"
@@ -1168,6 +1225,24 @@ Material(12sp)을 밑돈다. WCAG·KWCAG 에 최소 글자 크기 조항은 없�
 `bg.normal` 과 `bg.elevated` 가 3:1 이 되려면 그 테마를 포기해야 한다. 물리적으로 불가능하다.
 **면은 지각 힌트, 경계는 보더**로 역할을 나눈다.
 
+### 쌓임 순서는 `--z-index-*` 로만 정한다
+
+`z-index` 에 임의의 수를 쓰지 않는다. 눈금이 있고 **100 간격**이라 사이에 끼워 넣을 여지가 있다.
+
+```
+base 0 · sticky 100 · dropdown 200 · backdrop 300 · modal 400 · toast 500 · tooltip 600
+```
+
+순서에는 이유가 있다.
+
+- **`toast` 가 `modal` 보다 위다** — 모달이 열린 상태에서 뜬 알림이 가려지면 안 된다.
+- **`tooltip` 이 `toast` 보다 위다** — 모달 안 요소의 툴팁이 모달 위에 그려져야 한다.
+- **`dropdown` 이 `backdrop` 보다 아래다** — 모달이 열리면 뒤의 열린 드롭다운은 가려지는 것이 맞다.
+
+**쌓임 맥락(stacking context)에 갇히면 z-index 는 무력하다.** `transform`·`filter`·`opacity`·
+`will-change` 가 걸린 조상이 있으면 그 안에 갇힌다. 오버레이 계열은 포털로 `body` 아래에
+붙이는 것을 기본으로 한다 — 이건 토큰이 아니라 컴포넌트 규약이다.
+
 ### 모달 백드롭
 
 `--color-elevation-dim` 은 균일한 딤이다. **사진 위 스크림으로 쓰지 마라** — 그건 그라디언트가
@@ -1185,14 +1260,24 @@ hover·focus·press 는 면 위에 반투명 층을 얹어 표현한다. **테�
 어두운 면 위 → --color-interaction-overlay-lighten-{hovered,focused,pressed}
 ```
 
-**`primary` 처럼 테마와 반대로 뒤집히는 면이 있다** — 라이트에서 어둡고 다크에서 밝다. 그런
-면은 오버레이 방향도 테마별로 바꿔야 한다. 중립 회색 하나로는 버튼과 카드가 서로 반대로
-움직인다.
+**`primary` 처럼 테마와 반대로 뒤집히는 면이 있다** — 라이트에서 어둡고 다크에서 밝다.
+그래서 라이트 테마 안에 흰 배경(밝음)과 검은 버튼(어두움)이 **동시에** 있다. 테마는 면의
+밝기를 알려주지 못한다. 중립 회색 하나로는 버튼과 카드가 서로 반대로 움직인다.
+
+뒤집히는 면에서는 규칙을 따르느라 **결과적으로** 테마별 선택자가 필요해진다. 규칙이 테마인
+것이 아니라, 면이 테마를 따라 뒤집히기 때문이다.
 
 ```css
+/* primary 는 라이트에서 어둡다 → lighten */
 .btn-primary:hover::after { background: var(--color-interaction-overlay-lighten-hovered); }
+/* 다크에서는 밝아진다 → darken. 규칙(면 밝기)은 그대로다 */
 [data-theme="dark"] .btn-primary:hover::after { background: var(--color-interaction-overlay-darken-hovered); }
 ```
+
+뒤집히지 않는 면(`bg.*` 등)은 테마별 선택자가 필요 없다.
+
+M3 는 같은 문제를 콘텐츠(`on-`) 색으로, Primer 는 역할별 명시 토큰으로 푼다. **셋 다 면을
+따라가며 테마를 따라가지 않는다**(DECISIONS 0-14).
 
 강도는 `--interaction-opacity-*` 에 티어(면이 얼마나 짙은가) × 상태로 있다. semantic 에는
 `normal` 티어만 색으로 올려 두었고, `light`·`strong` 이 필요하면 숫자를 직접 쓴다.
@@ -1207,6 +1292,39 @@ outline: var(--focus-ring-width) solid var(--color-interaction-focus);
 outline-offset: var(--focus-ring-offset);
 ```
 
+### 모션 — 길이와 곡선
+
+`duration` 은 ms 눈금, `cubicBezier` 는 가속 곡선이다. 둘 다 Interaction 파운데이션에 있다.
+
+```css
+transition: background-color var(--duration-100) var(--cubic-bezier-standard);
+```
+
+**곡선 이름은 하는 일이다.**
+
+| | 언제 |
+|---|---|
+| `--cubic-bezier-standard` | 상태 전환 기본. 양끝이 부드럽다 |
+| `--cubic-bezier-enter` | 나타나는 요소 |
+| `--cubic-bezier-exit` | 사라지는 요소. **진입보다 짧게 잡는다** |
+| `--cubic-bezier-linear` | 루프 전용. 스피너가 등속이 아니면 이음매에서 끊겨 보인다 |
+
+값은 새로 만들지 않고 CSS `ease-in-out`·`ease-out`·`ease-in`·`linear` 의 정의값을 그대로 썼다.
+
+**`prefers-reduced-motion` 을 토큰으로 일괄 처리하지 않는다.** duration 을 전부 0 으로 덮으면
+스피너까지 멈춘다. 로딩 표시는 정보를 전달하므로 살려두거나 회전이 아닌 형태로 바꾼다.
+**컴포넌트가 각자 판단한다.**
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .panel { transition-duration: var(--duration-0); }   /* 위치 이동은 없앤다 */
+  /* 스피너는 그대로 둔다 — 정보 전달 수단이다 */
+}
+```
+
+`transition` 복합 토큰(`duration` + `delay` + `timingFunction`)은 **아직 없다.** 의도 이름이
+컴포넌트 문맥에서 나오므로 먼저 지으면 추측이 된다.
+
 ### 가장자리 페이드
 
 `--gradient-fade-*` 의 키는 **불투명한 가장자리**, 곧 페이드를 놓는 자리다. 색이
@@ -1216,6 +1334,8 @@ outline-offset: var(--focus-ring-offset);
 ### 하지 말 것
 
 - **오버레이를 테마로 고르지 마라.** 면의 밝기로 고른다.
+- **`transition` 에 값을 직접 쓰지 마라.** `--duration-*` · `--cubic-bezier-*` 를 쓴다.
+- **reduced-motion 에서 스피너를 멈추지 마라.** 진행 중이라는 정보가 사라진다.
 - **포커스 링을 `outline: none` 으로 지우지 마라.** 키보드 사용자가 위치를 잃는다.
 - **오버레이가 포커스 링을 대체하지 않는다.** 둘은 함께 쓴다.
 

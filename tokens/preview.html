@@ -205,6 +205,10 @@ function valueOf(t) {
   const v = t.$value
   if (t.$type === 'color' && v && typeof v === 'object') return hexOf(v)
   if (t.$type === 'dimension') { const d = resolveAliasTok(t).$value; return `${d.value}${d.unit}` }
+  /* duration 은 dimension 과 값 형태가 같고 단위만 ms·s 다(스펙 8.5) */
+  if (t.$type === 'duration') { const d = resolveAliasTok(t).$value; return `${d.value}${d.unit}` }
+  /* cubicBezier 는 수 4개 배열이다(스펙 8.6). 타입으로 걸러야 shadow 로 오인되지 않는다 */
+  if (t.$type === 'cubicBezier') return `cubic-bezier(${resolveAliasTok(t).$value.join(', ')})`
   if (t.$type === 'number' || t.$type === 'fontWeight') return String(resolveAliasTok(t).$value)
   if (t.$type === 'fontFamily') return v.map(n => /\s/.test(n) ? `'${n}'` : n).join(', ')
   if (t.$type === 'shadow') return (Array.isArray(v) ? v : [v])
