@@ -15,6 +15,8 @@ html, body, #root { margin: 0; padding: 0; }
   --font-weight-semibold: 600;
   --font-weight-medium: 500;
   --font-weight-regular: 400;
+  --font-size-10: 0.625rem;
+  --font-size-11: 0.6875rem;
   --font-size-12: 0.75rem;
   --font-size-14: 0.875rem;
   --font-size-16: 1rem;
@@ -26,6 +28,8 @@ html, body, #root { margin: 0; padding: 0; }
   --font-size-36: 2.25rem;
   --font-size-40: 2.5rem;
   --font-size-60: 3.75rem;
+  --line-height-10-14: 1.4;
+  --line-height-11-14: 1.272727;
   --line-height-12-16: 1.333333;
   --line-height-12-18: 1.5;
   --line-height-14-20: 1.428571;
@@ -40,6 +44,8 @@ html, body, #root { margin: 0; padding: 0; }
   --line-height-36-44: 1.222222;
   --line-height-40-52: 1.3;
   --line-height-60-72: 1.2;
+  --letter-spacing-10: 0rem;
+  --letter-spacing-11: 0rem;
   --letter-spacing-12: 0rem;
   --letter-spacing-14: 0rem;
   --letter-spacing-16: -0.01rem;
@@ -393,6 +399,7 @@ html, body, #root { margin: 0; padding: 0; }
 .label-md-strong { font-family: var(--font-family-base); font-size: var(--font-size-14); line-height: var(--line-height-14-20); font-weight: var(--font-weight-semibold); letter-spacing: var(--letter-spacing-14); }
 .label-sm { font-family: var(--font-family-base); font-size: var(--font-size-12); line-height: var(--line-height-12-16); font-weight: var(--font-weight-medium); letter-spacing: var(--letter-spacing-12); }
 .label-sm-strong { font-family: var(--font-family-base); font-size: var(--font-size-12); line-height: var(--line-height-12-16); font-weight: var(--font-weight-semibold); letter-spacing: var(--letter-spacing-12); }
+.label-xs { font-family: var(--font-family-base); font-size: var(--font-size-11); line-height: var(--line-height-11-14); font-weight: var(--font-weight-medium); letter-spacing: var(--letter-spacing-11); }
 .link-lg { font-family: var(--font-family-base); font-size: var(--font-size-16); line-height: var(--line-height-16-26); font-weight: var(--font-weight-regular); letter-spacing: var(--letter-spacing-16); text-decoration-line: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
 .link-md { font-family: var(--font-family-base); font-size: var(--font-size-14); line-height: var(--line-height-14-22); font-weight: var(--font-weight-regular); letter-spacing: var(--letter-spacing-14); text-decoration-line: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
 .link-sm { font-family: var(--font-family-base); font-size: var(--font-size-12); line-height: var(--line-height-12-18); font-weight: var(--font-weight-regular); letter-spacing: var(--letter-spacing-12); text-decoration-line: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
@@ -405,4 +412,5 @@ html, body, #root { margin: 0; padding: 0; }
   .heading-lg { font-size: var(--font-size-28); line-height: var(--line-height-28-36); letter-spacing: var(--letter-spacing-28); }
   .heading-md { font-size: var(--font-size-24); line-height: var(--line-height-24-32); letter-spacing: var(--letter-spacing-24); }
   .heading-sm { font-size: var(--font-size-20); line-height: var(--line-height-20-28); letter-spacing: var(--letter-spacing-20); }
+  .label-xs { font-size: var(--font-size-10); line-height: var(--line-height-10-14); letter-spacing: var(--letter-spacing-10); }
 }

@@ -1,5 +1,5 @@
 {
-  "$description": "복합 타이포그래피 토큰(DTCG typography). base=웹 뷰포트≥768, compact=<768 & iOS/Android 오버라이드(display/heading만). 빌드가 CSS 유틸리티 클래스로 출력. 모든 속성은 primitive 별칭 — 행간은 2px 그리드(px 키/rem 값), 자간은 크기밴드. link는 $extensions 로 밑줄 지정. 각 토큰의 컴포넌트 매핑은 대표 예시이며 망라가 아니다 — 컴포넌트 구현 단계에서 다듬는다.",
+  "$description": "복합 타이포그래피 토큰(DTCG typography). base=뷰포트≥768, compact=<768 오버라이드. **compact 에 담는 기준은 크기가 아니라 '뷰포트에 따라 값이 달라져야 하는가' 다** — display·heading 6종은 좁은 화면에서 넘치지 않게 한 단계 내리고, label-xs 는 밀도를 위해 내린다. 20px 이하 나머지는 좁은 화면에서도 그대로 둔다(DECISIONS 0-25). 빌드가 CSS 유틸리티 클래스로 출력. 모든 속성은 primitive 별칭 — 행간은 2px 그리드(px 키/rem 값), 자간은 크기밴드. link는 $extensions 로 밑줄 지정. 각 토큰의 컴포넌트 매핑은 대표 예시이며 망라가 아니다 — 컴포넌트 구현 단계에서 다듬는다.",
   "typography": {
     "base": {
       "display-lg": {
@@ -266,6 +266,17 @@
         },
         "$description": "label-sm 의 강조 변형(semibold). 용도 동일, 굵기만 다르다."
       },
+      "label-xs": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.11}",
+          "fontWeight": "{fontWeight.medium}",
+          "lineHeight": "{lineHeight.11-14}",
+          "letterSpacing": "{letterSpacing.11}"
+        },
+        "$description": "밀집 UI 크롬 라벨. 차트 축 레이블, 타임스탬프, 배지, 조밀 테이블. **아이콘·수치와 짝지어진 보조 정보에만 쓴다** — 단독 전달 금지. 좁은 화면(<768px)에서 10px 로 내려간다. `-strong` 변형은 수요가 확인되기 전까지 두지 않는다(DECISIONS 0-25)."
+      },
       "link-lg": {
         "$type": "typography",
         "$value": {
@@ -387,6 +398,17 @@
           "letterSpacing": "{letterSpacing.20}"
         },
         "$description": "heading-sm 의 모바일 오버라이드(뷰포트 <768px). 용도 동일, 크기·행간만 축소된다."
+      },
+      "label-xs": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.10}",
+          "fontWeight": "{fontWeight.medium}",
+          "lineHeight": "{lineHeight.10-14}",
+          "letterSpacing": "{letterSpacing.10}"
+        },
+        "$description": "label-xs 의 모바일 오버라이드(뷰포트 <768px). **이 그룹에서 유일하게 축소 이유가 다르다** — 제목 6종은 넘침 방지, 이것은 좁은 화면의 밀도 확보다. 행간은 base 와 같은 14px 라 전환 시 높이가 흔들리지 않는다."
       }
     },
     "$extensions": {

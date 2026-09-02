@@ -1486,13 +1486,29 @@
     }
   },
   "fontSize": {
+    "10": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.625,
+        "unit": "rem"
+      },
+      "$description": "가장 작다. compact `label-xs` 전용 — 1곳. **아이콘·수치와 짝지어진 보조 라벨에만 쓴다**(탭바 라벨, 차트 축, 배지). Apple HIG 권장 최소 11pt·Material 12sp 를 밑돌므로 텍스트가 유일한 전달 수단인 곳에는 쓰지 않는다(DECISIONS 0-25)."
+    },
+    "11": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.6875,
+        "unit": "rem"
+      },
+      "$description": "base `label-xs` 전용 — 1곳. 밀집 UI 크롬의 기본 크기이며 Apple HIG 권장 최소(11pt)와 같다. 좁은 화면에서는 compact 가 10 으로 내린다."
+    },
     "12": {
       "$type": "dimension",
       "$value": {
         "value": 0.75,
         "unit": "rem"
       },
-      "$description": "가장 작다. `body-sm` · `label-sm` · `link-sm` — 5곳. 스케일 최소값이며 그 아래 단계는 없다(미결 7)."
+      "$description": "`body-sm` · `label-sm` · `link-sm` — 5곳. 본문으로 쓸 수 있는 최소 크기다. 그 아래 10·11 은 `label-xs` 전용이며 본문에 쓰지 않는다."
     },
     "14": {
       "$type": "dimension",
@@ -1574,7 +1590,7 @@
       },
       "$description": "가장 크다. base `display-lg` 전용. compact 에서는 40으로 내려간다."
     },
-    "$description": "글자 크기 — 숫자 키 = px 기준 rem 스케일(복합 타이포용). 키는 px 이고 값은 rem 이다 — 사용자 글자 확대에 반응하게 하려는 것이다. **compact 세트가 같은 눈금을 한 단계씩 내려 쓰므로 한 크기를 base 와 compact 가 함께 참조한다**(예: 32 는 base `heading-lg` 와 compact `display-md`·`heading-xl`).",
+    "$description": "글자 크기 — 숫자 키 = px 기준 rem 스케일(복합 타이포용). 키는 px 이고 값은 rem 이다 — 사용자 글자 확대에 반응하게 하려는 것이다. **compact 세트가 같은 눈금을 한 단계씩 내려 쓰므로 한 크기를 base 와 compact 가 함께 참조한다**(예: 32 는 base `heading-lg` 와 compact `display-md`·`heading-xl`). 10·11 은 예외로 `label-xs` 전용이며 다른 계열에 쓰지 않는다.",
     "$extensions": {
       "net.infobank.ds.foundation": [
         "Typography"
@@ -1583,6 +1599,16 @@
   },
   "lineHeight": {
     "$description": "행간 — DTCG 2025.10 은 typography 의 lineHeight 를 `number`(fontSize 배수)로 요구한다. 키는 `글자px-행간px` 로, 2px 그리드에서 나온 설계 근거를 이름이 담는다. **짝지어진 글자 크기에서만 그리드에 떨어진다** — 다른 크기와 조합하면 안 되고, 빌드가 검사한다.",
+    "10-14": {
+      "$type": "number",
+      "$value": 1.4,
+      "$description": "10px 글자에 14px 행간. 1개 토큰이 쓴다. **`11-14` 와 라인박스가 같은 14px 다** — compact 전환에서 탭바 높이가 흔들리지 않게 한 것이다."
+    },
+    "11-14": {
+      "$type": "number",
+      "$value": 1.272727,
+      "$description": "11px 글자에 14px 행간. 1개 토큰이 쓴다. `10-14` 와 짝이며 라인박스가 같은 14px 다."
+    },
     "12-16": {
       "$type": "number",
       "$value": 1.333333,
@@ -1660,6 +1686,22 @@
     }
   },
   "letterSpacing": {
+    "10": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0,
+        "unit": "rem"
+      },
+      "$description": "10px 전용 — none 밴드(0em) 파생. 1개 토큰이 쓴다. 작은 글자는 자간을 넓히는 것이 정석이나 밴드에 양수가 없어 0 이다(DECISIONS 0-25 · 한계)."
+    },
+    "11": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0,
+        "unit": "rem"
+      },
+      "$description": "11px 전용 — none 밴드(0em) 파생. 1개 토큰이 쓴다. `10` 과 같은 한계를 공유한다."
+    },
     "12": {
       "$type": "dimension",
       "$value": {

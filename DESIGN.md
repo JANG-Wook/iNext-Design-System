@@ -6,7 +6,7 @@ spec: DTCG 2025.10 (Format · Color Module, Final Community Group Report)
 source: tokens/primitive.json + tokens/semantic.light.json + tokens/semantic.dark.json + tokens/typography.json
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
-scope: 색·그림자 66 · 그 외 144 · 타이포 클래스 33. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
+scope: 색·그림자 66 · 그 외 150 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
 typography:
   "base.display-lg":
     class: display-lg
@@ -176,6 +176,13 @@ typography:
     fontWeight: 600
     letterSpacing: "0rem"
     note: label-sm 의 강조 변형(semibold). 용도 동일, 굵기만 다르다.
+  "base.label-xs":
+    class: label-xs
+    fontSize: "0.6875rem"
+    lineHeight: 1.272727
+    fontWeight: 500
+    letterSpacing: "0rem"
+    note: 밀집 UI 크롬 라벨. 차트 축 레이블, 타임스탬프, 배지, 조밀 테이블. **아이콘·수치와 짝지어진 보조 정보에만 쓴다** — 단독 전달 금지. 좁은 화면(<768px)에서 10px 로 내려간다. `-strong` 변형은 수요가 확인되기 전까지 두지 않는다(DECISIONS 0-25).
   "base.link-lg":
     class: link-lg
     fontSize: "1rem"
@@ -239,6 +246,13 @@ typography:
     fontWeight: 700
     letterSpacing: "-0.0125rem"
     note: heading-sm 의 모바일 오버라이드(뷰포트 <768px). 용도 동일, 크기·행간만 축소된다.
+  "compact.label-xs":
+    class: label-xs (compact)
+    fontSize: "0.625rem"
+    lineHeight: 1.4
+    fontWeight: 500
+    letterSpacing: "0rem"
+    note: label-xs 의 모바일 오버라이드(뷰포트 <768px). **이 그룹에서 유일하게 축소 이유가 다르다** — 제목 6종은 넘침 방지, 이것은 좁은 화면의 밀도 확보다. 행간은 base 와 같은 14px 라 전환 시 높이가 흔들리지 않는다.
 color:
   label-strong:
     light: "#000000"
@@ -534,9 +548,15 @@ fontWeight:
     value: 400
     note: 본문 기본. `body` 3 · `link` 3 — 총 6곳. 긴 글에 쓰는 유일한 굵기다.
 fontSize:
+  10:
+    value: "0.625rem"
+    note: 가장 작다. compact `label-xs` 전용 — 1곳. **아이콘·수치와 짝지어진 보조 라벨에만 쓴다**(탭바 라벨, 차트 축, 배지). Apple HIG 권장 최소 11pt·Material 12sp 를 밑돌므로 텍스트가 유일한 전달 수단인 곳에는 쓰지 않는다(DECISIONS 0-25).
+  11:
+    value: "0.6875rem"
+    note: base `label-xs` 전용 — 1곳. 밀집 UI 크롬의 기본 크기이며 Apple HIG 권장 최소(11pt)와 같다. 좁은 화면에서는 compact 가 10 으로 내린다.
   12:
     value: "0.75rem"
-    note: 가장 작다. `body-sm` · `label-sm` · `link-sm` — 5곳. 스케일 최소값이며 그 아래 단계는 없다(미결 7).
+    note: "`body-sm` · `label-sm` · `link-sm` — 5곳. 본문으로 쓸 수 있는 최소 크기다. 그 아래 10·11 은 `label-xs` 전용이며 본문에 쓰지 않는다."
   14:
     value: "0.875rem"
     note: "`body-md` · `label-md` · `link-md` — 5곳. 목록·표처럼 밀도가 필요한 본문."
@@ -568,6 +588,12 @@ fontSize:
     value: "3.75rem"
     note: 가장 크다. base `display-lg` 전용. compact 에서는 40으로 내려간다.
 lineHeight:
+  10-14:
+    value: 1.4
+    note: "10px 글자에 14px 행간. 1개 토큰이 쓴다. **`11-14` 와 라인박스가 같은 14px 다** — compact 전환에서 탭바 높이가 흔들리지 않게 한 것이다."
+  11-14:
+    value: 1.272727
+    note: "11px 글자에 14px 행간. 1개 토큰이 쓴다. `10-14` 와 짝이며 라인박스가 같은 14px 다."
   12-16:
     value: 1.333333
     note: "12px 글자에 16px 행간. 2개 토큰이 쓴다."
@@ -611,6 +637,12 @@ lineHeight:
     value: 1.2
     note: "60px 글자에 72px 행간. 1개 토큰이 쓴다."
 letterSpacing:
+  10:
+    value: "0rem"
+    note: "10px 전용 — none 밴드(0em) 파생. 1개 토큰이 쓴다. 작은 글자는 자간을 넓히는 것이 정석이나 밴드에 양수가 없어 0 이다(DECISIONS 0-25 · 한계)."
+  11:
+    value: "0rem"
+    note: "11px 전용 — none 밴드(0em) 파생. 1개 토큰이 쓴다. `10` 과 같은 한계를 공유한다."
   12:
     value: "0rem"
     note: "12px 전용 — none 밴드(0em) 파생. 5개 토큰이 쓴다."
@@ -1026,12 +1058,33 @@ DESIGN.md                      이 문서
 
 ### compact 는 자동이다
 
-뷰포트가 좁으면 `display`·`heading` 6종이 한 단계씩 내려간다. 클래스를 바꿀 필요가 없다.
+뷰포트가 768px 미만이면 7종이 자동으로 내려간다. 클래스를 바꿀 필요가 없다.
+
+담는 기준은 **크기가 아니라 "뷰포트에 따라 값이 달라져야 하는가"** 다.
+
+- `display`·`heading` 6종 — 좁은 화면에서 **넘치지 않게** 한 단계 내린다.
+- `label-xs` — 좁은 화면의 **밀도**를 위해 11px → 10px 로 내린다. 행간은 양쪽 다 14px 라
+  전환 시 높이가 흔들리지 않는다.
+
+`title`·`body`·`label`·`link` 의 나머지 21종은 20px 이하라 좁은 화면에서도 넘치지 않는다.
+**모바일에서 본문을 더 작게 만들지 않는다** — compact 는 축소 장치가 아니다.
+
+### 11px·10px 은 `label-xs` 뿐이다
+
+밀집 UI 크롬 전용이다 — 차트 축 레이블, 타임스탬프, 배지, 조밀 테이블, 탭바 라벨.
+
+**아이콘이나 수치와 짝지어진 보조 정보에만 쓴다.** 10px 은 Apple HIG 권장 최소(11pt)와
+Material(12sp)을 밑돈다. WCAG·KWCAG 에 최소 글자 크기 조항은 없어 위반은 아니지만,
+**텍스트가 유일한 전달 수단인 곳에는 쓰지 않는다.** 그 조건이 이 크기를 정당화하는 유일한
+근거다.
+
+본문·링크에는 없다. 본문 최소는 `body-sm`(12px)이다.
 
 ### 하지 말 것
 
 - **`font-size`·`line-height` 를 직접 쓰지 마라.** 클래스를 쓴다.
-- **10px 이하를 만들지 마라.** 스케일 최소가 12px 이고, 그보다 작으면 접근성 권장 최소를 밑돈다.
+- **`label-xs` 를 본문·링크·단독 정보에 쓰지 마라.** 아이콘·수치와 짝지어진 보조 라벨 전용이다.
+- **10px 아래를 만들지 마라.** `label-xs` 의 compact 값이 스케일 최소다.
 - **본문 행간을 1.5 아래로 내리지 마라.**
 
 ## 여백 · 레이아웃

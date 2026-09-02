@@ -221,6 +221,8 @@ export const fontWeight = {
 }
 
 export const fontSize = {
+  "10": "0.625rem",
+  "11": "0.6875rem",
   "12": "0.75rem",
   "14": "0.875rem",
   "16": "1rem",
@@ -235,6 +237,8 @@ export const fontSize = {
 }
 
 export const lineHeight = {
+  "10-14": "1.4",
+  "11-14": "1.272727",
   "12-16": "1.333333",
   "12-18": "1.5",
   "14-20": "1.428571",
@@ -252,6 +256,8 @@ export const lineHeight = {
 }
 
 export const letterSpacing = {
+  "10": "0rem",
+  "11": "0rem",
   "12": "0rem",
   "14": "0rem",
   "16": "-0.01rem",
@@ -593,6 +599,13 @@ export const typography = {
       "fontFamily": "'Pretendard JP Variable', 'Pretendard JP', sans-serif",
       "fontWeight": 600
     },
+    "label-xs": {
+      "fontSize": "0.6875rem",
+      "lineHeight": "1.272727",
+      "letterSpacing": "0rem",
+      "fontFamily": "'Pretendard JP Variable', 'Pretendard JP', sans-serif",
+      "fontWeight": 500
+    },
     "link-lg": {
       "fontSize": "1rem",
       "lineHeight": "1.625",
@@ -660,6 +673,13 @@ export const typography = {
       "letterSpacing": "-0.0125rem",
       "fontFamily": "'Pretendard JP Variable', 'Pretendard JP', sans-serif",
       "fontWeight": 700
+    },
+    "label-xs": {
+      "fontSize": "0.625rem",
+      "lineHeight": "1.4",
+      "letterSpacing": "0rem",
+      "fontFamily": "'Pretendard JP Variable', 'Pretendard JP', sans-serif",
+      "fontWeight": 500
     }
   }
 }
