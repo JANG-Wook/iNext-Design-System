@@ -533,7 +533,7 @@ opacity:
 fontFamily:
   base:
     value: Pretendard JP Variable, Pretendard JP, sans-serif
-    note: 유일한 패밀리. 폴백 순서는 가변 → 정적 → 시스템이다 — 가변 글꼴이 있으면 굵기 4단계를 한 파일로 덮고, 없으면 정적판, 그마저 없으면 시스템 산세리프로 내려간다. 타이포 33개 전부가 참조한다.
+    note: 유일한 패밀리. 폴백 순서는 가변 → 정적 → 시스템이다 — 가변 글꼴이 있으면 굵기 4단계를 한 파일로 덮고, 없으면 정적판, 그마저 없으면 시스템 산세리프로 내려간다. 타이포 35개 전부가 참조한다.
 fontWeight:
   bold:
     value: 700
