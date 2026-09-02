@@ -44,7 +44,9 @@ outline-offset: var(--focus-ring-offset);
 
 ### 모션 — 길이와 곡선
 
-`duration` 은 ms 눈금, `cubicBezier` 는 가속 곡선이다. 둘 다 Interaction 파운데이션에 있다.
+`duration` 은 ms 눈금, `cubicBezier` 는 가속 곡선이다. 둘 다 **Motion** 파운데이션이다 — 조작
+피드백(hover·press)과 조작과 무관한 모션(스피너 루프·토스트 자동 닫힘)이 한 눈금을 공유하므로
+Interaction 아래 두지 않았다.
 
 ```css
 transition: background-color var(--duration-100) var(--cubic-bezier-standard);

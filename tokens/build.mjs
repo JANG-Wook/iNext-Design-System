@@ -236,7 +236,7 @@ function assertLineHeightPairing(){
 // $extensions 에 배열로 적고, 배정 누락·오타·미사용을 빌드가 검사한다.
 // 1:N 을 허용하므로 공유 스케일(opacity)은 참조하는 곳을 전부 나열한다.
 const FOUNDATIONS = ['Typography','Colors','Elevation','Spacing','Breakpoint','Radius',
-                     'Layout','Divider','Interaction','Effects','Ratio']
+                     'Layout','Divider','Interaction','Motion','Effects','Ratio']
 const FND = 'net.infobank.ds.foundation'
 function assertFoundationsAssigned(){
   const claimed = new Set()

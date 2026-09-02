@@ -38,7 +38,7 @@
 **그룹 나누는 기준**
 - primitive 그룹은 **하나의 눈금(스케일)** 또는 **하나의 설정 묶음** 단위로 나눈다. 타입이 같아도 눈금이 다르면 다른 그룹이다 — `dimension` 이 9그룹인 이유다. 스펙은 그룹을 임의 조직 수단으로 규정하고 **그룹에서 타입·용도를 추론하지 말라고 한다.**
 - 파운데이션은 **문서 축**이지 파일 구조가 아니다. 파운데이션 → 그룹 배정은 **1:N** 을 허용한다.
-  **11개다** — Typography · Colors · Elevation · Spacing · Breakpoint · Radius · Layout · Divider · Interaction · Effects · Ratio.
+  **12개다** — Typography · Colors · Elevation · Spacing · Breakpoint · Radius · Layout · Divider · Interaction · Motion · Effects · Ratio.
   배정은 그룹의 `$extensions."net.infobank.ds.foundation"` 배열에 적는다. 누락·오타·미사용을 빌드가 검사하고, `preview.html` 내비게이션도 이 값을 읽는다.
 - **티어 이름(`xs`~`xl`)을 쓰면 값이 이름 순서를 따라야 한다.** 빌드가 검사하며, 의도적 역순은 `build.mjs` 의 `TIER_EXEMPT` 에 이유와 함께 등록한다(DECISIONS 0-10).
 - 여러 파운데이션이 참조하는 스케일(`opacity`)은 어느 한 곳에 귀속시키지 않고 **참조하는 곳을 전부 나열**한다.

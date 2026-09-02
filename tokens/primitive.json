@@ -2213,7 +2213,7 @@
     }
   },
   "duration": {
-    "$description": "전환 길이 — DTCG `duration`(ms). 키는 ms 이고 값도 ms 다. **Interaction 파운데이션에 두었으나 조작 피드백 전용은 아니다** — 스피너 루프·토스트 자동 닫힘처럼 사용자 조작과 무관한 모션도 이 눈금을 공유한다(`opacity` 가 세 파운데이션에 걸쳐 있는 것과 같은 사정이다). **아직 소비자가 없다** — 컴포넌트 착수 전이라 참조 0건이며, 의도 이름 조합(`transition` 복합)은 컴포넌트 문맥에서 짓는다(미결 17).",
+    "$description": "전환 길이 — DTCG `duration`(ms). 키는 ms 이고 값도 ms 다. 조작 피드백(hover·press)과 조작과 무관한 모션(스피너 루프·토스트 자동 닫힘)이 **한 눈금을 공유**하므로 Interaction 이 아니라 **Motion** 파운데이션에 둔다. **아직 소비자가 없다** — 컴포넌트 착수 전이라 참조 0건이며, 의도 이름 조합(`transition` 복합)은 컴포넌트 문맥에서 짓는다(미결 17).",
     "0": {
       "$type": "duration",
       "$value": {
@@ -2272,12 +2272,12 @@
     },
     "$extensions": {
       "net.infobank.ds.foundation": [
-        "Interaction"
+        "Motion"
       ]
     }
   },
   "cubicBezier": {
-    "$description": "가속 곡선 — DTCG `cubicBezier` `[P1x, P1y, P2x, P2y]`. **값을 새로 만들지 않고 CSS `<easing-function>` 키워드의 정의값을 그대로 쓴다** — 출처가 명확하고 브라우저 기본 동작과 어긋나지 않는다. 이름은 곡선 모양이 아니라 **하는 일**이다(`color.interaction.overlay.darken/lighten` 과 같은 규칙). `duration` 과 같은 이유로 Interaction 에 두었고, 아직 소비자가 없다.",
+    "$description": "가속 곡선 — DTCG `cubicBezier` `[P1x, P1y, P2x, P2y]`. **값을 새로 만들지 않고 CSS `<easing-function>` 키워드의 정의값을 그대로 쓴다** — 출처가 명확하고 브라우저 기본 동작과 어긋나지 않는다. 이름은 곡선 모양이 아니라 **하는 일**이다(`color.interaction.overlay.darken/lighten` 과 같은 규칙). `duration` 과 짝이라 같은 **Motion** 파운데이션에 있고, 아직 소비자가 없다.",
     "linear": {
       "$type": "cubicBezier",
       "$value": [
@@ -2320,7 +2320,7 @@
     },
     "$extensions": {
       "net.infobank.ds.foundation": [
-        "Interaction"
+        "Motion"
       ]
     }
   },
