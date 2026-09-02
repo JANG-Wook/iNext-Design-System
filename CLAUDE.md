@@ -140,6 +140,7 @@ CSS 선언만 보고 템플릿 보간·`var()` 는 검사하지 않는다. 정�
 - KWCAG 2.2 에는 WCAG 1.4.11 에 해당하는 검사항목이 **없다**. 3:1 은 WCAG 만의 요구다.
 - 1.4.11 도 *"컴포넌트를 **식별**하는 데 필요한 시각 정보"* 가 대상이라, 모달·카드의 **컨테이너 면 자체**는 대상으로 보기 어렵다. 면끼리 3:1 은 물리적으로도 불가능하니 요구하지 않는다.
 - 면은 지각 힌트, **경계는 보더**가 담당한다.
+- **다만 보더는 규정 근거가 있다 — KWCAG 5.4.4(콘텐츠 간의 구분).** *"이웃한 콘텐츠는 시각적으로 구분될 수 있도록 제공해야 한다."* **WCAG 에 대응 조항이 없는 국내 전용 항목**이다. **수치 기준은 없고** 준수 방법 첫 번째가 "테두리를 이용하여 구분"이라, 보더를 두면 만족한다(DECISIONS 4-1 · 0-24). 두 기준은 포함 관계가 아니다 — WCAG 에만 1.4.11 이, KWCAG 에만 5.4.4 가 있다.
 
 **포커스 (KWCAG 6.1.2 · WCAG 2.4.7)**
 - 링 색은 `color.interaction.focus`, 두께·간격은 `focusRing.width` · `focusRing.offset`.
@@ -147,7 +148,7 @@ CSS 선언만 보고 템플릿 보간·`var()` 는 검사하지 않는다. 정�
 
 **컴포넌트 단계에서 확인할 것 (지금은 토큰으로 못 정함)**
 - 조작 영역 — KWCAG 6.1.3 **6.0mm 이상**(물리 크기) · WCAG 2.5.8 **24×24 CSS px**. 둘은 다른 단위라 각각 확인한다.
-- WCAG 2.2 신설 AA — 2.4.11 Focus Not Obscured, 2.5.7 Dragging Movements, 3.3.7 Redundant Entry.
+- WCAG 2.2 신설 — **AA**: 2.4.11 Focus Not Obscured · 2.5.7 Dragging Movements · 2.5.8 Target Size · 3.3.8 Accessible Authentication(Minimum) / **A**: 3.2.6 Consistent Help · 3.3.7 Redundant Entry. **AA 준수는 A 를 포함하므로 등급과 무관하게 전부 지킨다.**
 
 ## 완료 전 검증
 - 토큰을 수정했으면 "완료" 전에 `npm run build:tokens` 로 재생성한다.
