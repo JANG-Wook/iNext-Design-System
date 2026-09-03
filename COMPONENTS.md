@@ -402,7 +402,11 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
 
 상태       inactive  (기본)  aria-disabled="true"
                             포커스 받는다 · 활성화된다 · 눌리면 사유를 안내한다
-           disabled  (예외)  네이티브 disabled
+                            라벨은 label.neutral 이다 — label.disable 은 1.29:1 로 미달이고
+                            조작 가능하므로 WCAG 1.4.3 예외로 볼 수 없다 (0-32)
+                            비활성 신호는 배경·보더·커서가 함께 담당한다 (KWCAG 5.4.1)
+           disabled  (예외)  네이티브 disabled · 라벨은 label.disable
+                            포커스도 활성화도 안 되는 진짜 inactive 라 1.4.3 예외가 적용된다
                             사유를 알릴 방법이 정말 없을 때만 · 쓰면 근거를 남긴다
            loading           aria-busy="true" · 접근 이름은 유지한다
                             스피너는 prefers-reduced-motion 에서도 멈추지 않는다 (0-27)
@@ -450,13 +454,8 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
            비활성 상태를 색만으로 표현하지 마라 (5.4.1 · 색에 무관한 인식)
            --spacing-* 를 직접 고르지 마라 — --control-* 를 쓴다
 
-미결       ① ★ inactive 라벨 대비가 미달이다 — 2026-09-03 실측, 미해결
-             label.disable 로 4면 전부 1.29~1.33:1 (필요 4.5:1)
-             네이티브 disabled 는 WCAG 1.4.3 의 inactive component 예외에 들지만
-             aria-disabled 는 여전히 조작 가능하므로 예외로 보기 어렵다
-             기존 토큰 중 4면 전부 통과는 label.neutral(최저 6.25:1) 하나뿐이다
-             assistive 1.67 · alternative 4.10 은 미달
-             → 결정 전까지 Button 은 완료가 아니다 (DECISIONS 0-31)
+미결       ① 해소 — inactive 라벨을 label.neutral 로 바꿨다 (0-32)
+             브라우저 실측 10건 전부 통과, 최저 6.25:1. 토큰 변경 0건
            ② Floating Button 의 크기 단계 — 원형이라 min-height 짝이 맞지 않는다
            ③ 아이콘 크기 토큰이 없다 — Size 파운데이션에 추가할 후보
 ```

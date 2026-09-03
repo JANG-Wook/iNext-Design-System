@@ -46,6 +46,9 @@ function App() {
         <Button label="disabled" disabled />
         <Button label="loading" loading />
         <Button variant="outline" label="inactive outline" inactive />
+        <Button variant="text" label="inactive text" inactive />
+        <Button variant="secondary" label="inactive secondary" inactive />
+        <Button variant="negative" label="inactive negative" inactive />
       </div>
 
       <h2>아이콘</h2>
