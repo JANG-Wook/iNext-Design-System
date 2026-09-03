@@ -7,6 +7,15 @@ body {
   color: var(--color-label-normal);
   font-family: var(--font-family-base);
 }
+.dev-page { padding: var(--spacing-24); }
 .dev-row { display: flex; gap: var(--spacing-12); align-items: center; flex-wrap: wrap; }
 .dev-row + .dev-row { margin-top: var(--spacing-12); }
 .dev-key { width: var(--spacing-32); color: var(--color-label-alternative); }
+
+/* 컴포넌트를 좁은 열에 넣어 줄바꿈·잘림을 보려는 레이아웃이다.
+   폭 값은 눈금에 매지 않는다 — 눈금에 맞추면 "그 폭에서만 괜찮다"를 검증하게 된다. */
+/* ds-allow: 검증 페이지 열 폭 — 배포물이 아니고 컴포넌트 치수와 무관하다 */
+.dev-stack  { display: grid; gap: var(--spacing-20); max-width: 420px; }
+/* ds-allow: 같은 이유 — 폼 한 줄이 들어가는 폭 */
+.dev-inline { display: flex; gap: var(--spacing-12); align-items: flex-end; max-width: 520px; }
+.dev-grow   { flex: 1; }

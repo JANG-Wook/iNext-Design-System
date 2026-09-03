@@ -92,13 +92,24 @@ CI 가 `DESIGN.md` 를 다시 만들어 커밋된 것과 다르면 실패시킨�
 
 **검사가 막는다** — `npm run lint:hardcode`(`packages/tokens/checks/hardcode.mjs`). **검사 범위는 저장소 전체**라 `packages/react` 도 본다. CI 에도 걸려 있다.
 CSS 선언만 보고 템플릿 보간·`var()` 는 검사하지 않는다. 정당한 예외는 그 줄에
-`/* ds-allow: 이유 */` 를 단다. **이유 없는 예외는 두지 않는다.**
+`/* ds-allow: 이유 */` 를 단다. 여러 줄이 **같은 이유**일 때만
+`/* ds-allow-block: 이유 */` … `/* ds-allow-end */` 를 쓴다(닫지 않으면 실패한다).
+**이유 없는 예외는 두지 않는다.**
+
+**검사하는 축은 넷이다** — 색 · 길이(px·rem·em·ch + JSX 인라인의 단위 없는 숫자) ·
+시간(`transition`·`animation` 의 ms·s) · 층(`z-index`). 논리 속성(`padding-inline-start` 등)과
+크기(`width`·`min-block-size` 등)도 본다. **`✔ 0건` 을 곧 "위반이 없다"로 읽지 않는다** —
+실제로 이 목록이 좁아 컴포넌트가 쓰는 속성 대부분이 사각지대였다(DECISIONS 0-37).
+남은 한계는 **여러 줄에 걸친 스타일**이다. 알고 남긴 구멍이다.
 
 **하드코딩으로 보는 것 (금지)**
 - 색: `#hex`·`rgb()`·`rgba()`·`hsl()` 직접 기입.
 - 크기·간격: 스케일에 없는 임의 값(예: `13px`, `0.9rem`).
 - 타이포: 임의 lineHeight·letterSpacing 매직넘버.
 - semantic·typography 에 **원시 값 인라인** — 반드시 별칭 `{group.key}` 로 참조.
+  **빌드가 강제한다**(`assertLeavesAreAliases()`) — semantic·typography·component 의 모든 리프를
+  훑고, 복합 값은 하위 키까지 내려간다. 예외는 `ALIAS_EXEMPT` 에 자리와 이유를 적고,
+  쓸모없어지면 빌드를 세운다. 지금 예외는 `shadow` 기하 4자리뿐이다(DECISIONS 0-37).
 
 **원시 값이 사는 유일한 곳 = primitive 리프**
 - 실제 hex·rem·opacity 숫자는 **primitive 토큰의 `$value` 에만** 둔다.

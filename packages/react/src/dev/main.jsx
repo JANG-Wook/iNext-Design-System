@@ -29,7 +29,7 @@ function toggleTextSpacing() {
 function App() {
   const [bio, setBio] = useState('')
   return (
-    <main style={{ padding: 24 }}>
+    <main className="dev-page">
       <button onClick={() => {
         const r = document.documentElement
         r.dataset.theme = r.dataset.theme === 'dark' ? 'light' : 'dark'
@@ -65,7 +65,7 @@ function App() {
       </div>
 
       <h2>Text Field</h2>
-      <div style={{ display: 'grid', gap: 20, maxWidth: 420 }}>
+      <div className="dev-stack">
         <TextField label="이름" placeholder="홍길동" />
         <TextField label="이메일" type="email" required autoComplete="email"
                    helper="회사 메일 주소를 입력합니다." />
@@ -79,7 +79,7 @@ function App() {
       </div>
 
       <h2>Text Area</h2>
-      <div style={{ display: 'grid', gap: 20, maxWidth: 420 }}>
+      <div className="dev-stack">
         <TextArea label="메모" placeholder="자유롭게 적습니다" />
         <TextArea label="자기소개" required maxLength={200} value={bio} onChange={e => setBio(e.target.value)}
                   helper="200자까지 입력할 수 있습니다." />
@@ -90,7 +90,7 @@ function App() {
       </div>
 
       <h2>Search</h2>
-      <div style={{ display: 'grid', gap: 20, maxWidth: 420 }}>
+      <div className="dev-stack">
         <Search label="검색" placeholder="검색어를 입력하세요" />
         <Search label="밑줄형" variant="underline" placeholder="밑줄형" defaultValue="지울 수 있음" />
         <Search label="라벨 감춤" hideLabel placeholder="라벨이 화면에는 없다" defaultValue="X 보임" />
@@ -101,8 +101,8 @@ function App() {
       </div>
 
       <h2>폼 한 줄 — control.* 공유 검증</h2>
-      <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end', maxWidth: 520 }}>
-        <div style={{ flex: 1 }}><TextField label="검색어" /></div>
+      <div className="dev-inline">
+        <div className="dev-grow"><TextField label="검색어" /></div>
         <Button label="검색" />
       </div>
 

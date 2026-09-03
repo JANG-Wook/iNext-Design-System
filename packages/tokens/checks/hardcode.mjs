@@ -37,11 +37,19 @@ const FILE_EXEMPT = {}
 // ── 규칙 ───────────────────────────────────────────────────────────
 // 속성을 좁게 잡는다. 아무 곳의 숫자나 잡으면 오탐만 늘어난다.
 const COLOR_PROPS = /^(color|background|background-color|background-image|border|border-[a-z-]+|outline|outline-color|fill|stroke|box-shadow|text-shadow|caret-color|accent-color|column-rule|column-rule-color)$/
-const SPACE_PROPS = /^(margin|margin-[a-z]+|padding|padding-[a-z]+|gap|row-gap|column-gap|border-radius|border-[a-z]+-radius|inset|top|right|bottom|left)$/
+// 논리 속성과 크기까지 잡는다. `padding-[a-z]+` 는 하이픈이 하나 더 붙는 순간 빠져나가
+// padding-inline-start 를 놓쳤고, width·min-block-size 류는 아예 목록에 없었다.
+// 컴포넌트가 실제로 쓰는 속성이 검사 밖에 있었다는 뜻이다.
+const SPACE_PROPS = /^(margin|margin-[a-z-]+|padding|padding-[a-z-]+|gap|row-gap|column-gap|border-radius|border-[a-z-]*radius|inset|inset-[a-z-]+|top|right|bottom|left|width|height|min-width|max-width|min-height|max-height|inline-size|block-size|min-inline-size|max-inline-size|min-block-size|max-block-size|flex-basis)$/
 const TYPO_PROPS  = /^(font|font-size|line-height|letter-spacing|font-weight)$/
+// 시간은 duration 눈금, 층은 zIndex 눈금이다 — 둘 다 목록에 없어 통째로 사각지대였다.
+const TIME_PROPS  = /^(transition|transition-duration|transition-delay|animation|animation-duration|animation-delay)$/
+const Z_PROP      = /^z-index$/
 
 const COLOR_LIT = /#[0-9a-fA-F]{3,8}\b|\brgba?\s*\(|\bhsla?\s*\(|\boklch\s*\(|\bcolor-mix\s*\(/
-const DIM_LIT   = /(?<![\w.-])(\d+(?:\.\d+)?)(px|rem|em)\b/g
+const DIM_LIT   = /(?<![\w.-])(\d+(?:\.\d+)?)(px|rem|em|ch)\b/g
+// `.18s` 처럼 앞자리 0 이 없는 표기가 실제로 있었다 — 정수만 보면 놓친다.
+const TIME_LIT  = /(?<![\w.-])(\d*\.\d+|\d+)(ms|s)\b/g
 
 // 값 자체가 의미인 구조적 상수 — CLAUDE.md 의 하드코딩 예외
 const STRUCTURAL = new Set(['0', '0px', '0rem', '1', 'auto', 'inherit', 'initial', 'unset', 'none',
@@ -101,14 +109,20 @@ function declarations(text, ext){
 }
 
 // ── 검사 ───────────────────────────────────────────────────────────
-const scaleCache = new Map()
-function scaleValues(){
-  if (scaleCache.size) return scaleCache
+// 눈금은 축마다 다르다 — 길이(px·rem) · 시간(ms·s) · 층(z-index, 단위 없는 정수).
+// 한 자루에 담으면 "300 이 duration 에 있으니 300px 도 괜찮다"가 되어버린다.
+let scaleCache = null
+function scales(){
+  if (scaleCache) return scaleCache
+  const dim = new Set(), time = new Set(), z = new Set()
   const css = fs.readFileSync(`${PKG}/tokens.css`, 'utf8')
-  for (const m of css.matchAll(/^\s*--[a-z0-9-]+\s*:\s*([^;]+);/gm)){
-    const v = m[1].trim()
-    if (/^\d+(\.\d+)?(px|rem)$/.test(v)) scaleCache.set(v, true)
+  for (const m of css.matchAll(/^\s*(--[a-z0-9-]+)\s*:\s*([^;]+);/gm)){
+    const name = m[1], v = m[2].trim()
+    if (/^\d+(\.\d+)?(px|rem)$/.test(v)) dim.add(v)
+    else if (/^\d+(\.\d+)?(ms|s)$/.test(v)) time.add(v)
+    if (name.startsWith('--z-index-') && /^\d+$/.test(v)) z.add(v)
   }
+  scaleCache = { dim, time, z }
   return scaleCache
 }
 
@@ -116,8 +130,29 @@ function check(rel, text){
   const ext = path.extname(rel)
   const found = []
   const allowLines = new Set()
-  text.split('\n').forEach((l, i) => { if (/ds-allow\s*:/.test(l)) { allowLines.add(i + 1); allowLines.add(i + 2) } })
-  const scale = scaleValues()
+  // 줄 단위 예외 — 그 줄과 다음 줄을 덮는다.
+  // 블록 예외 — 여러 줄이 같은 이유일 때만 쓴다(뷰어의 표본 상자처럼).
+  //   /* ds-allow-block: 이유 */ … /* ds-allow-end */
+  // 닫지 않으면 파일 끝까지 조용히 삼키므로 실패시킨다.
+  let blockFrom = 0
+  text.split('\n').forEach((l, i) => {
+    const n = i + 1
+    if (/ds-allow\s*:/.test(l)) { allowLines.add(n); allowLines.add(n + 1) }
+    if (/ds-allow-block/.test(l) && !/ds-allow-block\s*:\s*\S/.test(l)){
+      console.error(`  ✗ ${rel}:${n} ds-allow-block 에 이유가 없다`); process.exitCode = 1
+    }
+    if (/ds-allow-block\s*:\s*\S/.test(l) && !blockFrom) blockFrom = n
+    if (/ds-allow-end/.test(l) && blockFrom){ for (let k = blockFrom; k <= n; k++) allowLines.add(k); blockFrom = 0 }
+  })
+  if (blockFrom){
+    console.error(`  ✗ ${rel}:${blockFrom} ds-allow-block 이 닫히지 않았다 — /* ds-allow-end */ 를 둔다`)
+    process.exitCode = 1
+  }
+  const scale = scales()
+  // JSX 인라인 스타일은 단위 없는 숫자가 px 로 해석된다(`padding: 24`).
+  // CSS 파일에서는 그런 표기가 애초에 무효라 이 규칙을 적용하지 않는다.
+  // 한 줄에 style= 가 보이는 경우만 본다 — 여러 줄로 흩어진 스타일 객체는 놓친다(오탐보다 낫다).
+  const jsxy = ext !== '.css' && ext !== '.html'
 
   for (const d of declarations(text, ext)){
     if (allowLines.has(d.line)) continue
@@ -134,9 +169,32 @@ function check(rel, text){
       for (const m of bare.matchAll(DIM_LIT)){
         const lit = m[1] + m[2]
         if (STRUCTURAL.has(lit)) continue
-        if (!scale.has(lit)) found.push({ ...d, rule: 'dim', why: `${lit} — 스케일에 없다. primitive 에 추가하고 참조한다` })
+        if (!scale.dim.has(lit)) found.push({ ...d, rule: 'dim', why: `${lit} — 스케일에 없다. primitive 에 추가하고 참조한다` })
         else found.push({ ...d, rule: 'dim', why: `${lit} — 스케일에 있는 값이다. 해당 토큰의 var() 를 쓴다` })
       }
+      if (jsxy && /\bstyle\s*=/.test(d.raw)){
+        const n = bare.trim().match(/^(\d+(?:\.\d+)?)$/)
+        if (n && !STRUCTURAL.has(n[1])){
+          const px = `${n[1]}px`
+          found.push({ ...d, rule: 'dim', why: scale.dim.has(px)
+            ? `${n[1]} — 단위 없는 숫자는 ${px} 다. 스케일에 있으니 var() 를 쓴다`
+            : `${n[1]} — 단위 없는 숫자는 ${px} 다. 스케일에 없다` })
+        }
+      }
+    }
+
+    if (TIME_PROPS.test(d.prop)){
+      for (const m of bare.matchAll(TIME_LIT)){
+        const lit = m[1] + m[2]
+        if (lit === '0s' || lit === '0ms') continue
+        found.push({ ...d, rule: 'time', why: `${lit} — ${scale.time.has(lit) ? '스케일에 있는 값이다' : '스케일에 없다'}. --duration-* 를 쓴다` })
+      }
+    }
+
+    if (Z_PROP.test(d.prop)){
+      const n = bare.trim()
+      if (/^-?\d+$/.test(n) && n !== '0')
+        found.push({ ...d, rule: 'z', why: `${n} — 층 순서는 --z-index-* 로 표현한다${scale.z.has(n) ? '(같은 값의 토큰이 있다)' : ''}` })
     }
   }
   return found

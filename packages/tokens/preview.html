@@ -13,11 +13,12 @@
     color: var(--color-label-normal);
     padding: 0 var(--spacing-24) var(--spacing-56);
   }
+  /* ds-allow: 뷰어 본문 폭 — 문서 도구의 크롬이고 컴포넌트 치수와 무관하다 */
   .wrap { max-width: 1180px; margin: 0 auto; }
 
   /* ── 상단 바 ── */
   .bar {
-    position: sticky; top: 0; z-index: 20;
+    position: sticky; top: 0; z-index: var(--z-index-sticky);
     background: var(--color-bg-normal);
     border-bottom: var(--divider-1) solid var(--color-line-normal);
     padding: var(--spacing-16) 0 var(--spacing-12);
@@ -46,7 +47,7 @@
   .btn:hover { background: var(--color-fill-strong); }
   #q {
     font: inherit;
-    padding: var(--spacing-8) var(--spacing-12); min-width: 200px;
+    padding: var(--spacing-8) var(--spacing-12); min-width: 200px;   /* ds-allow: 뷰어 크롬 — 위와 같은 이유 */
     border: var(--divider-1) solid var(--color-line-strong);
     border-radius: var(--radius-8);
     background: var(--color-bg-elevated); color: var(--color-label-normal);
@@ -60,8 +61,10 @@
   section { padding-top: var(--spacing-40); }
   h2 { margin: 0 0 var(--spacing-4); }
   h3 { margin: var(--spacing-24) 0 var(--spacing-8); color: var(--color-label-neutral); }
+  /* ds-allow-block: 읽기 폭은 글자 수(ch) 기준이라 길이 눈금과 축이 다르다 — px 로 환산하면 글꼴이 바뀔 때 뜻이 깨진다 */
   .lede { color: var(--color-label-alternative); margin: 0 0 var(--spacing-16); max-width: 70ch; }
   .desc { color: var(--color-label-alternative); margin: 0 0 var(--spacing-8); max-width: 80ch; }
+  /* ds-allow-end */
 
   /* ── 공통 행 ── */
   .rows { display: flex; flex-direction: column; gap: var(--spacing-4); }
@@ -90,6 +93,8 @@
   .note { color: var(--color-label-neutral); }
 
   /* ── 시각 표현 ── */
+  /* ds-allow-block: 토큰 표본 상자의 치수 — 토큰 값이 바뀌어도 표본 틀은 고정이어야 한다.
+     눈금에 매면 토큰을 바꿀 때 표본이 함께 움직여 무엇이 바뀐 건지 알 수 없다. */
   .vis { display: flex; align-items: center; justify-content: flex-start; min-height: 40px; }
   .sw {
     width: 64px; height: 40px; border-radius: var(--radius-6);
@@ -114,10 +119,12 @@
   .ratioviz { width: 64px; background: var(--color-fill-strong); border-radius: var(--radius-4); }
   .gradviz { width: 72px; height: 40px; border-radius: var(--radius-6); color: var(--color-label-normal); border: var(--divider-1) solid var(--color-line-alternative); }
   .opaviz { width: 40px; height: 40px; border-radius: var(--radius-circle); background: var(--color-label-normal); }
+  /* ds-allow-end */
 
   /* ── primitive 색 그리드 ── */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: var(--spacing-8); }
   .chip { overflow: hidden; padding: 0; }
+  /* ds-allow: 색 칩의 색 면 높이 — 위 표본과 같은 이유 */
   .chip > i { display: block; height: 52px; border-bottom: var(--divider-1) solid var(--color-line-alternative); }
   .chip > span { display: block; padding: var(--spacing-8); }
 
@@ -141,7 +148,8 @@
     position: fixed; left: 50%; bottom: var(--spacing-24); transform: translateX(-50%);
     padding: var(--spacing-8) var(--spacing-16); border-radius: var(--radius-full);
     background: var(--color-inverse-background); color: var(--color-inverse-label);
-    box-shadow: var(--shadow-md); opacity: 0; pointer-events: none; transition: opacity .18s; z-index: 30;
+    box-shadow: var(--shadow-md); opacity: 0; pointer-events: none;
+    transition: opacity var(--duration-200) var(--cubic-bezier-standard); z-index: var(--z-index-toast);
   }
   #toast[data-on] { opacity: 1; }
   @media (prefers-reduced-motion: reduce) { #toast { transition: none; } }

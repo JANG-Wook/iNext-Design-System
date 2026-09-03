@@ -190,6 +190,73 @@ function colorLines(sem, indent='  '){
     walk(sem[g], [g], (p,t) => out.push(`${indent}${cssVar(p)}: ${valueOf(t)};`)) }
   return out.join('\n')
 }
+// ── 별칭 강제 ──────────────────────────────────────────────────────
+// CLAUDE.md 는 "semantic·typography 에 원시 값 인라인 금지 — 반드시 별칭으로 참조"라고
+// 못박아 두었는데, 정작 그것을 강제하는 검사가 없었다. 막고 있던 것은 transition 한 곳
+// 뿐이다(0-30). 규칙이 산문으로만 있으면 다음 사람이 어긴 줄도 모른다.
+// 원시 값이 사는 유일한 곳은 primitive 리프다. 나머지 소스의 리프는 전부 별칭이어야 한다.
+const ALIAS_SOURCES = ['semantic.light.json', 'semantic.dark.json', 'typography.json', 'component.json']
+// 별칭으로 표현할 수 없는 자리만 둔다. 자리 이름은 `그룹.하위키` 이고 이유를 함께 적는다.
+// 쓸모없어지면 빌드를 세운다(TIER_EXEMPT · RATIO_EXEMPT 와 같은 규약).
+// 그림자 기하는 Elevation 축이고, 그 축에는 눈금이 없다. spacing 을 빌려 쓰는 것은
+// 범주 오류다 — "타입이 같아도 눈금이 다르면 다른 그룹"이라는 원칙에 정면으로 어긋난다.
+// 실측: 서로 다른 기하 값 14개 중 6개만 spacing 에 있고(1·6·12·14·20·24),
+// 8개는 없다(-7·-4·-2·-1·0·3·7·36). 음수는 어떤 길이 눈금도 담지 않는다.
+// offsetX·offsetY·blur·spread 는 한 레이어를 이루는 한 묶음이라 따로 떼면 뜻이 없다.
+// 자세한 근거는 DECISIONS 0-37.
+const ALIAS_EXEMPT = {
+  'shadow.offsetX': '그림자 기하 — Elevation 축에 눈금이 없다. 값 14개 중 8개가 spacing 밖이고 음수를 포함한다(DECISIONS 0-37)',
+  'shadow.offsetY': '위와 같다',
+  'shadow.blur':    '위와 같다',
+  'shadow.spread':  '위와 같다',
+}
+function assertLeavesAreAliases(){
+  const slots = new Set()
+  const violations = []
+  // 리프 하나에서 "별칭이 아닌 값"이 앉은 자리를 뽑는다. 복합 값은 하위키까지 내려간다.
+  const rawSlots = t => {
+    const out = new Set()
+    const walkVal = (v, slot) => {
+      if (typeof v === 'string'){ if (!ALIAS.test(v)) out.add(slot); return }
+      if (Array.isArray(v)){
+        // shadow 처럼 레이어 배열이면 인덱스는 자리 이름에서 뺀다 — 레이어 수가 바뀌어도 같은 자리다
+        if (v.length && v.every(x => x && typeof x === 'object' && !Array.isArray(x))){ v.forEach(x => walkVal(x, slot)); return }
+        out.add(slot); return                                     // 숫자 배열(cubicBezier) 등은 값 자체
+      }
+      if (v && typeof v === 'object'){
+        if (typeof v.value === 'number' && typeof v.unit === 'string'){ out.add(slot); return }   // dimension·duration 원시값
+        if (typeof v.colorSpace === 'string'){ out.add(slot); return }                            // color 원시값
+        for (const k of Object.keys(v)) walkVal(v[k], slot ? `${slot}.${k}` : k)
+        return
+      }
+      out.add(slot)                                               // 숫자·불리언
+    }
+    walkVal(t.$value, '')
+    return [...out]
+  }
+  for (const file of ALIAS_SOURCES){
+    const doc = SRC[file]; if (!doc) continue
+    const visit = (node, path) => {
+      if (!node || typeof node !== 'object') return
+      if (isLeaf(node)){
+        const group = path[0]
+        for (const slot of rawSlots(node)){
+          const key = slot ? `${group}.${slot}` : group
+          slots.add(key)
+          if (!ALIAS_EXEMPT[key])
+            violations.push(`${file} ${path.join('.')} 의 ${slot || '$value'} 가 원시 값이다 — 별칭 {group.key} 로 바꾸거나 ALIAS_EXEMPT 에 이유와 함께 등록한다`)
+        }
+        return
+      }
+      for (const k of Object.keys(node)) if (!k.startsWith('$')) visit(node[k], [...path, k])
+    }
+    visit(doc, [])
+  }
+  if (violations.length) throw new Error(`원시 값 인라인 ${violations.length}건:\n  - ${violations.join('\n  - ')}`)
+  for (const key of Object.keys(ALIAS_EXEMPT))
+    if (!slots.has(key)) throw new Error(`ALIAS_EXEMPT 의 ${key} 자리에 원시 값이 없다 — 예외를 지운다`)
+  return Object.keys(ALIAS_EXEMPT).length
+}
 // 라이트/다크의 그림자 기하가 어긋나면 즉시 실패시킨다(두 파일에 중복 기입되므로)
 function assertShadowGeometryMatches(){
   const geo = t => JSON.stringify((Array.isArray(t.$value)?t.$value:[t.$value])
@@ -411,6 +478,7 @@ const lsPairsChecked = assertLetterSpacingPairing()
 const lhPairsChecked = assertLineHeightPairing()
 const colorsChecked = assertColorHexMatchesComponents()
 assertShadowGeometryMatches()
+const aliasExempt = assertLeavesAreAliases()
 const css = `/* ============================================================
    iNext Design System — tokens.css  (자동 생성 · 편집 금지)
    원본: tokens/primitive.json + semantic.light/dark.json
@@ -534,7 +602,8 @@ fs.writeFileSync(`${DIR}/tokens.js`, js)
 // ── 요약 ───────────────────────────────────────────────────────────
 const nColor = (colorLines(L).match(/\n/g)||[]).length + 1
 const nPrim  = (primLines().match(/\n/g)||[]).length + 1
-console.log(`파운데이션 ${fnd.foundations}개 · 그룹 ${fnd.groups}개 배정 완료 · 티어 스케일 ${tierScales.length}개 순서 확인 · 종횡비 ${ratioChecked}개 키↔값 일치\n색 ${colorsChecked}건 components↔hex 일치 · 행간 ${lhPairsChecked}건 · 자간 ${lsPairsChecked}건 크기 짝 일치\ntokens.css: primitive ${nPrim}개 + 색 semantic ${nColor}개(×3 테마셀렉터)`)
+console.log(`파운데이션 ${fnd.foundations}개 · 그룹 ${fnd.groups}개 배정 완료 · 티어 스케일 ${tierScales.length}개 순서 확인 · 종횡비 ${ratioChecked}개 키↔값 일치\n색 ${colorsChecked}건 components↔hex 일치 · 행간 ${lhPairsChecked}건 · 자간 ${lsPairsChecked}건 크기 짝 일치
+별칭 강제: semantic·typography·component 리프 전부 별칭 · 예외 ${aliasExempt}자리(shadow 기하)\ntokens.css: primitive ${nPrim}개 + 색 semantic ${nColor}개(×3 테마셀렉터)`)
 console.log(`tokens.js : ${Object.keys(jsExports).length}개 export`)
 
 // ── 번들 — 테마별 단일 DTCG 문서 ───────────────────────────────────

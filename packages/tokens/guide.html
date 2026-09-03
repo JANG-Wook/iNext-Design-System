@@ -24,7 +24,7 @@
 
   /* ── 헤더 ── */
   .hdr {
-    position: sticky; top: 0; z-index: 30;
+    position: sticky; top: 0; z-index: var(--z-index-sticky);
     height: var(--ui-header-h);
     display: flex; align-items: center; gap: var(--spacing-8);
     padding: 0 var(--spacing-24);
@@ -98,11 +98,12 @@
   main { flex: 1; min-width: 0; padding: var(--spacing-40) var(--spacing-40) var(--spacing-56); }
   .page { max-width: var(--layout-max-width-lg); }
   .page > h2 { margin: 0 0 var(--spacing-8); }
+  /* ds-allow: 읽기 폭은 글자 수(ch) 기준이라 길이 눈금과 축이 다르다 */
   .lede { color: var(--color-label-neutral); margin: 0 0 var(--spacing-24); max-width: 78ch; }
   section { margin-top: var(--spacing-40); scroll-margin-top: calc(var(--ui-header-h) + var(--spacing-16)); }
   section > h3 { margin: 0 0 var(--spacing-8); }
   h4 { margin: var(--spacing-24) 0 var(--spacing-8); }
-  p { max-width: 80ch; }
+  p { max-width: 80ch; }   /* ds-allow: 읽기 폭 — 위와 같은 이유 */
   .dim { color: var(--color-label-alternative); }
   .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 
@@ -173,13 +174,14 @@
   summary { cursor: pointer; list-style: none; padding: var(--spacing-8) var(--spacing-12);
             display: flex; flex-wrap: wrap; gap: var(--spacing-8); align-items: baseline; }
   summary::-webkit-details-marker { display: none; }
-  summary::before { content: '▸'; color: var(--color-label-assistive); width: 1em; flex: none; }
+  summary::before { content: '▸'; color: var(--color-label-assistive); width: 1em; flex: none; }   /* ds-allow: 1em 은 값이 아니라 글자 크기와의 관계다 */
   details[open] > summary::before { content: '▾'; }
   summary:hover { background: var(--color-interaction-overlay-darken-hovered); }
   :root[data-theme="dark"] summary:hover { background: var(--color-interaction-overlay-lighten-hovered); }
   .d2 > summary { padding-left: var(--spacing-32); }
   .d3 > summary { padding-left: var(--spacing-48); }
   .cnt { color: var(--color-label-assistive); }
+  /* ds-allow: 읽기 폭 — 위와 같은 이유 */
   .gdesc { color: var(--color-label-neutral); padding: 0 var(--spacing-16) var(--spacing-8) var(--spacing-40); max-width: 90ch; }
 
   .leaf {
@@ -197,6 +199,7 @@
   .type { justify-self: start; padding: 0 var(--spacing-6); border-radius: var(--radius-4);
           background: var(--color-fill-alternative); color: var(--color-label-neutral); }
   .type.none { background: transparent; color: var(--color-label-assistive); }
+  /* ds-allow: 1em — 글자 크기와의 관계다 */
   .sw { display: inline-block; width: 1em; height: 1em; border-radius: var(--radius-4);
         border: var(--divider-1) solid var(--color-line-normal); vertical-align: -0.15em; margin-right: var(--spacing-6); }
 
