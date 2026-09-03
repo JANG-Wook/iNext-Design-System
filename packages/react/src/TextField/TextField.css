@@ -1,24 +1,8 @@
 /* ============================================================
    Text Field — iNext Design System
    동작 명세는 COMPONENTS.md 8-2 가 원본이다.
+   라벨·도움말·오류의 껍데기는 Field.css 가 갖는다.
    ============================================================ */
-
-.ds-field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-6);
-}
-
-.ds-field__label {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-4);
-  color: var(--color-label-normal);
-}
-
-/* 필수는 보이는 텍스트로 표시한다 — 별표만 쓰면 5.4.1(색·모양에 무관한 인식)과
-   3.3.2(레이블·지시문)에 걸린다. */
-.ds-field__required { color: var(--color-status-negative); }
 
 .ds-field__input {
   box-sizing: border-box;
@@ -71,18 +55,6 @@
   color: var(--color-label-disable);
   background-color: var(--color-interaction-disable);
   cursor: not-allowed;
-}
-
-/* ── 도움말 · 오류 메시지 ───────────────────────────────
-   한 줄 자리를 미리 잡아 오류가 나타날 때 아래 내용이 밀리지 않게 한다. */
-.ds-field__help {
-  min-block-size: var(--line-height-14-20);
-  margin: 0;
-  color: var(--color-label-alternative);
-}
-.ds-field__error {
-  margin: 0;
-  color: var(--color-status-negative);
 }
 
 @media (forced-colors: active) {

@@ -1,10 +1,11 @@
 /* 검증 전용 페이지 — 배포물이 아니다. 브라우저로 실측하려고 둔다. */
-import { StrictMode } from 'react'
+import { StrictMode, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import '../styles.css'
 import './dev.css'
 import Button from '../Button/Button.jsx'
 import TextField from '../TextField/TextField.jsx'
+import TextArea from '../TextArea/TextArea.jsx'
 
 const VARIANTS = ['primary', 'secondary', 'outline', 'text', 'negative']
 const SIZES = ['sm', 'md', 'lg']
@@ -25,6 +26,7 @@ function toggleTextSpacing() {
 }
 
 function App() {
+  const [bio, setBio] = useState('')
   return (
     <main style={{ padding: 24 }}>
       <button onClick={() => {
@@ -73,6 +75,17 @@ function App() {
         <TextField label="읽기 전용" readOnly defaultValue="변경할 수 없음" />
         <TextField label="inactive" inactive defaultValue="포커스는 된다" />
         <TextField label="disabled" disabled defaultValue="포커스도 안 된다" />
+      </div>
+
+      <h2>Text Area</h2>
+      <div style={{ display: 'grid', gap: 20, maxWidth: 420 }}>
+        <TextArea label="메모" placeholder="자유롭게 적습니다" />
+        <TextArea label="자기소개" required maxLength={200} value={bio} onChange={e => setBio(e.target.value)}
+                  helper="200자까지 입력할 수 있습니다." />
+        <TextArea label="사유" rows={5} error="사유를 10자 이상 입력하세요." defaultValue="짧음" />
+        <TextArea label="읽기 전용" readOnly defaultValue={'변경할 수 없음\n두 번째 줄'} />
+        <TextArea label="inactive" inactive defaultValue="포커스는 된다" />
+        <TextArea label="disabled" disabled defaultValue="포커스도 안 된다" />
       </div>
 
       <h2>폼 한 줄 — control.* 공유 검증</h2>

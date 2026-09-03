@@ -1,5 +1,7 @@
-import { forwardRef, useId } from 'react'
+import { forwardRef } from 'react'
+import '../Field/Field.css'
 import './TextField.css'
+import useFieldIds from '../Field/useFieldIds.js'
 
 /**
  * TextField — iNext Design System
@@ -31,20 +33,12 @@ const TextField = forwardRef(function TextField({
   id: idProp,
   ...rest
 }, ref) {
-  // KWCAG 8.1.1 — 같은 컴포넌트를 여러 번 써도 id 가 겹치지 않아야 한다.
-  // 손으로 문자열을 짓지 않는다.
-  const auto = useId()
-  const id = idProp ?? `${auto}-input`
-  const helpId = `${auto}-help`
-  const errId = `${auto}-err`
-
   if (!label && !rest['aria-label']) {
     throw new Error('TextField: label 또는 aria-label 이 필요하다 (WCAG 4.1.2)')
   }
-
   const invalid = Boolean(error)
-  // 도움말과 오류를 함께 연결한다 — 오류가 떠도 형식 안내가 사라지면 안 된다(3.3.2).
-  const describedBy = [helper && helpId, invalid && errId].filter(Boolean).join(' ') || undefined
+  const { id, helpId, errId, describedBy } =
+    useFieldIds({ id: idProp, hasHelper: Boolean(helper), hasError: invalid })
 
   return (
     <div className={['ds-field', className].filter(Boolean).join(' ')}

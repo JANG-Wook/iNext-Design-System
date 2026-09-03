@@ -1,0 +1,60 @@
+/* ============================================================
+   Text Area — iNext Design System
+   동작 명세는 COMPONENTS.md 8-3 이 원본이다.
+   라벨·도움말·오류의 껍데기는 Field.css 가 갖는다.
+   ============================================================ */
+
+.ds-textarea {
+  box-sizing: border-box;
+  inline-size: 100%;
+  /* 한 줄 컨트롤이 아니므로 control.minHeight 를 쓰지 않는다 — rows 가 높이를 정하고
+     min-height 는 하한만 잡는다. 고정 높이를 쓰지 않는 이유는 Text Field 와 같다(1.4.12). */
+  min-block-size: var(--control-min-height-lg);
+  padding-block: var(--spacing-10);
+  padding-inline: var(--control-padding-inline-md);
+  border-radius: var(--control-radius-md);
+  /* 테두리가 컨트롤을 식별하는 시각 정보라 WCAG 1.4.11(3:1) 대상이다.
+     line.* 계열은 전부 3:1 에 못 미쳐 label.alternative 를 쓴다(미결 23). */
+  border: var(--divider-1) solid var(--color-label-alternative);
+  background-color: var(--color-bg-normal);
+  color: var(--color-label-normal);
+  font-family: inherit;
+  transition: border-color var(--transition-control);
+
+  /* 세로만 허용한다. 가로로 늘리면 320px 리플로우(1.4.10)가 깨진다.
+     WCAG 2.5.7(끌기 동작)은 "사용자 에이전트가 정하고 저작자가 수정하지 않은 기능"을
+     예외로 두는데, 여기서는 축만 제한하고 크기 조절 자체는 UA 에 맡긴다. */
+  resize: vertical;
+}
+
+.ds-textarea::placeholder { color: var(--color-label-alternative); opacity: 1; }
+
+.ds-textarea:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-interaction-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.ds-field[data-invalid='true'] .ds-textarea { border-color: var(--color-status-negative); }
+
+.ds-textarea:read-only { background-color: var(--color-fill-alternative); }
+
+/* Button·Text Field 와 같은 규칙(0-32) — inactive 는 조작 가능하므로 읽히는 색을 쓴다. */
+.ds-textarea[aria-disabled='true'] {
+  color: var(--color-label-neutral);
+  background-color: var(--color-interaction-disable);
+  cursor: not-allowed;
+  resize: none;
+}
+.ds-textarea:disabled {
+  color: var(--color-label-disable);
+  background-color: var(--color-interaction-disable);
+  cursor: not-allowed;
+  resize: none;
+}
+
+@media (forced-colors: active) {
+  .ds-textarea { border-color: ButtonBorder; }
+  .ds-field[data-invalid='true'] .ds-textarea { border-color: Mark; }
+  .ds-textarea:focus-visible { outline-color: Highlight; }
+  .ds-textarea:disabled { color: GrayText; border-color: GrayText; }
+}
