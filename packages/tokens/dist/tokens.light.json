@@ -1,5 +1,5 @@
 {
-  "$description": "복합 타이포그래피 토큰(DTCG typography). base=뷰포트≥768, compact=<768 오버라이드. **compact 에 담는 기준은 크기가 아니라 '뷰포트에 따라 값이 달라져야 하는가' 다** — display·heading 6종은 좁은 화면에서 넘치지 않게 한 단계 내리고, label-xs 는 밀도를 위해 내린다. 20px 이하 나머지는 좁은 화면에서도 그대로 둔다(DECISIONS 0-25). 빌드가 CSS 유틸리티 클래스로 출력. 모든 속성은 primitive 별칭 — 행간은 2px 그리드(px 키/rem 값), 자간은 크기밴드. link는 $extensions 로 밑줄 지정. 각 토큰의 컴포넌트 매핑은 대표 예시이며 망라가 아니다 — 컴포넌트 구현 단계에서 다듬는다.",
+  "$description": "의도 이름 계층 — primitive 를 별칭으로 참조해 **용도 이름**을 붙인다. semantic 이 아니다: 테마 축이 없다(DECISIONS 0-16). `typography.json` 과 같은 자리이며 `COMPOSITION.sets.base` 에 등록돼 있다. 컴포넌트가 `--spacing-16` 을 직접 고르지 않게 하는 것이 목적이다(미결 17).",
   "color": {
     "$description": "라이트 semantic — primitive 참조. 컴포넌트는 역할 이름만 사용.",
     "gray": {
@@ -3562,6 +3562,108 @@
     "$extensions": {
       "net.infobank.ds.foundation": [
         "Typography"
+      ]
+    }
+  },
+  "control": {
+    "$description": "컨트롤 치수 — **컴포넌트가 아니라 역할 단위**다. Button · Text Field · Search · Select Button 이 같은 값을 공유해야 폼 한 줄에서 높이가 맞는다(`button.height` 로 지으면 Text Field 가 같은 값을 다시 정의한다). 전부 기존 primitive 별칭이며 **새 원시 값을 만들지 않았다.** 기본 단계는 `md` 다. 티어 이름을 쓰므로 빌드가 값 순서를 검사한다(DECISIONS 0-30).",
+    "minHeight": {
+      "$description": "컨트롤 최소 높이. **`height` 가 아니라 `min-height` 로 쓴다** — 고정 높이는 사용자가 행간·자간을 덮어썼을 때 글자를 자르고 WCAG 1.4.12(글자 간격)를 깬다. 이름이 사용법을 강제하도록 지었다.",
+      "sm": {
+        "$type": "dimension",
+        "$value": "{spacing.32}",
+        "$description": "32px. 조밀한 툴바 · 테이블 행 내부 · Chip. 8px 등차라 세로 리듬이 유지된다. **가장 작은 단계도 24 를 넘어** WCAG 2.5.8(24×24 CSS px)을 자체로 만족한다 — 히트박스를 따로 넓히지 않아도 된다."
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{spacing.40}",
+        "$description": "40px. 기본값. 폼 · 다이얼로그 · 일반 화면. 8px 등차라 세로 리듬이 유지된다."
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{spacing.48}",
+        "$description": "48px. 모바일 주요 CTA · Bottom Sheet 하단 버튼. 8px 등차라 세로 리듬이 유지된다."
+      }
+    },
+    "paddingInline": {
+      "$description": "컨트롤 좌우 안쪽 여백. `minHeight` 와 같은 단계를 쓴다.",
+      "sm": {
+        "$type": "dimension",
+        "$value": "{spacing.12}",
+        "$description": "12px. `minHeight.sm` 와 짝이다."
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{spacing.16}",
+        "$description": "16px. `minHeight.md` 와 짝이다."
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{spacing.20}",
+        "$description": "20px. `minHeight.lg` 와 짝이다."
+      }
+    },
+    "gap": {
+      "$description": "컨트롤 안 아이콘과 라벨 사이 간격.",
+      "sm": {
+        "$type": "dimension",
+        "$value": "{spacing.4}",
+        "$description": "4px. `minHeight.sm` 와 짝이다."
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{spacing.6}",
+        "$description": "6px. `minHeight.md` 와 짝이다."
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{spacing.8}",
+        "$description": "8px. `minHeight.lg` 와 짝이다."
+      }
+    },
+    "radius": {
+      "$description": "컨트롤 모서리. 원형 버튼(Floating Button)은 `radius.circle` 을 직접 쓴다.",
+      "sm": {
+        "$type": "dimension",
+        "$value": "{radius.6}",
+        "$description": "6px. `minHeight.sm` 와 짝이다."
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{radius.8}",
+        "$description": "8px. `minHeight.md` 와 짝이다."
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{radius.12}",
+        "$description": "12px. `minHeight.lg` 와 짝이다."
+      }
+    },
+    "minTarget": {
+      "$type": "dimension",
+      "$value": "{spacing.24}",
+      "$description": "조작 영역 하한 24px — WCAG 2.5.8. **KWCAG 6.1.3(대각 6.0mm)을 포함한다**: CSS 기준 픽셀(1px=1/96in)에서 24×24 의 대각은 8.98mm 이고, 6.0mm 대각을 만족하는 최소 정사각은 16.04px 다. **24 만 지키면 두 기준이 함께 닫힌다**(DECISIONS 0-30). 시각 크기가 이보다 작은 컨트롤은 히트박스를 이 값까지 넓힌다."
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Size"
+      ]
+    }
+  },
+  "transition": {
+    "$description": "전환 묶음 — DTCG `transition`(9.5). `duration` + `delay` + `timingFunction` 셋이 **모두 필수**라 지연이 없어도 `{duration.0}` 을 넣는다. CSS 로는 `transition: <속성> var(--transition-*)` 처럼 쓴다. **의도 이름이 컴포넌트 문맥에서 나오므로 필요한 것만 만든다** — 지금은 Button 이 쓰는 `control` 하나다(0-27 · 0-30).",
+    "control": {
+      "$type": "transition",
+      "$value": {
+        "duration": "{duration.100}",
+        "delay": "{duration.0}",
+        "timingFunction": "{cubicBezier.standard}"
+      },
+      "$description": "컨트롤 상태 전환 — hover·press 오버레이, 보더 색. 100ms · standard. 가장 빈번한 전환이라 가장 짧다."
+    },
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Motion"
       ]
     }
   },

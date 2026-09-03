@@ -292,7 +292,7 @@ let DATA = null
    $extensions."net.infobank.ds.foundation" 을 읽는다 — 배정의 원본은 JSON 이다. */
 const FND = 'net.infobank.ds.foundation'
 const FOUNDATIONS = ['Typography','Colors','Elevation','Spacing','Breakpoint','Radius',
-                     'Layout','Divider','Interaction','Motion','Effects','Ratio']
+                     'Size','Layout','Divider','Interaction','Motion','Effects','Ratio']
 const SECTIONS = [
   { id: 'summary',   label: '개요' },
   { id: 'type',      label: 'Typography · Composite' },
@@ -303,6 +303,7 @@ const SECTIONS = [
   { id: 'f-Spacing',     label: 'Spacing' },
   { id: 'f-Breakpoint',  label: 'Breakpoint' },
   { id: 'f-Radius',      label: 'Radius' },
+  { id: 'f-Size',        label: 'Size' },
   { id: 'f-Layout',      label: 'Layout' },
   { id: 'f-Divider',     label: 'Divider' },
   { id: 'f-Interaction', label: 'Interaction' },
@@ -323,7 +324,10 @@ const ELEVATION_COLOR_GROUP = 'elevation'
 
 function render() {
   if (!DATA) return
-  const { prim, light, dark, typo } = DATA
+  const { light, dark, typo } = DATA
+  // 파운데이션 섹션은 primitive 와 의도 이름 계층(component.json)을 한 트리로 본다.
+  // 별칭 해석은 DATA.prim(진짜 primitive)만 쓴다 — 위 derefPrim 참조.
+  const prim = { ...DATA.prim, ...(DATA.comp || {}) }
   const isDark = document.documentElement.dataset.theme === 'dark'
   const sem = isDark ? dark : light
   const hit = s => !query || String(s).toLowerCase().includes(query)
@@ -559,9 +563,9 @@ function reloadCss() {
   })
 }
 reloadCss()
-  .then(() => Promise.all(['primitive.json', 'semantic.light.json', 'semantic.dark.json', 'typography.json']
+  .then(() => Promise.all(['primitive.json', 'semantic.light.json', 'semantic.dark.json', 'typography.json', 'component.json']
     .map(f => fetch('./' + f, { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(f + ' — HTTP ' + r.status); return r.json() }))))
-  .then(([prim, light, dark, typo]) => { DATA = { prim, light, dark, typo }; render() })
+  .then(([prim, light, dark, typo, comp]) => { DATA = { prim, light, dark, typo, comp }; render() })
   .catch(err => {
     document.getElementById('app').innerHTML =
       '<p class="err body-lg">토큰 JSON 을 불러오지 못했습니다: ' + esc(err.message) + '</p>' +

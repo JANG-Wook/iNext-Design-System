@@ -161,16 +161,21 @@ anchor positioning 은 특히 최근이다. **그래서 지원 범위(⓪′)를
 만들 때 읽는 문서다. 그래서 CSS 클래스나 React prop 이 아니라 **역할·키보드·상태**로 쓴다.
 
 ```
-Button
-  역할       button
-  이름       자식 텍스트 · 아이콘 전용이면 aria-label (2.5.3)
-  키보드     Enter · Space = 활성 / Tab 진입 1회 / roving 없음
-  상태       disabled → aria-disabled · loading → aria-busy
-             disabled + loading 동시 → disabled 우선
-  조작영역   ≥24×24 CSS px (2.5.8) · 대각 ≥6.0mm (KWCAG 6.1.3)
-  토큰       control-height-* · control-padding-* · 오버레이는 면 밝기로 (0-14)
-  금지       아이콘 전용에 이름 생략 / outline: none
+<컴포넌트 이름>                              APG 패턴: <패턴 또는 "없음">
+  역할       무엇으로 만드나 · 어떤 role 인가
+  이름       접근 가능한 이름을 무엇이 만드나 (2.5.3)
+  키보드     키 → 동작. Tab 진입 횟수 · roving 여부
+  상태       상태 → 노출 속성. 충돌 시 우선순위
+  조작영역   최소 크기와 근거 SC
+  변형       variant → 색 토큰 매핑
+  크기       단계와 기본값
+  토큰       쓰는 토큰 목록
+  플랫폼     웹 / iOS 대응
+  금지       하지 말 것
+  미결       아직 못 정한 것 (비워두지 말고 적는다)
 ```
+
+**작성한 명세는 8절에 모은다.** 첫 사례는 **8-1 Button** 이다.
 
 **플랫폼별로 이렇게 읽힌다.**
 
@@ -365,3 +370,90 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
 - [KWCAG 2.2 검사항목](https://a11ykr.github.io/kwcag22/)
 - [DTCG Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/)
 - [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/)
+
+---
+
+## 8. 컴포넌트 동작 명세
+
+3-0 의 형식으로 컴포넌트마다 쓴다. **구현 전에 쓰고, 구현이 명세를 따르는지로 완료를 판정한다.**
+
+> 27종이 쌓이면 이 절이 비대해진다. 그때 별도 파일로, iOS 착수 시 패키지로 승격한다
+> (Adobe `component-schemas` 가 같은 자리다 — DECISIONS 0-29).
+
+### 8-1. Button
+
+**APG 패턴: Button** — 키보드 규약을 새로 발명하지 않는다.
+
+```
+역할       네이티브 <button type="button">
+           div·span 에 role="button" 을 붙이지 않는다
+           링크처럼 이동하는 것은 Button 이 아니라 <a> 다
+
+이름       자식 텍스트가 접근 가능한 이름이 된다
+           아이콘 전용이면 aria-label 필수
+           보이는 라벨이 있으면 그 텍스트가 이름에 포함돼야 한다 (2.5.3)
+           — 음성 제어 사용자가 "확인 눌러" 라고 말할 수 있어야 한다
+
+키보드     Space   활성    APG: "Space: Activates the button"
+           Enter   활성    APG: "Enter: Activates the button"
+           Tab     진입 1회 · roving tabindex 없음
+           실행은 up-event 에서 한다 (2.5.2)
+           — 누른 채 밖으로 벗어나면 취소된다
+
+상태       inactive  (기본)  aria-disabled="true"
+                            포커스 받는다 · 활성화된다 · 눌리면 사유를 안내한다
+           disabled  (예외)  네이티브 disabled
+                            사유를 알릴 방법이 정말 없을 때만 · 쓰면 근거를 남긴다
+           loading           aria-busy="true" · 접근 이름은 유지한다
+                            스피너는 prefers-reduced-motion 에서도 멈추지 않는다 (0-27)
+           pressed           aria-pressed (토글 버튼)
+           우선순위          disabled > inactive > loading > 나머지
+
+조작영역   ≥ 24×24 CSS px (WCAG 2.5.8) = --control-min-target
+           KWCAG 6.1.3(대각 6.0mm)을 포함한다 — 24 만 지키면 둘 다 닫힌다
+           가장 작은 sm(32px)도 자체로 만족한다
+           시각 크기가 24 미만인 아이콘 버튼은 히트박스를 24 까지 넓힌다
+
+변형       primary    bg {color.primary.normal}   label {color.inverse.label}
+           secondary  bg {color.fill.normal}      label {color.label.normal}
+           outline    bg 없음 · border {color.line.normal} · label {color.label.normal}
+           text       bg 없음 · label {color.label.normal}      (Text Button)
+           negative   bg {color.status.negative}  label {color.inverse.label}
+           floating   원형 · radius.circle · 그림자 shadow.md   (Floating Button)
+
+크기       sm 32 · md 40 · lg 48   기본 md
+           sm  조밀한 툴바 · 테이블 행 내부 · Chip
+           md  폼 · 다이얼로그 · 일반 화면
+           lg  모바일 주요 CTA · Bottom Sheet 하단
+           타이포  sm → label-md(14) · md·lg → label-lg(16)
+           — lg 가 글자를 키우지 않는 것은 의도다. 커지는 이유는
+             누르기 쉬우라고지 읽기 쉬우라고가 아니다
+
+토큰       크기    --control-min-height-*  --control-padding-inline-*
+                   --control-gap-*  --control-radius-*  --control-min-target
+           전환    --transition-control
+           포커스  --focus-ring-width + --focus-ring-offset
+                   --color-interaction-focus
+           상태    오버레이는 테마가 아니라 면의 밝기로 고른다 (0-14)
+                   밝은 면 → overlay-darken-* · 어두운 면 → overlay-lighten-*
+
+플랫폼     웹   <button> · aria-* · CSS px
+           iOS  accessibilityTraits.button
+                inactive → .notEnabled + 힌트로 사유
+                loading  → .updatesFrequently
+                조작영역 44×44 pt (HIG) 는 24 CSS px 보다 크므로 별도로 본다
+
+금지       height 를 고정하지 마라 — min-height 를 쓴다
+           고정 높이는 사용자가 행간을 키웠을 때 글자를 자르고 1.4.12 를 깬다
+           outline: none 으로 포커스 링을 지우지 마라
+           아이콘 전용 버튼에 이름을 생략하지 마라
+           비활성 상태를 색만으로 표현하지 마라 (5.4.1 · 색에 무관한 인식)
+           --spacing-* 를 직접 고르지 마라 — --control-* 를 쓴다
+
+미결       ① inactive 를 기본으로 하면 label.disable 의 대비 면제를 다시 봐야 한다
+             네이티브 disabled 는 WCAG 1.4.3 의 inactive component 예외에 들지만
+             aria-disabled 는 여전히 조작 가능하므로 예외로 보기 어렵다
+             → 구현 단계에서 실측한다
+           ② Floating Button 의 크기 단계 — 원형이라 min-height 짝이 맞지 않는다
+           ③ 아이콘 크기 토큰이 없다 — Size 파운데이션에 추가할 후보
+```

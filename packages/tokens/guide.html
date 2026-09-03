@@ -250,13 +250,14 @@ const RECIPE = 'net.infobank.ds.cssRecipe'
 /* 파운데이션 정본 목록 — build.mjs 의 FOUNDATIONS 와 같은 순서.
    실제 배정은 데이터에서 읽고, 목록과 어긋나면 화면에 드러낸다. */
 const FOUNDATIONS = ['Typography', 'Colors', 'Elevation', 'Spacing', 'Breakpoint', 'Radius',
-                     'Layout', 'Divider', 'Interaction', 'Motion', 'Effects', 'Ratio']
+                     'Size', 'Layout', 'Divider', 'Interaction', 'Motion', 'Effects', 'Ratio']
 
 const SRC = [
   ['primitive.json',      '테마 무관 원시 값. 실제 hex·rem·숫자가 사는 유일한 곳.'],
   ['semantic.light.json', '색 역할 — 라이트. primitive 를 별칭으로만 참조한다.'],
   ['semantic.dark.json',  '색 역할 — 다크. 라이트와 같은 키, 다른 참조.'],
   ['typography.json',     '복합 토큰. semantic 을 거치지 않고 primitive 를 직접 참조한다.'],
+  ['component.json',      '의도 이름 계층. control·transition — primitive 를 별칭으로 참조한다.'],
 ]
 
 let DATA = null   // { files, css:Map, pkg }

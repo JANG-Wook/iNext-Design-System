@@ -16,7 +16,7 @@ const NS  = 'net.infobank.ds.alpha'
 // 필요해지면 이 객체를 그대로 직렬화하면 되므로 미루는 대가가 없다(DECISIONS 0-9).
 // **새 소스 JSON 을 만들면 여기에 등록한다.** 등록하지 않으면 빌드가 실패한다.
 const COMPOSITION = {
-  sets:      { base: ['primitive.json', 'typography.json'] },
+  sets:      { base: ['primitive.json', 'typography.json', 'component.json'] },
   modifiers: { theme: { light: ['semantic.light.json'], dark: ['semantic.dark.json'] } },
   resolutionOrder: ['sets.base', 'modifiers.theme'],
 }
@@ -46,6 +46,7 @@ const prim = SRC['primitive.json']
 const L    = SRC['semantic.light.json']
 const D    = SRC['semantic.dark.json']
 const TYPO = SRC['typography.json'] ?? null
+const COMP = SRC['component.json'] ?? null
 
 // ── 값 해석 ────────────────────────────────────────────────────────
 const h2r = h => { const n = parseInt(h.slice(1),16); return [n>>16&255, n>>8&255, n&255] }
@@ -89,6 +90,20 @@ function valueOf(t){
   // duration 은 dimension 과 값 형태가 같다({value, unit}) — 단위만 ms·s 로 다르다(스펙 8.5).
   if (t.$type === 'duration')    { const v = deref(t).$value; return `${v.value}${v.unit}` }
   // cubicBezier 는 [P1x,P1y,P2x,P2y] 4수 배열이다(스펙 8.6).
+  // transition 은 duration + delay + timingFunction 복합이다(스펙 9.5). CSS 단축 속성의
+  // 인자 순서대로 낸다 — `transition: <속성> var(--transition-control)` 로 쓰이게 한다.
+  if (t.$type === 'transition'){
+    const v = t.$value
+    for (const k of ['duration','delay','timingFunction'])
+      if (v[k] === undefined) throw new Error(`transition 에 ${k} 가 없다(스펙 9.5 는 셋 다 필수)`)
+    const part = (ref, want) => {
+      if (!ALIAS.test(ref)) throw new Error(`transition 의 ${want} 는 별칭이어야 한다(원시값 인라인 금지): ${JSON.stringify(ref)}`)
+      const node = primNode(ref)
+      if (node.$type !== want) throw new Error(`transition 의 별칭 ${ref} 가 ${want} 가 아니다: ${node.$type}`)
+      return valueOf(node)
+    }
+    return `${part(v.duration,'duration')} ${part(v.timingFunction,'cubicBezier')} ${part(v.delay,'duration')}`
+  }
   if (t.$type === 'cubicBezier'){
     const v = deref(t).$value
     if (!Array.isArray(v) || v.length !== 4 || v.some(n => typeof n !== 'number'))
@@ -150,6 +165,23 @@ function primLines(){
     walk({[g]:prim[g]}, [], (p,t) => out.push(`  ${cssVar(p)}: ${valueOf(t)};`)) }
   return out.join('\n')
 }
+// ── 의도 이름 계층(component.json) ──
+// primitive 를 별칭으로 참조해 용도 이름을 붙인 층이다. 테마 축이 없으므로 :root 에 한 번만 낸다.
+// 그룹을 추가하면 이 목록에도 넣어야 산출물에 나간다 — 빌드가 양방향으로 검사한다.
+const COMP_GROUPS = ['control','transition']
+if (COMP){
+  for (const g of Object.keys(COMP)) if (!g.startsWith('$') && !COMP_GROUPS.includes(g))
+    throw new Error(`component.${g} 가 COMP_GROUPS 목록에 없어 산출물에서 누락된다`)
+  for (const g of COMP_GROUPS) if (!COMP[g]) throw new Error(`COMP_GROUPS 의 ${g} 가 component.json 에 없다`)
+}
+function compLines(){
+  if (!COMP) return ''
+  const out = []
+  for (const g of COMP_GROUPS){ if (!COMP[g]) continue
+    walk({[g]:COMP[g]}, [], (p,t) => out.push(`  ${cssVar(p)}: ${valueOf(t)};`)) }
+  return out.join('\n')
+}
+
 // 테마별로 갈리는 것 전부 — 색 + 그림자
 const SEM_GROUPS = ['color','shadow']
 function colorLines(sem, indent='  '){
@@ -239,7 +271,7 @@ function assertLineHeightPairing(){
 // $extensions 에 배열로 적고, 배정 누락·오타·미사용을 빌드가 검사한다.
 // 1:N 을 허용하므로 공유 스케일(opacity)은 참조하는 곳을 전부 나열한다.
 const FOUNDATIONS = ['Typography','Colors','Elevation','Spacing','Breakpoint','Radius',
-                     'Layout','Divider','Interaction','Motion','Effects','Ratio']
+                     'Size','Layout','Divider','Interaction','Motion','Effects','Ratio']
 const FND = 'net.infobank.ds.foundation'
 function assertFoundationsAssigned(){
   const claimed = new Set()
@@ -283,7 +315,9 @@ function assertTierScalesOrdered(){
       const name = path.join('.')
       const seq = [...keys].sort((a,b) => TIER_ORDER.indexOf(a) - TIER_ORDER.indexOf(b))
       const numOf = t => {
-        const v = t.$value
+        // 별칭을 먼저 푼다 — 의도 이름 계층(component.json)은 전부 별칭이라
+        // 풀지 않으면 티어 검사가 통째로 건너뛰어진다.
+        const v = (typeof t.$value === 'string' && ALIAS.test(t.$value) ? deref(t) : t).$value
         if (typeof v === 'number') return v
         if (v && typeof v === 'object' && typeof v.value === 'number') return v.value
         return null                                  // 복합 값(shadow 등)은 비교하지 않는다
@@ -391,6 +425,9 @@ html, body, #root { margin: 0; padding: 0; }
   /* ── 테마 무관 primitive ── */
 ${primLines()}
 
+  /* ── 의도 이름 계층 (component.json · 테마 무관) ── */
+${compLines()}
+
   /* ── 색 semantic (라이트) ── */
 ${colorLines(L)}
 }
@@ -464,6 +501,7 @@ const jsExports = {
   darkShadow: resolveTree(D.shadow),      // 다크 그림자 (색만 다름)
 }
 for (const g of NONCOLOR) if (prim[g]) jsExports[g] = resolveTree(prim[g])
+if (COMP) for (const g of COMP_GROUPS) if (COMP[g]) jsExports[g] = resolveTree(COMP[g])
 if (TYPO){
   const famStr  = valueOf(prim.fontFamily.base)
   const primDim = ref => valueOf(prim.fontSize[ref.slice(1,-1).split('.')[1]])

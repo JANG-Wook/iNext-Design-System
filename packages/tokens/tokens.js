@@ -456,6 +456,34 @@ export const opacity = {
   "88": "0.88"
 }
 
+export const control = {
+  "minHeight": {
+    "sm": "32px",
+    "md": "40px",
+    "lg": "48px"
+  },
+  "paddingInline": {
+    "sm": "12px",
+    "md": "16px",
+    "lg": "20px"
+  },
+  "gap": {
+    "sm": "4px",
+    "md": "6px",
+    "lg": "8px"
+  },
+  "radius": {
+    "sm": "6px",
+    "md": "8px",
+    "lg": "12px"
+  },
+  "minTarget": "24px"
+}
+
+export const transition = {
+  "control": "100ms cubic-bezier(0.42, 0, 0.58, 1) 0ms"
+}
+
 export const typography = {
   "base": {
     "display-lg": {

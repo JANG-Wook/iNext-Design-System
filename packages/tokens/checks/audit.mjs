@@ -5,9 +5,12 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 const D = path.join(path.dirname(fileURLToPath(import.meta.url)), '..') + '/'
+// 소스 목록을 손으로 적지 않는다 — 새 소스 파일이 감사에서 조용히 빠지는 사고를 막는다.
+// package.json 은 패키지 매니페스트지 토큰 소스가 아니라 제외한다(build.mjs 와 같은 규약).
+const NOT_A_SOURCE = new Set(['package.json'])
 const FILES = process.argv[2] === 'bundle'
   ? ['dist/tokens.light.json', 'dist/tokens.dark.json']
-  : ['primitive.json', 'semantic.light.json', 'semantic.dark.json', 'typography.json']
+  : fs.readdirSync(D).filter(f => f.endsWith('.json') && !NOT_A_SOURCE.has(f)).sort()
 const doc = {}
 for (const f of FILES) doc[f] = JSON.parse(fs.readFileSync(D + f))
 
@@ -109,6 +112,25 @@ function checkValue(type, v, where) {
       else if (typeof v === 'string') { if (!FW_KEY.includes(v)) add('오류','8.4',where,`키워드 아님: ${v}`) }
       else add('오류','8.4',where,'숫자도 키워드도 아님')
       break
+    // 9.5 transition — duration + delay + timingFunction 셋 다 필수다.
+    case 'transition': {
+      if (!v || typeof v !== 'object' || Array.isArray(v))
+        { add('오류','9.5 transition',where,'객체가 아님'); break }
+      const REQ = { duration:'duration', delay:'duration', timingFunction:'cubicBezier' }
+      for (const [pr, want] of Object.entries(REQ)){
+        if (v[pr] === undefined) { add('오류','9.5 transition',where,`${pr} 누락 — 셋 다 필수다`); continue }
+        const sv = v[pr]
+        if (isAlias(sv)){ const nd = look(sv)
+          if (!isTok(nd)) add('오류','3.8',where,`${pr} 별칭 대상 없음: ${sv}`)
+          else if (rType(nd) !== want) add('오류','9.5',where,`${pr} 별칭이 ${want} 가 아님: ${rType(nd)}`)
+          continue }
+        if (want === 'duration'){
+          if (!sv || typeof sv !== 'object' || typeof sv.value !== 'number' || !['ms','s'].includes(sv.unit))
+            add('오류','8.5',where,`${pr} 이 duration 값이 아님: ${JSON.stringify(sv)}`)
+        } else if (!Array.isArray(sv) || sv.length !== 4 || !sv.every(x => typeof x === 'number'))
+          add('오류','8.6',where,`${pr} 이 cubicBezier 값이 아님: ${JSON.stringify(sv)}`)
+      }
+      break }
     case 'shadow': {
       const layers = Array.isArray(v) ? v : [v]
       layers.forEach((l,i) => {

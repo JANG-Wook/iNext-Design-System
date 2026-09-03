@@ -1620,6 +1620,111 @@ AA             168건 미달 0
 
 ---
 
+### 0-30. 의도 이름 계층을 만든다 — 미결 17 을 닫고 Button 명세를 쓴다
+
+2026-09-03. Button 착수의 두 갈래(동작 명세 · 컴포넌트 토큰 계층)를 함께 처리했다. 미결 17 이 *"이름이 컴포넌트 문맥에서 나오므로 먼저 지으면 추측이 된다"* 고 경고했으므로, **Button 이라는 실제 문맥을 놓고** 이름을 지었다.
+
+#### 계산 하나가 미결 하나를 닫았다 — 24×24 가 6.0mm 를 포함한다
+
+`COMPONENTS.md` §5 가 *"어떤 사이즈가 2.5.8(24 CSS px)과 KWCAG 6.0mm 를 모두 만족하는지"* 를 미정으로 두고 있었다. CSS 기준 픽셀(1px = 1/96 in = 0.2646mm)로 계산하면 답이 나온다.
+
+| 정사각 | 대각 | KWCAG 6.0mm | WCAG 24px |
+|---|---|---|---|
+| 16×16 | 5.99mm | ✘ | ✘ |
+| **24×24** | **8.98mm** | **✔** | **✔** |
+
+6.0mm 대각을 만족하는 최소 정사각은 **16.04 CSS px** 다. **WCAG 2.5.8 이 KWCAG 6.1.3 을 완전히 포함한다** — 24 만 지키면 두 기준이 함께 닫히고 따로 잴 필요가 없다. 전제(CSS 기준 픽셀)는 명세에 조건으로 적었다.
+
+#### 계층의 자리 — `typography.json` 이 선례다
+
+`primitive.json` 에 넣으면 *"원시 값이 사는 유일한 곳 = primitive 리프"* 를 깬다. `semantic` 도 아니다 — **테마 축이 없다**(0-16). `typography.json` 이 이미 "복합·primitive 직접 참조·테마 없음" 자리에 있으므로 **`component.json` 을 같은 자리에** 두고 `COMPOSITION.sets.base` 에 등록했다.
+
+#### 이름은 컴포넌트가 아니라 역할 단위로
+
+```
+✘  button.height.md      Text Field 가 같은 값을 또 정의하게 된다
+✔  control.minHeight.md  Button · Text Field · Search · Select Button 이 공유
+```
+
+폼 한 줄에서 버튼과 입력의 높이가 맞아야 한다. Primer 가 `--control-*` 로 가는 이유다.
+
+#### `height` 가 아니라 `minHeight` 다
+
+WCAG **1.4.12(글자 간격)** 는 사용자가 행간·자간을 덮어써도 깨지지 않을 것을 요구한다. `height: 40px` 로 박으면 행간을 키운 사용자에게 글자가 잘린다 — `COMPONENTS.md` 3-4 가 *"고정 높이 버튼·칩에서 실패한다"* 고 적어둔 바로 그 지점이다.
+
+**이름이 사용법을 강제하도록** `control.minHeight` 로 지었다. `control.height` 였다면 구현자가 `height` 로 쓴다.
+
+#### 만든 것 — 14개, 새 원시 값 0개
+
+```
+control.minHeight      sm 32 · md 40 · lg 48   → {spacing.*}
+control.paddingInline  sm 12 · md 16 · lg 20   → {spacing.*}
+control.gap            sm  4 · md  6 · lg  8   → {spacing.*}
+control.radius         sm  6 · md  8 · lg 12   → {radius.*}
+control.minTarget      24                      → {spacing.24}
+transition.control     100ms · standard · 0ms  → {duration.*} {cubicBezier.*}
+```
+
+**전부 기존 눈금의 별칭이다.** `sm=32` 도 24 를 넘어 가장 작은 단계가 자체로 조작영역 요건을 만족한다. 기본 단계는 `md`.
+
+**색은 이 계층에 넣지 않았다.** variant 별 색은 이미 semantic 에 다 있고, 복제하면 테마 축이 두 곳으로 갈라진다. variant→색 매핑은 컴포넌트가 갖는다.
+
+**`transition` 은 `control` 하나만 만들었다.** `enter`·`exit` 를 지금 넣으면 참조 0 이 된다 — 0-27 에서 미룬 이유 그대로다.
+
+#### 파운데이션 — `Size` 를 신설했다 (13번째)
+
+조사해보니 **"Control" 파운데이션을 가진 곳은 없다.** Primer 는 `functional/size/`(size · size-coarse · size-fine · radius · z-index)에 넣고 `--control-*` 은 **토큰 이름**으로만 쓴다. M3 는 `md.comp.<컴포넌트>.*` 로 컴포넌트별 네임스페이스를 쓴다.
+
+우리 12개에 **`Size` 축이 없다는 것**이 진짜 공백이었다. `Spacing`(간격)·`Radius`(모서리)로 1:N 배정하는 안도 있었으나 **height 를 "Spacing" 이라 부르는 것은 정확하지 않다.** Motion 때와 같은 판단으로 신설했고, 앞으로 아이콘·아바타 치수가 갈 자리가 생겼다.
+
+#### `disabled` 정책 — 두 상태를 둔다
+
+처음에는 *"`aria-disabled` + 클릭 차단"* 을 권했다. **그건 두 방식의 나쁜 조합이다** — 포커스는 되는데 눌러도 아무 일이 없으면 사용자는 고장으로 읽는다. `aria-disabled` 의 존재 이유가 **활성화를 허용해 사유를 알리는 것**이다.
+
+Primer 의 실제 지침이 명확했다.
+
+| | 마크업 | 포커스 | 활성화 |
+|---|---|---|---|
+| **inactive**(기본) | `aria-disabled="true"` | ✔ | ✔ 눌리면 사유 안내 |
+| **disabled**(예외) | 네이티브 `disabled` | ✘ | ✘ *"rare cases … should generally be avoided"* |
+
+**기본을 `inactive` 로 한다.** 키보드·스크린리더 사용자가 버튼의 존재를 알 수 있다.
+
+**대가를 미결로 남겼다** — 네이티브 `disabled` 는 WCAG 1.4.3 의 *inactive component* 예외에 들지만 `aria-disabled` 는 여전히 조작 가능하므로 예외로 보기 어렵다. 우리 `label.disable` 이 대비 검사에서 빠져 있는데 **그 면제를 다시 봐야 한다.** Button 구현 때 실측한다(8-1 미결 ①).
+
+#### 가드 셋이 걸렸다 — 전부 실제 결함이었다
+
+**① 별칭이 CSS 로 그대로 새어 나갔다.** `--control-min-height-sm: {spacing.32};` 가 출력됐다. 원인은 내가 `$type` 을 빠뜨린 것이다 — `valueOf` 가 타입으로 분기하는데 타입이 없어 전 분기를 통과했다. **`$type` 은 필수라고 `CLAUDE.md` 에 적어놓고 어겼다.** 13개에 `dimension` 을 달아 해결했다.
+
+**② 티어 순서 검사가 별칭을 통째로 건너뛰고 있었다.** `numOf` 가 `$value` 를 그대로 읽어 문자열이면 `null` 을 반환했다. **의도 이름 계층은 전부 별칭이라 이 검사가 무용지물이었다.** 별칭을 먼저 풀도록 고쳤고 검사 대상이 5개 → **9개**로 늘었다. `lg` 를 `sm` 보다 작게 만들어 실제로 잡는지 확인했다.
+
+**③ 감사가 `component.json` 을 아예 읽지 않았다.** `audit.mjs` 의 `FILES` 가 하드코딩 목록이었다. **미결 22 와 같은 부류다.** 하드코딩을 지우고 **디스크에서 읽도록** 바꿨다 — 앞으로 새 소스가 감사에서 조용히 빠지지 않는다.
+
+또한 `transition` 복합 검사(스펙 9.5)가 없어 추가했다. `delay` 를 지우고 `timingFunction` 타입을 어긋나게 해 **감사 2건·빌드 1건이 실제로 잡는 것**을 확인했다.
+
+#### 뷰어 — 네 곳을 또 손으로 맞췄다
+
+`guide.html`·`preview.html` 의 `FOUNDATIONS`·`SECTIONS`·소스 파일 목록. **미결 22 가 예고한 그대로다.** `preview.html` 은 파운데이션 섹션을 `prim` 트리에서만 뽑고 있어 `component.json` 그룹이 렌더되지 않았다 — 별칭 해석은 진짜 primitive 로 두고 **섹션 렌더만 두 트리를 합치도록** 고쳤다. 브라우저에서 `Size 13` · `Motion 12` 를 확인했다.
+
+#### 남긴 관찰
+
+뷰어가 의도 이름 계층의 값을 `{spacing.32}` 로 보여준다. 참조 관계를 드러내는 것이라 틀리지 않지만 해석값(32px)이 함께 보이면 낫다. 지금은 `$description` 에 적어 가려지는데 **설명에 의존하는 것은 취약하다.** 전 별칭 토큰의 표시 방식을 바꾸는 일이라 이번 범위 밖으로 뒀다.
+
+#### 결과
+
+```
+토큰       433 → 447   component.json 14 (control 13 · transition 1)
+파운데이션  12 → 13     Size 신설
+소스        4 → 5       COMPOSITION.sets.base 에 등록
+CSS 변수   168 → 182
+검사        티어 스케일 5 → 9 · 감사가 소스 목록을 디스크에서 읽음 · transition 9.5 검사 추가
+검증        DTCG 오류 0 · 예외 5 · 정보 0 / AA 168건 미달 0 / 하드코딩 0건
+```
+
+**미결 17 을 닫는다.** `COMPONENTS.md` 8-1 에 Button 동작 명세를 썼다 — 27종의 첫 사례이고 형식의 본이 된다.
+
+---
+
 ## 1. 색
 
 ### 1-1. 단계를 WCAG 상대휘도로 고정한다
@@ -2006,7 +2111,7 @@ semantic 이 참조하는 것은 400 과 600 뿐이다. 200 · 300 · 500 · 700
 | ~~13~~ | ~~**`gradient.maskSize` 용도 미기록**~~ — **2026-09-01 해소(0-18)**. 5개 중 4개가 `spacing` 과 같은 값이라 새 눈금이 아니었다. 제거하고 페이드 길이는 `spacing` 을 쓴다. 48 결번도 이걸로 설명된다. |
 | 19 | **플랫폼 축 미도입** | `COMPOSITION` 의 modifier 는 `theme` 하나뿐이다. 플랫폼별로 값이 갈리는 역할(`safeArea` 4개)은 지금 **키 안에 플랫폼이 박혀 있다**(`safeArea.status.ios`). 임시 표현이며, 실제 iOS·Android 타깃이 생기면 테마처럼 **modifier 로 올려** `dist/tokens.ios.light.json` 처럼 갈라 내야 한다. **역할 이름에 플랫폼 접두사를 붙이지 않는다** — `color.ios.*` 가 그렇게 만들어졌다가 제거됐다(0-18). 소비자가 없는 지금 만들면 파일만 3배가 되므로 미룬다. |
 | 16 | **미디어 스크림 없음** | 사진·영상 위에 어두운 층을 깔아 글자 대비를 확보하는 수단이 없다. `elevation.dim` 은 균일한 모달 백드롭이라 대체가 안 된다. 미디어 컴포넌트 착수 시 만든다(0-15).<br>**어디에 두나 — `gradient` 안이 아니다.** `gradient.fade` 는 색이 없는(`currentColor`) 모양 레시피여서 primitive 에 있을 수 있다. 스크림은 특정 색을 갖고 AA 검증 대상이므로 **semantic** 이다 — `shadow` 가 같은 이유로 semantic 에 있는 것과 같다.<br>**형태 — 새 그라디언트 토큰이 아니라 색 토큰 하나면 된다.** `currentColor` 는 알파까지 실어 나른다(실측). `background-image: var(--gradient-fade-bottom); color: var(--color-scrim-…)` 로 모양은 재사용하고 색만 새로 둔다.<br>**불투명도** — 흰 사진(최악) 위 흰 글자 4.5:1 을 보장하는 임계 alpha 는 **0.5347**, `opacity` 눈금에서는 **`60`** 이 처음 통과한다.<br>**단서** — 위는 stop 2개짜리 단순 선형 페이드 기준이다. 밴딩을 피하려 곡선을 다듬어야 하면 새 그라디언트 토큰이 필요하고, 그때 두 가지가 걸린다 — `build.mjs` 가 `$type:"gradient"`(스펙 9.7)를 처리하지 못하고, `net.infobank.ds.alpha` 가 **토큰당 하나**라 stop 별로 다른 알파를 담을 그릇이 없다. |
-| 17 | **컴포넌트 토큰 계층 없음** | 비색 토큰은 primitive 에서 컴포넌트로 바로 간다 — 컴포넌트가 `--spacing-16` 을 직접 고른다. 필요한 것은 semantic(테마 축)이 아니라 **의도 이름 계층**이다: Primer 의 `--stack-gap-normal`·`--control-medium-paddingInline`, M3 의 `md.comp.*` 가 그 자리다. **컴포넌트 착수와 함께 만든다** — 이름이 컴포넌트 문맥에서 나오므로 먼저 지으면 추측이 된다(0-16). 그전까지는 primitive `$description` 으로 버틴다. |
+| ~~17~~ | ~~**컴포넌트 토큰 계층 없음**~~ — **2026-09-03 해소(0-30)**. `component.json` 을 `typography.json` 과 같은 자리에 두고 `control.*`(치수) · `transition.*`(전환) 14개를 만들었다. 컴포넌트가 아니라 **역할** 단위로 이름 지었고(폼 한 줄에서 높이가 맞아야 한다), `height` 가 아니라 **`minHeight`** 인 것은 WCAG 1.4.12 때문이다. 새 원시 값 0개. 파운데이션은 `Size` 를 신설했다. |
 | 21 | **숫자 폭 고정(`tnum`) 수단 없음** | 값이 갱신될 때 숫자가 좌우로 흔들린다. 차트 축 레이블 · 타임스탬프 · 조밀 테이블 · 배지 · 카운터 · 가격이 대상이며, `label-xs` 의 용도와 정확히 겹친다(0-25).<br>**DTCG 에 타입이 없다** — 스펙 전문 검색 0건(0-26). 만들면 `cssRecipe` 예외가 1건 는다.<br>**형태 — 타이포 토큰의 하위 속성이 아니다.** `tnum` 은 스타일과 직교한다(같은 `label-xs` 가 차트 축에도 텍스트 라벨에도 쓰인다). `link` 의 밑줄처럼 `$extensions` 에 박으면 숫자 아닌 라벨까지 강제된다. primitive 에 `fontFeature` 그룹을 두고 빌드가 `.tnum` 유틸리티를 내어 **조합**하는 쪽(`class="label-xs tnum"`)이 맞다.<br>**Chart·Table 착수 시 만든다** — 어느 스타일에 필요한지는 컴포넌트를 봐야 나온다. |
 | 22 | **파운데이션 목록이 네 곳에 복제** | `build.mjs`(FOUNDATIONS) · `guide.html`(FOUNDATIONS) · `preview.html`(FOUNDATIONS · SECTIONS). **뒤 셋은 빌드가 검사하지 않아** 하나만 고치면 감사·CI 는 통과하는데 뷰어 내비에서 빠진다 — Motion 신설 때 실제로 그 상태를 만들었다(0-27).<br>`guide.html` 의 목록은 데이터와 대조하는 **의도된 교차 검증**이라 지우면 안 된다. 필요한 것은 제거가 아니라 **네 목록이 같은지 보는 검사**다. `tokens/checks/` 에 스크립트 하나면 되고 `lint:hardcode` 와 같은 자리에 붙는다.<br>지금은 손으로 맞춰 일치한다. 파운데이션을 다시 건드릴 때 함께 처리한다. |
 | ~~18~~ | ~~**무채색 팔레트 설명 없음**~~ — **2026-09-01 해소(0-17)**. `gray` 20 · `coolGray` 3 + 그룹 설명 1건을 실제 참조처 기준으로 작성했다. 값 변경 없음. |

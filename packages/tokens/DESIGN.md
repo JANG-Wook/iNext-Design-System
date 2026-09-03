@@ -6,7 +6,7 @@ spec: DTCG 2025.10 (Format · Color Module, Final Community Group Report)
 source: primitive.json + semantic.light.json + semantic.dark.json + typography.json (packages/tokens)
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
-scope: 색·그림자 66 · 그 외 168 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
+scope: 색·그림자 66 · 그 외 182 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
 typography:
   "base.display-lg":
     class: display-lg
@@ -950,6 +950,50 @@ layout:
   gutter-xl:
     value: "24px"
     note: lg·xl 공통 — 24px
+control:
+  minHeight-sm:
+    value: "32px"
+    note: "32px. 조밀한 툴바 · 테이블 행 내부 · Chip. 8px 등차라 세로 리듬이 유지된다. **가장 작은 단계도 24 를 넘어** WCAG 2.5.8(24×24 CSS px)을 자체로 만족한다 — 히트박스를 따로 넓히지 않아도 된다."
+  minHeight-md:
+    value: "40px"
+    note: "40px. 기본값. 폼 · 다이얼로그 · 일반 화면. 8px 등차라 세로 리듬이 유지된다."
+  minHeight-lg:
+    value: "48px"
+    note: "48px. 모바일 주요 CTA · Bottom Sheet 하단 버튼. 8px 등차라 세로 리듬이 유지된다."
+  paddingInline-sm:
+    value: "12px"
+    note: "12px. `minHeight.sm` 와 짝이다."
+  paddingInline-md:
+    value: "16px"
+    note: "16px. `minHeight.md` 와 짝이다."
+  paddingInline-lg:
+    value: "20px"
+    note: "20px. `minHeight.lg` 와 짝이다."
+  gap-sm:
+    value: "4px"
+    note: "4px. `minHeight.sm` 와 짝이다."
+  gap-md:
+    value: "6px"
+    note: "6px. `minHeight.md` 와 짝이다."
+  gap-lg:
+    value: "8px"
+    note: "8px. `minHeight.lg` 와 짝이다."
+  radius-sm:
+    value: "6px"
+    note: "6px. `minHeight.sm` 와 짝이다."
+  radius-md:
+    value: "8px"
+    note: "8px. `minHeight.md` 와 짝이다."
+  radius-lg:
+    value: "12px"
+    note: "12px. `minHeight.lg` 와 짝이다."
+  minTarget:
+    value: "24px"
+    note: "조작 영역 하한 24px — WCAG 2.5.8. **KWCAG 6.1.3(대각 6.0mm)을 포함한다**: CSS 기준 픽셀(1px=1/96in)에서 24×24 의 대각은 8.98mm 이고, 6.0mm 대각을 만족하는 최소 정사각은 16.04px 다. **24 만 지키면 두 기준이 함께 닫힌다**(DECISIONS 0-30). 시각 크기가 이보다 작은 컨트롤은 히트박스를 이 값까지 넓힌다."
+transition:
+  control:
+    value: "[object Object]"
+    note: 컨트롤 상태 전환 — hover·press 오버레이, 보더 색. 100ms · standard. 가장 빈번한 전환이라 가장 짧다.
 shadow:
   xs:
     light: "0px 1px 3px 0px rgba(19, 19, 20, 0.08), 0px 0px 1px 0px rgba(19, 19, 20, 0.04)"
