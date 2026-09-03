@@ -7,7 +7,7 @@ source: primitive.json + semantic.light.json + semantic.dark.json + typography.j
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
 scope: 색·그림자 66 · 그 외 185 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
-usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 53개 토큰이 쓰이고 있다.
+usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 52개 토큰이 쓰이고 있다.
 typography:
   "base.display-lg":
     class: display-lg
@@ -304,12 +304,11 @@ color:
     light: rgba(113, 115, 121, 0.22)
     dark: rgba(113, 115, 121, 0.32)
     note: 기본 구분선. 4개 면 최소 대비 라이트 1.31 · 다크 1.43 — **컨트롤 경계로 쓸 수 없다**(WCAG 1.4.11 의 3:1 미달). 이웃 콘텐츠를 나누는 자리이고, 그 근거인 KWCAG 5.4.4 에는 수치 기준이 없다.
-    usedBy: [Button]
   line-strong:
     light: rgba(113, 115, 121, 0.8)
     dark: rgba(193, 195, 199, 0.52)
     note: "**컨트롤 경계선.** 입력·체크박스·라디오처럼 테두리가 곧 컴포넌트의 식별 정보인 자리에 쓴다 — `line.*` 일곱 중 WCAG 1.4.11 의 3:1 을 만족하는 **유일한 단계**다(4개 면 최소 라이트 3.09 · 다크 3.49 — `checks/surfaces.mjs` 가 매 빌드 검사한다). 구분선에는 `normal` 이하를 쓴다(DECISIONS 0-38)."
-    usedBy: [Search, TextArea, TextField]
+    usedBy: [Button, Search, TextArea, TextField]
   line-neutral:
     light: rgba(113, 115, 121, 0.16)
     dark: rgba(113, 115, 121, 0.28)
@@ -334,7 +333,6 @@ color:
   fill-normal:
     light: rgba(113, 115, 121, 0.08)
     dark: rgba(113, 115, 121, 0.22)
-    usedBy: [Button]
   fill-alternative:
     light: rgba(113, 115, 121, 0.05)
     dark: rgba(113, 115, 121, 0.12)
@@ -342,6 +340,7 @@ color:
   fill-strong:
     light: rgba(113, 115, 121, 0.16)
     dark: rgba(113, 115, 121, 0.28)
+    usedBy: [Button]
   interaction-inactive:
     light: "#989BA1"
     dark: "#595B61"

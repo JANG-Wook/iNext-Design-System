@@ -58,12 +58,20 @@
   --ds-btn-ov-press: var(--color-interaction-overlay-lighten-pressed);
 }
 .ds-btn[data-variant='secondary'] {
-  background-color: var(--color-fill-normal);
+  /* fill.normal 이 아니라 fill.strong 이다. 두 가지 이유가 있다 —
+     ① primary(13.39:1)와 나란히 뒀을 때 무게가 한쪽으로 쏠리지 않는다.
+     ② fill.normal 은 interaction.disable 과 값이 완전히 같아서(라이트 둘 다 #F4F4F4)
+        활성과 비활성의 면이 구별되지 않았다. 한 단계 올려 면으로도 갈린다 (0-41). */
+  background-color: var(--color-fill-strong);
   color: var(--color-label-normal);
 }
 .ds-btn[data-variant='outline'] {
   color: var(--color-label-normal);
-  box-shadow: inset 0 0 0 var(--divider-1) var(--color-line-normal);
+  /* line.strong 이다. 1.4.11 이 요구해서가 아니라 — 글자가 있어 테두리는 면제다 —
+     이 선이 outline 과 text 를 가르는 유일한 차이이기 때문이다. line.normal(1.32)로는
+     둘이 같은 버튼으로 보였다(0-40). 입력 테두리와 같은 값이지만 높이·라운드·라벨 정렬이
+     달라 혼동되지 않는다. */
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-line-strong);
 }
 .ds-btn[data-variant='text'] {
   color: var(--color-label-normal);
@@ -159,6 +167,8 @@
 .ds-btn:disabled[data-variant='negative'] {
   background-color: var(--color-interaction-disable);
 }
+/* 비활성은 line.alternative(1.10) 그대로 둔다. 1.4.11 은 inactive 컴포넌트를 명시적으로
+   제외하고, 활성(3.09)과 벌어질수록 "지금 쓸 수 없음"이 더 잘 읽힌다. */
 .ds-btn[aria-disabled='true'][data-variant='outline'],
 .ds-btn:disabled[data-variant='outline'] {
   box-shadow: inset 0 0 0 var(--divider-1) var(--color-line-alternative);

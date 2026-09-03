@@ -456,8 +456,13 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
            시각 크기가 24 미만인 아이콘 버튼은 히트박스를 24 까지 넓힌다
 
 변형       primary    bg {color.primary.normal}   label {color.inverse.label}
-           secondary  bg {color.fill.normal}      label {color.label.normal}
-           outline    bg 없음 · border {color.line.normal} · label {color.label.normal}
+           secondary  bg {color.fill.strong}      label {color.label.normal}
+                      — fill.normal 은 interaction.disable 과 값이 같아(라이트 둘 다 #F4F4F4)
+                        활성·비활성의 면이 구별되지 않았다. 한 단계 올려 갈랐다 (0-41)
+           outline    bg 없음 · border {color.line.strong} · label {color.label.normal}
+                      — 1.4.11 이 요구해서가 아니라(글자가 있어 면제) 이 선이 outline 과
+                        text 를 가르는 유일한 차이라서다. line.normal(1.32)로는 둘이
+                        같은 버튼으로 보였다 (0-40). 비활성은 line.alternative 그대로
            text       bg 없음 · label {color.label.normal}      (Text Button)
            negative   bg {color.status.negative}  label {color.inverse.label}
            floating   원형 · radius.circle · 그림자 shadow.md   (Floating Button)
