@@ -1725,6 +1725,74 @@ CSS 변수   168 → 182
 
 ---
 
+### 0-31. Button 을 만든다 — 그리고 inactive 대비 미달을 찾는다
+
+2026-09-03. `COMPONENTS.md` 8-1 명세대로 `packages/react` 에 Button 을 구현했다. **명세가 예고한 미결 ① 이 실제 결함으로 확인됐다 — 아직 해결되지 않았다.**
+
+#### 상태를 CSS 로 처리한다 — 취향이 아니라 요구다
+
+참고한 기존 구현은 `useState` 로 hover·focus·press 를 관리했다. 두 가지가 깨진다.
+
+1. **`onFocus` 는 마우스 클릭에도 발생한다.** 그래서 클릭만 해도 포커스 표시가 뜬다. `:focus-visible` 이 존재하는 이유가 이것이다.
+2. **인라인 스타일로는 미디어쿼리를 쓸 수 없다.** `forced-colors` · `prefers-reduced-motion` · `hover: hover` 는 `COMPONENTS.md` 3-5 의 **요구사항**이다.
+
+CSS 로 옮기니 `useState` 3개와 마우스 핸들러 6개가 통째로 사라졌다. **실측으로 확인했다** — 마우스 클릭 시 `:focus-visible` false · `outline-style: none`, Tab 시 true · `2px solid`, offset 2px.
+
+#### 참고 구현에서 가져온 것
+
+**로딩 시 본문을 `visibility: hidden` 으로 두고 스피너를 절대 중앙에 놓는다.** `display: none` 이면 버튼 폭이 흔들린다. 그 외 오버레이 별도 레이어, lookup 테이블, `iconOnly` 의 `label`→`aria-label` 재사용, 아이콘 `aria-hidden` 래퍼, `flex: none` 을 가져왔다.
+
+**가져오지 않은 것** — `outline: none`(포커스 링 없음), `opacity: 0.32` 매직넘버, `color-mix` 런타임 합성(우리는 합성된 rgba 토큰이 있다), 하드코딩 `0.15s`, `spacing` 을 radius 로 쓰기.
+
+#### 오버레이 방향을 variant 별로 실측했다 — 세 가지 거동이 나왔다
+
+| variant | 라이트 | 다크 | |
+|---|---|---|---|
+| `primary` | lighten (L 0.028) | darken (L 0.931) | 뒤집힌다 |
+| `secondary`·`outline`·`text` | darken (L 1.000) | lighten (L 0.011) | **반대로** 뒤집힌다 |
+| `negative` | lighten (L 0.156) | **lighten** (L 0.437) | **안 뒤집힌다** |
+
+**테마로 골랐다면 `negative` 가 다크에서 반대 방향이 된다.** 0-14 의 결론을 실물이 다시 확인했다. 구현은 variant 마다 `--ds-btn-ov-*` 변수만 바꾸고, 뒤집히는 면만 테마 선택자로 되돌린다. 브라우저에서 8조합 전부 목표와 일치함을 확인했다.
+
+#### 통과한 검증
+
+```
+조작영역     sm 32 · md 40 · lg 48 / 아이콘전용 32·40·48 — 24 미만 0건
+min-height   행간 4배 강제 시 40 → 66px 로 자라고 잘리지 않는다 (height 였다면 잘린다)
+1.4.12       사용자 스타일시트 !important 로 검사 — 잘림 없음
+포커스        마우스 클릭 링 없음 · Tab 링 2px + offset 2px
+포커스 대비   6면 전부 4.79~6.03:1 (필요 3:1)
+라벨 대비     variant 5 × 테마 2 = 10건 전부 통과 (최저 negative 라이트 4.77:1)
+타이포        sm label-md(14/20) · md·lg label-lg(16/24)
+```
+
+#### ★ 미해결 — inactive 라벨 대비 미달
+
+명세 미결 ① 이 예고한 그대로다. `aria-disabled` 는 **포커스를 받고 활성화되므로** WCAG 1.4.3 의 *inactive user interface component* 예외로 보기 어렵다. 그런데 색은 `label.disable` 을 쓰고 있다.
+
+| 후보 | 라이트 fill | 라이트 bg | 다크 fill | 다크 bg | 최저 |
+|---|---|---|---|---|---|
+| `label.disable`(현재) | 1.32 | 1.33 | 1.30 | 1.29 | **1.29 ✘** |
+| `label.assistive` | 1.67 | 1.69 | 1.74 | 1.79 | 1.67 ✘ |
+| `label.alternative` | 4.51 | 4.73 | 4.10 | 4.93 | 4.10 ✘ |
+| `label.neutral` | 8.49 | 9.15 | 6.25 | 7.84 | **6.25 ✔** |
+
+**기존 토큰 중 4면 전부를 통과하는 것은 `label.neutral` 하나뿐이다.** 다만 6.25:1 이면 거의 죽어 보이지 않아 비활성 신호가 약해진다 — **"보이는 비활성"과 "읽히는 대비"가 서로 당긴다.**
+
+**결정 전까지 Button 은 완료가 아니다.** 구현은 현재 상태로 커밋하되 8-1 미결 ① 에 ★ 로 표시했다. 값을 임의로 바꾸지 않는다.
+
+#### 곁들여 — `.gitignore` 가 거짓이 됐다
+
+`package-lock.json` 을 *"이 저장소는 의존성이 0이다"* 라는 이유로 무시하고 있었다. `packages/react` 가 devDependency 4개(`vite` · `@vitejs/plugin-react` · `react` · `react-dom`)를 갖게 되면서 그 전제가 깨졌다. **잠금 파일 없이는 CI 와 로컬이 다른 버전을 받는다.** 무시를 풀고 커밋했다.
+
+`packages/tokens` 의 의존성 0 은 그대로다(0-29).
+
+#### 검증 페이지도 한 번 틀렸다
+
+라이트 테마 스크린샷에서 `outline`·`text` 가 안 보였다. 원인은 **검증 페이지가 자기 배경을 칠하지 않아** 라이트 토큰이 브라우저의 어두운 바탕 위에 얹힌 것이었다. 컴포넌트 결함이 아니라 **실측이 거짓말을 한 경우**다. `body` 에 `--color-bg-normal` 을 칠해 고쳤다.
+
+---
+
 ## 1. 색
 
 ### 1-1. 단계를 WCAG 상대휘도로 고정한다

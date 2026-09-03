@@ -450,10 +450,13 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
            비활성 상태를 색만으로 표현하지 마라 (5.4.1 · 색에 무관한 인식)
            --spacing-* 를 직접 고르지 마라 — --control-* 를 쓴다
 
-미결       ① inactive 를 기본으로 하면 label.disable 의 대비 면제를 다시 봐야 한다
+미결       ① ★ inactive 라벨 대비가 미달이다 — 2026-09-03 실측, 미해결
+             label.disable 로 4면 전부 1.29~1.33:1 (필요 4.5:1)
              네이티브 disabled 는 WCAG 1.4.3 의 inactive component 예외에 들지만
              aria-disabled 는 여전히 조작 가능하므로 예외로 보기 어렵다
-             → 구현 단계에서 실측한다
+             기존 토큰 중 4면 전부 통과는 label.neutral(최저 6.25:1) 하나뿐이다
+             assistive 1.67 · alternative 4.10 은 미달
+             → 결정 전까지 Button 은 완료가 아니다 (DECISIONS 0-31)
            ② Floating Button 의 크기 단계 — 원형이라 min-height 짝이 맞지 않는다
            ③ 아이콘 크기 토큰이 없다 — Size 파운데이션에 추가할 후보
 ```

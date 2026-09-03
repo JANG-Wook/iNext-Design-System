@@ -1,9 +1,11 @@
 # macOS
 .DS_Store
 
-# 의존성 — 이 저장소는 의존성이 0이다(build.mjs 가 Node 표준 모듈만 쓴다)
+# 의존성
+# packages/tokens 는 의존성 0 을 유지한다(build.mjs 가 Node 표준 모듈만 쓴다).
+# packages/react 는 JSX 트랜스폼·검증에 devDependency 를 쓴다(DECISIONS 0-31).
+# 그래서 잠금 파일은 커밋한다 — 없으면 CI 와 로컬이 다른 버전을 받는다.
 node_modules/
-package-lock.json
 
 # npm pack 산출물
 *.tgz

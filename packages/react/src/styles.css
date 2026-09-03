@@ -1,0 +1,3 @@
+/* 소비자가 한 번에 가져가는 진입점. 토큰이 먼저 와야 var() 가 해석된다. */
+@import '@infobank/ds-tokens/css';
+@import './Button/Button.css';

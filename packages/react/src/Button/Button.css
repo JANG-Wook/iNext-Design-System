@@ -1,0 +1,211 @@
+/* ============================================================
+   Button — iNext Design System
+   값은 전부 토큰이다. 이 파일에 원시 값을 쓰지 않는다(npm run lint:hardcode).
+   상태(:hover · :focus-visible · :active)를 CSS 가 처리한다 —
+   인라인 스타일로는 forced-colors · prefers-reduced-motion 을 만족할 수 없다
+   (COMPONENTS.md 3-5).
+   ============================================================ */
+
+.ds-btn {
+  /* 오버레이 방향은 테마가 아니라 얹히는 면의 밝기로 고른다(DECISIONS 0-14).
+     variant 마다 면이 다르므로 아래에서 이 변수만 바꾼다. 기본은 밝은 면이다. */
+  --ds-btn-ov-hover: var(--color-interaction-overlay-darken-hovered);
+  --ds-btn-ov-press: var(--color-interaction-overlay-darken-pressed);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  /* height 가 아니라 min-height 다 — 고정 높이는 행간을 키운 사용자에게
+     글자를 자르고 WCAG 1.4.12 를 깬다. */
+  min-height: var(--control-min-height-md);
+  padding-inline: var(--control-padding-inline-md);
+  gap: var(--control-gap-md);
+  border-radius: var(--control-radius-md);
+
+  border: 0;
+  background: none;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+  transition: background-color var(--transition-control);
+}
+
+/* ── 크기 ─────────────────────────────────────────────── */
+.ds-btn[data-size='sm'] {
+  min-height: var(--control-min-height-sm);
+  padding-inline: var(--control-padding-inline-sm);
+  gap: var(--control-gap-sm);
+  border-radius: var(--control-radius-sm);
+}
+.ds-btn[data-size='lg'] {
+  min-height: var(--control-min-height-lg);
+  padding-inline: var(--control-padding-inline-lg);
+  gap: var(--control-gap-lg);
+  border-radius: var(--control-radius-lg);
+}
+
+/* ── 변형 ─────────────────────────────────────────────── */
+.ds-btn[data-variant='primary'] {
+  background-color: var(--color-primary-normal);
+  color: var(--color-inverse-label);
+  /* primary 는 라이트에서 어두운 면이다 → lighten */
+  --ds-btn-ov-hover: var(--color-interaction-overlay-lighten-hovered);
+  --ds-btn-ov-press: var(--color-interaction-overlay-lighten-pressed);
+}
+.ds-btn[data-variant='secondary'] {
+  background-color: var(--color-fill-normal);
+  color: var(--color-label-normal);
+}
+.ds-btn[data-variant='outline'] {
+  color: var(--color-label-normal);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-line-normal);
+}
+.ds-btn[data-variant='text'] {
+  color: var(--color-label-normal);
+}
+.ds-btn[data-variant='negative'] {
+  background-color: var(--color-status-negative);
+  color: var(--color-inverse-label);
+  /* negative 는 두 테마 모두 어두운 면이다 → 뒤집지 않는다.
+     테마로 골랐다면 다크에서 방향이 반대가 된다(실측). */
+  --ds-btn-ov-hover: var(--color-interaction-overlay-lighten-hovered);
+  --ds-btn-ov-press: var(--color-interaction-overlay-lighten-pressed);
+}
+
+/* 다크에서 면이 뒤집히는 것만 방향을 되돌린다.
+   primary: 다크에서 밝은 면 → darken. secondary·outline·text: 다크에서 어두운 면 → lighten. */
+:root[data-theme='dark'] .ds-btn,
+:root[data-theme='dark'] .ds-btn[data-variant='secondary'],
+:root[data-theme='dark'] .ds-btn[data-variant='outline'],
+:root[data-theme='dark'] .ds-btn[data-variant='text'] {
+  --ds-btn-ov-hover: var(--color-interaction-overlay-lighten-hovered);
+  --ds-btn-ov-press: var(--color-interaction-overlay-lighten-pressed);
+}
+:root[data-theme='dark'] .ds-btn[data-variant='primary'] {
+  --ds-btn-ov-hover: var(--color-interaction-overlay-darken-hovered);
+  --ds-btn-ov-press: var(--color-interaction-overlay-darken-pressed);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .ds-btn,
+  :root:not([data-theme='light']) .ds-btn[data-variant='secondary'],
+  :root:not([data-theme='light']) .ds-btn[data-variant='outline'],
+  :root:not([data-theme='light']) .ds-btn[data-variant='text'] {
+    --ds-btn-ov-hover: var(--color-interaction-overlay-lighten-hovered);
+    --ds-btn-ov-press: var(--color-interaction-overlay-lighten-pressed);
+  }
+  :root:not([data-theme='light']) .ds-btn[data-variant='primary'] {
+    --ds-btn-ov-hover: var(--color-interaction-overlay-darken-hovered);
+    --ds-btn-ov-press: var(--color-interaction-overlay-darken-pressed);
+  }
+}
+
+/* ── 상태 오버레이 ─────────────────────────────────────
+   배경색을 직접 바꾸지 않고 층을 얹는다. variant 색이 그대로 남는다. */
+.ds-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-color: transparent;
+  transition: background-color var(--transition-control);
+}
+/* hover 는 진짜 포인터에서만 — 터치에서 hover 가 고착되는 것을 막는다 */
+@media (hover: hover) {
+  .ds-btn:hover:not([aria-disabled='true']):not(:disabled)::after {
+    background-color: var(--ds-btn-ov-hover);
+  }
+}
+.ds-btn:active:not([aria-disabled='true']):not(:disabled)::after {
+  background-color: var(--ds-btn-ov-press);
+}
+
+/* ── 포커스 ─────────────────────────────────────────────
+   :focus-visible 이라 마우스 클릭에는 링이 뜨지 않는다.
+   offset 을 둬 페이지 배경 위에 놓는다 — 컴포넌트 면 위에 그리면 대비가 사라진다. */
+.ds-btn:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-interaction-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ── 비활성 ─────────────────────────────────────────────
+   기본은 inactive(aria-disabled) 다 — 포커스를 받고 눌리면 사유를 알린다(0-30).
+   색은 토큰으로 낮춘다. opacity 매직넘버를 쓰지 않는다. */
+.ds-btn[aria-disabled='true'],
+.ds-btn:disabled {
+  cursor: not-allowed;
+  color: var(--color-label-disable);
+}
+.ds-btn[aria-disabled='true'][data-variant='primary'],
+.ds-btn[aria-disabled='true'][data-variant='secondary'],
+.ds-btn[aria-disabled='true'][data-variant='negative'],
+.ds-btn:disabled[data-variant='primary'],
+.ds-btn:disabled[data-variant='secondary'],
+.ds-btn:disabled[data-variant='negative'] {
+  background-color: var(--color-interaction-disable);
+}
+.ds-btn[aria-disabled='true'][data-variant='outline'],
+.ds-btn:disabled[data-variant='outline'] {
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-line-alternative);
+}
+
+/* ── 아이콘 ─────────────────────────────────────────────
+   aria-hidden 래퍼. 찌그러지지 않게 flex-shrink 를 막는다. */
+.ds-btn__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 아이콘 전용 — 정사각. 조작 영역 하한을 보장한다(WCAG 2.5.8 · KWCAG 6.1.3). */
+.ds-btn[data-icon-only='true'] {
+  padding-inline: 0;
+  aspect-ratio: 1;
+  min-width: var(--control-min-height-md);
+}
+.ds-btn[data-icon-only='true'][data-size='sm'] { min-width: var(--control-min-height-sm); }
+.ds-btn[data-icon-only='true'][data-size='lg'] { min-width: var(--control-min-height-lg); }
+
+/* 원형 — Floating Button */
+.ds-btn[data-shape='circle'] { border-radius: var(--radius-circle); }
+
+/* ── 로딩 ───────────────────────────────────────────────
+   본문을 visibility 로 숨긴다 — display:none 이면 버튼 폭이 흔들린다. */
+.ds-btn__content { display: contents; }
+.ds-btn[data-loading='true'] .ds-btn__content { visibility: hidden; }
+.ds-btn__spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ds-btn__spinner::before {
+  content: '';
+  width: var(--spacing-16);
+  height: var(--spacing-16);
+  border-radius: var(--radius-circle);
+  border: var(--divider-1) solid currentColor;
+  border-top-color: transparent;
+  animation: ds-btn-spin var(--duration-1000) var(--cubic-bezier-linear) infinite;
+}
+@keyframes ds-btn-spin { to { transform: rotate(360deg); } }
+
+/* ── 사용자 환경 설정 (COMPONENTS.md 3-5) ─────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ds-btn, .ds-btn::after { transition-duration: var(--duration-0); }
+  /* 스피너는 멈추지 않는다 — 진행 중이라는 정보가 사라진다(0-27).
+     회전을 느리게만 한다. */
+  .ds-btn__spinner::before { animation-duration: calc(var(--duration-1000) * 2); }
+}
+@media (forced-colors: active) {
+  /* 고대비 모드에서 배경·그림자가 제거돼 버튼이 사라진다. 테두리로 형태를 남긴다. */
+  .ds-btn { border: var(--divider-1) solid ButtonBorder; }
+  .ds-btn:focus-visible { outline-color: Highlight; }
+  .ds-btn[aria-disabled='true'], .ds-btn:disabled { color: GrayText; border-color: GrayText; }
+}

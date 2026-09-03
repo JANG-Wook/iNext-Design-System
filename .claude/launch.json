@@ -4,9 +4,25 @@
     {
       "name": "tokens-preview",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4321"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4321"
+      ],
       "port": 4321,
       "url": "http://localhost:4321"
+    },
+    {
+      "name": "react-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "-w",
+        "@infobank/ds-react"
+      ],
+      "port": 4322,
+      "url": "http://localhost:4322"
     }
   ]
 }

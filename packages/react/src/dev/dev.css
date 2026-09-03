@@ -1,0 +1,12 @@
+/* 검증 페이지 전용 — 배포물이 아니다.
+   페이지가 자기 배경을 칠하지 않으면 라이트 토큰이 브라우저의 어두운 바탕 위에
+   얹혀 outline·text 변형이 안 보인다. 실측이 거짓말이 된다. */
+body {
+  margin: 0;
+  background: var(--color-bg-normal);
+  color: var(--color-label-normal);
+  font-family: var(--font-family-base);
+}
+.dev-row { display: flex; gap: var(--spacing-12); align-items: center; flex-wrap: wrap; }
+.dev-row + .dev-row { margin-top: var(--spacing-12); }
+.dev-key { width: var(--spacing-32); color: var(--color-label-alternative); }
