@@ -474,3 +474,75 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
            ② Floating Button 의 크기 단계 — 원형이라 min-height 짝이 맞지 않는다
            ③ 아이콘 크기 토큰이 없다 — Size 파운데이션에 추가할 후보
 ```
+
+### 8-2. Text Field
+
+**APG 패턴: 없음** — 네이티브 `<input>` 이 규약이다. 새로 발명하지 않는다.
+
+```
+역할       네이티브 <input>. type 은 prop 으로 통과한다
+           (text · email · password · tel · url · search · number)
+
+이름       <label for> ↔ <input id>. **id 는 useId 로 만든다** (KWCAG 8.1.1)
+           보이는 라벨이 기본이다. placeholder 는 라벨이 아니다
+           — 입력을 시작하면 사라져서 형식을 잊게 만든다
+
+키보드     네이티브. Tab 진입 1회
+
+상태       default / hover / focus / filled / readOnly / inactive / disabled / error
+           error     → aria-invalid="true" + aria-describedby 로 메시지 연결
+           helper    → aria-describedby
+           **오류가 떠도 helper 를 유지한다** — 둘 다 describedby 에 넣는다
+             형식 안내가 사라지면 3.3.2 를 잃는다
+           우선순위   disabled > inactive > readOnly > error > 나머지
+
+검증 시점  **컴포넌트가 갖지 않는다.** error 를 prop 으로 받는다 — 폼 상태는 폼이 갖는다
+           권장 규칙: **submit 우선 · 첫 submit 이후에는 blur**
+           입력 중 실시간 검증은 다 치기도 전에 사용자를 혼낸다
+
+오류       3.3.1 위치와 이유를 텍스트로 · 3.3.3 수정 방법을 제안
+           **필드 자체 오류에 live region 을 쓰지 않는다** — 포커스가 들어올 때
+           describedby 로 읽힌다. live 로 하면 중복 발화된다
+           폼 전체 요약에는 live region 을 쓴다(다른 컴포넌트의 몫)
+
+필수       네이티브 required + **보이는 텍스트 "필수"**
+           별표만 쓰면 KWCAG 5.4.1(색·모양에 무관한 인식)과 3.3.2 에 걸린다
+
+자동완성   1.3.5 — autocomplete 를 통과시킨다. 기본값을 지어내지 않는다
+
+크기       md 40 · lg 48. **sm 은 노출하지 않는다** — 32px 입력은 글자와 여백이 답답하다
+           control.* 을 Button 과 공유한다
+
+조작영역   입력 자체는 충분하다. 안에 컨트롤을 넣으면 그것이 ≥24×24 여야 한다
+
+토큰       control.min-height / padding-inline / radius   ← Button 과 공유(검증됨)
+           테두리 ★ label.alternative — line.* 는 전부 3:1 미달이다(미결 23)
+           오류 status.negative · 포커스 focus-ring + interaction.focus
+           타이포 라벨 label-md · 입력값 body-md · 도움말·오류 label-sm
+
+플랫폼     웹   <input> · <label for> · aria-*
+           iOS  UITextField + accessibilityLabel
+                오류는 accessibilityValue 가 아니라 힌트로 전달한다
+
+금지       placeholder 를 라벨로 쓰지 마라
+           오류를 색만으로 표시하지 마라 (5.4.1)
+           입력 중 실시간으로 빨갛게 만들지 마라
+           height 를 고정하지 마라 — min-height (1.4.12)
+           id 를 손으로 짓지 마라 (8.1.1)
+
+미결       ① 지우기 버튼 · 문자 수 카운터는 이번 범위에 없다
+           ② 테두리 색이 의미상 어긋난다 — label 색을 line 자리에 쓰고 있다(미결 23)
+```
+
+**실측 (2026-09-03)**
+
+| | 라이트 | 다크 | 기준 |
+|---|---|---|---|
+| 테두리 | 4.73 | 4.93 | 3:1 (1.4.11) |
+| 오류 테두리 | 5.10 | 8.01 | 3:1 |
+| 입력값 · 라벨 | 18.08 | 16.11 | 4.5:1 |
+| placeholder · 도움말 | 4.73 | 4.93 | 4.5:1 |
+| 오류 문구 · 필수 표시 | 5.10 | 8.01 | 4.5:1 |
+
+**`control.*` 공유 검증** — 폼 한 줄에서 입력 40px · 버튼 40px · 바닥 정렬 차 **0**.
+미결 17 에서 *"폼 한 줄에서 높이가 맞아야 한다"* 를 근거로 역할 단위 이름을 택한 것이 실물로 확인됐다.

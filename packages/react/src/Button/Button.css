@@ -171,7 +171,21 @@
   flex: none;
   align-items: center;
   justify-content: center;
+  /* 크기를 래퍼가 정한다 — 호출자가 넘긴 SVG 가 버튼을 밀어내지 못하게 한다.
+     이게 없으면 큰 아이콘 하나로 레이아웃이 깨진다. */
+  inline-size: var(--control-icon-size-md);
+  block-size: var(--control-icon-size-md);
 }
+.ds-btn[data-size='sm'] .ds-btn__icon {
+  inline-size: var(--control-icon-size-sm);
+  block-size: var(--control-icon-size-sm);
+}
+.ds-btn[data-size='lg'] .ds-btn__icon {
+  inline-size: var(--control-icon-size-lg);
+  block-size: var(--control-icon-size-lg);
+}
+/* 아이콘 세트와 무관하게 래퍼를 채운다 — 색은 currentColor 를 따른다. */
+.ds-btn__icon > svg { inline-size: 100%; block-size: 100%; display: block; }
 
 /* 아이콘 전용 — 정사각. 조작 영역 하한을 보장한다(WCAG 2.5.8 · KWCAG 6.1.3). */
 .ds-btn[data-icon-only='true'] {

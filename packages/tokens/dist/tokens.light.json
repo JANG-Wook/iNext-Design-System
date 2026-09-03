@@ -3639,6 +3639,24 @@
         "$description": "12px. `minHeight.lg` 와 짝이다."
       }
     },
+    "iconSize": {
+      "$description": "컨트롤 안 아이콘의 한 변. **아이콘은 `currentColor` 를 따르므로 색 토큰은 두지 않는다** — 컨테이너의 `color` 가 제어한다. 래퍼에 이 크기를 주고 SVG 는 100% 로 채운다 — 아이콘 세트가 바뀌어도 CSS 가 그대로 동작한다(lucide 는 `size` prop 도 있지만 CSS 로 통일한다).",
+      "sm": {
+        "$type": "dimension",
+        "$value": "{spacing.16}",
+        "$description": "16px. `minHeight.sm` 와 짝이다. 32px 컨트롤용. 위아래 8px 씩 남는다."
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{spacing.20}",
+        "$description": "20px. `minHeight.md` 와 짝이다. 40px 컨트롤용. 기본."
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{spacing.24}",
+        "$description": "24px. `minHeight.lg` 와 짝이다. 48px 컨트롤용."
+      }
+    },
     "minTarget": {
       "$type": "dimension",
       "$value": "{spacing.24}",

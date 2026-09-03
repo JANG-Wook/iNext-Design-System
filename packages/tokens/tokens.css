@@ -192,6 +192,9 @@ html, body, #root { margin: 0; padding: 0; }
   --control-radius-sm: 6px;
   --control-radius-md: 8px;
   --control-radius-lg: 12px;
+  --control-icon-size-sm: 16px;
+  --control-icon-size-md: 20px;
+  --control-icon-size-lg: 24px;
   --control-min-target: 24px;
   --transition-control: 100ms cubic-bezier(0.42, 0, 0.58, 1) 0ms;
 

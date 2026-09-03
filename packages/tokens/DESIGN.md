@@ -6,7 +6,7 @@ spec: DTCG 2025.10 (Format · Color Module, Final Community Group Report)
 source: primitive.json + semantic.light.json + semantic.dark.json + typography.json (packages/tokens)
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
-scope: 색·그림자 66 · 그 외 182 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
+scope: 색·그림자 66 · 그 외 185 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
 typography:
   "base.display-lg":
     class: display-lg
@@ -987,6 +987,15 @@ control:
   radius-lg:
     value: "12px"
     note: "12px. `minHeight.lg` 와 짝이다."
+  iconSize-sm:
+    value: "16px"
+    note: "16px. `minHeight.sm` 와 짝이다. 32px 컨트롤용. 위아래 8px 씩 남는다."
+  iconSize-md:
+    value: "20px"
+    note: "20px. `minHeight.md` 와 짝이다. 40px 컨트롤용. 기본."
+  iconSize-lg:
+    value: "24px"
+    note: "24px. `minHeight.lg` 와 짝이다. 48px 컨트롤용."
   minTarget:
     value: "24px"
     note: "조작 영역 하한 24px — WCAG 2.5.8. **KWCAG 6.1.3(대각 6.0mm)을 포함한다**: CSS 기준 픽셀(1px=1/96in)에서 24×24 의 대각은 8.98mm 이고, 6.0mm 대각을 만족하는 최소 정사각은 16.04px 다. **24 만 지키면 두 기준이 함께 닫힌다**(DECISIONS 0-30). 시각 크기가 이보다 작은 컨트롤은 히트박스를 이 값까지 넓힌다."

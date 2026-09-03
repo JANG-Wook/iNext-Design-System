@@ -477,6 +477,11 @@ export const control = {
     "md": "8px",
     "lg": "12px"
   },
+  "iconSize": {
+    "sm": "16px",
+    "md": "20px",
+    "lg": "24px"
+  },
   "minTarget": "24px"
 }
 
