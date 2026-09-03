@@ -3298,7 +3298,7 @@
           "lineHeight": "{lineHeight.16-26}",
           "letterSpacing": "{letterSpacing.16}"
         },
-        "$description": "장문 본문 — 행간이 가장 넓다. Popup·Bottom Sheet(Text) 본문, Text Area. PC 권장. 기본 regular, 강조는 body-lg-strong."
+        "$description": "장문 본문 — 행간이 가장 넓다. Popup·Bottom Sheet(Text) 본문. **Text Area 는 여기 없다** — 같은 폼 안의 Text Field(body-md, 14px)와 글자 크기가 어긋나므로 입력값은 body-md 를 쓴다. PC 권장. 기본 regular, 강조는 body-lg-strong."
       },
       "body-lg-strong": {
         "$type": "typography",
@@ -3342,7 +3342,7 @@
           "lineHeight": "{lineHeight.12-18}",
           "letterSpacing": "{letterSpacing.12}"
         },
-        "$description": "보조 설명. Tooltip, Text Field 헬퍼·에러 문구, Data Visual 축 레이블. 기본 regular, 강조는 body-sm-strong."
+        "$description": "보조 설명. Tooltip, Data Visual 축 레이블. 기본 regular, 강조는 body-sm-strong."
       },
       "body-sm-strong": {
         "$type": "typography",
@@ -3364,7 +3364,7 @@
           "lineHeight": "{lineHeight.16-24}",
           "letterSpacing": "{letterSpacing.16}"
         },
-        "$description": "UI 라벨(대). Button(대), Bottom Sheet CTA. PC 권장. 기본 medium, 강조는 label-lg-strong."
+        "$description": "UI 라벨(대). Button(md·lg), Bottom Sheet CTA. PC 권장. 기본 medium, 강조는 label-lg-strong."
       },
       "label-lg-strong": {
         "$type": "typography",
@@ -3408,7 +3408,7 @@
           "lineHeight": "{lineHeight.12-16}",
           "letterSpacing": "{letterSpacing.12}"
         },
-        "$description": "UI 라벨(소). Bottom Navigation 라벨, Tag, Breadcrumb, Chip, Indicator(Number). 기본 medium, 강조는 label-sm-strong."
+        "$description": "UI 라벨(소). Bottom Navigation 라벨, Tag, Breadcrumb, Chip, Indicator(Number), 폼의 헬퍼·에러·글자수(Text Field·Text Area·Search). 기본 medium, 강조는 label-sm-strong."
       },
       "label-sm-strong": {
         "$type": "typography",

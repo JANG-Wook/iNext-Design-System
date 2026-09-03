@@ -156,11 +156,56 @@ function assertYamlRoundTrip(obj, text){
   }
 }
 
+// ── 사용처 색인 — 의도가 아니라 현실을 적는다 ──────────────────────
+// $description 은 "무엇에 쓰라고 만들었나"(의도)를 적는다. 미래의 컴포넌트도 들어간다.
+// usedBy 는 "지금 어느 컴포넌트가 실제로 쓰나"(현실)를 코드에서 긁어 적는다.
+// 둘을 나란히 두면 어긋난 것이 눈에 보인다 — 실제로 손으로 적은 사용처 2건이
+// 코드와 달랐다(0-39). 손으로 적으면 썩고, 긁어 오면 안 썩는다.
+//
+// 토큰 패키지가 React 패키지를 읽는 것은 방향이 거꾸로다. 그래서 **없으면 그냥 건너뛴다** —
+// ds-tokens 를 단독으로 빌드해도 깨지지 않아야 한다(의존성 0 원칙). 모노레포·CI 에서는
+// 항상 있으므로 drift 검사는 그대로 동작한다.
+const REACT = path.resolve(DIR, '../react/src')
+// 검증 페이지는 배포물이 아니다 — 사용처로 세면 "이 토큰은 쓰이고 있다"가 거짓이 된다.
+const NOT_A_COMPONENT = new Set(['dev'])
+function scanUsage(classNames){
+  if (!fs.existsSync(REACT)) return null
+  const map = new Map()
+  const add = (k, c) => { if (!map.has(k)) map.set(k, new Set()); map.get(k).add(c) }
+  const visit = (dir, comp) => {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name < b.name ? -1 : 1)){
+      const p = path.join(dir, e.name)
+      if (e.isDirectory()){ visit(p, comp ?? e.name); continue }
+      if (!comp || NOT_A_COMPONENT.has(comp)) continue     // src 바로 아래 파일(배럴 등)은 컴포넌트가 아니다
+      if (!/\.(css|jsx|tsx|js|ts)$/.test(e.name)) continue
+      const text = fs.readFileSync(p, 'utf8')
+      for (const m of text.matchAll(/var\((--[a-z0-9-]+)/g)) add(m[1], comp)
+      // 타이포는 CSS 변수가 아니라 클래스로 쓰인다. `body-md` 가 `body-md-strong` 안에
+      // 걸리지 않도록 하이픈까지 경계로 본다.
+      for (const cn of classNames)
+        if (new RegExp(`(?<![\\w-])${cn}(?![\\w-])`).test(text)) add(cn, comp)
+    }
+  }
+  visit(REACT, null)
+  return map
+}
+
 // ── front matter 조립 ──────────────────────────────────────────────
 // 색은 라이트·다크 두 값을 함께 낸다. 하나만 넣으면 나머지 테마가 문서에서 사라진다.
 // 그 외 토큰은 테마 축이 없으므로 값 하나다.
 const L = new Map(walk(light, [], []).map(([p, t]) => [p.join('.'), t]))
 const D = new Map(walk(dark,  [], []).map(([p, t]) => [p.join('.'), t]))
+
+// 타이포 클래스 이름을 먼저 모은다 — 스캐너가 이 목록으로만 본문을 훑는다.
+// base 와 compact 는 **같은 클래스 이름**을 쓴다(compact 는 미디어쿼리로 덮는다).
+const TYPO_CLASSES = [...new Set([...L.keys()]
+  .filter(k => k.startsWith('typography.'))
+  .map(k => k.split('.')[2]))].sort()
+const USAGE = scanUsage(TYPO_CLASSES)
+const usedBy = k => {
+  const v = USAGE?.get(k)
+  return v && v.size ? [...v].sort() : null
+}
 
 const groups = {}
 let nColor = 0, nOther = 0, nTypo = 0
@@ -183,18 +228,23 @@ for (const [key, t] of L){
     bucket[name] = plainStr(t, light)
     nOther++
   }
-  if (t.$description) {
+  const attach = (key, val) => {
     const b = bucket[name]
-    if (typeof b === 'object') b.note = t.$description.replace(/\s+/g, ' ').trim()
-    else groups[g][`${name}__note`] = t.$description.replace(/\s+/g, ' ').trim()
+    if (typeof b === 'object') b[key] = val
+    else groups[g][`${name}__${key}`] = val
   }
+  if (t.$description) attach('note', t.$description.replace(/\s+/g, ' ').trim())
+  const u = usedBy(cssVar(p))
+  if (u) attach('usedBy', u)
 }
-// 설명은 값 옆에 두되, 스칼라 값에는 별도 키를 만들지 않고 묶음으로 바꾼다.
+// 설명·사용처는 값 옆에 두되, 스칼라 값에는 별도 키를 만들지 않고 묶음으로 바꾼다.
 for (const [g, bucket] of Object.entries(groups)){
   for (const k of Object.keys(bucket)){
-    if (!k.endsWith('__note')) continue
-    const base = k.slice(0, -6)
-    bucket[base] = { value: bucket[base], note: bucket[k] }
+    const m = k.match(/^(.*)__(note|usedBy)$/)
+    if (!m) continue
+    const [, base, field] = m
+    if (typeof bucket[base] !== 'object') bucket[base] = { value: bucket[base] }
+    bucket[base][field] = bucket[k]
     delete bucket[k]
   }
 }
@@ -218,9 +268,17 @@ for (const [key, t] of L){
     fontWeight: res(v.fontWeight), letterSpacing: res(v.letterSpacing),
   }
   if (t.$description) entry.note = t.$description.replace(/\s+/g, ' ').trim()
+  const u = usedBy(name)                       // 클래스 이름은 base·compact 공용이다
+  if (u) entry.usedBy = u
   typography[`${set}.${name}`] = entry
   nTypo++
 }
+
+// 실제로 쓰이고 있는 **토큰** 수. 컴포넌트가 자기 지역 커스텀 프로퍼티(`--ds-btn-ov-*`)를
+// 쓰는 것도 var() 로 잡히므로, 우리 토큰(CSS 변수 또는 타이포 클래스)만 센다.
+const nUsed = USAGE
+  ? [...USAGE.keys()].filter(k => (CSSVARS.has(k) || TYPO_CLASSES.includes(k)) && USAGE.get(k).size).length
+  : 0
 
 const front = {
   name: 'iNext Design System',
@@ -231,6 +289,9 @@ const front = {
   generatedBy: 'tokens/build-design-md.mjs — 직접 편집하지 않는다',
   themes: ['light', 'dark'],
   scope: `색·그림자 ${nColor} · 그 외 ${nOther} · 타이포 클래스 ${nTypo}. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.`,
+  usage: USAGE
+    ? `usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 ${nUsed}개 토큰이 쓰이고 있다.`
+    : 'packages/react 가 없어 사용처를 스캔하지 않았다 — 토큰 패키지는 단독으로도 빌드된다.',
   typography,
   ...groups,
 }
@@ -245,3 +306,4 @@ const fm = yaml(front)
 assertYamlRoundTrip(front, fm)
 fs.writeFileSync(OUT, `---\n${fm}\n---\n\n${body}\n`)
 console.log(`DESIGN.md — front matter ${nColor + nOther + nTypo}개(색·그림자 ${nColor} · 그 외 ${nOther} · 타이포 ${nTypo}) + narrative ${files.length}개`)
+console.log(USAGE ? `사용처 색인 — packages/react 에서 ${nUsed}개 토큰 사용 확인` : '사용처 색인 — packages/react 없음, 건너뜀')
