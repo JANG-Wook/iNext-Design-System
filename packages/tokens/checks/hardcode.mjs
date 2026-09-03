@@ -14,14 +14,17 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
+// 검사 범위는 저장소 전체다 — 컴포넌트 패키지도 본다.
+// 눈금(스케일)은 토큰 패키지의 tokens.css 에서 읽으므로 두 경로를 따로 잡는다.
+const PKG  = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')   // packages/tokens
+const ROOT = path.resolve(PKG, '../..')                                          // 저장소 루트
 
 // ── 검사하지 않는 경로 ─────────────────────────────────────────────
 const SKIP_DIR  = new Set(['node_modules', '.git', 'dist', 'narrative'])
 const SKIP_FILE = new Set([
-  'tokens/tokens.css',            // 생성물 — 원시 값이 여기로 나오는 게 정상
-  'tokens/tokens.js',             // 생성물
-  'DESIGN.md',                    // 생성물
+  'packages/tokens/tokens.css',   // 생성물 — 원시 값이 여기로 나오는 게 정상
+  'packages/tokens/tokens.js',    // 생성물
+  'packages/tokens/DESIGN.md',    // 생성물
 ])
 const EXT = new Set(['.css', '.html', '.jsx', '.tsx', '.vue', '.svelte'])
 
@@ -101,7 +104,7 @@ function declarations(text, ext){
 const scaleCache = new Map()
 function scaleValues(){
   if (scaleCache.size) return scaleCache
-  const css = fs.readFileSync(`${ROOT}/tokens/tokens.css`, 'utf8')
+  const css = fs.readFileSync(`${PKG}/tokens.css`, 'utf8')
   for (const m of css.matchAll(/^\s*--[a-z0-9-]+\s*:\s*([^;]+);/gm)){
     const v = m[1].trim()
     if (/^\d+(\.\d+)?(px|rem)$/.test(v)) scaleCache.set(v, true)

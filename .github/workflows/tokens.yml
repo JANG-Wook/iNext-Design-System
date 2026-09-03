@@ -23,7 +23,7 @@ jobs:
 
       - name: 산출물이 원본과 동기화돼 있는가
         run: |
-          if ! git diff --exit-code -- tokens/tokens.css tokens/tokens.js tokens/dist; then
+          if ! git diff --exit-code -- packages/tokens/tokens.css packages/tokens/tokens.js packages/tokens/dist; then
             echo "::error::커밋된 산출물이 재빌드 결과와 다릅니다. 'npm run build:tokens' 후 다시 커밋하세요."
             exit 1
           fi
@@ -32,20 +32,20 @@ jobs:
       # 안 고친 변경이 머지되지 않게 막는다.
       - name: DESIGN.md 가 토큰과 어긋나지 않는가
         run: |
-          if ! git diff --exit-code -- DESIGN.md; then
+          if ! git diff --exit-code -- packages/tokens/DESIGN.md; then
             echo "::error::DESIGN.md 가 토큰과 어긋났습니다. 'npm run build:tokens' 후 다시 커밋하세요."
             exit 1
           fi
 
       - name: DTCG 2025.10 정합성 — 소스
-        run: node tokens/checks/audit.mjs
+        run: node packages/tokens/checks/audit.mjs
 
       - name: DTCG 2025.10 정합성 — 번들
-        run: node tokens/checks/audit.mjs bundle
+        run: node packages/tokens/checks/audit.mjs bundle
 
       - name: 접근성 — 텍스트 대비 AA (WCAG 1.4.3 / KWCAG 5.4.3)
-        run: node tokens/checks/surfaces.mjs
+        run: node packages/tokens/checks/surfaces.mjs
 
       # DESIGN.md 는 "쓰지 마라" 고 설득할 뿐이고, 막는 것은 이 검사다.
       - name: 하드코딩 — 토큰 대신 값을 직접 쓴 곳
-        run: node tokens/checks/hardcode.mjs
+        run: node packages/tokens/checks/hardcode.mjs

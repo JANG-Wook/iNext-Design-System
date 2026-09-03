@@ -29,9 +29,12 @@ function listSources(){
   return [...out]
 }
 // 디스크 ↔ COMPOSITION 양방향 검사. 소스를 추가하고 등록을 잊는 사고를 막는다.
+// package.json 은 패키지 매니페스트지 토큰 소스가 아니라 제외한다. 그 외의 .json 은
+// 제외하지 않는다 — 새 파일이 생기면 빌드를 세워 등록 여부를 의식적으로 정하게 한다.
+const NOT_A_SOURCE = new Set(['package.json'])
 function assertCompositionCoversSources(){
   const declared = new Set(listSources())
-  for (const f of fs.readdirSync(DIR).filter(f => f.endsWith('.json')))
+  for (const f of fs.readdirSync(DIR).filter(f => f.endsWith('.json') && !NOT_A_SOURCE.has(f)))
     if (!declared.has(f)) throw new Error(`소스 ${f} 가 COMPOSITION 에 등록되지 않았다 — 번들·가드에서 누락된다`)
   for (const f of declared)
     if (!fs.existsSync(`${DIR}/${f}`)) throw new Error(`COMPOSITION 이 참조하는 ${f} 가 없다`)

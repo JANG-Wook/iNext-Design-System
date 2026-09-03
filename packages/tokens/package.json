@@ -1,0 +1,26 @@
+{
+  "name": "@infobank/ds-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "description": "iNext Design System — 디자인 토큰 (DTCG 2025.10)",
+  "type": "module",
+  "files": [
+    "DESIGN.md",
+    "tokens.css",
+    "tokens.js",
+    "dist/tokens.light.json",
+    "dist/tokens.dark.json"
+  ],
+  "exports": {
+    ".": "./tokens.js",
+    "./css": "./tokens.css",
+    "./dtcg/light": "./dist/tokens.light.json",
+    "./dtcg/dark": "./dist/tokens.dark.json"
+  },
+  "scripts": {
+    "build:tokens": "node build.mjs && node build-design-md.mjs",
+    "build:designmd": "node build-design-md.mjs",
+    "lint:hardcode": "node checks/hardcode.mjs",
+    "check": "npm run build:tokens && node checks/audit.mjs && node checks/audit.mjs bundle && node checks/surfaces.mjs && npm run lint:hardcode"
+  }
+}

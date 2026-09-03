@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>iNext Design System</title>
-<!-- 단일 원본: tokens.css(빌드 산출물) + tokens/*.json(DTCG 원본) + package.json(버전).
+<!-- 단일 원본: tokens.css(빌드 산출물) + *.json(DTCG 원본) + package.json(버전). 모두 같은 폴더(packages/tokens).
      이 페이지에는 토큰 값을 박지 않는다 — 표시하는 값·변수명·예시 코드는 전부 로드한 파일에서 뽑는다. -->
 <link id="tokens-css" rel="stylesheet" href="./tokens.css">
 <style>
@@ -895,7 +895,7 @@ reloadCss()
     ...SRC.map(([f]) => get('./' + f).then(r => r.json())),
     get('./tokens.css').then(r => r.text()),
     /* 버전은 package.json 이 원본이다. 못 읽으면 태그를 감춘다 — 값을 지어내지 않는다. */
-    get('../package.json').then(r => r.json()).catch(() => null),
+    get('./package.json').then(r => r.json()).catch(() => null),
   ]))
   .then(res => {
     const files = {}

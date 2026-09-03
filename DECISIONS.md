@@ -1556,6 +1556,70 @@ headless **프레임워크 라이브러리**는 안 쓰되 **프레임워크 중
 
 ---
 
+### 0-29. 모노레포로 옮긴다 — 토큰 패키지의 의존성 0 을 지키기 위해
+
+2026-09-03. 컴포넌트 착수 직전에 구조를 정리했다. **배포 전이라 지금이 가장 싸다** — `private: true` 이고 소비자가 0 이다.
+
+#### 왜 나누나 — 소비자가 다르다
+
+DTCG 는 **패키지 구조를 정하지 않는다.** 형식 스펙일 뿐이다. 다만 실무 관행이 있고, 이유는 하나다 — **토큰은 웹·iOS·Android·Figma 가 다 쓰고 React 구현은 웹만 쓴다.** 한 패키지에 넣으면 iOS 팀이 React 의존성을 끌어온다.
+
+확인한 사례 둘.
+
+| | 구조 |
+|---|---|
+| **Primer**(GitHub) | `@primer/primitives`(`src/tokens/` + `dist/`)를 React·CSS 패키지가 의존한다. 다만 **순수 DTCG 는 아니다** — Style Dictionary 기반이고 `$extensions` 만 W3C 스펙에서 차용했다 |
+| **Adobe Spectrum** | `packages/tokens` · **`component-schemas`**(구현 무관 컴포넌트 API 스키마) · `design-data` · `design-data-spec`. 웹·iOS·Android 를 덮기 때문에 **구현 독립 명세를 따로 패키지로 뺐다** |
+
+**Adobe 의 `component-schemas` 가 우리 `COMPONENTS.md` 3-0(동작 명세)과 같은 자리다.** 0-28 에서 headless 를 버린 근거 — *"어차피 iOS 용으로 쓸 명세"* — 를 그쪽은 이미 패키지로 만들어 두고 있다.
+
+#### 결과 구조
+
+```
+DS/                        @infobank/ds          npm workspaces (추가 의존성 없음)
+├─ packages/tokens/        @infobank/ds-tokens   의존성 0 · 플랫폼 중립
+│    *.json · build.mjs · checks/ · dist/ · tokens.css · tokens.js
+│    narrative/ · DESIGN.md · package.json
+├─ packages/react/         @infobank/ds-react    런타임 의존성은 여기에만
+├─ CLAUDE.md · COMPONENTS.md · DECISIONS.md      루트(교차 관심사)
+```
+
+**핵심은 `ds-tokens` 가 의존성 0 을 유지하는 것이다.** `@floating-ui/dom` 을 도입하더라도 `ds-react` 에만 들어간다 — 0-28 에서 *"의존성 0개가 자산"* 이라 해놓고 의존성을 추가하자던 모순이 여기서 풀린다. **그 전제가 빠져 있었다.**
+
+#### `spec` 패키지는 만들지 않았다
+
+Adobe 처럼 `packages/spec` 를 둘 수도 있으나 **iOS 착수 전에는 소비자가 없다.** 3-0 명세를 `COMPONENTS.md` 안에 문서로 쓰다가 iOS 가 실제로 시작될 때 승격한다. 미결 16·17 을 미룬 것과 같은 판단이다.
+
+#### `DECISIONS.md` 를 루트로 올렸다
+
+`tokens/DECISIONS.md` 에 있었는데 **0-28(headless·React)은 토큰 결정이 아니다.** 이미 범위를 벗어나 있었다. 지금 옮기면 자연스럽고 나중에 옮기면 링크가 많아진다.
+
+#### 가드가 한 번 걸렸다 — 약화시키지 않고 좁혔다
+
+`build.mjs` 의 COMPOSITION 양방향 검사가 **`package.json` 을 미등록 토큰 소스로 보고 빌드를 세웠다.** 패키지 매니페스트가 토큰 소스와 같은 폴더에 오면서 생긴 일이다.
+
+`package.json` **한 건만** 제외했다. 다른 `.json` 은 계속 빌드를 세운다 — 새 파일이 생기면 등록 여부를 의식적으로 정하게 하는 것이 이 가드의 목적이기 때문이다. 소스를 `src/` 로 내려 근본적으로 분리하는 안도 있었으나 경로 변경이 커져 이번 범위 밖으로 뒀다.
+
+#### 검사기 두 개의 경로를 갈랐다
+
+`hardcode.mjs` 는 **검사 범위(저장소 전체)와 눈금 출처(토큰 패키지)가 다르다.** `ROOT` 와 `PKG` 로 나눴다. `packages/react` 에 위반을 심어 **실제로 잡는지 확인했다** — 색 리터럴·스케일 밖 `13px` 2건을 잡았고 제거 후 0건으로 돌아왔다.
+
+`build-design-md.mjs` 는 `narrative/`·`DESIGN.md`·`package.json` 을 전부 `DIR` 기준으로 바꿨다. `ROOT` 변수가 사라졌다.
+
+#### 검증
+
+브라우저에서 두 뷰어를 확인했다. `guide.html` 이 `../package.json` 을 읽고 있어 404 였다 — 같은 폴더로 내려왔으므로 `./package.json` 으로 고쳤고, 버전 태그 `v0.1.0` 이 정상 표시된다. `preview.html` 은 상대 경로뿐이라 그대로 동작한다.
+
+```
+산출물 drift   0 (tokens.css · tokens.js · dist 무변경)
+DESIGN.md      package 이름 한 줄만 변경 (@infobank/next-ds-tokens → @infobank/ds-tokens)
+DTCG           오류 0 · 예외 5 · 정보 0
+AA             168건 미달 0
+하드코딩        0건
+```
+
+---
+
 ## 1. 색
 
 ### 1-1. 단계를 WCAG 상대휘도로 고정한다

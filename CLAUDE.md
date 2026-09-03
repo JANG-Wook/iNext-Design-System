@@ -1,8 +1,10 @@
 # iNext Design System Project
 
-**토큰(DTCG) 단계는 마무리됐고 컴포넌트 단계로 넘어간다.** 토큰 작업 대상은 `tokens/` 폴더이며, 남은 미결은 대부분 컴포넌트를 봐야 풀린다.
+**토큰(DTCG) 단계는 마무리됐고 컴포넌트 단계로 넘어간다.** 남은 미결은 대부분 컴포넌트를 봐야 풀린다.
 
-**설계 배경과 미결 사항은 `tokens/DECISIONS.md` 를 먼저 읽는다.** 왜 그렇게 정했는지·무엇을 검토했다 버렸는지가 거기 있다. 토큰 하나하나의 의미는 JSON 의 `$description` 에 있다.
+**저장소는 모노레포다**(npm workspaces). `packages/tokens` = `@infobank/ds-tokens`(DTCG 토큰, **의존성 0 을 유지한다** — iOS·Android·Figma 가 이것만 가져간다) · `packages/react` = `@infobank/ds-react`(React 구현, 런타임 의존성은 여기에만 둔다). 루트에는 `CLAUDE.md` · `COMPONENTS.md` · `DECISIONS.md` 만 둔다(DECISIONS 0-29).
+
+**설계 배경과 미결 사항은 `DECISIONS.md`(루트) 를 먼저 읽는다.** 왜 그렇게 정했는지·무엇을 검토했다 버렸는지가 거기 있다. 토큰 하나하나의 의미는 JSON 의 `$description` 에 있다.
 
 **컴포넌트와 관련된 작업이면 `COMPONENTS.md` 를 먼저 읽는다.** 진행 순서(P0~P3)·착수 전 선결 4가지·모든 컴포넌트가 만족해야 하는 접근성 요구·KR delta·완료 정의가 거기 있다. 이 파일들은 자동으로 읽히지 않는다 — **이 문단이 유일한 진입점이다.**
 
@@ -29,9 +31,9 @@
 - 타이포는 **복합 토큰**(`$type:"typography"`, `typography.json`) 으로 관리한다. 스펙 9.8 이 요구하는 **5속성을 모두** 갖춰야 하고, 하위 타입이 정해져 있다.
   `fontFamily`=fontFamily · `fontSize`=dimension · `fontWeight`=fontWeight · `letterSpacing`=dimension · **`lineHeight`=number(fontSize 배수)**.
   행간 토큰 키는 `글자px-행간px`(예: `lineHeight.14-22`)이며 **짝지어진 글자 크기에서만 2px 그리드에 떨어진다** — 빌드가 짝을 검사한다.
-- **값의 단일 원본은 `tokens/` 의 소스 JSON 4개.** `tokens.css`·`tokens.js`·`dist/`·`DESIGN.md` 는 산출물이므로 **직접 편집하지 않는다.** (산문의 원본은 `narrative/` — 아래 절)
+- **값의 단일 원본은 `packages/tokens/` 의 소스 JSON 4개.** `tokens.css`·`tokens.js`·`dist/`·`DESIGN.md` 는 산출물이므로 **직접 편집하지 않는다.** (산문의 원본은 `packages/tokens/narrative/` — 아래 절)
 - 변경 절차: **JSON 수정 → `npm run build:tokens` 로 재생성.**
-- **새 소스 JSON 을 만들면 `build.mjs` 의 `COMPOSITION` 에 등록한다.** 빌드가 디스크와 등록 목록을 양방향으로 검사해 누락 시 실패한다. (DTCG Resolver Module 의 sets/modifiers 개념만 차용했고 resolver 파일은 두지 않는다 — DECISIONS 0-9)
+- **새 소스 JSON 을 만들면 `build.mjs` 의 `COMPOSITION` 에 등록한다.** (`package.json` 만 토큰 소스가 아니라 제외된다.) 빌드가 디스크와 등록 목록을 양방향으로 검사해 누락 시 실패한다. (DTCG Resolver Module 의 sets/modifiers 개념만 차용했고 resolver 파일은 두지 않는다 — DECISIONS 0-9)
 - **토큰 값의 형식을 바꾸면 JSON 을 직접 읽는 소비자 전부를 같이 고친다.** 목록은 `build.mjs` · `preview.html` · 검증 스크립트다. `preview.html` 은 브라우저에서 JSON 과 `tokens.css` 를 직접 읽으므로 빌드가 잡아주지 못한다 — 실제로 두 번 놓쳤다(DECISIONS 0-6 · 0-7).
 - 반투명색은 base 색 참조 + `$extensions."net.infobank.ds.alpha"`(opacity 참조)로 두고, 빌드가 rgba 로 합성한다.
   스펙 color 객체에 native `alpha` 필드가 있지만 **쓰지 않는다** — 그쪽은 0~1 숫자만 받아 `{opacity.16}` 같은 토큰 참조를 담지 못한다. 불투명도를 `opacity` 스케일 한 곳에서 관리하려면 확장이 필요하다.
@@ -45,29 +47,29 @@
 - 여러 파운데이션이 참조하는 스케일(`opacity`)은 어느 한 곳에 귀속시키지 않고 **참조하는 곳을 전부 나열**한다.
 
 **스펙 밖의 값**
-- DTCG 타입으로 표현할 수 없는 값은 `$extensions."net.infobank.ds.cssRecipe": true` 로 표시하고 `DECISIONS.md` 에 근거를 남긴다.
+- DTCG 타입으로 표현할 수 없는 값은 `$extensions."net.infobank.ds.cssRecipe": true` 로 표시하고 `DECISIONS.md`(루트) 에 근거를 남긴다.
 - **예외를 늘리지 않는다.** 먼저 스펙 타입으로 표현할 방법을 찾고, 정말 없을 때만 예외로 둔다.
 
 ## DESIGN.md — DTCG 에서 생성한다
 
 **`DESIGN.md` 는 생성물이다. 직접 편집하지 않는다** — 다음 빌드에 사라진다.
-front matter 는 토큰에서, 본문은 `narrative/*.md` 에서 온다.
+front matter 는 토큰에서, 본문은 `packages/tokens/narrative/*.md` 에서 온다. 생성 위치는 `packages/tokens/DESIGN.md` 다.
 
 **직접 고치는 것 셋 (생성물이 아니다)**
-- `tokens/*.json` — 값과 `$description`
-- `narrative/*.md` — 산문. 왜 그 값인지·금지사항. 파일명 순서대로 이어 붙는다
+- `packages/tokens/*.json` — 값과 `$description`
+- `packages/tokens/narrative/*.md` — 산문. 왜 그 값인지·금지사항. 파일명 순서대로 이어 붙는다
 - `COMPONENTS.md` — 컴포넌트 진행 순서와 공통 요구
 
-**사람이 쓰든 에이전트가 쓰든 상관없다.** 지킬 것은 둘뿐이다 — **변경 전 승인을 받는다**, **근거를 `tokens/DECISIONS.md` 에 남긴다.**
+**사람이 쓰든 에이전트가 쓰든 상관없다.** 지킬 것은 둘뿐이다 — **변경 전 승인을 받는다**, **근거를 `DECISIONS.md` 에 남긴다.**
 
 **고칠 곳을 헷갈리지 않는다**
 
 | 고치려는 것 | 고칠 곳 |
 |---|---|
-| 값 | `tokens/*.json` |
+| 값 | `packages/tokens/*.json` |
 | 토큰 하나의 짧은 설명 | 그 토큰의 `$description` |
-| 왜 그렇게 정했는지 · 금지사항 | `narrative/*.md` |
-| 설계 결정의 전체 이력 | `tokens/DECISIONS.md` |
+| 왜 그렇게 정했는지 · 금지사항 | `packages/tokens/narrative/*.md` |
+| 설계 결정의 전체 이력 | `DECISIONS.md` (루트) |
 | 컴포넌트 순서 · 공통 요구 · 완료 정의 | `COMPONENTS.md` |
 
 **자동 반영** — `npm run build:tokens` 가 토큰 빌드와 `DESIGN.md` 생성을 함께 돌린다.
@@ -81,14 +83,14 @@ CI 가 `DESIGN.md` 를 다시 만들어 커밋된 것과 다르면 실패시킨�
 - 색은 **라이트·다크 두 값**을 함께 낸다. 반투명색은 `rgba()` 로 낸다.
 - `$description` 이 그대로 `note` 로 실려 나간다. **그래서 설명을 지어내면 안 된다** — 실제 근거만 쓴다.
 
-**생성기를 고칠 때** — `tokens/build-design-md.mjs` 는 **결정적이어야 한다.** 타임스탬프·난수를
+**생성기를 고칠 때** — `packages/tokens/build-design-md.mjs` 는 **결정적이어야 한다.** 타임스탬프·난수를
 넣으면 drift 검사가 매번 실패한다. YAML 을 손으로 만들므로 **왕복 검사**가 들어 있다 —
 되읽은 결과가 원본과 다르면 쓰기 전에 실패한다.
 
 ## 하드코딩 절대 금지
 값을 직접 박지 않고 **토큰으로만** 표현한다.
 
-**검사가 막는다** — `npm run lint:hardcode`(`tokens/checks/hardcode.mjs`). CI 에도 걸려 있다.
+**검사가 막는다** — `npm run lint:hardcode`(`packages/tokens/checks/hardcode.mjs`). **검사 범위는 저장소 전체**라 `packages/react` 도 본다. CI 에도 걸려 있다.
 CSS 선언만 보고 템플릿 보간·`var()` 는 검사하지 않는다. 정당한 예외는 그 줄에
 `/* ds-allow: 이유 */` 를 단다. **이유 없는 예외는 두지 않는다.**
 
@@ -112,7 +114,7 @@ CSS 선언만 보고 템플릿 보간·`var()` 는 검사하지 않는다. 정�
 - `tokens.css`·`tokens.js` 안의 실제 값 — 빌드 산출물이라 편집 대상이 아님.
 
 ## 기존 토큰 먼저 탐색
-- 새 토큰을 만들기 전에 `primitive.json`·`semantic.light/dark.json`·`typography.json` 에 이미 있는지 검색한다.
+- 새 토큰을 만들기 전에 `packages/tokens/` 의 `primitive.json`·`semantic.light/dark.json`·`typography.json` 에 이미 있는지 검색한다.
 - 같은 값·역할이 있으면 재사용/참조하고, 중복 토큰을 새로 만들지 않는다.
 - 새 값이 정말 필요할 때만 primitive 에 추가하고 semantic/typography 에서 참조한다.
 
@@ -124,7 +126,7 @@ CSS 선언만 보고 템플릿 보간·`var()` 는 검사하지 않는다. 정�
 - 빌드·스크립트 실패 시 실제 에러/로그를 끝까지 읽고 원인을 확정한 뒤 고친다. 키워드로 짐작해 "흔한 수정"을 먼저 적용하지 않는다.
 
 ## 접근성 (필수)
-- **WCAG 2.2 AA + KWCAG 2.2** 를 충족한다. 근거 조항과 확인 내역은 `tokens/DECISIONS.md` 4-1 에 있다.
+- **WCAG 2.2 AA + KWCAG 2.2** 를 충족한다. 근거 조항과 확인 내역은 `DECISIONS.md` 4-1 에 있다.
 - 대비: 텍스트 **4.5:1**, 비텍스트·UI **3:1**. 라이트·다크 **동등**하게.
 - 색을 바꾸면 **대비를 재검증**한다. 반투명색은 **배경에 합성한 뒤** 대비를 계산한다.
 - 타이포는 rem 기반(사용자 확대 대응), 본문 행간 ≥1.5 를 기준으로 한다.

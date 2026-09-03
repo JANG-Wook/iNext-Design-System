@@ -1,9 +1,9 @@
 ---
 name: iNext Design System
-package: "@infobank/next-ds-tokens"
+package: "@infobank/ds-tokens"
 version: "0.1.0"
 spec: DTCG 2025.10 (Format · Color Module, Final Community Group Report)
-source: tokens/primitive.json + tokens/semantic.light.json + tokens/semantic.dark.json + tokens/typography.json
+source: primitive.json + semantic.light.json + semantic.dark.json + typography.json (packages/tokens)
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
 scope: 색·그림자 66 · 그 외 168 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.

@@ -1,26 +1,16 @@
 {
-  "name": "@infobank/next-ds-tokens",
+  "name": "@infobank/ds",
   "version": "0.1.0",
   "private": true,
-  "description": "iNext Design System — 디자인 토큰 (DTCG)",
+  "description": "iNext Design System — 모노레포 루트",
   "type": "module",
-  "files": [
-    "DESIGN.md",
-    "tokens/tokens.css",
-    "tokens/tokens.js",
-    "tokens/dist/tokens.light.json",
-    "tokens/dist/tokens.dark.json"
+  "workspaces": [
+    "packages/*"
   ],
-  "exports": {
-    ".": "./tokens/tokens.js",
-    "./css": "./tokens/tokens.css",
-    "./dtcg/light": "./tokens/dist/tokens.light.json",
-    "./dtcg/dark": "./tokens/dist/tokens.dark.json"
-  },
   "scripts": {
-    "build:tokens": "node tokens/build.mjs && node tokens/build-design-md.mjs",
-    "build:designmd": "node tokens/build-design-md.mjs",
-    "lint:hardcode": "node tokens/checks/hardcode.mjs",
-    "check": "npm run build:tokens && node tokens/checks/audit.mjs && node tokens/checks/audit.mjs bundle && node tokens/checks/surfaces.mjs && npm run lint:hardcode"
+    "build:tokens": "npm run build:tokens -w @infobank/ds-tokens",
+    "build:designmd": "npm run build:designmd -w @infobank/ds-tokens",
+    "lint:hardcode": "npm run lint:hardcode -w @infobank/ds-tokens",
+    "check": "npm run check -w @infobank/ds-tokens"
   }
 }

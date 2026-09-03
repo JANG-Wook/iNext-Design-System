@@ -1,0 +1,10 @@
+{
+  "name": "@infobank/ds-react",
+  "version": "0.0.0",
+  "private": true,
+  "description": "iNext Design System — React 구현 (착수 전)",
+  "type": "module",
+  "dependencies": {
+    "@infobank/ds-tokens": "0.1.0"
+  }
+}

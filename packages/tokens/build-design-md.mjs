@@ -12,12 +12,11 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const DIR  = path.dirname(fileURLToPath(import.meta.url))   // tokens/
-const ROOT = path.resolve(DIR, '..')
-const NARR = `${ROOT}/narrative`
-const OUT  = `${ROOT}/DESIGN.md`
+const DIR  = path.dirname(fileURLToPath(import.meta.url))   // packages/tokens/
+const NARR = `${DIR}/narrative`
+const OUT  = `${DIR}/DESIGN.md`
 
-const pkg   = JSON.parse(fs.readFileSync(`${ROOT}/package.json`, 'utf8'))
+const pkg   = JSON.parse(fs.readFileSync(`${DIR}/package.json`, 'utf8'))
 const light = JSON.parse(fs.readFileSync(`${DIR}/dist/tokens.light.json`, 'utf8'))
 const dark  = JSON.parse(fs.readFileSync(`${DIR}/dist/tokens.dark.json`, 'utf8'))
 const css   = fs.readFileSync(`${DIR}/tokens.css`, 'utf8')
@@ -228,7 +227,7 @@ const front = {
   package: pkg.name,
   version: pkg.version,
   spec: 'DTCG 2025.10 (Format · Color Module, Final Community Group Report)',
-  source: 'tokens/primitive.json + tokens/semantic.light.json + tokens/semantic.dark.json + tokens/typography.json',
+  source: 'primitive.json + semantic.light.json + semantic.dark.json + typography.json (packages/tokens)',
   generatedBy: 'tokens/build-design-md.mjs — 직접 편집하지 않는다',
   themes: ['light', 'dark'],
   scope: `색·그림자 ${nColor} · 그 외 ${nOther} · 타이포 클래스 ${nTypo}. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.`,
