@@ -78,14 +78,18 @@
 | | 선결 항목 | 상태 |
 |---|---|---|
 | **⓪** | **배포 형태** — 무엇으로 만드나 | **React 컴포넌트로 확정** |
-| **⓪′** | **지원 범위** — 브라우저 × 입력 방식 | **미정.** 이게 플랫폼 API 사용 가부를 결정한다 ↓ |
+| **⓪′** | **지원 범위** — 브라우저 × 입력 방식 | **미정 · Tooltip 착수 전 마감.** P0 에서 이 결정에 걸리는 것은 **Tooltip 하나뿐이다** — Button · Text Field · Text Area · Search · Selection Controls · Switch · Loading · Tag 는 영향받지 않는다. 플랫폼 API 사용 가부를 결정한다 ↓ |
 | **①** | **동작 명세** — 컴포넌트별 역할·키보드·상태 | 3-0 의 형식으로 컴포넌트마다 쓴다 |
 | **②** | **기반 프리미티브** — headless 냐 직접 구현이냐 | **headless 를 쓰지 않는다.** 아래 근거 |
 | **③** | **사용자 환경 설정** | `Loading` 이 P0-7 이라 `prefers-reduced-motion` 이 P0 로 딸려 온다 |
 | **④** | **레이어링** | `Tooltip` 이 P0-9 이라 포털·스크롤 잠금·중첩 오버레이가 통째로 P0 로 딸려 온다. z-index 눈금은 이미 있다(0-27) |
 
-> 원래 계획서는 선결을 ①②만 꼽았다. **Tooltip 과 Loading 이 P0 에 있는 한 ③④도 P0 이고,
-> 배포 형태·지원 범위(⓪⓪′)는 그보다 앞선다.**
+> 원래 계획서는 선결을 ①②만 꼽았다. **Tooltip 과 Loading 이 P0 에 있는 한 ③④도 P0 이다.**
+>
+> **다만 "선결"이 전부를 막는다는 뜻은 아니다.** 미정으로 남은 ⓪′(지원 범위)는 Tooltip 에만
+> 걸린다 — **Button 은 지금 착수할 수 있다.** 실제로 Button 을 막는 것은 이 표가 아니라
+> **미결 17(컴포넌트 토큰 계층)** 과 `transition` 복합 토큰이며, 둘 다 Button 을 만들면서
+> 정하기로 한 것들이다(0-16 · 0-27).
 
 ### ② headless 를 쓰지 않는다
 
@@ -133,12 +137,13 @@ CSS anchor positioning 이 지원 범위 밖으로 판정되면 Dropdown·Toolti
 | API | Baseline |
 |---|---|
 | **Popover API**(`popover` 속성) | **Newly available — 2025-01** |
-| **`<dialog>`** | 모달·포커스 트랩 내장 |
+| **`<dialog>`** | `showModal()` 이 **배경을 `inert` 로 만들고 포커스를 가둔다.** **배경 스크롤 잠금은 포함되지 않는다** — 그건 우리 몫이고 iOS Safari 대응이 특히 까다롭다 |
 | **CSS anchor positioning**(`anchor-name`) | **Newly available — 2026-01** |
 
 **둘 다 "widely available" 이 아니라 "newly available" 이다.** 최신 브라우저에서만 동작하고,
-anchor positioning 은 특히 최근이다. **그래서 지원 범위(⓪′)가 선결이다** — 그것이 정해지기
-전에는 이 API 들을 쓸 수 있는지 알 수 없고, 못 쓰면 위 5종의 비용이 다시 올라간다.
+anchor positioning 은 특히 최근이다. **그래서 지원 범위(⓪′)를 Tooltip 착수 전에 정해야 한다** —
+그전에는 이 API 들을 쓸 수 있는지 알 수 없고, 못 쓰면 위 5종의 비용이 다시 올라간다.
+**Button 을 비롯한 나머지 P0 는 이 결정을 기다리지 않는다.**
 
 ---
 
