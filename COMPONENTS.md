@@ -126,14 +126,21 @@ CSS anchor positioning 이 지원 범위 밖으로 판정되면 Dropdown·Toolti
 `packages/react` 의 런타임 의존성이 된다(`lucide-react`). `packages/tokens` 는 영향받지 않는다 —
 아이콘은 웹 구현체 층이고 토큰은 플랫폼 중립을 유지한다(0-29).
 
-**설치 시점에 확인할 것** — `size` · `strokeWidth` · `color` 의 기본값. 공식 문서에서
-확인하지 못했다. **추정으로 적지 않는다.**
+**기본값 — `lucide-react` 1.39.0 소스에서 확인했다**(2026-09-03, `defaultAttributes.mjs`).
 
-**미리 아는 제약**
-- lucide 는 `stroke` 기반이다. 작은 크기에서 획이 두꺼워 보이면 `strokeWidth` 를 함께 낮춘다.
-- 색은 `currentColor` 를 따르므로 컨테이너의 `color` 로 제어한다 — 아이콘용 색 토큰을 따로 두지 않는다.
-- **아이콘 크기 토큰이 아직 없다**(8-1 미결 ③). `Size` 파운데이션에 들어갈 후보이며,
-  Button·Text Field 두 소비자를 놓고 이름 짓는다(미결 17 과 같은 논리).
+```
+width 24 · height 24 · viewBox "0 0 24 24"
+stroke "currentColor" · strokeWidth 2 · fill "none"
+```
+
+**쓰는 방식 — CSS 로 크기를 준다. `size` prop 을 쓰지 않는다.**
+래퍼에 `--control-icon-size-*` 를 주고 `svg { inline-size: 100% }` 로 채운다.
+viewBox 가 함께 줄어들어 **획도 비례해 얇아지므로**(16px 에서 ≈1.33px) `strokeWidth` 를
+따로 조정하지 않는다. 아이콘 세트가 바뀌어도 CSS 가 그대로 동작한다.
+
+`stroke` 가 `currentColor` 라 **아이콘용 색 토큰을 두지 않는다** — 컨테이너의 `color` 가 제어한다.
+
+크기 토큰은 `control.iconSize` sm 16 · md 20 · lg 24 다(0-34).
 
 ### 그 대가 — 직접 구현이 비싼 5종
 
@@ -598,3 +605,54 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
 `rows` 반영 88px(3행) · 132px(5행) · `id` 중복 0(6개) · 라벨 미연결 0 ·
 카운터 `describedby` 연결됨 · 입력 시 `0 / 200` → `11 / 200` 갱신 확인 ·
 **320px 리플로우 통과**(가로 스크롤 없음, 넘치는 요소 0).
+
+### 8-4. Search
+
+**APG 패턴: 없음** — 네이티브 `<input type="search">` 가 규약이다.
+자동완성 목록은 Dropdown(P1-5)의 몫이고 여기 없다.
+
+**8-2 Text Field 와 같은 규약을 따른다.** 다른 점만 적는다.
+
+```
+변형       outline (기본) · underline
+           underline 은 좌우 여백을 줄인다 — 면이 없어 안쪽 여백이 의미를 갖지 않는다
+
+이름       **라벨을 생략할 수 없다.** 화면에서 감추려면 hideLabel 을 쓴다
+           placeholder 는 접근 가능한 이름이 아니고 입력을 시작하면 사라진다
+           hideLabel 은 .ds-visually-hidden 으로 처리한다 —
+           display:none 이나 visibility:hidden 은 보조기술에서도 사라진다
+
+앞 아이콘  돋보기. 장식이라 aria-hidden 이고 pointer-events: none 이다
+           — 아이콘을 눌러도 입력으로 포커스가 간다
+
+지우기     **네이티브 지우기 버튼을 숨긴다**(::-webkit-search-cancel-button)
+           — 키보드로 도달할 수 없어 WCAG 2.1.1 을 만족하지 못한다
+           대신 진짜 <button> 을 둔다
+           · 값이 있을 때만 나타난다 (제어·비제어 모두 동작)
+           · 조작 영역 24×24 = --control-min-target (2.5.8 · KWCAG 6.1.3)
+           · 이름은 "<라벨> 지우기" — 여러 검색이 한 화면에 있을 때 구분된다
+           · **지운 뒤 포커스를 입력으로 되돌린다** — 버튼이 사라지면 포커스가
+             body 로 떨어져 키보드 사용자가 위치를 잃는다
+
+Enter      onSearch 를 부른다. 폼 안이면 폼 제출이 우선이다
+
+토큰       control.min-height / padding-inline / radius / icon-size / min-target
+           테두리 ★ label.alternative — line.* 는 전부 3:1 미달(미결 23)
+
+미결       ① 자동완성·최근 검색어 목록 없음 — Dropdown 착수 시 합류한다
+           ② 검색 랜드마크(<search> · role="search")를 컴포넌트가 만들지 않는다
+             랜드마크는 페이지 구조라 소비자가 감싼다
+```
+
+**실측 (2026-09-03)**
+
+| | 라이트 | 다크 | 기준 |
+|---|---|---|---|
+| outline 테두리 · underline 밑줄 | 4.73 | 4.93 | 3:1 |
+| 오류 테두리 | 5.10 | 8.01 | 3:1 |
+| 입력값 | 18.08 | 16.11 | 4.5:1 |
+| placeholder · 앞 아이콘 · 지우기 아이콘 | 4.73 | 4.93 | 4.5:1 |
+
+지우기 버튼 4개 모두 **24×24**(24 미만 0건) · 이름 `"밑줄형 지우기"` 처럼 라벨이 들어감 ·
+**클릭 시 값 비움 → 버튼 사라짐 → 포커스가 입력으로 복귀 → 재입력 시 버튼 복귀** 확인 ·
+`hideLabel` 라벨이 화면 1×1 이면서 `htmlFor` 로 연결됨.

@@ -16,7 +16,8 @@
     "react": "^18 || ^19"
   },
   "dependencies": {
-    "@infobank/ds-tokens": "0.1.0"
+    "@infobank/ds-tokens": "0.1.0",
+    "lucide-react": "^1.39.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4",

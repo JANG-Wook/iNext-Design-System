@@ -6,6 +6,7 @@ import './dev.css'
 import Button from '../Button/Button.jsx'
 import TextField from '../TextField/TextField.jsx'
 import TextArea from '../TextArea/TextArea.jsx'
+import Search from '../Search/Search.jsx'
 
 const VARIANTS = ['primary', 'secondary', 'outline', 'text', 'negative']
 const SIZES = ['sm', 'md', 'lg']
@@ -86,6 +87,17 @@ function App() {
         <TextArea label="읽기 전용" readOnly defaultValue={'변경할 수 없음\n두 번째 줄'} />
         <TextArea label="inactive" inactive defaultValue="포커스는 된다" />
         <TextArea label="disabled" disabled defaultValue="포커스도 안 된다" />
+      </div>
+
+      <h2>Search</h2>
+      <div style={{ display: 'grid', gap: 20, maxWidth: 420 }}>
+        <Search label="검색" placeholder="검색어를 입력하세요" />
+        <Search label="밑줄형" variant="underline" placeholder="밑줄형" defaultValue="지울 수 있음" />
+        <Search label="라벨 감춤" hideLabel placeholder="라벨이 화면에는 없다" defaultValue="X 보임" />
+        <Search label="도움말" helper="두 글자 이상 입력하세요." />
+        <Search label="오류" error="검색어가 너무 짧습니다." defaultValue="가" />
+        <Search label="inactive" inactive defaultValue="포커스는 된다" />
+        <Search label="disabled" disabled defaultValue="포커스도 안 된다" />
       </div>
 
       <h2>폼 한 줄 — control.* 공유 검증</h2>
