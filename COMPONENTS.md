@@ -120,6 +120,21 @@ Radix · React Aria 같은 headless 라이브러리를 **쓰지 않고 직접 �
 목적 유틸리티**는 후보로 남긴다. `@floating-ui/dom` 은 바닐라 JS 라 React 에 묶지 않는다 —
 CSS anchor positioning 이 지원 범위 밖으로 판정되면 Dropdown·Tooltip 의 현실적인 대안이다.
 
+### 아이콘은 lucide 를 쓴다
+
+**결정 — 아이콘 세트는 [lucide](https://lucide.dev) 다. 라이선스는 ISC**(확인함, 2026-09-03).
+`packages/react` 의 런타임 의존성이 된다(`lucide-react`). `packages/tokens` 는 영향받지 않는다 —
+아이콘은 웹 구현체 층이고 토큰은 플랫폼 중립을 유지한다(0-29).
+
+**설치 시점에 확인할 것** — `size` · `strokeWidth` · `color` 의 기본값. 공식 문서에서
+확인하지 못했다. **추정으로 적지 않는다.**
+
+**미리 아는 제약**
+- lucide 는 `stroke` 기반이다. 작은 크기에서 획이 두꺼워 보이면 `strokeWidth` 를 함께 낮춘다.
+- 색은 `currentColor` 를 따르므로 컨테이너의 `color` 로 제어한다 — 아이콘용 색 토큰을 따로 두지 않는다.
+- **아이콘 크기 토큰이 아직 없다**(8-1 미결 ③). `Size` 파운데이션에 들어갈 후보이며,
+  Button·Text Field 두 소비자를 놓고 이름 짓는다(미결 17 과 같은 논리).
+
 ### 그 대가 — 직접 구현이 비싼 5종
 
 **눈 뜨고 받는 비용이다.** 이 다섯은 일정을 넉넉히 잡고, 착수 전에 3-0 명세를 특히 꼼꼼히 쓴다.
