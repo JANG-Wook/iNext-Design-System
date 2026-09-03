@@ -30,11 +30,11 @@
    테두리가 컨트롤을 식별하는 시각 정보라 3:1 이 필요하다.
    line.* 는 전부 미달이라 label.alternative 를 쓴다(미결 23). */
 .ds-search[data-variant='outline'] .ds-search__input {
-  border: var(--divider-1) solid var(--color-label-alternative);
+  border: var(--divider-1) solid var(--color-line-strong);
   border-radius: var(--control-radius-md);
 }
 .ds-search[data-variant='underline'] .ds-search__input {
-  border-block-end: var(--divider-1) solid var(--color-label-alternative);
+  border-block-end: var(--divider-1) solid var(--color-line-strong);
   border-radius: 0;
   /* 밑줄형은 좌우 여백을 줄인다 — 면이 없어 안쪽 여백이 의미를 갖지 않는다. */
   padding-inline-start: calc(var(--control-icon-size-md) + var(--spacing-8));

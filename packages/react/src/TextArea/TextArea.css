@@ -15,7 +15,7 @@
   border-radius: var(--control-radius-md);
   /* 테두리가 컨트롤을 식별하는 시각 정보라 WCAG 1.4.11(3:1) 대상이다.
      line.* 계열은 전부 3:1 에 못 미쳐 label.alternative 를 쓴다(미결 23). */
-  border: var(--divider-1) solid var(--color-label-alternative);
+  border: var(--divider-1) solid var(--color-line-strong);
   background-color: var(--color-bg-normal);
   color: var(--color-label-normal);
   font-family: inherit;

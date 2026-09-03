@@ -75,6 +75,7 @@
       "normal": {
         "$type": "color",
         "$value": "{color.gray.550}",
+        "$description": "기본 구분선. 4개 면 최소 대비 라이트 1.31 · 다크 1.43 — **컨트롤 경계로 쓸 수 없다**(WCAG 1.4.11 의 3:1 미달). 이웃 콘텐츠를 나누는 자리이고, 그 근거인 KWCAG 5.4.4 에는 수치 기준이 없다.",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.22}"
         }
@@ -82,13 +83,15 @@
       "strong": {
         "$type": "color",
         "$value": "{color.gray.550}",
+        "$description": "**컨트롤 경계선.** 입력·체크박스·라디오처럼 테두리가 곧 컴포넌트의 식별 정보인 자리에 쓴다 — `line.*` 일곱 중 WCAG 1.4.11 의 3:1 을 만족하는 **유일한 단계**다(4개 면 최소 라이트 3.09 · 다크 3.49 — `checks/surfaces.mjs` 가 매 빌드 검사한다). 구분선에는 `normal` 이하를 쓴다(DECISIONS 0-38).",
         "$extensions": {
-          "net.infobank.ds.alpha": "{opacity.52}"
+          "net.infobank.ds.alpha": "{opacity.80}"
         }
       },
       "neutral": {
         "$type": "color",
         "$value": "{color.gray.550}",
+        "$description": "약한 구분선. 4개 면 최소 대비 라이트 1.21 · 다크 1.35 — 컨트롤 경계로 쓸 수 없다.",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.16}"
         }
@@ -96,21 +99,25 @@
       "alternative": {
         "$type": "color",
         "$value": "{color.gray.550}",
+        "$description": "가장 약한 구분선. 4개 면 최소 대비 라이트 1.10 · 다크 1.25 — 컨트롤 경계로 쓸 수 없다.",
         "$extensions": {
           "net.infobank.ds.alpha": "{opacity.8}"
         }
       },
       "solidNormal": {
         "$type": "color",
-        "$value": "{color.gray.200}"
+        "$value": "{color.gray.200}",
+        "$description": "알파 없는 불투명 구분선. 겹쳐 그려도 색이 짙어지지 않고 아래 면색이 비치지 않는다. 4개 면 최소 대비 라이트 1.22 · 다크 1.35 — 컨트롤 경계로 쓸 수 없다."
       },
       "solidNeutral": {
         "$type": "color",
-        "$value": "{color.gray.150}"
+        "$value": "{color.gray.150}",
+        "$description": "알파 없는 불투명 구분선 중 약한 단계. 4개 면 최소 대비 라이트 1.13 · 다크 1.28 — 컨트롤 경계로 쓸 수 없다."
       },
       "solidAlternative": {
         "$type": "color",
-        "$value": "{color.gray.100}"
+        "$value": "{color.gray.100}",
+        "$description": "알파 없는 불투명 구분선 중 가장 약한 단계. 4개 면 최소 대비 라이트 1.03 · 다크 1.20 — 컨트롤 경계로 쓸 수 없다."
       }
     },
     "fill": {

@@ -20,7 +20,7 @@ export const color = {
   },
   "line": {
     "normal": "rgba(113, 115, 121, 0.22)",
-    "strong": "rgba(113, 115, 121, 0.52)",
+    "strong": "rgba(113, 115, 121, 0.8)",
     "neutral": "rgba(113, 115, 121, 0.16)",
     "alternative": "rgba(113, 115, 121, 0.08)",
     "solidNormal": "#E0E1E3",

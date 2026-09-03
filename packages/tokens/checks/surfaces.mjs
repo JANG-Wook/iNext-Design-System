@@ -64,6 +64,47 @@ for (const [theme, S] of [['라이트', L], ['다크', K]]) {
 if (fails.length) { console.log('  미달:'); fails.forEach(f => console.log('    ✗ ' + f)) }
 console.log(`\n총 ${n}건 검사 · 미달 ${bad}건`)
 
+/* 비텍스트 대비 — WCAG 2.2 AA 1.4.11 (3:1)
+   KWCAG 2.2 에는 대응 항목이 **없다**. 3:1 은 WCAG 만의 요구다(DECISIONS 4-1).
+
+   범위를 넓게 잡지 않는다. 1.4.11 은 "컴포넌트와 상태를 **식별하는 데 필요한**" 시각
+   정보만 대상이고, Understanding 문서는 히트 영역 경계선을 요구하지 않는다고 명시한다 —
+   컨트롤 안에 보이는 콘텐츠(글자·충분히 대비되는 아이콘)가 있으면 테두리는 면제다.
+   그래서 outline Button 의 테두리(`line.normal`, 1.31)는 위반이 아니다. 글자가 있다.
+
+   대상은 **테두리가 유일한 식별 수단인 컨트롤**이다 — 빈 입력 필드, 미체크 상태의
+   체크박스·라디오. 우리 토큰에서 그 자리를 맡는 것은 `line.strong` 하나뿐이다(0-38).
+   여기 목록을 늘릴 때는 "그 색이 없으면 컨트롤이 거기 있는지 알 수 없는가" 를 먼저 묻는다. */
+const NONTEXT = [
+  ['line.strong', S => S.color.line.strong,
+   '컨트롤 경계선 — 빈 입력 필드·미체크 체크박스는 이 선 말고 식별 수단이 없다'],
+]
+let nn = 0, nbad = 0
+const nfails = []
+console.log('\n■ 비텍스트 대비 — 컨트롤 경계 (WCAG 1.4.11 — 3:1)\n')
+for (const [theme, S] of [['라이트', L], ['다크', K]]) {
+  for (const [label, pick, why] of NONTEXT) {
+    const tok = pick(S)
+    if (!tok) { console.log(`  ✗ ${theme} ${label} 없음 — 목록을 고치거나 토큰을 되살린다`); nbad++; continue }
+    const row = []
+    for (const s of SURF) {
+      const bgTok = S.color.bg[s]
+      const bg = flat(bgTok, ref(bgTok.$value))
+      const r = R(flat(tok, bg), bg)
+      row.push(r)
+      nn++
+      if (r < 3) { nbad++; nfails.push(`${theme} ${label} on bg.${s} = ${r.toFixed(2)}`) }
+    }
+    const min = Math.min(...row)
+    console.log(`  ${theme} ${label.padEnd(14)} ${row.map(r => r.toFixed(2)).join('  ')}   최소 ${min.toFixed(2)} ${min >= 3 ? '✔' : '✘'}`)
+    if (min >= 3 && min < 3.2) console.log(`         ⚠ 여유 ${(min - 3).toFixed(2)} — 면 색을 조금만 바꿔도 미달로 떨어진다`)
+  }
+}
+if (nfails.length) { console.log('  미달:'); nfails.forEach(f => console.log('    ✗ ' + f)) }
+console.log(`\n총 ${nn}건 검사 · 미달 ${nbad}건`)
+console.log(`  (면 순서: ${SURF.join(' · ')})`)
+bad += nbad
+
 /* 참고 — 면 사이 대비(규정 요건 아님, DECISIONS 4-2) */
 console.log('\n■ 참고 — 면 사이 대비 (규정 요건 아님)')
 for (const [theme, S] of [['라이트', L], ['다크', K]]) {

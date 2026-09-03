@@ -293,24 +293,31 @@ color:
   line-normal:
     light: rgba(113, 115, 121, 0.22)
     dark: rgba(113, 115, 121, 0.32)
+    note: 기본 구분선. 4개 면 최소 대비 라이트 1.31 · 다크 1.43 — **컨트롤 경계로 쓸 수 없다**(WCAG 1.4.11 의 3:1 미달). 이웃 콘텐츠를 나누는 자리이고, 그 근거인 KWCAG 5.4.4 에는 수치 기준이 없다.
   line-strong:
-    light: rgba(113, 115, 121, 0.52)
+    light: rgba(113, 115, 121, 0.8)
     dark: rgba(193, 195, 199, 0.52)
+    note: "**컨트롤 경계선.** 입력·체크박스·라디오처럼 테두리가 곧 컴포넌트의 식별 정보인 자리에 쓴다 — `line.*` 일곱 중 WCAG 1.4.11 의 3:1 을 만족하는 **유일한 단계**다(4개 면 최소 라이트 3.09 · 다크 3.49 — `checks/surfaces.mjs` 가 매 빌드 검사한다). 구분선에는 `normal` 이하를 쓴다(DECISIONS 0-38)."
   line-neutral:
     light: rgba(113, 115, 121, 0.16)
     dark: rgba(113, 115, 121, 0.28)
+    note: 약한 구분선. 4개 면 최소 대비 라이트 1.21 · 다크 1.35 — 컨트롤 경계로 쓸 수 없다.
   line-alternative:
     light: rgba(113, 115, 121, 0.08)
     dark: rgba(113, 115, 121, 0.22)
+    note: 가장 약한 구분선. 4개 면 최소 대비 라이트 1.10 · 다크 1.25 — 컨트롤 경계로 쓸 수 없다.
   line-solidNormal:
     light: "#E0E1E3"
     dark: "#37373A"
+    note: 알파 없는 불투명 구분선. 겹쳐 그려도 색이 짙어지지 않고 아래 면색이 비치지 않는다. 4개 면 최소 대비 라이트 1.22 · 다크 1.35 — 컨트롤 경계로 쓸 수 없다.
   line-solidNeutral:
     light: "#E9EAEB"
     dark: "#333337"
+    note: 알파 없는 불투명 구분선 중 약한 단계. 4개 면 최소 대비 라이트 1.13 · 다크 1.28 — 컨트롤 경계로 쓸 수 없다.
   line-solidAlternative:
     light: "#F4F4F4"
     dark: "#2E2F32"
+    note: 알파 없는 불투명 구분선 중 가장 약한 단계. 4개 면 최소 대비 라이트 1.03 · 다크 1.20 — 컨트롤 경계로 쓸 수 없다.
   fill-normal:
     light: rgba(113, 115, 121, 0.08)
     dark: rgba(113, 115, 121, 0.22)
@@ -514,7 +521,7 @@ opacity:
     note: 다크 `shadow.xs` 전용.
   52:
     value: 0.52
-    note: "`line.strong`(두 테마) · 라이트 모달 백드롭(`elevation.dim`) · 다크 `shadow.xl`."
+    note: 다크 `line.strong` · 라이트 모달 백드롭(`elevation.dim`) · 다크 `shadow.xl`. 3곳.
   60:
     value: 0.6
     note: 다크 `bg.transparent` 와 `bg.transparentAlternative` 전용. 두 곳 다 같은 면의 반투명 변형이다.
@@ -526,10 +533,10 @@ opacity:
     note: 다크 `label.alternative` · 다크 모달 백드롭(`elevation.dim`).
   80:
     value: 0.8
-    note: 다크 `shadow.md` 전용.
+    note: 라이트 `line.strong` · 다크 `shadow.md`. 2곳.
   88:
     value: 0.88
-    note: 사다리의 최대값. `label.neutral`(두 테마) · 다크 `shadow.lg`/`xl`.
+    note: 사다리의 최대값. `label.neutral`(두 테마) · 다크 `shadow.lg`/`xl`. 4곳.
 fontFamily:
   base:
     value: Pretendard JP Variable, Pretendard JP, sans-serif

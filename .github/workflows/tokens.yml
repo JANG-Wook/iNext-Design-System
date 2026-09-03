@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: 빌드 — 가드 8종
+      - name: 빌드 — 가드 전체
         run: npm run build:tokens
 
       - name: 산출물이 원본과 동기화돼 있는가
@@ -43,7 +43,7 @@ jobs:
       - name: DTCG 2025.10 정합성 — 번들
         run: node packages/tokens/checks/audit.mjs bundle
 
-      - name: 접근성 — 텍스트 대비 AA (WCAG 1.4.3 / KWCAG 5.4.3)
+      - name: 접근성 — 대비 AA (텍스트 1.4.3/5.4.3 4.5:1 · 컨트롤 경계 1.4.11 3:1)
         run: node packages/tokens/checks/surfaces.mjs
 
       # DESIGN.md 는 "쓰지 마라" 고 설득할 뿐이고, 막는 것은 이 검사다.
