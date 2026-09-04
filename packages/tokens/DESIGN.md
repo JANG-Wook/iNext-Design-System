@@ -270,43 +270,55 @@ color:
   label-strong:
     light: "#000000"
     dark: "#FFFFFF"
+    note: 가장 강한 글자 — 제목·핵심 수치처럼 시선을 먼저 받아야 하는 자리. 4개 면 최소 대비 **라이트 19.61 · 다크 16.06** 으로 `label` 계단에서 가장 높다. **지금 코드 소비자가 없다** — 컴포넌트가 아직 넷뿐이라 전부 `label.normal` 로 충분했다.
   label-normal:
     light: "#161617"
     dark: "#F7F7F8"
+    note: 기본 글자 — 무엇을 쓸지 모르겠으면 이것. 본문·라벨·입력값에 쓴다. 4개 면 최소 대비 **라이트 16.89 · 다크 15.00**. Button · Text Field · Text Area · Search 가 쓴다.
     usedBy: [Button, Field, Search, TextArea, TextField]
   label-neutral:
     light: rgba(46, 47, 50, 0.88)
     dark: rgba(193, 195, 199, 0.88)
+    note: 한 단계 낮춘 글자 — `normal` 옆에 놓이는 부차적 정보. 4개 면 최소 대비 **라이트 8.68 · 다크 7.39** 로 4.5:1 에 여유가 크다. **지금 코드 소비자가 없다** — 0-32 에서 `inactive` 라벨로 썼다가 0-44 에서 그 상태 자체를 걷어냈다.
   label-alternative:
     light: rgba(55, 55, 58, 0.7)
     dark: rgba(173, 176, 181, 0.74)
+    note: "보조 글자 — placeholder · 도움말 · 글자 수 카운터. **4.5:1 을 겨우 넘는다: 4개 면 최소 라이트 4.55 · 다크 4.71.** 라이트 여유가 0.05 뿐이라 면 색을 건드리면 이 토큰부터 다시 잰다(`checks/surfaces.mjs` 가 매 빌드 검사한다). Text Field · Text Area · Search 가 쓴다."
     usedBy: [Field, Search, TextArea, TextField]
   label-assistive:
     light: rgba(55, 55, 58, 0.28)
     dark: rgba(173, 176, 181, 0.28)
+    note: 장식·보조 표시 전용 — 4개 면 최소 대비 **라이트 1.68 · 다크 1.73** 으로 **4.5:1 을 만족하지 않는다.** KWCAG 5.4.3 의 예외(장식 목적)로 검사에서 뺀다. **정보를 이 색으로만 전달하지 않는다.** 지금 코드 소비자가 없다.
   label-disable:
     light: rgba(55, 55, 58, 0.16)
     dark: rgba(152, 155, 161, 0.16)
+    note: 비활성 컨트롤의 글자 — 4개 면 최소 대비 **라이트 1.33 · 다크 1.26** 으로 4.5:1 을 만족하지 않는다. 네이티브 `disabled` 는 포커스도 활성화도 안 되는 진짜 inactive 라 **WCAG 1.4.3 의 예외**가 적용된다(0-43). 면은 `interaction.disable` 이다. Button · Text Field · Text Area · Search 가 쓴다.
     usedBy: [Button, Search, TextArea, TextField]
   bg-normal:
     light: "#FFFFFF"
     dark: "#1A1B1C"
+    note: 페이지 바탕 — 가장 아래 면. 라이트 `#FFFFFF` · 다크 `#1A1B1C`. **대비 검사의 기준면 넷 중 첫째**이고, 텍스트 색은 이 면을 포함한 네 면 **전부**에서 4.5:1 을 만족해야 한다 — `bg.normal` 만 보면 카드·모달 위 텍스트가 사각지대가 된다. Text Field · Text Area · Search 가 쓴다.
     usedBy: [Search, TextArea, TextField]
   bg-normalAlternative:
     light: "#F7F7F8"
     dark: "#0E0E0F"
+    note: "`bg.normal` 옆에 놓는 한 단계 다른 면 — 구역을 나눌 때. `bg.normal` 과 대비는 **라이트 1.07 · 다크 1.12** 다. **면끼리 3:1 을 요구하지 않는다** — WCAG 1.4.11 은 컴포넌트를 식별하는 시각 정보가 대상이고 면 자체는 아니며, 면끼리 3:1 은 물리적으로도 불가능하다(0-24). 경계가 필요하면 보더를 둔다(KWCAG 5.4.4). 대비 검사의 기준면 넷 중 하나. 지금 코드 소비자가 없다."
   bg-elevated:
     light: "#FFFFFF"
     dark: "#212124"
+    note: 떠 있는 면 — 카드·모달·팝오버의 바탕. **라이트는 `bg.normal` 과 값이 같아 대비 1.00** 이고 높이는 그림자가 표현한다. 다크는 `#212124` 로 한 단계 밝다(대비 1.07) — 어두운 테마에서는 위로 올라올수록 밝아진다. 대비 검사의 기준면 넷 중 하나. 지금 코드 소비자가 없다.
   bg-elevatedAlternative:
     light: "#F7F7F8"
     dark: "#131314"
+    note: "`bg.elevated` 옆의 한 단계 다른 면 — 카드 안에서 구역을 나눌 때. `bg.normal` 과 대비 **라이트 1.07 · 다크 1.08**. 대비 검사의 기준면 넷 중 하나. 지금 코드 소비자가 없다."
   bg-transparent:
     light: rgba(255, 255, 255, 0.08)
     dark: rgba(33, 33, 36, 0.6)
+    note: 면 위에 얹는 반투명 층 — 라이트는 흰색 8%, 다크는 `#212124` 60%. **두 테마의 알파 차이가 크다**(8% 대 60%). 다크는 `transparentAlternative` 와 값이 완전히 같고, 라이트만 8% / 28% 로 갈린다. 지금 코드 소비자가 없다.
   bg-transparentAlternative:
     light: rgba(255, 255, 255, 0.28)
     dark: rgba(33, 33, 36, 0.6)
+    note: "`bg.transparent` 보다 진한 반투명 층 — 라이트는 흰색 28%, 다크는 `#212124` 60%. **다크에서는 `bg.transparent` 와 값이 완전히 같아 두 단계가 구별되지 않는다** — 라이트에서만 갈린다. 지금 코드 소비자가 없다."
   line-normal:
     light: rgba(113, 115, 121, 0.22)
     dark: rgba(113, 115, 121, 0.32)
@@ -340,13 +352,16 @@ color:
   fill-normal:
     light: rgba(113, 115, 121, 0.08)
     dark: rgba(113, 115, 121, 0.22)
+    note: 컨트롤·구역의 기본 채움 — `gray.550` 8%(라이트) / 22%(다크). 합성하면 라이트 `#F4F4F4` · 다크 `#2D2E30` 이고 `bg.normal` 과 대비 **1.10 / 1.27**. **라이트에서 `interaction.disable` 과 값이 완전히 같다(`#F4F4F4`)** — 그래서 Button 의 secondary 는 이걸 쓰지 않고 `fill.strong` 을 쓴다. 활성과 비활성의 면이 구별되지 않았다(0-41). 지금 코드 소비자가 없다.
   fill-alternative:
     light: rgba(113, 115, 121, 0.05)
     dark: rgba(113, 115, 121, 0.12)
+    note: 가장 옅은 채움 — `gray.550` 5%(라이트) / 12%(다크). 합성하면 라이트 `#F8F8F8` · 다크 `#242627` 이고 `bg.normal` 과 대비 **1.06 / 1.13**. Text Field · Text Area 가 쓴다.
     usedBy: [TextArea, TextField]
   fill-strong:
     light: rgba(113, 115, 121, 0.16)
     dark: rgba(113, 115, 121, 0.28)
+    note: 가장 진한 채움 — `gray.550` 16%(라이트) / 28%(다크). 합성하면 라이트 `#E8E9EA` · 다크 `#323436` 이고 `bg.normal` 과 대비 **1.22 / 1.38**. **Button 의 secondary 면이다** — `fill.normal` 이 `interaction.disable` 과 값이 같아 한 단계 올렸다(0-41). 이 대비로는 무늬 있는 배경 위에서 면이 얼룩처럼 보이므로 그런 자리에는 outline 을 쓴다(COMPONENTS.md 8-1 용도).
     usedBy: [Button]
   interaction-inactive:
     light: "#989BA1"
@@ -393,13 +408,16 @@ color:
   primary-normal:
     light: "#2E2F32"
     dark: "#F7F7F8"
+    note: 브랜드 기본색 — **무채색이다.** 라이트 `#2E2F32` · 다크 `#F7F7F8` 이고 `bg.normal` 과 대비 **13.39 / 16.11** 로 우리 면색 중 배경과 가장 세게 갈린다. Button 의 primary 면이며, 그래서 **화면당 하나**로 제한한다(COMPONENTS.md 8-1 용도). 위에 올라가는 글자는 `label.normal` 이 아니라 `inverse.label` 이다.
     usedBy: [Button]
   primary-strong:
     light: "#212124"
     dark: "#E9EAEB"
+    note: "`primary.normal` 보다 한 단계 어둡다 — 라이트 `#212124`(대비 16.06) · 다크 `#E9EAEB`(14.32). **두 테마 모두 어두워지는 방향**이라 라이트는 대비가 오르고 다크는 내린다. **지금 코드 소비자가 없다** — Button 은 hover·press 를 면색 교체가 아니라 오버레이로 처리한다(0-14)."
   primary-heavy:
     light: "#161617"
     dark: "#E0E1E3"
+    note: "`primary` 계단에서 가장 어둡다 — 라이트 `#161617`(대비 18.08) · 다크 `#E0E1E3`(13.18). **지금 코드 소비자가 없다.**"
   status-positive:
     light: "#137F2C"
     dark: "#25CB4B"
@@ -444,52 +462,68 @@ color:
   accent-fg-red:
     light: "#D5242A"
     dark: "#FB5751"
+    note: 빨강 강조 전경색 — 라이트 `red.600`(#D5242A) · 다크 `red.400`(#FB5751), 4개 면 최소 대비 **4.77 / 5.03**. **11계열이 상대휘도로 정규화돼 있어 번호가 같으면 대비도 사실상 같다**(라이트 4.73~4.79 · 다크 4.97~5.06 — DECISIONS 1-1). 그래서 계열 선택은 대비 문제가 아니라 **의미 배정** 문제다. 지금 코드 소비자가 없다.
   accent-fg-redOrange:
     light: "#BD4811"
     dark: "#F5601A"
+    note: 다홍 강조 전경색 — 라이트 `redOrange.600`(#BD4811) · 다크 `redOrange.400`(#F5601A), 4개 면 최소 대비 **4.79 / 5.02**. **11계열이 상대휘도로 정규화돼 있어 번호가 같으면 대비도 사실상 같다**(라이트 4.73~4.79 · 다크 4.97~5.06 — DECISIONS 1-1). 그래서 계열 선택은 대비 문제가 아니라 **의미 배정** 문제다. 지금 코드 소비자가 없다.
   accent-fg-orange:
     light: "#A25D11"
     dark: "#D27A1A"
+    note: 주황 강조 전경색 — 라이트 `orange.600`(#A25D11) · 다크 `orange.400`(#D27A1A), 4개 면 최소 대비 **4.77 / 5.00**. **11계열이 상대휘도로 정규화돼 있어 번호가 같으면 대비도 사실상 같다**(라이트 4.73~4.79 · 다크 4.97~5.06 — DECISIONS 1-1). 그래서 계열 선택은 대비 문제가 아니라 **의미 배정** 문제다. 지금 코드 소비자가 없다.
   accent-fg-lime:
     light: "#617611"
     dark: "#7F9A19"
+    note: 라임 강조 전경색 — 라이트 `lime.600`(#617611) · 다크 `lime.400`(#7F9A19), 4개 면 최소 대비 **4.78 / 5.00**. **11계열이 상대휘도로 정규화돼 있어 번호가 같으면 대비도 사실상 같다**(라이트 4.73~4.79 · 다크 4.97~5.06 — DECISIONS 1-1). 그래서 계열 선택은 대비 문제가 아니라 **의미 배정** 문제다. 지금 코드 소비자가 없다.
   accent-fg-green:
     light: "#137F2C"
     dark: "#1CA53B"
+    note: 초록 강조 전경색 — 라이트 `green.600`(#137F2C) · 다크 `green.400`(#1CA53B), 4개 면 최소 대비 **4.78 / 4.97**. **11계열이 상대휘도로 정규화돼 있어 번호가 같으면 대비도 사실상 같다**(라이트 4.73~4.79 · 다크 4.97~5.06 — DECISIONS 1-1). 그래서 계열 선택은 대비 문제가 아니라 **의미 배정** 문제다. 지금 코드 소비자가 없다.
   accent-fg-cyan:
     light: "#14798C"
     dark: "#1D9EB6"
+    note: 청록 강조 전경색 — 라이트 `cyan.600`(#14798C) · 다크 `cyan.400`(#1D9EB6), 4개 면 최소 대비 **4.73 / 5.06**. **11계열이 상대휘도로 정규화돼 있어 번호가 같으면 대비도 사실상 같다**(라이트 4.73~4.79 · 다크 4.97~5.06 — DECISIONS 1-1). 그래서 계열 선택은 대비 문제가 아니라 **의미 배정** 문제다. 지금 코드 소비자가 없다.
   accent-fg-lightBlue:
     light: "#1374A9"
     dark: "#1C98DB"
+    note: 하늘 강조 전경색 — 라이트 `lightBlue.600`(#1374A9) · 다크 `lightBlue.400`(#1C98DB), 4개 면 최소 대비 **4.79 / 5.02**. **11계열이 상대휘도로 정규화돼 있어 번호가 같으면 대비도 사실상 같다**(라이트 4.73~4.79 · 다크 4.97~5.06 — DECISIONS 1-1). 그래서 계열 선택은 대비 문제가 아니라 **의미 배정** 문제다. 지금 코드 소비자가 없다.
   accent-fg-blue:
     light: "#1266E8"
     dark: "#4D8EFA"
+    note: 파랑 강조 전경색 — 라이트 `blue.600`(#1266E8) · 다크 `blue.400`(#4D8EFA), 4개 면 최소 대비 **4.79 / 5.02**. **11계열이 상대휘도로 정규화돼 있어 번호가 같으면 대비도 사실상 같다**(라이트 4.73~4.79 · 다크 4.97~5.06 — DECISIONS 1-1). 그래서 계열 선택은 대비 문제가 아니라 **의미 배정** 문제다. 지금 코드 소비자가 없다.
   accent-fg-violet:
     light: "#6B56E7"
     dark: "#8A81FA"
+    note: 보라 강조 전경색 — 라이트 `violet.600`(#6B56E7) · 다크 `violet.400`(#8A81FA), 4개 면 최소 대비 **4.77 / 5.05**. **11계열이 상대휘도로 정규화돼 있어 번호가 같으면 대비도 사실상 같다**(라이트 4.73~4.79 · 다크 4.97~5.06 — DECISIONS 1-1). 그래서 계열 선택은 대비 문제가 아니라 **의미 배정** 문제다. 지금 코드 소비자가 없다.
   accent-fg-purple:
     light: "#A042CB"
     dark: "#C467F1"
+    note: 자주 강조 전경색 — 라이트 `purple.600`(#A042CB) · 다크 `purple.400`(#C467F1), 4개 면 최소 대비 **4.74 / 5.01**. **11계열이 상대휘도로 정규화돼 있어 번호가 같으면 대비도 사실상 같다**(라이트 4.73~4.79 · 다크 4.97~5.06 — DECISIONS 1-1). 그래서 계열 선택은 대비 문제가 아니라 **의미 배정** 문제다. 지금 코드 소비자가 없다.
   accent-fg-pink:
     light: "#BB33A6"
     dark: "#E25ACB"
+    note: 분홍 강조 전경색 — 라이트 `pink.600`(#BB33A6) · 다크 `pink.400`(#E25ACB), 4개 면 최소 대비 **4.74 / 5.02**. **11계열이 상대휘도로 정규화돼 있어 번호가 같으면 대비도 사실상 같다**(라이트 4.73~4.79 · 다크 4.97~5.06 — DECISIONS 1-1). 그래서 계열 선택은 대비 문제가 아니라 **의미 배정** 문제다. 지금 코드 소비자가 없다.
   inverse-primary:
     light: "#F7F7F8"
     dark: "#2E2F32"
+    note: 반전 면 위의 브랜드색 — 라이트 `#F7F7F8` · 다크 `#2E2F32` 로 `primary.normal` 을 정확히 뒤집은 값이다. **지금 코드 소비자가 없다.**
   inverse-background:
     light: "#1A1B1C"
     dark: "#FFFFFF"
+    note: 반전된 바탕 — 라이트에서 어두운 면, 다크에서 흰 면. `bg.normal` 과 대비가 **두 테마 모두 17.25** 다. **지금 코드 소비자가 없다** — 페이지와 반대 명도의 면을 쓰는 컴포넌트(Notification 은 P1-7)가 아직 없다.
   inverse-label:
     light: "#F7F7F8"
     dark: "#161617"
+    note: 반전 면 위의 글자 — 라이트에서는 어두운 면 위, 다크에서는 밝은 면 위에 얹힌다. **Button 의 primary · negative 라벨이 이것**이고 실측 대비 **라이트 12.50 · 다크 16.89** 다. `label.normal` 과 명도 방향이 반대라 같은 면에 섞어 쓰지 않는다.
     usedBy: [Button]
   static-white:
     light: "#FFFFFF"
     dark: "#FFFFFF"
+    note: 테마와 무관하게 항상 흰색 — 라이트·다크 둘 다 `gray.0`. **바탕이 테마를 따르지 않는 자리**(사진·영상 위 등)에만 쓴다. 테마를 따라야 하는 곳에는 `label.*` · `bg.*` 를 쓴다 — 여기에 쓰면 한쪽 테마에서 대비가 무너진다. 지금 코드 소비자가 없다.
   static-black:
     light: "#000000"
     dark: "#000000"
+    note: "테마와 무관하게 항상 검정 — 라이트·다크 둘 다 `gray.1000`. `static.white` 와 같은 규칙이다: **바탕이 테마를 따르지 않는 자리에만** 쓴다. 지금 코드 소비자가 없다."
   elevation-dim:
     light: rgba(22, 24, 24, 0.52)
     dark: rgba(22, 22, 23, 0.74)
