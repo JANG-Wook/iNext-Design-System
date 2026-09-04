@@ -459,10 +459,13 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
 
                         기본                disabled
            primary      primary.normal      interaction.disable
+           secondary    fill.strong         interaction.disable
            negative     status.negative     interaction.disable
-           secondary    fill.strong         면 없음
            outline      line.strong 선      line.alternative 선
            text         면·선 없음          면·선 없음
+
+           채워진 셋은 채워진 채로, 빈 둘은 빈 채로 간다.
+           채워진 셋이 disabled 에서 같아지는 것은 의도다 — 라벨이 14.88 → 1.32 로 갈린다
 
            라벨         label.normal        label.disable
                         (primary·negative 는 inverse.label)

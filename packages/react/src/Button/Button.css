@@ -164,9 +164,12 @@
 .ds-btn:disabled[data-variant='negative'] {
   background-color: var(--color-interaction-disable);
 }
-/* 원래 약한 variant — 면을 벗는다. text 는 애초에 면이 없다 */
+/* 채워진 variant 는 secondary 도 마찬가지다. 0-43 에서 secondary 만 면을 벗겼던 것은
+   `inactive` 라벨을 흐리게 하려면 면이 없어야 했기 때문인데(면 위에서 label.alternative 가
+   4.5:1 미달), 0-44 에서 inactive 를 걷어내며 그 제약이 사라졌다. `disabled` 는 WCAG 1.4.3
+   예외라 라벨에 대비 요구가 없다 — 면을 되돌려 실루엣을 지킨다(0-45). */
 .ds-btn:disabled[data-variant='secondary'] {
-  background-color: transparent;
+  background-color: var(--color-interaction-disable);
 }
 /* outline 은 자기 선을 유지하되 약하게. 1.4.11 은 inactive 컴포넌트를 명시적으로
    제외하므로 3:1 대상이 아니고, 활성(3.24)과 벌어질수록 "쓸 수 없음"이 잘 읽힌다. */
