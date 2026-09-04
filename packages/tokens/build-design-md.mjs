@@ -15,6 +15,7 @@ import { fileURLToPath } from 'node:url'
 const DIR  = path.dirname(fileURLToPath(import.meta.url))   // packages/tokens/
 const NARR = `${DIR}/narrative`
 const OUT  = `${DIR}/DESIGN.md`
+const COMP_MD = path.resolve(DIR, '../../COMPONENTS.md')    // 저장소 루트
 
 const pkg   = JSON.parse(fs.readFileSync(`${DIR}/package.json`, 'utf8'))
 const light = JSON.parse(fs.readFileSync(`${DIR}/dist/tokens.light.json`, 'utf8'))
@@ -296,14 +297,84 @@ const front = {
   ...groups,
 }
 
+// ── 컴포넌트 절 — COMPONENTS.md 에서 가져온다 ──────────────────────
+//  DESIGN.md 하나만 읽고 프론트를 그릴 수 있게 하는 것이 목표다. 토큰만으로는 부족하고
+//  컴포넌트 명세가 같이 들어가야 한다. 그런데 COMPONENTS.md 는 절반이 **우리 프로세스**다
+//  (진행 순서 · 착수 전 선결 · 완료 정의). 그리는 데 필요 없는 것까지 넣으면 노이즈다.
+//
+//  그래서 절마다 넣을지 말지를 아래에 등록하고, **양방향으로 검사**한다 — 파일에 있는데
+//  목록에 없거나 목록에 있는데 파일에 없으면 빌드를 세운다. COMPOSITION · NONCOLOR 와
+//  같은 방식이다. 절을 새로 만들면 "이건 DESIGN.md 로 나가나?" 를 반드시 한 번 정하게 된다.
+const COMP_SECTIONS = {
+  '1. 진행 순서': false,                                    // 우리 일정
+  '2. 착수 전 선결': false,                                 // 결정 근거 — DECISIONS 성격
+  '3. 모든 컴포넌트가 만족해야 하는 것': true,
+  '4. KR delta — WCAG 2.2 AA 로 덮이지 않는 KWCAG 항목': true,
+  '5. 토큰 — 이미 정해진 것 / 아직 아닌 것': false,          // 토큰을 어떻게 관리하나 — 메타
+  '6. 완료 정의 (DoD)': false,                              // 우리 검수 절차
+  '7. 기준선': false,                                       // 표준 버전 메모
+  '8. 컴포넌트 동작 명세': true,
+}
+const COMP_MARK = '<!-- ds:components -->'
+
+function componentSections(){
+  // 토큰 패키지는 단독으로 빌드된다(의존성 0). COMPONENTS.md 가 없어도 돌아야 한다 —
+  // packages/react 를 스캔하는 부분과 같은 규칙이다.
+  if (!fs.existsSync(COMP_MD))
+    return { text: '> 컴포넌트 절은 `COMPONENTS.md` 에서 오는데 그 파일이 없어 비어 있다 — 토큰 패키지는 단독으로도 빌드된다.', n: 0 }
+
+  const src = fs.readFileSync(COMP_MD, 'utf8')
+  // 절 경계는 `## ` 헤딩이다. 코드펜스 안의 `## ` 는 헤딩이 아니므로 걸러낸다.
+  const lines = src.split('\n')
+  const heads = []
+  let fence = false
+  lines.forEach((ln, i) => {
+    if (/^```/.test(ln)) fence = !fence
+    if (!fence && ln.startsWith('## ')) heads.push({ title: ln.slice(3).trim(), at: i })
+  })
+
+  const inFile = heads.map(h => h.title)
+  for (const t of inFile)
+    if (!(t in COMP_SECTIONS))
+      throw new Error(`COMPONENTS.md 의 절 "${t}" 가 COMP_SECTIONS 에 없다 — DESIGN.md 로 낼지 정한다`)
+  for (const t of Object.keys(COMP_SECTIONS))
+    if (!inFile.includes(t))
+      throw new Error(`COMP_SECTIONS 의 "${t}" 가 COMPONENTS.md 에 없다 — 절 이름이 바뀌었거나 지워졌다`)
+
+  const parts = []
+  heads.forEach((h, i) => {
+    if (!COMP_SECTIONS[h.title]) return
+    const end = i + 1 < heads.length ? heads[i + 1].at : lines.length
+    parts.push(lines.slice(h.at, end).join('\n').trim())
+  })
+  const lead = [
+    '## 컴포넌트',
+    '',
+    '**아래는 `COMPONENTS.md` 에서 그대로 온다.** 절 번호도 그 파일의 번호이므로',
+    '`3-0` · `8-1` 같은 상호 참조가 이 문서 안에서 그대로 해석된다.',
+    '',
+    `내보내는 절은 ${parts.length}개이고, 나머지(진행 순서 · 착수 전 선결 · 토큰 관리 ·`,
+    '완료 정의 · 기준선)는 **우리 작업 절차**라 뺐다 — 그리는 데 필요한 것만 남긴다.',
+  ].join('\n')
+  return { text: [lead, ...parts].join('\n\n'), n: parts.length }
+}
+
 // ── 본문 ───────────────────────────────────────────────────────────
 if (!fs.existsSync(NARR)) throw new Error(`narrative/ 가 없다 — 산문 원본이 있어야 한다: ${NARR}`)
 const files = fs.readdirSync(NARR).filter(f => f.endsWith('.md')).sort()
 if (!files.length) throw new Error('narrative/ 에 .md 가 없다')
-const body = files.map(f => fs.readFileSync(`${NARR}/${f}`, 'utf8').trim()).join('\n\n')
+let body = files.map(f => fs.readFileSync(`${NARR}/${f}`, 'utf8').trim()).join('\n\n')
+
+// 컴포넌트 절이 들어갈 자리는 narrative 가 정한다 — 접근성 뒤, 가져다 쓰기 앞이다.
+// 마커가 없거나 둘 이상이면 자리를 알 수 없으므로 세운다.
+const nMark = body.split(COMP_MARK).length - 1
+if (nMark !== 1)
+  throw new Error(`narrative 에 ${COMP_MARK} 가 ${nMark}개다 — 정확히 1개여야 컴포넌트 절의 자리가 정해진다`)
+const comp = componentSections()
+body = body.replace(COMP_MARK, comp.text)
 
 const fm = yaml(front)
 assertYamlRoundTrip(front, fm)
 fs.writeFileSync(OUT, `---\n${fm}\n---\n\n${body}\n`)
-console.log(`DESIGN.md — front matter ${nColor + nOther + nTypo}개(색·그림자 ${nColor} · 그 외 ${nOther} · 타이포 ${nTypo}) + narrative ${files.length}개`)
+console.log(`DESIGN.md — front matter ${nColor + nOther + nTypo}개(색·그림자 ${nColor} · 그 외 ${nOther} · 타이포 ${nTypo}) + narrative ${files.length}개 + COMPONENTS.md 절 ${comp.n}개`)
 console.log(USAGE ? `사용처 색인 — packages/react 에서 ${nUsed}개 토큰 사용 확인` : '사용처 색인 — packages/react 없음, 건너뜀')

@@ -37,3 +37,5 @@
 | 2.4.11 Focus Not Obscured | 포커스된 요소가 가려지지 않아야 한다 |
 | 2.5.7 Dragging Movements | 끌기 동작에 대안이 있어야 한다 |
 | 3.3.7 Redundant Entry | 같은 정보를 다시 입력하게 하지 않는다 |
+
+<!-- ds:components -->

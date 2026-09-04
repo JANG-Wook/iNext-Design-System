@@ -53,12 +53,14 @@
 ## DESIGN.md — DTCG 에서 생성한다
 
 **`DESIGN.md` 는 생성물이다. 직접 편집하지 않는다** — 다음 빌드에 사라진다.
-front matter 는 토큰에서, 본문은 `packages/tokens/narrative/*.md` 에서 온다. 생성 위치는 `packages/tokens/DESIGN.md` 다.
+front matter 는 토큰에서, 본문은 `packages/tokens/narrative/*.md` **와 `COMPONENTS.md`** 에서 온다. 생성 위치는 `packages/tokens/DESIGN.md` 다.
+
+**`COMPONENTS.md` 는 절 단위로 들어간다.** 어느 절을 낼지는 `build-design-md.mjs` 의 `COMP_SECTIONS` 에 등록하고 **빌드가 양방향으로 검사한다** — 파일에 있는데 목록에 없거나 그 반대면 실패한다. 지금 나가는 것은 **3절(공통 요구) · 4절(KR delta) · 8절(컴포넌트 명세)** 셋이고, 나머지(진행 순서 · 착수 전 선결 · 토큰 관리 · 완료 정의 · 기준선)는 우리 작업 절차라 뺀다. 들어갈 자리는 narrative 의 `<!-- ds:components -->` 마커가 정한다(정확히 1개여야 한다).
 
 **직접 고치는 것 셋 (생성물이 아니다)**
 - `packages/tokens/*.json` — 값과 `$description`
 - `packages/tokens/narrative/*.md` — 산문. 왜 그 값인지·금지사항. 파일명 순서대로 이어 붙는다
-- `COMPONENTS.md` — 컴포넌트 진행 순서와 공통 요구
+- `COMPONENTS.md` — 컴포넌트 진행 순서와 공통 요구. **일부 절이 `DESIGN.md` 로 나간다**(위 절)
 
 **사람이 쓰든 에이전트가 쓰든 상관없다.** 지킬 것은 둘뿐이다 — **변경 전 승인을 받는다**, **근거를 `DECISIONS.md` 에 남긴다.**
 
@@ -74,7 +76,7 @@ front matter 는 토큰에서, 본문은 `packages/tokens/narrative/*.md` 에서
 
 **자동 반영** — `npm run build:tokens` 가 토큰 빌드와 `DESIGN.md` 생성을 함께 돌린다.
 CI 가 `DESIGN.md` 를 다시 만들어 커밋된 것과 다르면 실패시킨다(`tokens.css`·`dist/` 와 같은 방식).
-**토큰만 고치고 `DESIGN.md` 를 안 고친 변경은 머지되지 않는다.**
+**토큰이든 `COMPONENTS.md` 든, 고치고 `DESIGN.md` 를 안 고친 변경은 머지되지 않는다.**
 
 **front matter 에 들어가는 것 = CSS 변수가 되는 것 + 타이포 클래스**
 - 곧 **컴포넌트가 실제로 쓰는 API 면**이다. primitive 팔레트 99개는 CSS 로 나가지 않으므로 제외한다 — 다 넣으면 읽는 쪽(사람·에이전트)에 노이즈다.

@@ -28,12 +28,12 @@ jobs:
             exit 1
           fi
 
-      # DESIGN.md 는 토큰 + narrative 로 만든 생성물이다. 토큰만 고치고 문서를
-      # 안 고친 변경이 머지되지 않게 막는다.
-      - name: DESIGN.md 가 토큰과 어긋나지 않는가
+      # DESIGN.md 는 토큰 + narrative + COMPONENTS.md 로 만든 생성물이다.
+      # 셋 중 하나만 고치고 문서를 안 고친 변경이 머지되지 않게 막는다.
+      - name: DESIGN.md 가 원본과 어긋나지 않는가
         run: |
           if ! git diff --exit-code -- packages/tokens/DESIGN.md; then
-            echo "::error::DESIGN.md 가 토큰과 어긋났습니다. 'npm run build:tokens' 후 다시 커밋하세요."
+            echo "::error::DESIGN.md 가 원본(토큰 · narrative · COMPONENTS.md)과 어긋났습니다. 'npm run build:tokens' 후 다시 커밋하세요."
             exit 1
           fi
 
