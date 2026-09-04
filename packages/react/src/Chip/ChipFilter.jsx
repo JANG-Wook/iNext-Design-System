@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import { ChevronDown } from 'lucide-react'
+import { CHIP_TYPO } from './chipTypo.js'
 import './Chip.css'
 
 /**
@@ -18,19 +19,22 @@ import './Chip.css'
  * @param {object}   props
  * @param {string}   props.label              필터 이름. 예: "정렬"
  * @param {string}   [props.selected]         선택된 값의 표시 문구. 예: "리뷰 많은 순"
+ * @param {'xs'|'sm'|'md'} [props.size='sm']  24 · 32 · 40px — 라벨 12 · 14 · 15
  * @param {boolean}  [props.open=false]       목록이 열려 있는가 — 소비자가 갖는다
  * @param {boolean}  [props.disabled=false]
  * @param {() => void} [props.onClick]
  */
 const ChipFilter = forwardRef(function ChipFilter({
-  label, selected, open = false, disabled = false, className, ...rest
+  label, selected, size = 'sm', open = false, disabled = false, className, ...rest
 }, ref) {
   const hasValue = selected != null && selected !== ''
   return (
     <button
       ref={ref}
       type="button"
-      className={['ds-chip', 'ds-chip--filter', 'label-md', className].filter(Boolean).join(' ')}
+      className={['ds-chip', 'ds-chip--filter', CHIP_TYPO[size] ?? CHIP_TYPO.sm, className]
+        .filter(Boolean).join(' ')}
+      data-size={size}
       aria-expanded={open}
       data-open={open || undefined}
       data-value={hasValue || undefined}

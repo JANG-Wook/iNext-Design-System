@@ -77,27 +77,35 @@ function MeasureSelfCheck() {
   )
 }
 
+// 칩 크기 셋 — control.* 사다리의 xs~md 구간이다(0-59).
+const CHIP_SIZES = [
+  { size: 'xs', px: '24px · 라벨 12' },
+  { size: 'sm', px: '32px · 라벨 14  ← 기본' },
+  { size: 'md', px: '40px · 라벨 15' },
+]
+
 /* 칩 데모 — Filter 는 열림 상태를, Input 은 목록을 소비자가 갖는다.
    그 "소비자" 자리를 여기서 흉내낸다. */
-function ChipDemo() {
+function ChipDemo({ size }) {
   const [open, setOpen] = useState(false)
   const [sort, setSort] = useState(null)
   const [people, setPeople] = useState(['김부장', '이차장', '박대리'])
   return (
     <>
       <div className="dev-row">
-        <ChipFilter label="가격" />
-        <ChipFilter label="정렬" selected={sort} open={open}
+        <ChipFilter size={size} label="가격" />
+        <ChipFilter size={size} label="정렬" selected={sort} open={open}
                     onClick={() => { setOpen(o => !o); if (!sort) setSort('리뷰 많은 순') }} />
-        <ChipFilter label="지역" selected="서울" />
-        <ChipFilter label="비활성" disabled />
+        <ChipFilter size={size} label="지역" selected="서울" />
+        <ChipFilter size={size} label="비활성" disabled />
       </div>
       <div className="dev-row">
         {people.map(p => (
-          <ChipInput key={p} label={p}
+          <ChipInput key={p} size={size} label={p}
                      onClick={() => {}}
                      onRemove={() => setPeople(v => v.filter(x => x !== p))} />
         ))}
+        <ChipInput size={size} label="짜장면" onClick={() => {}} />
         {people.length === 0 && <span className="label-sm">전부 지웠다</span>}
       </div>
     </>
@@ -253,40 +261,30 @@ function App() {
 
       {/* Chip — 셋이 한 컴포넌트로 보이지만 역할이 셋이다(8-7).
           Select 는 라디오, Filter 는 버튼+aria-expanded, Input 은 ✕ 유무로 구조가 갈린다. */}
-      <h2>Chip — Select</h2>
+      <h2>Chip — Select × 크기</h2>
       <div className="dev-stack">
-        <ChipGroup label="음식 종류" defaultValue="all">
-          <ChipSelect value="all" label="전체" />
-          <ChipSelect value="kr" label="한식" />
-          <ChipSelect value="west" label="양식" />
-          <ChipSelect value="snack" label="분식" />
-          <ChipSelect value="bakery" label="빵집" />
-          <ChipSelect value="none" label="못 고름" disabled />
-        </ChipGroup>
+        {CHIP_SIZES.map(z => (
+          <ChipGroup key={z} label={`음식 종류 (${z.size} · ${z.px})`} defaultValue="all">
+            <ChipSelect size={z.size} value="all" label="전체" />
+            <ChipSelect size={z.size} value="kr" label="한식" />
+            <ChipSelect size={z.size} value="west" label="양식" />
+            <ChipSelect size={z.size} value="snack" label="분식" />
+            <ChipSelect size={z.size} value="bakery" label="빵집" />
+            <ChipSelect size={z.size} value="none" label="못 고름" disabled />
+          </ChipGroup>
+        ))}
       </div>
 
-      <h2>Chip — Filter · Input</h2>
-      <div className="dev-stack"><ChipDemo /></div>
-
-      {/* 라벨 크기 12 / 14 비교 — 8-7 미결 ②. **정하면 이 절과 dev.css 블록을 지운다.** */}
-      <h2>Chip — 라벨 12 / 14 비교 (임시)</h2>
+      {/* Filter · Input × 크기. Input 의 마지막 하나는 onRemove 가 없다 —
+          ✕ 없이 버튼 하나로 도는 형태(최근 검색어 자리)를 함께 본다. */}
+      <h2>Chip — Filter · Input × 크기</h2>
       <div className="dev-stack">
-        <div>
-          <p className="label-sm">현재 = label-md (14)</p>
-          <ChipGroup label="14px" hideLabel defaultValue="kr">
-            <ChipSelect value="all" label="전체" />
-            <ChipSelect value="kr" label="한식" />
-            <ChipSelect value="west" label="양식" />
-          </ChipGroup>
-        </div>
-        <div className="dev-chip12">
-          <p className="label-sm">label-sm (12) — 토큰 설명이 말하는 값</p>
-          <ChipGroup label="12px" hideLabel defaultValue="kr">
-            <ChipSelect value="all" label="전체" />
-            <ChipSelect value="kr" label="한식" />
-            <ChipSelect value="west" label="양식" />
-          </ChipGroup>
-        </div>
+        {CHIP_SIZES.map(z => (
+          <div key={z.size}>
+            <p className="label-sm">{z.size} · {z.px}</p>
+            <ChipDemo size={z.size} />
+          </div>
+        ))}
       </div>
 
       <h2>폼 한 줄 — control.* 공유 검증</h2>

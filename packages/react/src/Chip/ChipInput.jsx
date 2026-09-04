@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import { X } from 'lucide-react'
+import { CHIP_TYPO } from './chipTypo.js'
 import './Chip.css'
 
 /**
@@ -23,15 +24,17 @@ import './Chip.css'
  *
  * @param {object}   props
  * @param {string}   props.label
+ * @param {'xs'|'sm'|'md'} [props.size='sm']  24 · 32 · 40px — 라벨 12 · 14 · 15
  * @param {() => void} [props.onClick]    본문을 눌렀을 때. 팝오버·모달을 여는 자리
  * @param {() => void} [props.onRemove]   주면 ✕ 가 생긴다
  * @param {string}   [props.removeLabel]  삭제 버튼 이름. 기본 `${label} 삭제`
  * @param {boolean}  [props.disabled=false]
  */
 const ChipInput = forwardRef(function ChipInput({
-  label, onClick, onRemove, removeLabel, disabled = false, className, ...rest
+  label, size = 'sm', onClick, onRemove, removeLabel, disabled = false, className, ...rest
 }, ref) {
   const cls = ['ds-chip', 'ds-chip--input', className].filter(Boolean).join(' ')
+  const typo = CHIP_TYPO[size] ?? CHIP_TYPO.sm
 
   // ✕ 가 없으면 컨트롤이 하나다. 굳이 컨테이너로 감싸지 않는다 — 탭 정지도 하나다.
   if (!onRemove) {
@@ -39,7 +42,8 @@ const ChipInput = forwardRef(function ChipInput({
       <button
         ref={ref}
         type="button"
-        className={`${cls} label-md`}
+        className={`${cls} ${typo}`}
+        data-size={size}
         disabled={disabled || undefined}
         onClick={onClick}
         {...rest}
@@ -60,11 +64,11 @@ const ChipInput = forwardRef(function ChipInput({
   }
 
   return (
-    <span className={`${cls} ds-chip--removable`} {...rest}>
+    <span className={`${cls} ds-chip--removable`} data-size={size} {...rest}>
       <button
         ref={ref}
         type="button"
-        className="ds-chip__body label-md"
+        className={`ds-chip__body ${typo}`}
         disabled={disabled || undefined}
         onClick={onClick}
       >

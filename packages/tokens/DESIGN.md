@@ -6,8 +6,8 @@ spec: DTCG 2025.10 (Format · Color Module, Final Community Group Report)
 source: primitive.json + semantic.light.json + semantic.dark.json + typography.json (packages/tokens)
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
-scope: 색·그림자 66 · 그 외 195 · 타이포 클래스 36. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
-usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 58개 토큰이 쓰이고 있다.
+scope: 색·그림자 66 · 그 외 198 · 타이포 클래스 36. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
+usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 61개 토큰이 쓰이고 있다.
 typography:
   "base.display-lg":
     class: display-lg
@@ -157,15 +157,15 @@ typography:
     lineHeight: 1.466667
     fontWeight: 500
     letterSpacing: "-0.009375rem"
-    note: "UI 라벨(대) — **15px**. Button(md). 14 와 16 사이를 메우려고 만든 자리다: md(40px)와 lg(48px) 버튼이 같은 16px 라벨을 써서 md 쪽이 더 커 보였다 — 글자/높이가 40% 대 33%였다. 셋이 14·15·16 으로 갈리면서 비율이 43.8 → 37.5 → 33.3% 로 단조 감소한다(DECISIONS 0-50). 기본 medium. **`-strong` 은 수요가 확인되기 전까지 두지 않는다**(0-25 와 같은 원칙)."
-    usedBy: [Button]
+    note: "UI 라벨(대) — **15px**. Button(md) · Chip(md). 14 와 16 사이를 메우려고 만든 자리다: md(40px)와 lg(48px) 버튼이 같은 16px 라벨을 써서 md 쪽이 더 커 보였다 — 글자/높이가 40% 대 33%였다. 셋이 14·15·16 으로 갈리면서 비율이 43.8 → 37.5 → 33.3% 로 단조 감소한다(DECISIONS 0-50). 기본 medium. **`-strong` 은 수요가 확인되기 전까지 두지 않는다**(0-25 와 같은 원칙)."
+    usedBy: [Button, Chip]
   "base.label-md":
     class: label-md
     fontSize: "0.875rem"
     lineHeight: 1.428571
     fontWeight: 500
     letterSpacing: "0rem"
-    note: UI 라벨(기본) — 라벨의 기준값. Button(sm)·Text Button, Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong.
+    note: UI 라벨(기본) — 라벨의 기준값. Button(sm)·Text Button, Chip(sm), Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong.
     usedBy: [Button, Checkbox, Chip, Radio, Search, TextArea, TextField]
   "base.label-md-strong":
     class: label-md-strong
@@ -180,8 +180,8 @@ typography:
     lineHeight: 1.333333
     fontWeight: 500
     letterSpacing: "0rem"
-    note: UI 라벨(소). Bottom Navigation 라벨, Tag, Breadcrumb, Chip, Indicator(Number), 폼의 헬퍼·에러·글자수(Text Field·Text Area·Search). 기본 medium, 강조는 label-sm-strong.
-    usedBy: [Checkbox, Radio, Search, TextArea, TextField]
+    note: UI 라벨(소). Bottom Navigation 라벨, Tag, Breadcrumb, Chip(xs), Indicator(Number), 폼의 헬퍼·에러·글자수(Text Field·Text Area·Search). 기본 medium, 강조는 label-sm-strong.
+    usedBy: [Checkbox, Chip, Radio, Search, TextArea, TextField]
   "base.label-sm-strong":
     class: label-sm-strong
     fontSize: "0.75rem"
@@ -1070,18 +1070,26 @@ layout:
     value: "24px"
     note: lg·xl 공통 — 24px
 control:
+  minHeight-xs:
+    value: "24px"
+    note: "24px. **Chip 전용 단계다** — Button·Text Field 는 이 아래로 내려가지 않는다. WCAG 2.5.8 의 하한(24×24)과 **정확히 같아서 여유가 0 이다**: 이보다 작게 만들 수 없고, 이 높이의 컨트롤은 세로 여백을 더 줄 자리도 없다. 칩은 가로로 넓어 조작 영역 자체는 넉넉하다."
+    usedBy: [Chip]
   minHeight-sm:
     value: "32px"
-    note: "32px. 조밀한 툴바 · 테이블 행 내부 · Chip. 8px 등차라 세로 리듬이 유지된다. **가장 작은 단계도 24 를 넘어** WCAG 2.5.8(24×24 CSS px)을 자체로 만족한다 — 히트박스를 따로 넓히지 않아도 된다."
+    note: "32px. 조밀한 툴바 · 테이블 행 내부 · Chip(sm). 8px 등차라 세로 리듬이 유지된다. WCAG 2.5.8(24×24 CSS px)에 **8px 여유**를 두고 만족한다 — 여유가 0 인 것은 `xs` 다."
     usedBy: [Button, Chip]
   minHeight-md:
     value: "40px"
     note: "40px. 기본값. 폼 · 다이얼로그 · 일반 화면. 8px 등차라 세로 리듬이 유지된다."
-    usedBy: [Button, Search, TextField]
+    usedBy: [Button, Chip, Search, TextField]
   minHeight-lg:
     value: "48px"
     note: "48px. 모바일 주요 CTA · Bottom Sheet 하단 버튼. 8px 등차라 세로 리듬이 유지된다."
     usedBy: [Button, TextArea, TextField]
+  paddingInline-xs:
+    value: "8px"
+    note: "8px. `minHeight.xs` 와 짝이다."
+    usedBy: [Chip]
   paddingInline-sm:
     value: "12px"
     note: "12px. `minHeight.sm` 와 짝이다."
@@ -1089,11 +1097,15 @@ control:
   paddingInline-md:
     value: "16px"
     note: "16px. `minHeight.md` 와 짝이다."
-    usedBy: [Button, Search, TextArea, TextField]
+    usedBy: [Button, Chip, Search, TextArea, TextField]
   paddingInline-lg:
     value: "20px"
     note: "20px. `minHeight.lg` 와 짝이다."
     usedBy: [Button, TextField]
+  gap-xs:
+    value: "2px"
+    note: "2px. `minHeight.xs` 와 짝이다."
+    usedBy: [Chip]
   gap-sm:
     value: "4px"
     note: "4px. `minHeight.sm` 와 짝이다."
@@ -1101,7 +1113,7 @@ control:
   gap-md:
     value: "6px"
     note: "6px. `minHeight.md` 와 짝이다."
-    usedBy: [Button, Checkbox, Radio]
+    usedBy: [Button, Checkbox, Chip, Radio]
   gap-lg:
     value: "8px"
     note: "8px. `minHeight.lg` 와 짝이다."
@@ -2470,9 +2482,26 @@ APG 키보드 5종을 **실제 키 입력으로** 확인했다. 스크립트로 
            onRemove 를 부르기 **전에** 옮긴다. 그 시점에는 아직 모든 칩이 DOM 에 있다
            다음 칩 → 없으면 이전 칩. **마지막 하나를 지울 때만** 갈 곳이 없다 (미결 ②)
 
-모양       알약이다 — --radius-full
-           높이 --control-min-height-sm (32) · 좌우 --control-padding-inline-sm (12)
-           아이콘 --control-icon-size-sm (16)
+크기       **xs · sm · md 셋이고 lg 는 없다** (새로 정함)
+           — 이유: md(40px·15px)가 이미 Button md 와 치수가 같다. 그 위는 알약 모양
+             말고는 버튼과 구별되지 않아 새 단계를 만들 이유가 없다
+
+                    높이   좌우여백   라벨          글자/높이
+           xs        24      8      label-sm (12)    50.0%
+           sm        32     12      label-md (14)    43.8%   ← 기본
+           md        40     16      label-lg (15)    37.5%
+
+           **control.* 사다리의 xs~md 구간이다** — Button·Text Field 는 같은 사다리의
+           sm~lg 를 쓴다. 같은 티어 이름이면 같은 물리 크기라 **한 줄에 섞여도 높이가
+           맞는다.** 칩 전용 눈금을 따로 만들지 않은 이유다 (0-59)
+
+           글자/높이가 단조 감소한다 — Button 에서 md 가 lg 보다 커 보였던 원인을
+           만들지 않으려는 것이다 (0-50)
+
+           **xs 의 ✕ 는 여유가 0 이다** — 히트박스 24 가 칩 높이 24 와 같아 세로 여백이
+           없다. 히트박스를 줄이지 않는다: 24 는 WCAG 2.5.8 의 하한이다
+
+모양       알약이다 — --radius-full · 아이콘 --control-icon-size-sm (16)
 
 토큰       미선택   면 fill.alternative · 테두리 line.strong · 라벨 label.normal
            선택     면 primary.normal · 라벨 inverse.label   (Checkbox·Radio 와 같은 짝)
@@ -2504,10 +2533,9 @@ APG 키보드 5종을 **실제 키 입력으로** 확인했다. 스크립트로 
            ② **마지막 칩을 지우면 갈 곳이 없다.** 다음도 이전도 없으면 포커스가 떨어진다.
              빈 상태에서 무엇에 포커스를 줄지는 그 자리를 아는 쪽(목록·폼)만 정할 수 있다.
              Select Button(8-8)·Dropdown(P1-5)에서 같은 문제를 다시 만나면 그때 공통 규칙을 만든다
-           ③ **라벨 크기가 12 / 14 로 갈려 있다.** `label-sm` 의 `$description` 은 Chip 을
-             12px 로 적고 있는데 같은 32px 인 Button sm 은 14px 를 쓴다. 검증 페이지에
-             둘을 나란히 깔았다 — 정하면 한쪽을 지우고 토큰 설명도 함께 고친다
-           ④ **묶음 코드가 RadioGroup 과 겹친다.** name·선택값·fieldset 을 소유하는 구조가
+           ~~③ 라벨 크기가 12 / 14 로 갈려 있다~~ — **해소 (0-59).** 둘 중 하나를 고르는
+             문제가 아니라 **크기 축이 없던 것**이었다. xs·sm·md = 12·14·15 로 셋 다 쓴다
+           ③ **묶음 코드가 RadioGroup 과 겹친다.** name·선택값·fieldset 을 소유하는 구조가
              같다. 지금은 레이아웃이 달라 따로 뒀다. **Select Button(8-8)이 세 번째 사례이므로
              거기서 합칠지 정한다** — 두 번으로는 공통점을 잘못 뽑을 수 있다
 ```
@@ -2521,7 +2549,10 @@ APG 키보드 5종을 **실제 키 입력으로** 확인했다. 스크립트로 
 | 선택 면 | 13.39 | 16.11 | — |
 | 선택 라벨 · Filter 값 | 12.50 | 16.89 | 4.5:1 |
 
-칩 19개 전부 높이 **32** · `✕` 히트박스 **24×24**(아이콘은 16) · `id` 중복 0 ·
+칩 42개 · 크기별 높이 **24 / 32 / 40** · 글자 **12 / 14 / 15** ·
+글자/높이 **50.0 → 43.8 → 37.5%**(단조 감소) · 24 미만 높이 0건 ·
+`✕` 히트박스 세 크기 모두 **24×24**(아이콘은 16) · **✕ 가 알약을 넘치는 경우 0건** ·
+`id` 중복 0 ·
 `<label for>` 미연결 0 · Filter 에 `aria-haspopup` 없음(의도) ·
 Filter 접근 이름에 값이 들어감(`"지역, 서울"`) · 누르면 `aria-expanded` 가 `true` 로 바뀌고
 화살표가 뒤집힘.

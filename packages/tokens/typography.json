@@ -231,7 +231,7 @@
           "lineHeight": "{lineHeight.15-22}",
           "letterSpacing": "{letterSpacing.15}"
         },
-        "$description": "UI 라벨(대) — **15px**. Button(md). 14 와 16 사이를 메우려고 만든 자리다: md(40px)와 lg(48px) 버튼이 같은 16px 라벨을 써서 md 쪽이 더 커 보였다 — 글자/높이가 40% 대 33%였다. 셋이 14·15·16 으로 갈리면서 비율이 43.8 → 37.5 → 33.3% 로 단조 감소한다(DECISIONS 0-50). 기본 medium. **`-strong` 은 수요가 확인되기 전까지 두지 않는다**(0-25 와 같은 원칙)."
+        "$description": "UI 라벨(대) — **15px**. Button(md) · Chip(md). 14 와 16 사이를 메우려고 만든 자리다: md(40px)와 lg(48px) 버튼이 같은 16px 라벨을 써서 md 쪽이 더 커 보였다 — 글자/높이가 40% 대 33%였다. 셋이 14·15·16 으로 갈리면서 비율이 43.8 → 37.5 → 33.3% 로 단조 감소한다(DECISIONS 0-50). 기본 medium. **`-strong` 은 수요가 확인되기 전까지 두지 않는다**(0-25 와 같은 원칙)."
       },
       "label-md": {
         "$type": "typography",
@@ -242,7 +242,7 @@
           "lineHeight": "{lineHeight.14-20}",
           "letterSpacing": "{letterSpacing.14}"
         },
-        "$description": "UI 라벨(기본) — 라벨의 기준값. Button(sm)·Text Button, Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong."
+        "$description": "UI 라벨(기본) — 라벨의 기준값. Button(sm)·Text Button, Chip(sm), Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong."
       },
       "label-md-strong": {
         "$type": "typography",
@@ -264,7 +264,7 @@
           "lineHeight": "{lineHeight.12-16}",
           "letterSpacing": "{letterSpacing.12}"
         },
-        "$description": "UI 라벨(소). Bottom Navigation 라벨, Tag, Breadcrumb, Chip, Indicator(Number), 폼의 헬퍼·에러·글자수(Text Field·Text Area·Search). 기본 medium, 강조는 label-sm-strong."
+        "$description": "UI 라벨(소). Bottom Navigation 라벨, Tag, Breadcrumb, Chip(xs), Indicator(Number), 폼의 헬퍼·에러·글자수(Text Field·Text Area·Search). 기본 medium, 강조는 label-sm-strong."
       },
       "label-sm-strong": {
         "$type": "typography",

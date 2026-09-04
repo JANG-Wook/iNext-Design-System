@@ -1,5 +1,6 @@
 import { forwardRef, useId } from 'react'
 import { useChipGroup } from './ChipGroup.jsx'
+import { CHIP_TYPO } from './chipTypo.js'
 import './Chip.css'
 
 /**
@@ -14,10 +15,11 @@ import './Chip.css'
  * @param {object}  props
  * @param {string}  props.value
  * @param {string}  props.label
+ * @param {'xs'|'sm'|'md'} [props.size='sm']  24 · 32 · 40px — 라벨 12 · 14 · 15
  * @param {boolean} [props.disabled=false]
  */
 const ChipSelect = forwardRef(function ChipSelect({
-  value, label, disabled = false, id: idProp, className, ...rest
+  value, label, size = 'sm', disabled = false, id: idProp, className, ...rest
 }, ref) {
   const g = useChipGroup()
   const auto = useId()
@@ -27,7 +29,8 @@ const ChipSelect = forwardRef(function ChipSelect({
     : { defaultChecked: g.defaultValue === value }
 
   return (
-    <span className={['ds-chip', 'ds-chip--select', className].filter(Boolean).join(' ')}>
+    <span className={['ds-chip', 'ds-chip--select', className].filter(Boolean).join(' ')}
+          data-size={size}>
       <input
         ref={ref}
         type="radio"
@@ -40,7 +43,7 @@ const ChipSelect = forwardRef(function ChipSelect({
         {...selection}
         {...rest}
       />
-      <label className="ds-chip__label label-md" htmlFor={id}>{label}</label>
+      <label className={`ds-chip__label ${CHIP_TYPO[size] ?? CHIP_TYPO.sm}`} htmlFor={id}>{label}</label>
     </span>
   )
 })

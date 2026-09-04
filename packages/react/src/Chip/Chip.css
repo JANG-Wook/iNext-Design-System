@@ -21,6 +21,8 @@
   padding-inline: var(--control-padding-inline-sm);
   padding-block: var(--control-min-inset);
   gap: var(--control-gap-sm);
+  /* 크기 셋은 control.* 사다리의 xs~md 구간이다 — Button 은 같은 사다리의 sm~lg 를 쓴다.
+     같은 티어 이름이면 같은 물리 크기라 한 줄에 섞여도 높이가 맞는다(0-59). */
   border-radius: var(--radius-full);
   border: 0;
   background-color: var(--color-fill-alternative);
@@ -31,6 +33,16 @@
   user-select: none;
   white-space: nowrap;
   transition: background-color var(--transition-control), box-shadow var(--transition-control);
+}
+.ds-chip[data-size='xs'] {
+  min-block-size: var(--control-min-height-xs);
+  padding-inline: var(--control-padding-inline-xs);
+  gap: var(--control-gap-xs);
+}
+.ds-chip[data-size='md'] {
+  min-block-size: var(--control-min-height-md);
+  padding-inline: var(--control-padding-inline-md);
+  gap: var(--control-gap-md);
 }
 .ds-chip__icon {
   display: inline-flex;
@@ -64,6 +76,14 @@
   cursor: pointer;
   user-select: none;
 }
+.ds-chip--select[data-size='xs'] .ds-chip__label {
+  min-block-size: var(--control-min-height-xs);
+  padding-inline: var(--control-padding-inline-xs);
+}
+.ds-chip--select[data-size='md'] .ds-chip__label {
+  min-block-size: var(--control-min-height-md);
+  padding-inline: var(--control-padding-inline-md);
+}
 .ds-chip__input:disabled ~ .ds-chip__label { cursor: not-allowed; }
 
 /* 선택 — Checkbox·Radio 와 같은 색 짝을 쓴다. 셋이 형제로 보여야 한다. */
@@ -88,6 +108,13 @@
 .ds-chip--removable {
   padding-inline-end: var(--spacing-2);
   cursor: default;
+}
+/* xs 는 칩 높이(24)와 ✕ 히트박스(24)가 **같다.** 세로 여백을 더 줄 자리가 없으므로
+   padding-block 을 0 으로 두고, ✕ 가 알약을 넘치지 않게 한다.
+   히트박스는 줄이지 않는다 — 24 는 WCAG 2.5.8 의 하한이라 타협할 수 없다(8-7). */
+.ds-chip--removable[data-size='xs'] {
+  padding-block: 0;
+  padding-inline-end: 0;
 }
 .ds-chip__body {
   display: inline-flex;
@@ -129,7 +156,7 @@
   .ds-chip--select:has(.ds-chip__input:checked:hover:not(:disabled)),
   .ds-chip--filter[data-value]:hover:not(:disabled) {
     background-color: var(--color-primary-normal);
-    box-shadow: inset 0 0 0 var(--control-min-height-sm) var(--color-interaction-overlay-lighten-hovered);
+    box-shadow: inset 0 0 0 var(--control-min-height-md) var(--color-interaction-overlay-lighten-hovered);
   }
   .ds-chip__remove:hover:not(:disabled) {
     background-color: var(--color-interaction-overlay-darken-hovered);

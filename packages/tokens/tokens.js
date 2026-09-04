@@ -469,16 +469,19 @@ export const opacity = {
 
 export const control = {
   "minHeight": {
+    "xs": "24px",
     "sm": "32px",
     "md": "40px",
     "lg": "48px"
   },
   "paddingInline": {
+    "xs": "8px",
     "sm": "12px",
     "md": "16px",
     "lg": "20px"
   },
   "gap": {
+    "xs": "2px",
     "sm": "4px",
     "md": "6px",
     "lg": "8px"

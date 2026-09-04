@@ -188,12 +188,15 @@ html, body, #root { margin: 0; padding: 0; }
   --opacity-88: 0.88;
 
   /* ── 의도 이름 계층 (component.json · 테마 무관) ── */
+  --control-min-height-xs: 24px;
   --control-min-height-sm: 32px;
   --control-min-height-md: 40px;
   --control-min-height-lg: 48px;
+  --control-padding-inline-xs: 8px;
   --control-padding-inline-sm: 12px;
   --control-padding-inline-md: 16px;
   --control-padding-inline-lg: 20px;
+  --control-gap-xs: 2px;
   --control-gap-sm: 4px;
   --control-gap-md: 6px;
   --control-gap-lg: 8px;
