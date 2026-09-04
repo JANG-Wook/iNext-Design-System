@@ -25,7 +25,7 @@
 | 2 | Text Field | |
 | 3 | Text Area | |
 | 4 | Search | Outline · Underline |
-| 5 | Selection Controls | Checkbox · Radio · Chip(Select/Filter/Input) · Select Button |
+| 5 | Selection Controls | Checkbox · Radio · Chip(Select/Filter/Input) |
 | 6 | Switch | |
 | 7 | Loading | S · M · L |
 | 8 | Tag | Membership · Status · Category |
@@ -901,7 +901,6 @@ Enter      onSearch 를 부른다. 폼 안이면 폼 제출이 우선이다
                                   — 이유: 되돌리는 방법이 다르다. 제출 전이면 취소가 답이고
                                     즉시 반영이면 다시 누르는 것이 답이다. 어느 쪽인지
                                     모르면 사용자는 자기가 한 일이 먹혔는지 알 수 없다
-           고르는 대상이 카드       Select Button (8-8) — **동작은 이것과 같고 껍데기만 다르다**
            필터에서 여러 개         Chip Select (8-7)
 
 이름       <label for> ↔ <input id>. **id 는 생성 함수로 만든다** (KWCAG 8.1.1)
@@ -931,7 +930,7 @@ Enter      onSearch 를 부른다. 폼 안이면 폼 제출이 우선이다
 
 크기       단계 없음. 한 크기다 — 미결 ① 참조
 
-토큰       네모        --control-box-size (20px)   ← Radio · Select Button 과 공유
+토큰       네모        --control-box-size (20px)   ← Radio 와 공유
            미선택 테두리 line.strong                 1.4.11 의 3:1 을 만족하는 유일한 line 단계
            선택 면      primary.normal
            선택 체크    inverse.label                Button primary 와 같은 짝
@@ -996,7 +995,6 @@ Enter      onSearch 를 부른다. 폼 안이면 폼 제출이 우선이다
 
            갈림길
            여러 개를 켠다       Checkbox (8-5)
-           고르는 대상이 카드    Select Button (8-8) — 동작은 이것과 같고 껍데기만 다르다
            필터에서 하나        Chip Select (8-7)
            선택지가 많다        Dropdown (P1-5) (새로 정함)
                               — 이유: 라디오의 값은 선택지를 **전부 펼쳐 보여주는 것**이다.
@@ -1054,7 +1052,7 @@ Enter      onSearch 를 부른다. 폼 안이면 폼 제출이 우선이다
            id 를 손으로 짓지 마라 (8.1.1)
 
 미결       ① **항목별 설명(aria-describedby)을 넣지 않았다.** 지금은 묶음 단위 도움말·오류만
-             있다. 항목마다 부연이 필요한 자리는 Select Button(8-8)이 먼저 만난다
+             있다. **항목마다 부연이 필요한 컴포넌트가 아직 없다** — 나오면 그때 넣는다
 ```
 
 **실측 (2026-09-04)**
@@ -1097,7 +1095,6 @@ APG 키보드 5종을 **실제 키 입력으로** 확인했다. 스크립트로 
 
            갈림길
            세로로 늘어놓는다        Radio (8-6) · Checkbox (8-5) — 칩은 가로로 흐른다
-           고르는 대상이 카드       Select Button (8-8)
            그냥 실행하는 것         Button (8-1) — 칩 모양의 버튼을 만들지 않는다 (0-47)
            본문 안 링크            <a> — 칩은 컨트롤이지 텍스트가 아니다
 
@@ -1179,12 +1176,14 @@ APG 키보드 5종을 **실제 키 입력으로** 확인했다. 스크립트로 
              보장하지 못한다.** Dropdown 착수 시 합류한다
            ② **마지막 칩을 지우면 갈 곳이 없다.** 다음도 이전도 없으면 포커스가 떨어진다.
              빈 상태에서 무엇에 포커스를 줄지는 그 자리를 아는 쪽(목록·폼)만 정할 수 있다.
-             Select Button(8-8)·Dropdown(P1-5)에서 같은 문제를 다시 만나면 그때 공통 규칙을 만든다
+             Dropdown(P1-5)에서 같은 문제를 다시 만나면 그때 공통 규칙을 만든다
            ~~③ 라벨 크기가 12 / 14 로 갈려 있다~~ — **해소 (0-59).** 둘 중 하나를 고르는
              문제가 아니라 **크기 축이 없던 것**이었다. xs·sm·md = 12·14·15 로 셋 다 쓴다
            ③ **묶음 코드가 RadioGroup 과 겹친다.** name·선택값·fieldset 을 소유하는 구조가
-             같다. 지금은 레이아웃이 달라 따로 뒀다. **Select Button(8-8)이 세 번째 사례이므로
-             거기서 합칠지 정한다** — 두 번으로는 공통점을 잘못 뽑을 수 있다
+             같다. 지금은 레이아웃이 달라 따로 뒀다(칩은 가로로 흐르고 감싼다).
+             **세 번째 사례가 나올 때까지 합치지 않는다** — 둘로는 공통점을 잘못 뽑는다.
+             **세 번째가 무엇일지는 지금 모른다.** 후보를 미리 지목하지 않는다 —
+             한 번 그렇게 잡아 뒀다가 그 컴포넌트가 범위에서 빠졌다 (0-60)
 ```
 
 **실측 (2026-09-04)**

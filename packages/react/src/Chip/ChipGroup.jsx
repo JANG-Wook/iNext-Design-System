@@ -9,7 +9,7 @@ import './Chip.css'
  * **다른 것은 레이아웃뿐이다**(칩은 가로로 흐르고 감싼다).
  *
  * 지금 둘을 합치지 않은 이유는 8-7 미결 ③에 있다: 사례가 둘뿐이라 공통점을 잘못
- * 뽑을 수 있다. Select Button(8-8)이 세 번째다 — 거기서 정한다.
+ * 뽑을 수 있다. **세 번째가 나올 때까지 둔다** — 무엇이 세 번째일지 미리 지목하지 않는다.
  *
  * @param {object}   props
  * @param {string}   props.label            <legend>. 화면에서 감추려면 hideLabel
