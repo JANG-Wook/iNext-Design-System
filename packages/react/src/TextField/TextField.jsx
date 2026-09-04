@@ -17,7 +17,6 @@ import useFieldIds from '../Field/useFieldIds.js'
  * @param {string}   [props.helper]         형식 안내 (3.3.2)
  * @param {string}   [props.error]          오류 메시지. 있으면 aria-invalid 가 켜진다 (3.3.1)
  * @param {boolean}  [props.required=false] 보이는 "필수" 표시 + 네이티브 required
- * @param {boolean}  [props.inactive=false] aria-disabled — 포커스 받는다
  * @param {boolean}  [props.disabled=false] 네이티브 disabled — 예외적으로만
  */
 const TextField = forwardRef(function TextField({
@@ -27,7 +26,6 @@ const TextField = forwardRef(function TextField({
   helper,
   error,
   required = false,
-  inactive = false,
   disabled = false,
   className,
   id: idProp,
@@ -56,7 +54,6 @@ const TextField = forwardRef(function TextField({
         className="ds-field__input body-md"
         required={required || undefined}
         disabled={disabled || undefined}
-        aria-disabled={inactive || undefined}
         aria-invalid={invalid || undefined}
         aria-describedby={describedBy}
         {...rest}

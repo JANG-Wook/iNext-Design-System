@@ -100,12 +100,7 @@
 }
 
 /* ── 비활성 ─────────────────────────────────────────────
-   Button·Text Field 와 같은 규칙(0-32). */
-.ds-search__input[aria-disabled='true'] {
-  color: var(--color-label-neutral);
-  background-color: var(--color-interaction-disable);
-  cursor: not-allowed;
-}
+   Button·Text Field 와 같은 규칙 — `disabled` 하나만 있다(0-44). */
 .ds-search__input:disabled {
   color: var(--color-label-disable);
   background-color: var(--color-interaction-disable);

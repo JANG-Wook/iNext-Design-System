@@ -41,15 +41,11 @@
 }
 
 /* ── 읽기 전용 · 비활성 ─────────────────────────────────
-   Button 과 같은 규칙이다(0-32) — inactive 는 조작 가능하므로 읽히는 색을 쓰고,
-   네이티브 disabled 만 1.4.3 예외를 받는다. */
+   Button 과 같은 규칙이다 — `disabled` 하나만 있다(0-44). `aria-disabled`(inactive)는
+   걷어냈다. 쓸 수 없는 입력은 `readOnly` 로 두거나, 활성으로 두고 검증에서 사유를 알린다.
+   네이티브 disabled 만 WCAG 1.4.3 예외를 받는다. */
 .ds-field__input:read-only {
   background-color: var(--color-fill-alternative);
-}
-.ds-field__input[aria-disabled='true'] {
-  color: var(--color-label-neutral);
-  background-color: var(--color-interaction-disable);
-  cursor: not-allowed;
 }
 .ds-field__input:disabled {
   color: var(--color-label-disable);

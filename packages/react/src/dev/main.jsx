@@ -11,7 +11,6 @@ import Search from '../Search/Search.jsx'
 const VARIANTS = ['primary', 'secondary', 'outline', 'text', 'negative']
 const STATES = [
   { key: '기본',     props: {} },
-  { key: 'inactive', props: { inactive: true } },
   { key: 'disabled', props: { disabled: true } },
   { key: 'loading',  props: { loading: true } },
 ]
@@ -86,7 +85,6 @@ function App() {
                    error="숫자만 입력할 수 있습니다. 하이픈을 빼고 다시 입력하세요." />
         <TextField label="큰 크기" size="lg" helper="lg 단계" />
         <TextField label="읽기 전용" readOnly defaultValue="변경할 수 없음" />
-        <TextField label="inactive" inactive defaultValue="포커스는 된다" />
         <TextField label="disabled" disabled defaultValue="포커스도 안 된다" />
       </div>
 
@@ -97,7 +95,6 @@ function App() {
                   helper="200자까지 입력할 수 있습니다." />
         <TextArea label="사유" rows={5} error="사유를 10자 이상 입력하세요." defaultValue="짧음" />
         <TextArea label="읽기 전용" readOnly defaultValue={'변경할 수 없음\n두 번째 줄'} />
-        <TextArea label="inactive" inactive defaultValue="포커스는 된다" />
         <TextArea label="disabled" disabled defaultValue="포커스도 안 된다" />
       </div>
 
@@ -108,7 +105,6 @@ function App() {
         <Search label="라벨 감춤" hideLabel placeholder="라벨이 화면에는 없다" defaultValue="X 보임" />
         <Search label="도움말" helper="두 글자 이상 입력하세요." />
         <Search label="오류" error="검색어가 너무 짧습니다." defaultValue="가" />
-        <Search label="inactive" inactive defaultValue="포커스는 된다" />
         <Search label="disabled" disabled defaultValue="포커스도 안 된다" />
       </div>
 

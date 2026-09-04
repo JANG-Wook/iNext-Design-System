@@ -19,7 +19,6 @@ import useFieldIds from '../Field/useFieldIds.js'
  * @param {'outline'|'underline'} [props.variant='outline']
  * @param {string}   [props.helper]
  * @param {string}   [props.error]
- * @param {boolean}  [props.inactive=false]
  * @param {boolean}  [props.disabled=false]
  * @param {() => void} [props.onClear]        지우기 버튼. 없으면 값만 비운다
  * @param {(v: string) => void} [props.onSearch]  Enter. 폼 안이면 폼 제출이 우선이다
@@ -30,7 +29,6 @@ const Search = forwardRef(function Search({
   variant = 'outline',
   helper,
   error,
-  inactive = false,
   disabled = false,
   onClear,
   onSearch,
@@ -102,7 +100,6 @@ const Search = forwardRef(function Search({
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           disabled={disabled || undefined}
-          aria-disabled={inactive || undefined}
           aria-invalid={invalid || undefined}
           aria-describedby={describedBy}
         />

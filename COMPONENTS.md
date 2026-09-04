@@ -303,7 +303,7 @@ anchor positioning 은 특히 최근이다. **그래서 지원 범위(⓪′)를
 | 항목 | 기준 |
 |---|---|
 | 상태 매트릭스 | default / hover / focus / active / disabled / read-only / loading / error / selected 중 **유효한 조합**과 충돌 시 우선순위(`disabled + error` 는?) |
-| disabled 정책 | 포커스 가능하게 둘지 `aria-disabled` 로 대체할지. 대비 예외를 어디까지 허용할지 — `label.disable` 은 대비 검사에서 빠져 있다 |
+| disabled 정책 | **정해졌다 — 쓸 수 없는 컨트롤을 만들지 않는다.** 활성으로 두고 눌렀을 때 사유를 보여준다. `aria-disabled`(inactive)는 0-44 에서 걷어냈다. 네이티브 `disabled` 는 정말 사유를 알릴 방법이 없을 때만 쓰고 근거를 남긴다 — `label.disable` 은 WCAG 1.4.3 예외라 대비 검사에서 빠져 있다 |
 | 빈 상태 | 문구·아이콘·행동 유도의 유무 |
 | 로딩 | 스켈레톤 유무, 로딩 중 레이아웃 이동 방지, 낙관적 업데이트 여부 |
 | 부분 실패 | 재시도 진입점의 위치 |
@@ -450,37 +450,34 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
            실행은 up-event 에서 한다 (2.5.2)
            — 누른 채 밖으로 벗어나면 취소된다
 
-상태       **variant 의 실루엣을 지킨다** — 채워진 버튼은 채워진 채로, 빈 버튼은 빈 채로
+상태       **쓸 수 없는 버튼을 만들지 않는다.** 활성으로 두고 눌렀을 때 사유를 보여준다.
+           `aria-disabled`(inactive)는 걷어냈다 — 못 쓰게 보이면 사용자가 애초에 누르지 않아
+           "눌러서 사유를 알린다"는 존재 이유가 자기 시각 표현에 무력화된다 (0-44)
+
+           **variant 의 실루엣을 지킨다** — 채워진 버튼은 채워진 채로, 빈 버튼은 빈 채로
            약해진다. 상태가 바뀔 때 모양이 뒤집히면 "같은 버튼이 꺼진 것"으로 안 읽힌다 (0-43)
 
-                        기본                inactive              disabled
-           primary      primary.normal      interaction.inactive  interaction.disable
-           negative     status.negative     interaction.inactive  interaction.disable
-           secondary    fill.strong         면 없음               면 없음
-           outline      line.strong 선      line.alternative 선   line.alternative 선
-           text         면·선 없음          면·선 없음            면·선 없음
+                        기본                disabled
+           primary      primary.normal      interaction.disable
+           negative     status.negative     interaction.disable
+           secondary    fill.strong         면 없음
+           outline      line.strong 선      line.alternative 선
+           text         면·선 없음          면·선 없음
 
-           라벨         label.normal        ↓                     label.disable
+           라벨         label.normal        label.disable
                         (primary·negative 는 inverse.label)
-                        inactive 라벨 — 채워진 면 위 label.normal(6.49) · 그 외 label.alternative(4.73)
-                        채워진 면 위에서 4.5:1 을 넘는 라벨은 label.normal 하나뿐이다
 
-           inactive  (기본)  aria-disabled="true"
-                            포커스 받는다 · 활성화된다 · 눌리면 사유를 안내한다
-                            조작 가능하므로 1.4.3 예외가 아니라 라벨이 4.5:1 을 지켜야 한다 (0-32)
-                            면끼리 활성↔inactive 가 라이트 4.81 · 다크 6.34 로 벌어진다
+           disabled  (예외)  네이티브 disabled
+                            포커스도 활성화도 안 되는 진짜 inactive 라 WCAG 1.4.3 예외가 적용된다
                             **비활성을 색만으로 표시하지 않는 것은 규정이 아니라 우리 원칙이다** —
                             1.4.1/5.4.1 은 비활성 상태의 표현을 다루지 않는다 (0-43)
-                            primary 와 negative 는 inactive 에서 같아진다. negative 의 빨강이
+                            primary 와 negative 는 disabled 에서 같아진다. negative 의 빨강이
                             사라지는 것은 의도다 — 비활성인 파괴적 버튼이 빨가면 활성으로 오인된다
-           disabled  (예외)  네이티브 disabled · 라벨은 label.disable
-                            포커스도 활성화도 안 되는 진짜 inactive 라 1.4.3 예외가 적용된다
-                            inactive 와 같은 실루엣에 한 단계 더 내려간다 (면 2.79 → 1.10)
-                            사유를 알릴 방법이 정말 없을 때만 · 쓰면 근거를 남긴다
+                            **정말 사유를 알릴 방법이 없을 때만** · 쓰면 근거를 남긴다
            loading           aria-busy="true" · 접근 이름은 유지한다
                             스피너는 prefers-reduced-motion 에서도 멈추지 않는다 (0-27)
            pressed           aria-pressed (토글 버튼)
-           우선순위          disabled > inactive > loading > 나머지
+           우선순위          disabled > loading > 나머지
 
 조작영역   ≥ 24×24 CSS px (WCAG 2.5.8) = --control-min-target
            KWCAG 6.1.3(대각 6.0mm)을 포함한다 — 24 만 지키면 둘 다 닫힌다
@@ -517,7 +514,7 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
 
 플랫폼     웹   <button> · aria-* · CSS px
            iOS  accessibilityTraits.button
-                inactive → .notEnabled + 힌트로 사유
+                disabled → .notEnabled
                 loading  → .updatesFrequently
                 조작영역 44×44 pt (HIG) 는 24 CSS px 보다 크므로 별도로 본다
 
@@ -525,11 +522,13 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
            고정 높이는 사용자가 행간을 키웠을 때 글자를 자르고 1.4.12 를 깬다
            outline: none 으로 포커스 링을 지우지 마라
            아이콘 전용 버튼에 이름을 생략하지 마라
+           **쓸 수 없는 버튼을 만들지 마라** — 활성으로 두고 눌렀을 때 사유를 보여준다 (0-44)
            비활성 상태를 색만으로 표현하지 마라 — **우리 원칙이다.** 1.4.1/5.4.1 은
            비활성 표현을 다루지 않는다. 규정처럼 인용하지 마라 (0-43)
            --spacing-* 를 직접 고르지 마라 — --control-* 를 쓴다
 
-미결       ① 해소 — inactive 라벨을 label.neutral 로 바꿨다 (0-32)
+미결       ① 해소 — inactive 라벨을 label.neutral 로 바꿨다 (0-32).
+             **그 뒤 0-44 에서 inactive 상태 자체를 걷어냈다**
              브라우저 실측 10건 전부 통과, 최저 6.25:1. 토큰 변경 0건
            ② Floating Button 의 크기 단계 — 원형이라 min-height 짝이 맞지 않는다
            ③ 아이콘 크기 토큰이 없다 — Size 파운데이션에 추가할 후보
@@ -549,12 +548,13 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
 
 키보드     네이티브. Tab 진입 1회
 
-상태       default / hover / focus / filled / readOnly / inactive / disabled / error
+상태       default / hover / focus / filled / readOnly / disabled / error
            error     → aria-invalid="true" + aria-describedby 로 메시지 연결
            helper    → aria-describedby
            **오류가 떠도 helper 를 유지한다** — 둘 다 describedby 에 넣는다
              형식 안내가 사라지면 3.3.2 를 잃는다
-           우선순위   disabled > inactive > readOnly > error > 나머지
+           우선순위   disabled > readOnly > error > 나머지
+           **쓸 수 없는 입력은 readOnly 로 두거나 활성으로 두고 검증에서 사유를 알린다** (0-44)
 
 검증 시점  **컴포넌트가 갖지 않는다.** error 를 prop 으로 받는다 — 폼 상태는 폼이 갖는다
            권장 규칙: **submit 우선 · 첫 submit 이후에는 blur**
@@ -627,7 +627,7 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
            **세로를 허용하는 이유** — WCAG 2.5.7(끌기 동작)은 "사용자 에이전트가
            정하고 저작자가 수정하지 않은 기능"을 예외로 둔다. 축만 제한하고
            크기 조절 자체는 UA 에 맡긴다
-           inactive · disabled 에서는 resize: none
+           disabled 에서는 resize: none
 
 글자 수    maxLength 를 주면 카운터가 함께 켜진다
            **제어 컴포넌트일 때만 표시한다** — 비제어면 값을 모르므로 틀린 숫자를
@@ -655,7 +655,7 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
 | 오류 테두리 | 5.10 | 8.01 | 3:1 |
 | 입력값 | 18.08 | 16.11 | 4.5:1 |
 | placeholder · 카운터 | 4.73 | 4.93 | 4.5:1 |
-| inactive 라벨 | — | 6.25 | 4.5:1 |
+| ~~inactive 라벨~~ | — | ~~6.25~~ | 0-44 에서 상태를 걷어냈다 |
 
 `rows` 반영 88px(3행) · 132px(5행) · `id` 중복 0(6개) · 라벨 미연결 0 ·
 카운터 `describedby` 연결됨 · 입력 시 `0 / 200` → `11 / 200` 갱신 확인 ·

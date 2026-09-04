@@ -18,7 +18,6 @@ import useFieldIds from '../Field/useFieldIds.js'
  * @param {string}   [props.error]
  * @param {number}   [props.maxLength]      주면 글자 수 표시가 함께 켜진다
  * @param {boolean}  [props.required=false]
- * @param {boolean}  [props.inactive=false]
  * @param {boolean}  [props.disabled=false]
  * @param {string}   [props.value]          카운터를 쓰려면 제어 컴포넌트여야 한다
  */
@@ -29,7 +28,6 @@ const TextArea = forwardRef(function TextArea({
   error,
   maxLength,
   required = false,
-  inactive = false,
   disabled = false,
   className,
   id: idProp,
@@ -65,7 +63,6 @@ const TextArea = forwardRef(function TextArea({
         maxLength={maxLength}
         required={required || undefined}
         disabled={disabled || undefined}
-        aria-disabled={inactive || undefined}
         aria-invalid={invalid || undefined}
         aria-describedby={describedBy}
         {...rest}

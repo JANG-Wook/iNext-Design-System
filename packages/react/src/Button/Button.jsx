@@ -19,10 +19,9 @@ import './Button.css'
  * @param {React.ReactNode} [props.trailingIcon]
  * @param {boolean}  [props.iconOnly=false]   정사각. label 이 aria-label 이 된다
  * @param {boolean}  [props.circle=false]     원형 (Floating Button)
- * @param {boolean}  [props.inactive=false]   aria-disabled — 포커스 받고 눌린다
  * @param {boolean}  [props.disabled=false]   네이티브 disabled — 예외적으로만
  * @param {boolean}  [props.loading=false]    aria-busy. 폭이 흔들리지 않는다
- * @param {() => void} [props.onClick]        inactive 면 사유를 알리는 자리다
+ * @param {() => void} [props.onClick]
  */
 /* 크기별 타이포 — 복합 토큰이라 유틸리티 클래스를 쓴다.
    낱개(font-size·line-height…)로 조합하지 않는다(narrative/04-typography.md).
@@ -38,7 +37,6 @@ const Button = forwardRef(function Button({
   trailingIcon = null,
   iconOnly = false,
   circle = false,
-  inactive = false,
   disabled = false,
   loading = false,
   onClick,
@@ -51,8 +49,7 @@ const Button = forwardRef(function Button({
     throw new Error('Button: iconOnly 에는 label 또는 aria-label 이 필요하다 (WCAG 2.5.3)')
   }
 
-  // loading 중에는 중복 실행을 막는다. inactive 는 막지 않는다 —
-  // 눌러서 왜 안 되는지 알리는 것이 inactive 의 존재 이유다(0-30).
+  // loading 중에는 중복 실행을 막는다.
   const handleClick = (e) => {
     if (loading || disabled) return
     onClick?.(e)
@@ -71,7 +68,6 @@ const Button = forwardRef(function Button({
       data-shape={circle ? 'circle' : undefined}
       data-loading={loading || undefined}
       disabled={disabled || undefined}
-      aria-disabled={inactive || undefined}
       aria-busy={loading || undefined}
       aria-label={iconOnly ? label : undefined}
       onClick={handleClick}
