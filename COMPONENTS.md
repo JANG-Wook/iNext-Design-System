@@ -642,6 +642,20 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
 역할       네이티브 <input>. type 은 prop 으로 통과한다
            (text · email · password · tel · url · search · number)
 
+용도       **한 줄짜리 자유 입력.** 값을 우리가 미리 알 수 없을 때 쓴다
+
+           갈림길 — 아래에 걸리면 Text Field 가 아니다
+           여러 줄        Text Area (8-3)
+           정해진 목록     Dropdown (P1-5) — 고를 수 있는 값이 정해져 있으면 입력이 아니다
+           찾기           Search (8-4) — 돋보기 · 지우기 · Enter 규약이 통째로 다르다
+           둘 중 하나     Switch (P0-6) 또는 Checkbox (P0-5)
+
+           **type 을 반드시 고른다** (토큰 아님 · 표준)
+           — 모바일 키보드가 달라지고, 1.3.5 의 autocomplete 도 type 에 매여 있다.
+             전부 text 로 받으면 둘 다 잃는다
+
+           크기는 md(40) 기본 · lg(48). **sm 은 없다** — 근거는 크기 절에 있다
+
 이름       <label for> ↔ <input id>. **id 는 useId 로 만든다** (KWCAG 8.1.1)
            보이는 라벨이 기본이다. placeholder 는 라벨이 아니다
            — 입력을 시작하면 사라져서 형식을 잊게 만든다
@@ -684,6 +698,18 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
            iOS  UITextField + accessibilityLabel
                 오류는 accessibilityValue 가 아니라 힌트로 전달한다
 
+오용       **고르기를 잘못하는 것.** 코드는 도는데 사용자가 헤맨다
+
+           x 여러 줄 입력을 Text Field 로 받는다 — Text Area 다 (8-3)
+           x 값이 정해진 것을 Text Field 로 받는다 — Dropdown 이다. 오타를 사용자
+             책임으로 떠넘기고, 검증 오류를 스스로 만들어낸다 (새로 정함)
+           x 검색을 Text Field 로 만든다 — Search 의 규약(돋보기 · 접근 가능한 지우기 ·
+             Enter)이 전부 빠진다. 특히 지우기가 없으면 값을 지우려고 백스페이스를
+             길게 눌러야 한다 (8-4)
+           x type 을 text 로만 쓴다 — 모바일 키보드와 autocomplete(1.3.5)를 함께 잃는다
+           x 쓸 수 없는 입력을 disabled 로 둔다 — readOnly 로 두거나, 활성으로 두고
+             검증에서 사유를 알린다 (0-44)
+
 금지       placeholder 를 라벨로 쓰지 마라
            오류를 색만으로 표시하지 마라 (5.4.1)
            입력 중 실시간으로 빨갛게 만들지 마라
@@ -719,6 +745,16 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
 ```
 역할       네이티브 <textarea>
 
+용도       **길이를 예측할 수 없는 여러 줄 서술.** 사유 · 메모 · 자기소개
+
+           **줄바꿈이 값의 일부인가**로 가른다 (새로 정함)
+           — 이유: textarea 는 Enter 를 값에 담는다. 개행이 필요 없는 자리에 쓰면
+             사용자가 제출을 기대하고 Enter 를 눌렀을 때 줄만 바뀐다. 길이가 길어도
+             개행이 의미 없으면 Text Field 다
+
+           **입력값은 body-md(14px)를 쓴다** — 같은 폼 안의 Text Field 와 글자 크기를
+           맞추기 위해서다. body-lg 가 아니다 (토큰: body-lg 의 $description)
+
 크기       rows 로 정한다(기본 3). control.minHeight 를 쓰지 않는다
            — 한 줄 컨트롤이 아니다. min-height 는 lg(48px)를 하한으로만 잡는다
 
@@ -739,6 +775,14 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
 토큰       control.padding-inline / radius (Text Field 와 공유)
            테두리 line.strong — line.* 중 유일하게 3:1 을 만족한다(라이트 3.09 · 다크 3.49, DECISIONS 0-38)
            세로 여백은 spacing-10
+
+오용       x 한 줄 입력을 Text Area 로 만든다 — Enter 가 제출이 아니라 줄바꿈이 된다
+           x 개행이 의미 없는 값을 Text Area 로 받는다 — 길이는 이유가 되지 않는다
+             (새로 정함 — 위 용도 절의 근거)
+           x 비제어로 쓰면서 카운터를 기대한다 — 값을 모르므로 감춘다.
+             틀린 숫자를 보여주느니 안 보여준다 (명세: 글자 수 절)
+           x 자동 높이 확장을 JS 로 흉내낸다 — 사용자의 수동 크기 조절과 싸운다.
+             `field-sizing: content` 가 widely available 이 될 때까지 기다린다 (미결 ①)
 
 미결       ① 자동 높이 확장을 넣지 않았다
              CSS `field-sizing: content` 가 정답이지만 **Baseline newly available
@@ -769,6 +813,19 @@ WCAG 2.2 AA 준수가 곧 인증 통과는 아니며, 심사 시점에 매핑이
 **8-2 Text Field 와 같은 규약을 따른다.** 다른 점만 적는다.
 
 ```
+용도       **사용자가 찾으러 온 자리.** 목록·표를 좁히는 필터도 포함한다
+           찾는 게 아니면 Text Field 다 (8-2) — 돋보기는 "여기서 찾는다"는 신호라
+           일반 입력에 붙이면 거짓말이 된다
+
+           변형
+           outline    기본. 자기 영역이 필요한 자리 — 페이지 본문 · 폼 안
+           underline  헤더 · 툴바처럼 이미 상자가 많은 자리 (새로 정함)
+                      — 이유: 테두리 4변 대신 밑변 하나라 상자를 하나 덜 만든다.
+                        좌우 여백도 줄어든다(면이 없어 안쪽 여백이 의미를 잃으므로)
+
+           **자동완성·최근 검색어가 필요하면 아직 쓸 수 없다** — 없다 (미결 ①).
+           Dropdown(P1-5) 착수 시 합류한다
+
 변형       outline (기본) · underline
            underline 은 좌우 여백을 줄인다 — 면이 없어 안쪽 여백이 의미를 갖지 않는다
 
@@ -793,6 +850,13 @@ Enter      onSearch 를 부른다. 폼 안이면 폼 제출이 우선이다
 
 토큰       control.min-height / padding-inline / radius / icon-size / min-target
            테두리 line.strong — line.* 중 유일하게 3:1 을 만족한다(라이트 3.09 · 다크 3.49, DECISIONS 0-38)
+
+오용       x 일반 입력을 Search 로 만든다 — 돋보기가 "찾는 곳"이라고 잘못 말한다
+           x 검색 랜드마크(<search> · role="search")를 컴포넌트가 만들어줄 것으로 기대한다
+             — 랜드마크는 페이지 구조라 소비자가 감싼다 (미결 ②)
+           x 자동완성이 필요한 자리에 지금 쓴다 — 목록이 없다 (미결 ①)
+           x 라벨 없이 placeholder 만 둔다 — hideLabel 로 감출 수는 있어도 없앨 수는 없다
+             (이름 절)
 
 미결       ① 자동완성·최근 검색어 목록 없음 — Dropdown 착수 시 합류한다
            ② 검색 랜드마크(<search> · role="search")를 컴포넌트가 만들지 않는다
