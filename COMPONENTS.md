@@ -881,3 +881,100 @@ Enter      onSearch 를 부른다. 폼 안이면 폼 제출이 우선이다
 지우기 버튼 4개 모두 **24×24**(24 미만 0건) · 이름 `"밑줄형 지우기"` 처럼 라벨이 들어감 ·
 **클릭 시 값 비움 → 버튼 사라짐 → 포커스가 입력으로 복귀 → 재입력 시 버튼 복귀** 확인 ·
 `hideLabel` 라벨이 화면 1×1 이면서 `htmlFor` 로 연결됨.
+
+### 8-5. Checkbox
+
+**APG 패턴: Checkbox** — 키보드·ARIA 는 원문을 받아 대조했다.
+
+```
+역할       네이티브 <input type="checkbox">
+           div 에 role="checkbox" 를 붙이지 않는다 — 네이티브가 Space 토글 ·
+           forced-colors · 폼 제출을 전부 갖고 있다
+           묶음은 <fieldset> + <legend>. APG 는 role="group" + aria-labelledby 도 허용한다
+
+용도       **여러 개를 서로 독립적으로 켜고 끈다.** 한 항목이 다른 항목에 영향을 주지 않는다
+
+           갈림길
+           하나만 고른다           Radio (8-6)
+           즉시 적용되는 켜기/끄기   Switch (P0-6) — 체크박스는 제출해야 반영되고
+                                  스위치는 누르는 순간 반영된다 (새로 정함)
+                                  — 이유: 되돌리는 방법이 다르다. 제출 전이면 취소가 답이고
+                                    즉시 반영이면 다시 누르는 것이 답이다. 어느 쪽인지
+                                    모르면 사용자는 자기가 한 일이 먹혔는지 알 수 없다
+           고르는 대상이 카드       Select Button (8-8) — **동작은 이것과 같고 껍데기만 다르다**
+           필터에서 여러 개         Chip Select (8-7)
+
+이름       <label for> ↔ <input id>. **id 는 생성 함수로 만든다** (KWCAG 8.1.1)
+           라벨 전체가 조작 영역이 된다 — 네이티브 <label> 의 기본 동작이라 우리가 만들지 않는다
+
+키보드     Space   상태를 바꾼다
+                   APG: "When the checkbox has focus, pressing the Space key
+                   changes the state of the checkbox."
+           Tab     **항목마다 1회.** Radio 와 다르다 — 묶음이 하나의 탭 정지가 아니다
+           화살표  쓰지 않는다. 항목이 독립이라 묶음 안 이동이 없다
+
+상태       unchecked / checked / mixed / disabled / error
+           checked   네이티브 checked
+           mixed     APG tri-state — 전부 체크면 checked · 일부면 mixed · 없으면 unchecked
+                     **DOM 속성이 아니라 프로퍼티다.** el.indeterminate 로만 켜지고 HTML 로는
+                     못 쓴다. aria-checked="mixed" 는 네이티브가 대신 노출한다
+                     **모양은 :indeterminate 로 그리지 않는다** — 프로퍼티로만 켜지는 상태라
+                     `~` 형제 선택자에 스타일 무효화가 걸리지 않았다. 접근성은 프로퍼티가,
+                     모양은 data-mixed 속성이 맡는다 (0-56)
+                     **하위 항목의 요약이지 사용자가 고르는 세 번째 값이 아니다**
+           error     aria-invalid + aria-describedby. 묶음 단위 오류는 fieldset 에 건다
+           우선순위  disabled > error > 나머지
+
+조작영역   **시각 크기와 조작 영역을 분리한다.** 네모는 --control-box-size(20px)이고
+           조작 영역은 ≥24×24 = --control-min-target (WCAG 2.5.8 · KWCAG 6.1.3)
+           라벨까지 포함되므로 실제로는 훨씬 넓다
+
+크기       단계 없음. 한 크기다 — 미결 ① 참조
+
+토큰       네모        --control-box-size (20px)   ← Radio · Select Button 과 공유
+           미선택 테두리 line.strong                 1.4.11 의 3:1 을 만족하는 유일한 line 단계
+           선택 면      primary.normal
+           선택 체크    inverse.label                Button primary 와 같은 짝
+           비활성      interaction.disable + label.disable
+           포커스      focus-ring + interaction.focus  (offset 필수 — 0-46)
+           라벨        label-md (14)
+           간격        control.gap
+           **새 색 토큰 없이 닫힌다** — 전부 기존 값이다
+
+플랫폼     웹   <input type="checkbox"> · <label for> · fieldset/legend
+           iOS  UISwitch 가 아니다 — 체크박스는 제출형이라 커스텀 컨트롤 +
+                accessibilityTraits 로 만든다. mixed 는 iOS 에 대응이 없어
+                "부분 선택" 을 accessibilityValue 로 말해 준다
+
+오용       x 하나만 고르는 자리에 쓴다 — Radio 다 (8-6)
+           x 즉시 반영되는 설정에 쓴다 — Switch 다 (새로 정함, 위 용도 절 근거)
+           x mixed 를 사용자가 고를 수 있는 세 번째 값으로 쓴다 — 하위 항목의 요약이다
+           x 약관 동의 오류를 색으로만 알린다 — KWCAG 5.4.1
+
+금지       div + role="checkbox" 로 만들지 마라
+           라벨을 <label for> 없이 옆 텍스트로만 두지 마라
+           indeterminate 를 HTML 속성으로 쓰려 하지 마라 — 프로퍼티다
+           네모 크기를 조작 영역으로 착각하지 마라 — 20px 은 24 미만이다
+           id 를 손으로 짓지 마라 (8.1.1)
+
+미결       ① **크기 단계를 두지 않았다.** Text Field 가 sm 을 안 낸 것과 같은 이유로
+             지금은 한 크기다. 조밀한 표 안에서 20px 이 큰지는 Table(P2-1) 에서 본다
+           ② **`aria-checked="mixed"` 노출을 눈으로 확인하지 못했다.** HTML-AAM 이
+             `indeterminate` → `mixed` 매핑을 규정하고 프로퍼티가 켜진 것은 확인했지만,
+             검증 페이지의 접근성 트리 도구가 체크 상태를 보여주지 않는다.
+             **스크린리더로 직접 들어봐야 한다**
+```
+
+**실측 (2026-09-04)**
+
+| | 라이트 | 다크 | 기준 |
+|---|---|---|---|
+| 미선택 테두리 | 3.24 | 3.59 | 3:1 (1.4.11) |
+| 오류 테두리 | 5.10 | 8.01 | 3:1 |
+| 선택 면 | 13.39 | 16.11 | — |
+| 선택 체크 · 부분선택 대시 | 12.50 | 16.89 | 3:1 (비텍스트) |
+| 라벨 | 18.08 | 16.11 | 4.5:1 |
+
+조작 영역 11개 전부 **24×24**(24 미만 0건) · 네모 20×20 · 두 중심 어긋남 0 ·
+`id` 중복 0 · `<label for>` 미연결 0 · 도움말·오류가 `aria-describedby` 로 연결됨 ·
+오류 행만 `aria-invalid="true"` · 두 줄 라벨에서 네모가 첫 줄에 붙음.

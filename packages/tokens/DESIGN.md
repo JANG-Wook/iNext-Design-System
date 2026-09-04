@@ -6,8 +6,8 @@ spec: DTCG 2025.10 (Format · Color Module, Final Community Group Report)
 source: primitive.json + semantic.light.json + semantic.dark.json + typography.json (packages/tokens)
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
-scope: 색·그림자 66 · 그 외 194 · 타이포 클래스 36. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
-usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 53개 토큰이 쓰이고 있다.
+scope: 색·그림자 66 · 그 외 195 · 타이포 클래스 36. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
+usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 56개 토큰이 쓰이고 있다.
 typography:
   "base.display-lg":
     class: display-lg
@@ -166,7 +166,7 @@ typography:
     fontWeight: 500
     letterSpacing: "0rem"
     note: UI 라벨(기본) — 라벨의 기준값. Button(sm)·Text Button, Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong.
-    usedBy: [Button, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Search, TextArea, TextField]
   "base.label-md-strong":
     class: label-md-strong
     fontSize: "0.875rem"
@@ -181,7 +181,7 @@ typography:
     fontWeight: 500
     letterSpacing: "0rem"
     note: UI 라벨(소). Bottom Navigation 라벨, Tag, Breadcrumb, Chip, Indicator(Number), 폼의 헬퍼·에러·글자수(Text Field·Text Area·Search). 기본 medium, 강조는 label-sm-strong.
-    usedBy: [Search, TextArea, TextField]
+    usedBy: [Checkbox, Search, TextArea, TextField]
   "base.label-sm-strong":
     class: label-sm-strong
     fontSize: "0.75rem"
@@ -275,7 +275,7 @@ color:
     light: "#161617"
     dark: "#F7F7F8"
     note: 기본 글자 — 무엇을 쓸지 모르겠으면 이것. 본문·라벨·입력값에 쓴다. 4개 면 최소 대비 **라이트 16.89 · 다크 15.00**. Button · Text Field · Text Area · Search 가 쓴다.
-    usedBy: [Button, Field, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Field, Search, TextArea, TextField]
   label-neutral:
     light: rgba(46, 47, 50, 0.88)
     dark: rgba(193, 195, 199, 0.88)
@@ -284,7 +284,7 @@ color:
     light: rgba(55, 55, 58, 0.7)
     dark: rgba(173, 176, 181, 0.74)
     note: "보조 글자 — placeholder · 도움말 · 글자 수 카운터. **4.5:1 을 겨우 넘는다: 4개 면 최소 라이트 4.55 · 다크 4.71.** 라이트 여유가 0.05 뿐이라 면 색을 건드리면 이 토큰부터 다시 잰다(`checks/surfaces.mjs` 가 매 빌드 검사한다). Text Field · Text Area · Search 가 쓴다."
-    usedBy: [Field, Search, TextArea, TextField]
+    usedBy: [Checkbox, Field, Search, TextArea, TextField]
   label-assistive:
     light: rgba(55, 55, 58, 0.28)
     dark: rgba(173, 176, 181, 0.28)
@@ -293,7 +293,7 @@ color:
     light: rgba(55, 55, 58, 0.16)
     dark: rgba(152, 155, 161, 0.16)
     note: 비활성 컨트롤의 글자 — 4개 면 최소 대비 **라이트 1.33 · 다크 1.26** 으로 4.5:1 을 만족하지 않는다. 네이티브 `disabled` 는 포커스도 활성화도 안 되는 진짜 inactive 라 **WCAG 1.4.3 의 예외**가 적용된다(0-43). 면은 `interaction.disable` 이다. Button · Text Field · Text Area · Search 가 쓴다.
-    usedBy: [Button, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Search, TextArea, TextField]
   bg-normal:
     light: "#FFFFFF"
     dark: "#1A1B1C"
@@ -327,7 +327,7 @@ color:
     light: rgba(113, 115, 121, 0.8)
     dark: rgba(193, 195, 199, 0.52)
     note: "**컨트롤 경계선.** 입력·체크박스·라디오처럼 테두리가 곧 컴포넌트의 식별 정보인 자리에 쓴다 — `line.*` 일곱 중 WCAG 1.4.11 의 3:1 을 만족하는 **유일한 단계**다(4개 면 최소 라이트 3.09 · 다크 3.49 — `checks/surfaces.mjs` 가 매 빌드 검사한다). 구분선에는 `normal` 이하를 쓴다(DECISIONS 0-38)."
-    usedBy: [Button, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Search, TextArea, TextField]
   line-neutral:
     light: rgba(113, 115, 121, 0.16)
     dark: rgba(113, 115, 121, 0.28)
@@ -336,7 +336,7 @@ color:
     light: rgba(113, 115, 121, 0.08)
     dark: rgba(113, 115, 121, 0.22)
     note: 가장 약한 구분선. 4개 면 최소 대비 라이트 1.10 · 다크 1.25 — 컨트롤 경계로 쓸 수 없다.
-    usedBy: [Button]
+    usedBy: [Button, Checkbox]
   line-solidNormal:
     light: "#E0E1E3"
     dark: "#37373A"
@@ -371,17 +371,17 @@ color:
     light: "#F4F4F4"
     dark: "#2E2F32"
     note: 비활성 컨트롤의 면색 — 눌리지 않는 버튼·입력 필드의 배경. 위에 올라가는 글자는 `label.disable` 이며, 둘 다 대비 검사 대상이 아니다.
-    usedBy: [Button, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Search, TextArea, TextField]
   interaction-focus:
     light: "#161617"
     dark: "#F4F4F4"
     note: 키보드 포커스 링 색. KWCAG 6.1.2(초점은 시각적으로 구별) · WCAG 2.4.7 대응. **무채색이다** — 우리 팔레트는 명도로 정규화돼 있어 색조를 바꿔도 대비가 같고, 그래서 색조 선택은 `어느 색조가 비어 있나` 라는 배정 문제가 된다. 무채색은 그 문제를 아예 피한다. **primary 가 바뀌어도 링은 그대로 쓸 수 있다**(0-46). 4개 면 최소 대비 라이트 16.89 · 다크 14.60 으로 계열 중 가장 또렷하다. **대가는 `focusRing.offset` 이 필수가 된다는 것** — primary 버튼과 라이트 1.35 · 다크 1.03, 다크 negative 와 1.96 이라 링이 컴포넌트 면 위에 겹치면 사라진다.
-    usedBy: [Button, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Search, TextArea, TextField]
   interaction-overlay-darken-hovered:
     light: rgba(0, 0, 0, 0.05)
     dark: rgba(0, 0, 0, 0.05)
     note: 밝은 면 위 hover 상태 오버레이. 면을 어둡게 한다. 강도는 `interaction.opacity.normal.hovered` 를 따른다.
-    usedBy: [Button, Search]
+    usedBy: [Button, Checkbox, Search]
   interaction-overlay-darken-focused:
     light: rgba(0, 0, 0, 0.08)
     dark: rgba(0, 0, 0, 0.08)
@@ -395,7 +395,7 @@ color:
     light: rgba(255, 255, 255, 0.05)
     dark: rgba(255, 255, 255, 0.05)
     note: 어두운 면 위 hover 상태 오버레이. 면을 밝게 한다. 강도는 `interaction.opacity.normal.hovered` 를 따른다.
-    usedBy: [Button, Search]
+    usedBy: [Button, Checkbox, Search]
   interaction-overlay-lighten-focused:
     light: rgba(255, 255, 255, 0.08)
     dark: rgba(255, 255, 255, 0.08)
@@ -409,7 +409,7 @@ color:
     light: "#2E2F32"
     dark: "#F7F7F8"
     note: 브랜드 기본색 — **무채색이다.** 라이트 `#2E2F32` · 다크 `#F7F7F8` 이고 `bg.normal` 과 대비 **13.39 / 16.11** 로 우리 면색 중 배경과 가장 세게 갈린다. Button 의 primary 면이며, 그래서 **화면당 하나**로 제한한다(COMPONENTS.md 8-1 용도). 위에 올라가는 글자는 `label.normal` 이 아니라 `inverse.label` 이다.
-    usedBy: [Button]
+    usedBy: [Button, Checkbox]
   primary-strong:
     light: "#212124"
     dark: "#E9EAEB"
@@ -430,7 +430,7 @@ color:
     light: "#D5242A"
     dark: "#FC948B"
     note: 오류·실패·파괴적 동작. 삭제 확인처럼 되돌릴 수 없는 곳.
-    usedBy: [Button, Field, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Field, Search, TextArea, TextField]
   accent-bg-redOrange:
     light: "#D45215"
     dark: "#D45215"
@@ -515,7 +515,7 @@ color:
     light: "#F7F7F8"
     dark: "#161617"
     note: 반전 면 위의 글자 — 라이트에서는 어두운 면 위, 다크에서는 밝은 면 위에 얹힌다. **Button 의 primary · negative 라벨이 이것**이고 실측 대비 **라이트 12.50 · 다크 16.89** 다. `label.normal` 과 명도 방향이 반대라 같은 면에 섞어 쓰지 않는다.
-    usedBy: [Button]
+    usedBy: [Button, Checkbox]
   static-white:
     light: "#FFFFFF"
     dark: "#FFFFFF"
@@ -631,6 +631,7 @@ fontSize:
   14:
     value: "0.875rem"
     note: "`body-md` · `label-md` · `link-md` — 5곳. 목록·표처럼 밀도가 필요한 본문."
+    usedBy: [Checkbox]
   15:
     value: "0.9375rem"
     note: "`label-lg` — 1곳. 14 와 16 사이를 메우려고 넣었다. 버튼 md(40px)가 lg(48px)와 같은 16px 라벨을 써서 md 쪽이 더 커 보였다 — 글자/높이가 40% 대 33%였다. 라벨 사다리를 5티어로 다시 짜며 생긴 자리다(DECISIONS 0-50)."
@@ -677,7 +678,7 @@ lineHeight:
   14-20:
     value: 1.428571
     note: "14px 글자에 20px 행간. 2개 토큰이 쓴다."
-    usedBy: [Field]
+    usedBy: [Checkbox, Field]
   14-22:
     value: 1.571429
     note: "14px 글자에 22px 행간. 3개 토큰이 쓴다."
@@ -765,7 +766,7 @@ spacing:
     usedBy: [Field, Search]
   6:
     value: "6px"
-    usedBy: [Field]
+    usedBy: [Checkbox, Field]
   8:
     value: "8px"
     usedBy: [Field, Search]
@@ -806,6 +807,7 @@ radius:
   4:
     value: "4px"
     note: 작은 버튼·태그·체크박스 같은 매우 작은 요소.
+    usedBy: [Checkbox]
   6:
     value: "6px"
     note: 툴팁 같이 작은 요소.
@@ -910,7 +912,7 @@ divider:
   1:
     value: "1px"
     note: 기본 구분선. 리스트 항목·섹션 사이의 얇은 선.
-    usedBy: [Button, Field, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Field, Search, TextArea, TextField]
   8:
     value: "8px"
     note: 굵은 구분선. 섹션을 크게 가르는 띠. 색은 line 토큰보다 면 색(bg.normalAlternative 등)이 자연스럽다.
@@ -918,16 +920,16 @@ focusRing:
   width:
     value: "2px"
     note: 링 두께. WCAG 2.4.13(AAA) 의 2px 기준을 따른다.
-    usedBy: [Button, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Search, TextArea, TextField]
   offset:
     value: "2px"
     note: 요소와 링 사이 간격. 링이 컴포넌트 색 위에 겹치지 않게 한다.
-    usedBy: [Button, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Search, TextArea, TextField]
 duration:
   0:
     value: "[object Object]"
     note: 지연 없음. DTCG `transition` 은 `delay` 를 필수로 요구하므로 지연이 없어도 쓸 값이 필요하다. 즉시 완료에도 쓴다.
-    usedBy: [Button]
+    usedBy: [Button, Checkbox]
   100:
     value: "[object Object]"
     note: 상태 오버레이(hover·press). 가장 빈번한 전환이라 가장 짧다.
@@ -1096,7 +1098,7 @@ control:
   gap-md:
     value: "6px"
     note: "6px. `minHeight.md` 와 짝이다."
-    usedBy: [Button]
+    usedBy: [Button, Checkbox]
   gap-lg:
     value: "8px"
     note: "8px. `minHeight.lg` 와 짝이다."
@@ -1125,6 +1127,10 @@ control:
     value: "24px"
     note: "24px. `minHeight.lg` 와 짝이다. 48px 컨트롤용."
     usedBy: [Button]
+  boxSize:
+    value: "20px"
+    note: 선택 컨트롤의 네모·원 한 변 20px — Checkbox · Radio · Select Button 이 공유한다. **`iconSize.20` 을 쓰지 않는다.** 값은 같지만 축이 다르다 — `iconSize` 는 SVG 래퍼 크기이고 이것은 컨트롤 그 자체의 상자다. 한쪽을 바꿀 때 다른 쪽이 따라 움직이면 안 된다(DECISIONS 0-55). **시각 크기이지 조작 영역이 아니다** — 조작 영역의 하한은 `minTarget`(24px)이고, 라벨까지 포함하면 실제로는 더 넓다. **티어를 두지 않았다** — 크기 단계 수요가 아직 확인되지 않았다(`label-xs` 의 `-strong` 을 두지 않은 것과 같은 원칙, 0-25). 필요해지면 그때 나눈다.
+    usedBy: [Checkbox]
   minInset:
     value: "1px"
     note: "컨트롤 테두리 안쪽 최소 여백 1px — **KWCAG 6.1.3 (KR delta)**. 브라우저 UA 가 `button {padding: 1px 6px}` · `input {padding: 1px 2px}` 로 우연히 이 값을 주고 있었는데, 우리가 `padding-inline` 만 덮어 **세로는 UA 값이 남아 있었다**(0-48). 우연한 만족은 브라우저가 바뀌면 사라진다. `padding-block` 을 이 토큰으로 명시해 **의도해서** 만족시킨다. 이보다 큰 세로 여백을 이미 갖는 컨트롤(Text Area 10px)은 그대로 두면 된다 — **하한이다**. **주의: 6.1.3 은 그 여백이 포인터 조작에 반응하지 않을 것도 요구하는데, padding 만으로는 그 부분이 충족되지 않는다**(미결 25)."
@@ -1132,12 +1138,12 @@ control:
   minTarget:
     value: "24px"
     note: "조작 영역 하한 24px — WCAG 2.5.8. **KWCAG 6.1.3(대각 6.0mm)을 포함한다**: CSS 기준 픽셀(1px=1/96in)에서 24×24 의 대각은 8.98mm 이고, 6.0mm 대각을 만족하는 최소 정사각은 16.04px 다. **24 만 지키면 두 기준이 함께 닫힌다**(DECISIONS 0-30). 시각 크기가 이보다 작은 컨트롤은 히트박스를 이 값까지 넓힌다."
-    usedBy: [Search]
+    usedBy: [Checkbox, Search]
 transition:
   control:
     value: "[object Object]"
     note: 컨트롤 상태 전환 — hover·press 오버레이, 보더 색. 100ms · standard. 가장 빈번한 전환이라 가장 짧다.
-    usedBy: [Button, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Search, TextArea, TextField]
 shadow:
   xs:
     light: "0px 1px 3px 0px rgba(19, 19, 20, 0.08), 0px 0px 1px 0px rgba(19, 19, 20, 0.04)"
@@ -2213,6 +2219,103 @@ Enter      onSearch 를 부른다. 폼 안이면 폼 제출이 우선이다
 지우기 버튼 4개 모두 **24×24**(24 미만 0건) · 이름 `"밑줄형 지우기"` 처럼 라벨이 들어감 ·
 **클릭 시 값 비움 → 버튼 사라짐 → 포커스가 입력으로 복귀 → 재입력 시 버튼 복귀** 확인 ·
 `hideLabel` 라벨이 화면 1×1 이면서 `htmlFor` 로 연결됨.
+
+### 8-5. Checkbox
+
+**APG 패턴: Checkbox** — 키보드·ARIA 는 원문을 받아 대조했다.
+
+```
+역할       네이티브 <input type="checkbox">
+           div 에 role="checkbox" 를 붙이지 않는다 — 네이티브가 Space 토글 ·
+           forced-colors · 폼 제출을 전부 갖고 있다
+           묶음은 <fieldset> + <legend>. APG 는 role="group" + aria-labelledby 도 허용한다
+
+용도       **여러 개를 서로 독립적으로 켜고 끈다.** 한 항목이 다른 항목에 영향을 주지 않는다
+
+           갈림길
+           하나만 고른다           Radio (8-6)
+           즉시 적용되는 켜기/끄기   Switch (P0-6) — 체크박스는 제출해야 반영되고
+                                  스위치는 누르는 순간 반영된다 (새로 정함)
+                                  — 이유: 되돌리는 방법이 다르다. 제출 전이면 취소가 답이고
+                                    즉시 반영이면 다시 누르는 것이 답이다. 어느 쪽인지
+                                    모르면 사용자는 자기가 한 일이 먹혔는지 알 수 없다
+           고르는 대상이 카드       Select Button (8-8) — **동작은 이것과 같고 껍데기만 다르다**
+           필터에서 여러 개         Chip Select (8-7)
+
+이름       <label for> ↔ <input id>. **id 는 생성 함수로 만든다** (KWCAG 8.1.1)
+           라벨 전체가 조작 영역이 된다 — 네이티브 <label> 의 기본 동작이라 우리가 만들지 않는다
+
+키보드     Space   상태를 바꾼다
+                   APG: "When the checkbox has focus, pressing the Space key
+                   changes the state of the checkbox."
+           Tab     **항목마다 1회.** Radio 와 다르다 — 묶음이 하나의 탭 정지가 아니다
+           화살표  쓰지 않는다. 항목이 독립이라 묶음 안 이동이 없다
+
+상태       unchecked / checked / mixed / disabled / error
+           checked   네이티브 checked
+           mixed     APG tri-state — 전부 체크면 checked · 일부면 mixed · 없으면 unchecked
+                     **DOM 속성이 아니라 프로퍼티다.** el.indeterminate 로만 켜지고 HTML 로는
+                     못 쓴다. aria-checked="mixed" 는 네이티브가 대신 노출한다
+                     **모양은 :indeterminate 로 그리지 않는다** — 프로퍼티로만 켜지는 상태라
+                     `~` 형제 선택자에 스타일 무효화가 걸리지 않았다. 접근성은 프로퍼티가,
+                     모양은 data-mixed 속성이 맡는다 (0-56)
+                     **하위 항목의 요약이지 사용자가 고르는 세 번째 값이 아니다**
+           error     aria-invalid + aria-describedby. 묶음 단위 오류는 fieldset 에 건다
+           우선순위  disabled > error > 나머지
+
+조작영역   **시각 크기와 조작 영역을 분리한다.** 네모는 --control-box-size(20px)이고
+           조작 영역은 ≥24×24 = --control-min-target (WCAG 2.5.8 · KWCAG 6.1.3)
+           라벨까지 포함되므로 실제로는 훨씬 넓다
+
+크기       단계 없음. 한 크기다 — 미결 ① 참조
+
+토큰       네모        --control-box-size (20px)   ← Radio · Select Button 과 공유
+           미선택 테두리 line.strong                 1.4.11 의 3:1 을 만족하는 유일한 line 단계
+           선택 면      primary.normal
+           선택 체크    inverse.label                Button primary 와 같은 짝
+           비활성      interaction.disable + label.disable
+           포커스      focus-ring + interaction.focus  (offset 필수 — 0-46)
+           라벨        label-md (14)
+           간격        control.gap
+           **새 색 토큰 없이 닫힌다** — 전부 기존 값이다
+
+플랫폼     웹   <input type="checkbox"> · <label for> · fieldset/legend
+           iOS  UISwitch 가 아니다 — 체크박스는 제출형이라 커스텀 컨트롤 +
+                accessibilityTraits 로 만든다. mixed 는 iOS 에 대응이 없어
+                "부분 선택" 을 accessibilityValue 로 말해 준다
+
+오용       x 하나만 고르는 자리에 쓴다 — Radio 다 (8-6)
+           x 즉시 반영되는 설정에 쓴다 — Switch 다 (새로 정함, 위 용도 절 근거)
+           x mixed 를 사용자가 고를 수 있는 세 번째 값으로 쓴다 — 하위 항목의 요약이다
+           x 약관 동의 오류를 색으로만 알린다 — KWCAG 5.4.1
+
+금지       div + role="checkbox" 로 만들지 마라
+           라벨을 <label for> 없이 옆 텍스트로만 두지 마라
+           indeterminate 를 HTML 속성으로 쓰려 하지 마라 — 프로퍼티다
+           네모 크기를 조작 영역으로 착각하지 마라 — 20px 은 24 미만이다
+           id 를 손으로 짓지 마라 (8.1.1)
+
+미결       ① **크기 단계를 두지 않았다.** Text Field 가 sm 을 안 낸 것과 같은 이유로
+             지금은 한 크기다. 조밀한 표 안에서 20px 이 큰지는 Table(P2-1) 에서 본다
+           ② **`aria-checked="mixed"` 노출을 눈으로 확인하지 못했다.** HTML-AAM 이
+             `indeterminate` → `mixed` 매핑을 규정하고 프로퍼티가 켜진 것은 확인했지만,
+             검증 페이지의 접근성 트리 도구가 체크 상태를 보여주지 않는다.
+             **스크린리더로 직접 들어봐야 한다**
+```
+
+**실측 (2026-09-04)**
+
+| | 라이트 | 다크 | 기준 |
+|---|---|---|---|
+| 미선택 테두리 | 3.24 | 3.59 | 3:1 (1.4.11) |
+| 오류 테두리 | 5.10 | 8.01 | 3:1 |
+| 선택 면 | 13.39 | 16.11 | — |
+| 선택 체크 · 부분선택 대시 | 12.50 | 16.89 | 3:1 (비텍스트) |
+| 라벨 | 18.08 | 16.11 | 4.5:1 |
+
+조작 영역 11개 전부 **24×24**(24 미만 0건) · 네모 20×20 · 두 중심 어긋남 0 ·
+`id` 중복 0 · `<label for>` 미연결 0 · 도움말·오류가 `aria-describedby` 로 연결됨 ·
+오류 행만 `aria-invalid="true"` · 두 줄 라벨에서 네모가 첫 줄에 붙음.
 
 ## 가져다 쓰기
 

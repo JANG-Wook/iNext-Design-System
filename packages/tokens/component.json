@@ -92,6 +92,11 @@
         "$description": "24px. `minHeight.lg` 와 짝이다. 48px 컨트롤용."
       }
     },
+    "boxSize": {
+      "$type": "dimension",
+      "$value": "{spacing.20}",
+      "$description": "선택 컨트롤의 네모·원 한 변 20px — Checkbox · Radio · Select Button 이 공유한다. **`iconSize.20` 을 쓰지 않는다.** 값은 같지만 축이 다르다 — `iconSize` 는 SVG 래퍼 크기이고 이것은 컨트롤 그 자체의 상자다. 한쪽을 바꿀 때 다른 쪽이 따라 움직이면 안 된다(DECISIONS 0-55). **시각 크기이지 조작 영역이 아니다** — 조작 영역의 하한은 `minTarget`(24px)이고, 라벨까지 포함하면 실제로는 더 넓다. **티어를 두지 않았다** — 크기 단계 수요가 아직 확인되지 않았다(`label-xs` 의 `-strong` 을 두지 않은 것과 같은 원칙, 0-25). 필요해지면 그때 나눈다."
+    },
     "minInset": {
       "$type": "dimension",
       "$value": "{spacing.1}",

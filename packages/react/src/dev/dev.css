@@ -35,3 +35,12 @@ body {
 /* 측정기 자기검사 — 실패하면 눈에 띄어야 한다. 통과면 조용히 있는다. */
 .dev-selfcheck { margin: 0 0 var(--spacing-16); color: var(--color-label-alternative); }
 .dev-selfcheck--fail { color: var(--color-status-negative); font-weight: var(--font-weight-bold); }
+
+/* fieldset 은 UA 기본 테두리·여백이 있어 검증 화면에서 시끄럽다. 최소만 남긴다. */
+.dev-fieldset {
+  border: var(--divider-1) solid var(--color-line-normal);
+  border-radius: var(--radius-8);
+  padding: var(--spacing-16);
+  margin: 0;
+}
+.dev-fieldset > legend { padding-inline: var(--spacing-6); }

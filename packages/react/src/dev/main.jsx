@@ -19,6 +19,7 @@ import Button from '../Button/Button.jsx'
 import TextField from '../TextField/TextField.jsx'
 import TextArea from '../TextArea/TextArea.jsx'
 import Search from '../Search/Search.jsx'
+import Checkbox from '../Checkbox/Checkbox.jsx'
 // 실제 아이콘으로 본다 — 원형 플레이스홀더는 획 두께·여백이 진짜와 달라
 // 정렬과 시각 무게를 잘못 판단하게 만든다(0-47).
 import { Download, ExternalLink, Settings, PanelLeftClose, Plus } from 'lucide-react'
@@ -156,6 +157,30 @@ function App() {
         <Search label="오류" error="검색어가 너무 짧습니다." defaultValue="가" />
         <Search label="disabled" disabled defaultValue="포커스도 안 된다" />
       </div>
+
+      {/* Checkbox — 네모(20)와 조작 영역(24)이 다른 값이라 둘 다 잰다.
+          mixed 는 프로퍼티라 화면에서 실제로 켜지는지 봐야 한다(8-5). */}
+      <h2>Checkbox</h2>
+      <div className="dev-stack">
+        <Checkbox label="기본" />
+        <Checkbox label="선택됨" defaultChecked />
+        <Checkbox label="부분 선택 (mixed)" indeterminate />
+        <Checkbox label="도움말이 있다" helper="선택하면 알림을 받습니다." />
+        <Checkbox label="오류" error="약관에 동의해야 계속할 수 있습니다." />
+        <Checkbox label="disabled" disabled />
+        <Checkbox label="disabled + 선택됨" disabled defaultChecked />
+        <Checkbox label="라벨이 길어서 두 줄로 넘어가면 네모가 첫 줄에 붙어 있는지 본다. 가운데로 내려가면 안 된다." />
+      </div>
+
+      <h2>Checkbox — fieldset 묶음</h2>
+      <fieldset className="dev-fieldset">
+        <legend className="label-md">받을 알림</legend>
+        <div className="dev-stack">
+          <Checkbox label="이메일" defaultChecked />
+          <Checkbox label="문자" />
+          <Checkbox label="푸시" />
+        </div>
+      </fieldset>
 
       <h2>폼 한 줄 — control.* 공유 검증</h2>
       <div className="dev-inline">
