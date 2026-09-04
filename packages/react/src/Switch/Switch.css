@@ -1,0 +1,154 @@
+/* ============================================================
+   Switch — iNext Design System
+   값은 전부 토큰이다. 이 파일에 원시 값을 쓰지 않는다(npm run lint:hardcode).
+   명세는 COMPONENTS.md 8-8. 색 짝은 Checkbox(8-5)·Radio(8-6)와 같다 — 셋이 형제로 보여야 한다.
+   ============================================================ */
+
+.ds-switch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+/* 트랙과 라벨을 한 줄에. align-items 는 start 다 — 라벨이 두 줄이 되면
+   트랙이 첫 줄에 붙어야 한다. */
+.ds-switch__row {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--control-gap-md);
+}
+
+/* ── 진짜 input ──────────────────────────────────────────
+   숨기지 않는다. 트랙 위에 투명하게 겹친다 — display:none 은 보조기술에서도 사라진다.
+   트랙이 40×24 라 그 자체로 WCAG 2.5.8(24×24)을 넘는다: 여기서 넓힐 필요가 없다. */
+.ds-switch__input {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: var(--control-track-width);
+  block-size: var(--control-min-height-xs);
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.ds-switch__input:disabled { cursor: not-allowed; }
+
+/* ── 트랙 ────────────────────────────────────────────────
+   꺼짐 면이 **`fill.alternative` 다.** 처음엔 Chip 처럼 `fill.strong` 을 썼는데,
+   그러면 손잡이 테두리(`line.strong`)가 트랙 위에서 **라이트 2.80** 으로 3:1 에 미달한다.
+   `line.strong` 은 **페이지 4면** 기준으로 검증된 값이라 컴포넌트 면 위에서는 여유가 없다.
+   후보를 전부 재봤다 — `fill.strong` 2.80 · `fill.normal` 3.02 · `fill.alternative` 3.09.
+   3.02 는 여유가 0.02 뿐이라 쓰지 않는다(0-63).
+   트랙 자신의 테두리는 `line.strong` 이 그대로 지고 배경 대비 3.24 / 3.59 다. */
+.ds-switch__track {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  inline-size: var(--control-track-width);
+  block-size: var(--control-min-height-xs);
+  /* 라벨 첫 줄의 광학 중심에 맞춘다 */
+  margin-block-start: calc((var(--line-height-14-20) * var(--font-size-14) - var(--control-min-height-xs)) / 2);
+  padding: var(--spacing-2);
+  box-sizing: border-box;
+  border-radius: var(--radius-full);
+  background-color: var(--color-fill-alternative);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-line-strong);
+  transition: background-color var(--transition-control), box-shadow var(--transition-control);
+}
+
+/* ── 손잡이 ──────────────────────────────────────────────
+   **위치가 상태를 말한다.** 색만 바꾸면 KWCAG 5.4.1 에 걸린다.
+   이동 거리 16 = 트랙 40 − 손잡이 20 − 여백 2 − 여백 2. */
+.ds-switch__thumb {
+  inline-size: var(--control-box-size);
+  block-size: var(--control-box-size);
+  border-radius: var(--radius-circle);
+  background-color: var(--color-bg-normal);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-line-strong);
+  transition: transform var(--transition-control),
+              background-color var(--transition-control),
+              box-shadow var(--transition-control);
+}
+
+/* ── 켜짐 ────────────────────────────────────────────────
+   `:checked` 는 속성으로도 켜지므로 형제 선택자가 정상 동작한다 —
+   Checkbox 의 부분 선택이 겪은 문제(0-56)는 여기 없다. 스위치에는 mixed 가 없다. */
+.ds-switch__input:checked ~ .ds-switch__track {
+  background-color: var(--color-primary-normal);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-primary-normal);
+}
+.ds-switch__input:checked ~ .ds-switch__track .ds-switch__thumb {
+  background-color: var(--color-inverse-label);
+  box-shadow: none;
+  transform: translateX(calc(var(--control-track-width) - var(--control-box-size) - var(--spacing-2) * 2));
+}
+/* 오른쪽에서 왼쪽으로 읽는 문서에서는 손잡이도 반대로 간다 */
+[dir='rtl'] .ds-switch__input:checked ~ .ds-switch__track .ds-switch__thumb {
+  transform: translateX(calc((var(--control-track-width) - var(--control-box-size) - var(--spacing-2) * 2) * -1));
+}
+
+/* ── 라벨 ────────────────────────────────────────────────
+   <label for> 라 라벨 전체가 조작 영역이다. 네이티브 동작이다. */
+.ds-switch__label {
+  color: var(--color-label-normal);
+  cursor: pointer;
+  user-select: none;
+}
+.ds-switch__input:disabled ~ .ds-switch__label { cursor: not-allowed; }
+
+/* ── 상태 오버레이 ───────────────────────────────────────
+   면을 직접 바꾸지 않고 얹는다(0-14). */
+@media (hover: hover) {
+  .ds-switch__input:hover:not(:disabled) ~ .ds-switch__track {
+    background-color: var(--color-interaction-overlay-darken-hovered);
+  }
+  /* 켜진 트랙은 어두운 면이다 → lighten 으로 뒤집는다 */
+  .ds-switch__input:checked:hover:not(:disabled) ~ .ds-switch__track {
+    background-color: var(--color-primary-normal);
+    box-shadow: inset 0 0 0 var(--control-min-height-xs) var(--color-interaction-overlay-lighten-hovered);
+  }
+}
+
+/* ── 포커스 ──────────────────────────────────────────────
+   offset 을 둬 페이지 배경 위에 놓는다 — 트랙 위에 그리면 대비가 사라진다(0-46). */
+.ds-switch__input:focus-visible ~ .ds-switch__track {
+  outline: var(--focus-ring-width) solid var(--color-interaction-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ── 비활성 ──────────────────────────────────────────────
+   포커스도 활성화도 안 되는 진짜 inactive 라 WCAG 1.4.3 예외가 적용된다(0-43). */
+.ds-switch__input:disabled ~ .ds-switch__track {
+  background-color: var(--color-interaction-disable);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-interaction-disable);
+}
+.ds-switch__input:disabled ~ .ds-switch__track .ds-switch__thumb {
+  background-color: var(--color-bg-normal);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-line-alternative);
+}
+.ds-switch__input:disabled ~ .ds-switch__label { color: var(--color-label-disable); }
+
+/* ── 도움말 ──────────────────────────────────────────────
+   트랙 폭 + 간격만큼 들여 라벨과 왼쪽을 맞춘다. */
+.ds-switch__help {
+  margin: 0;
+  margin-inline-start: calc(var(--control-track-width) + var(--control-gap-md));
+  color: var(--color-label-alternative);
+}
+
+/* ── 사용자 환경 설정 (COMPONENTS.md 3-5) ───────────────── */
+@media (prefers-reduced-motion: reduce) {
+  /* 손잡이가 **순간이동** 한다 — 위치는 상태 정보라 없애지 않는다. 이동만 없앤다. */
+  .ds-switch__track, .ds-switch__thumb { transition-duration: var(--duration-0); }
+}
+@media (forced-colors: active) {
+  /* 고대비 모드에서 배경·그림자가 제거돼 트랙이 사라진다. 테두리로 형태를 남긴다. */
+  .ds-switch__track { border: var(--divider-1) solid ButtonBorder; }
+  .ds-switch__thumb { border: var(--divider-1) solid ButtonBorder; background-color: ButtonText; }
+  .ds-switch__input:checked ~ .ds-switch__track { background-color: Highlight; }
+  .ds-switch__input:focus-visible ~ .ds-switch__track { outline-color: Highlight; }
+  .ds-switch__input:disabled ~ .ds-switch__track { border-color: GrayText; }
+  .ds-switch__input:disabled ~ .ds-switch__label { color: GrayText; }
+}

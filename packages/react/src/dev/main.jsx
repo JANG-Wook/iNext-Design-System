@@ -26,6 +26,7 @@ import ChipGroup from '../Chip/ChipGroup.jsx'
 import ChipSelect from '../Chip/ChipSelect.jsx'
 import ChipFilter from '../Chip/ChipFilter.jsx'
 import ChipInput from '../Chip/ChipInput.jsx'
+import Switch from '../Switch/Switch.jsx'
 // 실제 아이콘으로 본다 — 원형 플레이스홀더는 획 두께·여백이 진짜와 달라
 // 정렬과 시각 무게를 잘못 판단하게 만든다(0-47).
 import { Download, ExternalLink, Settings, PanelLeftClose, Plus } from 'lucide-react'
@@ -286,6 +287,27 @@ function App() {
           </div>
         ))}
       </div>
+
+      {/* Switch — 켜짐/꺼짐을 색으로만 알리지 않는다. 손잡이가 실제로 움직이는지 잰다(5.4.1).
+          mixed 가 없다는 것이 Checkbox 와의 규정상 차이다(APG). */}
+      <h2>Switch</h2>
+      <div className="dev-stack">
+        <Switch label="알림 받기" />
+        <Switch label="켜짐" defaultChecked />
+        <Switch label="도움말이 있다" helper="끄면 중요 공지도 오지 않습니다." />
+        <Switch label="disabled" disabled />
+        <Switch label="disabled + 켜짐" disabled defaultChecked />
+        <Switch label="라벨이 길어서 두 줄로 넘어가면 트랙이 첫 줄에 붙어 있는지 본다. 가운데로 내려가면 안 된다." />
+      </div>
+
+      <h2>Switch — fieldset 묶음</h2>
+      <fieldset className="dev-fieldset">
+        <legend className="label-md">알림</legend>
+        <div className="dev-stack">
+          <Switch label="이메일" defaultChecked />
+          <Switch label="문자" />
+        </div>
+      </fieldset>
 
       <h2>폼 한 줄 — control.* 공유 검증</h2>
       <div className="dev-inline">

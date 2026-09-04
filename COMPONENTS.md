@@ -1213,3 +1213,110 @@ Filter 접근 이름에 값이 들어감(`"지역, 서울"`) · 누르면 `aria-
 **고치기 전에는 두 경우 다 `body` 로 떨어졌다.** 처음엔 호출자 몫으로 문서에 적었는데,
 실제로 눌러 보니 8-4 Search 에서 이미 해결한 문제를 그대로 다시 만든 것이었다 —
 컴포넌트가 처리하도록 바꿨다.
+
+### 8-8. Switch
+
+**APG 패턴: Switch** — 키보드·ARIA 는 원문을 받아 대조했다.
+
+```
+역할       네이티브 <input type="checkbox"> + role="switch"
+           **HTML 에 스위치 요소가 없다.** 그래서 체크박스에 역할만 바꿔 얹는다 —
+           APG: "For HTML input[type=checkbox], use the native checked attribute
+           instead of aria-checked"
+           div 에 role="switch" 를 붙이지 않는다. 네이티브가 Space 토글 ·
+           forced-colors · 폼 제출을 갖고 있다
+
+용도       **켜고 끄는 것이 즉시 반영되는 자리.** 알림 받기 · 다크 모드 · 자동 저장
+
+           Checkbox 와의 갈림길 — 둘이다 (하나는 규정, 하나는 우리 원칙)
+           ① **세 번째 상태가 필요하면 스위치가 아니다** (APG)
+              APG: "switches can only be used for binary input while checkboxes
+              and toggle buttons allow implementations the option of supporting
+              a third middle state."
+              부분 선택(mixed)이 필요하면 Checkbox 다 (8-5)
+           ② **되돌리는 방법이 다르다** (새로 정함 — 8-5 에서 같은 근거로 적었다)
+              스위치는 누르는 순간 반영되고 다시 눌러 되돌린다.
+              체크박스는 제출해야 반영되고 취소로 되돌린다.
+              **어느 쪽인지 모르면 사용자는 자기가 한 일이 먹혔는지 알 수 없다**
+
+           그 밖의 갈림길
+           여럿 중 하나        Radio (8-6)
+           필터에서 하나       Chip Select (8-7)
+           누르면 실행되는 것   Button (8-1) — 스위치는 상태이지 동작이 아니다
+
+           **"저장" 버튼과 함께 두지 않는다** — 즉시 반영인데 저장을 요구하면
+           둘 중 하나가 거짓말이다
+
+이름       <label for> ↔ <input id>. **id 는 생성 함수로 만든다** (KWCAG 8.1.1)
+           **켜짐/꺼짐을 라벨에 넣지 않는다** — "알림 켜짐" 이 아니라 "알림" 이다.
+           상태는 role="switch" + checked 가 보조기술에 전달한다. 라벨에도 넣으면
+           "알림 켜짐, 켜짐" 으로 두 번 읽힌다
+           묶음은 <fieldset> + <legend> (APG 가 group 역할도 허용한다)
+
+키보드     Space   상태를 바꾼다
+                   APG: "Space: When focus is on the switch, changes the state
+                   of the switch."
+           Enter   **APG 가 선택으로 둔다.** 네이티브 체크박스는 Enter 로 토글하지 않고
+                   폼을 제출한다. **우리는 네이티브 동작을 덮지 않는다** — 폼 안에서
+                   Enter 가 제출이라는 기대를 깨는 쪽이 더 나쁘다
+           Tab     항목마다 1회. Radio 와 다르다
+
+상태       off / on / disabled
+           **mixed 가 없다** — 있으면 Checkbox 를 써야 한다는 신호다
+           on/off 를 **색으로만 알리지 않는다** — 손잡이 위치가 함께 바뀐다 (KWCAG 5.4.1)
+           우선순위  disabled > 나머지
+
+조작영역   트랙 40×24 자체가 24 를 넘는다. 라벨까지 포함하면 더 넓다
+           (WCAG 2.5.8 · KWCAG 6.1.3)
+
+모양       트랙 가로 --control-track-width (40) · 세로 --control-min-height-xs (24)
+           손잡이 --control-box-size (20) · 안쪽 여백 --spacing-2 (2)
+           이동 거리 16 = 40 − 20 − 2 − 2. **전부 기존 눈금에 떨어진다**
+
+토큰       트랙 off   **fill.alternative** + 테두리 line.strong
+                      — fill.strong 이면 손잡이 테두리가 트랙 위에서 라이트 2.80 으로
+                        3:1 에 미달한다. line.strong 은 **페이지 4면** 기준으로 검증된
+                        값이라 컴포넌트 면 위에서는 여유가 없다 (0-63)
+           트랙 on    primary.normal
+           손잡이 off bg.normal + 테두리 line.strong
+           손잡이 on  inverse.label            (Checkbox·Radio 와 같은 짝)
+           비활성     interaction.disable + label.disable
+           포커스     focus-ring + interaction.focus  (offset 필수 — 0-46)
+           라벨       label-md (14)
+           **새 색 토큰 없이 닫힌다.** 새 치수 토큰은 trackWidth 하나뿐이다
+
+플랫폼     웹   <input type="checkbox" role="switch"> · <label for>
+           iOS  UISwitch 가 정확히 이것이다 — 커스텀 뷰를 만들지 않는다
+
+오용       x 세 번째 상태가 필요한데 스위치로 만든다 — Checkbox 다 (APG)
+           x 제출해야 반영되는 값을 스위치로 만든다 — Checkbox 다 (새로 정함)
+           x 스위치 옆에 "저장" 버튼을 둔다 — 즉시 반영과 모순된다
+           x 라벨에 "켜짐" 을 넣는다 — 보조기술이 상태를 두 번 읽는다
+           x 여럿 중 하나를 고르는 데 스위치를 여러 개 둔다 — Radio 다 (8-6)
+           x 누르면 무언가 실행되는 것을 스위치로 만든다 — Button 이다. 상태가 아니다
+
+금지       div + role="switch" 로 만들지 마라
+           Enter 를 가로채 토글하지 마라 — 폼 제출을 깬다
+           on/off 를 색으로만 표현하지 마라 — 손잡이가 움직여야 한다 (5.4.1)
+           id 를 손으로 짓지 마라 (8.1.1)
+
+미결       ① **크기 단계를 두지 않았다.** Checkbox 와 같은 이유다 — 수요가 확인되면 나눈다
+           ② **트랙 토큰이 Switch 전용이다.** Slider(P2-7)도 트랙을 갖지만 치수가 다를
+             것이다. 그때 티어로 나눌지 본다
+```
+
+**실측 (2026-09-04)**
+
+| | 라이트 | 다크 | 기준 |
+|---|---|---|---|
+| 꺼짐 트랙 테두리 | 3.24 | 3.59 | 3:1 (1.4.11) |
+| 꺼짐 손잡이 테두리 (트랙 위) | **3.09** | 3.43 | 3:1 |
+| 켜짐 트랙 | 13.39 | 16.11 | — |
+| 켜짐 손잡이 (트랙 위) | 12.50 | 16.89 | 3:1 |
+| 라벨 | 18.08 | 16.11 | 4.5:1 |
+
+**손잡이가 실제로 움직인다** — 꺼짐 `2px` → 켜짐 `18px`, 이동 **16px**. 색이 아니라
+위치가 상태를 말한다(KWCAG 5.4.1). 비활성이어도 켜짐이면 오른쪽에 있다.
+
+트랙 40×24 · 손잡이 20×20 · 조작 영역 40×24(2.5.8 통과) · `role="switch"` 전부 ·
+`aria-checked` 를 쓰지 않고 네이티브 `checked` 가 전달(APG) · `id` 중복 0.

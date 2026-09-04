@@ -497,6 +497,7 @@ export const control = {
     "lg": "24px"
   },
   "boxSize": "20px",
+  "trackWidth": "40px",
   "minInset": "1px",
   "minTarget": "24px"
 }

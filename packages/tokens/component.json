@@ -112,6 +112,11 @@
       "$value": "{spacing.20}",
       "$description": "선택 컨트롤의 네모·원 한 변 20px — Checkbox · Radio 가 공유한다. **`iconSize.20` 을 쓰지 않는다.** 값은 같지만 축이 다르다 — `iconSize` 는 SVG 래퍼 크기이고 이것은 컨트롤 그 자체의 상자다. 한쪽을 바꿀 때 다른 쪽이 따라 움직이면 안 된다(DECISIONS 0-55). **시각 크기이지 조작 영역이 아니다** — 조작 영역의 하한은 `minTarget`(24px)이고, 라벨까지 포함하면 실제로는 더 넓다. **티어를 두지 않았다** — 크기 단계 수요가 아직 확인되지 않았다(`label-xs` 의 `-strong` 을 두지 않은 것과 같은 원칙, 0-25). 필요해지면 그때 나눈다."
     },
+    "trackWidth": {
+      "$type": "dimension",
+      "$value": "{spacing.40}",
+      "$description": "손잡이가 오가는 트랙의 가로 40px — 지금은 Switch 하나가 쓴다. **세로와 손잡이는 새로 만들지 않았다** — 세로는 `minHeight.xs`(24), 손잡이는 `boxSize`(20)다. 이동 거리 16px 도 `spacing.16` 에 떨어진다: 40 − 20 − 2 − 2 = 16. **`minHeight.md`(40)를 쓰지 않는다.** 값은 같지만 그쪽은 세로 축이라, 컨트롤 높이를 바꾸면 스위치 가로가 따라 움직인다 — `iconSize.20` 을 `boxSize` 로 가르지 않았을 때와 같은 함정이다(0-55). **Slider(P2-7)도 트랙을 갖지만 치수가 다를 것이다** — 그때 티어로 나눌지 본다. 미리 나누면 추측이다."
+    },
     "minInset": {
       "$type": "dimension",
       "$value": "{spacing.1}",
