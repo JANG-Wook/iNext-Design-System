@@ -3684,8 +3684,7 @@
       "net.infobank.ds.foundation": [
         "Typography"
       ]
-    },
-    "$description": null
+    }
   },
   "control": {
     "$description": "컨트롤 치수 — **컴포넌트가 아니라 역할 단위**다. Button · Text Field · Search 가 같은 값을 공유해야 폼 한 줄에서 높이가 맞는다(`button.height` 로 지으면 Text Field 가 같은 값을 다시 정의한다). 전부 기존 primitive 별칭이며 **새 원시 값을 만들지 않았다.** 기본 단계는 `md` 다. 티어 이름을 쓰므로 빌드가 값 순서를 검사한다(DECISIONS 0-30).",
