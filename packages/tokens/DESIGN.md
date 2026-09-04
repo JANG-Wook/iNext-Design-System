@@ -7,7 +7,7 @@ source: primitive.json + semantic.light.json + semantic.dark.json + typography.j
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
 scope: 색·그림자 66 · 그 외 185 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
-usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 52개 토큰이 쓰이고 있다.
+usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 53개 토큰이 쓰이고 있다.
 typography:
   "base.display-lg":
     class: display-lg
@@ -269,11 +269,11 @@ color:
   label-neutral:
     light: rgba(46, 47, 50, 0.88)
     dark: rgba(193, 195, 199, 0.88)
-    usedBy: [Button, Search, TextArea, TextField]
+    usedBy: [Search, TextArea, TextField]
   label-alternative:
     light: rgba(55, 55, 58, 0.7)
     dark: rgba(173, 176, 181, 0.74)
-    usedBy: [Field, Search, TextArea, TextField]
+    usedBy: [Button, Field, Search, TextArea, TextField]
   label-assistive:
     light: rgba(55, 55, 58, 0.28)
     dark: rgba(173, 176, 181, 0.28)
@@ -344,7 +344,8 @@ color:
   interaction-inactive:
     light: "#989BA1"
     dark: "#595B61"
-    note: 비활성 컨트롤의 전경색 — 아이콘·테두리처럼 "지금 쓸 수 없음"을 색으로 알리는 자리. 글자에는 `label.disable` 을 쓴다. 비활성 요소라 대비 검사에서 제외된다(KWCAG 5.4.3 예외).
+    note: 비활성 컨트롤의 색 — 아이콘·테두리 같은 전경, 그리고 **채워진 버튼이 inactive 일 때의 면**. 면으로 쓰는 것은 채워진 variant 가 실루엣을 잃지 않게 하려는 것이고, 이 면 위에서 4.5:1 을 넘는 라벨은 `label.normal`(6.49/6.34) 하나뿐이다(0-43). 활성 primary 와 4.81/6.34 로 벌어져 상태가 명도로 읽힌다. 비활성 요소라 대비 검사에서 제외된다(KWCAG 5.4.3 예외).
+    usedBy: [Button]
   interaction-disable:
     light: "#F4F4F4"
     dark: "#2E2F32"

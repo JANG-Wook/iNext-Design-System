@@ -19,3 +19,13 @@ body {
 /* ds-allow: 같은 이유 — 폼 한 줄이 들어가는 폭 */
 .dev-inline { display: flex; gap: var(--spacing-12); align-items: flex-end; max-width: 520px; }
 .dev-grow   { flex: 1; }
+
+/* variant × 상태 전면표 — 열 폭을 맞춰야 세로로 비교가 된다.
+   폭은 눈금(최대 56)으로 표현할 수 없다. 버튼 하나가 들어가는 열이면 되고
+   컴포넌트 치수와는 무관하다. */
+.dev-head { color: var(--color-label-alternative); }
+/* ds-allow: 검증 페이지 열 폭 — 버튼 한 개가 들어가는 칸. 배포물이 아니다 */
+.dev-cell { display: inline-flex; min-width: 112px; }
+.dev-matrix { flex-wrap: nowrap; }
+/* ds-allow: 같은 이유 — variant 이름이 들어가는 칸 */
+.dev-key-wide { width: 76px; }

@@ -9,6 +9,12 @@ import TextArea from '../TextArea/TextArea.jsx'
 import Search from '../Search/Search.jsx'
 
 const VARIANTS = ['primary', 'secondary', 'outline', 'text', 'negative']
+const STATES = [
+  { key: '기본',     props: {} },
+  { key: 'inactive', props: { inactive: true } },
+  { key: 'disabled', props: { disabled: true } },
+  { key: 'loading',  props: { loading: true } },
+]
 const SIZES = ['sm', 'md', 'lg']
 const Dot = () => <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="currentColor"/></svg>
 
@@ -43,17 +49,23 @@ function App() {
         </div>
       ))}
 
-      <h2>상태</h2>
-      <div className="dev-row">
-        <Button label="기본" />
-        <Button label="inactive" inactive />
-        <Button label="disabled" disabled />
-        <Button label="loading" loading />
-        <Button variant="outline" label="inactive outline" inactive />
-        <Button variant="text" label="inactive text" inactive />
-        <Button variant="secondary" label="inactive secondary" inactive />
-        <Button variant="negative" label="inactive negative" inactive />
+      {/* variant × 상태 전면표 — 한 variant 가 상태를 넘어갈 때 모양이 어떻게
+          변하는지 가로로 읽는다. 세로로는 같은 상태끼리 구별되는지 본다. */}
+      <h2>variant × 상태</h2>
+      <div className="dev-row dev-matrix dev-head">
+        <code className="dev-key" />
+        {STATES.map(st => <code key={st.key} className="dev-cell">{st.key}</code>)}
       </div>
+      {VARIANTS.map(v => (
+        <div key={v} className="dev-row dev-matrix">
+          <code className="dev-key dev-key-wide">{v}</code>
+          {STATES.map(st => (
+            <span key={st.key} className="dev-cell">
+              <Button variant={v} label="레이블" {...st.props} />
+            </span>
+          ))}
+        </div>
+      ))}
 
       <h2>아이콘</h2>
       <div className="dev-row">
