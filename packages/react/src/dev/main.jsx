@@ -1,4 +1,16 @@
-/* 검증 전용 페이지 — 배포물이 아니다. 브라우저로 실측하려고 둔다. */
+/* 검증 전용 페이지 — 배포물이 아니다. 브라우저로 실측하려고 둔다.
+ *
+ * **이 페이지가 지켜야 할 것 셋.** 셋 다 실측이 거짓말한 사고에서 나왔다(0-49).
+ *   ① 페이지가 자기 배경을 칠한다 — 안 칠하면 라이트 토큰이 브라우저의 어두운
+ *      바탕 위에 얹혀 outline·text 가 사라진다 (0-33)
+ *   ② 테마는 스크립트로 바꾸지 않는다 — data-theme 을 JS 로 바꾸면 재계산 전 값을
+ *      읽는다. 브라우저의 colorScheme 을 바꾸고 새로고침한다 (0-34)
+ *   ③ 재는 대상을 눌리는 곳에 두지 않는다 — 칸이 줄면 라벨이 줄바꿈해 높이가
+ *      늘어난다. 컴포넌트 문제가 아닌데 컴포넌트를 의심하게 된다 (0-48)
+ *
+ * **대비·합성은 손으로 짜지 않는다.** `measure.js` 를 쓴다 — 즉석 코드가 네 번
+ * 틀렸고 그중 둘은 같은 실수였다. 콘솔에서는 `window.__ds` 로 쓴다.
+ */
 import { StrictMode, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import '../styles.css'
@@ -10,6 +22,10 @@ import Search from '../Search/Search.jsx'
 // 실제 아이콘으로 본다 — 원형 플레이스홀더는 획 두께·여백이 진짜와 달라
 // 정렬과 시각 무게를 잘못 판단하게 만든다(0-47).
 import { Download, ExternalLink, Settings, PanelLeftClose, Plus } from 'lucide-react'
+import * as measure from './measure.js'
+
+// 콘솔에서 바로 쓴다 — 즉석으로 합성·대비를 다시 짜지 않는다(0-49)
+if (typeof window !== 'undefined') window.__ds = measure
 
 const VARIANTS = ['primary', 'secondary', 'outline', 'text', 'negative']
 const STATES = [
@@ -43,10 +59,22 @@ function toggleTextSpacing() {
   document.head.appendChild(el)
 }
 
+/* 측정기를 믿을 수 있는지 먼저 본다. 여기가 빨간색이면 아래 숫자를 믿지 않는다. */
+function MeasureSelfCheck() {
+  const r = measure.selfCheck()
+  return (
+    <p className={`dev-selfcheck label-sm${r.ok ? '' : ' dev-selfcheck--fail'}`}>
+      측정기 자기검사 {r.ok ? `✔ ${r.results.length}건 통과` : `✘ 실패`}
+      {!r.ok && r.results.filter(x => !x.ok).map(x => ` · ${x.name}: ${x.got}`)}
+    </p>
+  )
+}
+
 function App() {
   const [bio, setBio] = useState('')
   return (
     <main className="dev-page">
+      <MeasureSelfCheck />
       <button onClick={() => {
         const r = document.documentElement
         r.dataset.theme = r.dataset.theme === 'dark' ? 'light' : 'dark'

@@ -31,3 +31,7 @@ body {
 .dev-matrix { flex-wrap: nowrap; overflow-x: auto; }
 /* ds-allow: 같은 이유 — variant 이름이 들어가는 칸 */
 .dev-key-wide { width: 76px; }
+
+/* 측정기 자기검사 — 실패하면 눈에 띄어야 한다. 통과면 조용히 있는다. */
+.dev-selfcheck { margin: 0 0 var(--spacing-16); color: var(--color-label-alternative); }
+.dev-selfcheck--fail { color: var(--color-status-negative); font-weight: var(--font-weight-bold); }
