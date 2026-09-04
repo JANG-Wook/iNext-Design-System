@@ -177,9 +177,25 @@ CSS 선언만 보고 템플릿 보간·`var()` 는 검사하지 않는다. 정�
 - WCAG 2.2 신설 — **AA**: 2.4.11 Focus Not Obscured · 2.5.7 Dragging Movements · 2.5.8 Target Size · 3.3.8 Accessible Authentication(Minimum) / **A**: 3.2.6 Consistent Help · 3.3.7 Redundant Entry. **AA 준수는 A 를 포함하므로 등급과 무관하게 전부 지킨다.**
 
 ## 완료 전 검증
-- 토큰을 수정했으면 "완료" 전에 `npm run build:tokens` 로 재생성한다.
+
+**커밋 전에 `npm run check` 를 돌린다. `build:tokens` 만으로는 부족하다.**
+
+```
+npm run check
+  build:tokens → deterministic → audit(소스) → audit(번들) → surfaces → hardcode → ci-parity
+```
+
+`build.mjs` 의 가드와 `audit.mjs` 는 **보는 것이 다르다** — 전자는 우리 규칙(별칭·티어·짝),
+후자는 **DTCG 스펙 준수**다. 빌드가 통과해도 스펙 위반이 남을 수 있다. 실제로 그래서
+커밋 다섯 개가 연속으로 CI 에서 빨갛게 나갔다(DECISIONS 0-61 · 0-62).
+
+**`npm run check` 는 CI 와 어긋나지 않는다** — `ci-parity.mjs` 가 워크플로의 실행 단계를
+전부 뽑아 대조하고, 하나라도 감당하지 않으면 선다.
+
+- 토큰을 수정했으면 "완료" 전에 `npm run build:tokens` 로 재생성하고 **`npm run check` 로 확인한다.**
 - 색을 바꿨으면 대비(AA)를 재검증한 뒤 결과를 보고한다. 통과 전엔 완료 선언 금지.
 - 사용자가 "끝/완료"라고 하기 전에 먼저 검증한다.
+- **돌리지 않은 검사를 "통과" 라고 말하지 않는다.**
 
 ## 이전 세션 이어받기
 - "완료됐다"는 요약을 그대로 믿지 않는다. 실제 JSON·생성물을 직접 열어 확인한다.

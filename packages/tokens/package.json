@@ -21,6 +21,6 @@
     "build:tokens": "node build.mjs && node build-design-md.mjs",
     "build:designmd": "node build-design-md.mjs",
     "lint:hardcode": "node checks/hardcode.mjs",
-    "check": "npm run build:tokens && node checks/audit.mjs && node checks/audit.mjs bundle && node checks/surfaces.mjs && npm run lint:hardcode"
+    "check": "npm run build:tokens && node checks/deterministic.mjs && node checks/audit.mjs && node checks/audit.mjs bundle && node checks/surfaces.mjs && npm run lint:hardcode && node checks/ci-parity.mjs"
   }
 }
