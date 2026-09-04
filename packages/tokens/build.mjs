@@ -360,6 +360,20 @@ function assertFoundationsAssigned(){
   if (unused.length) throw new Error(`아무 그룹도 쓰지 않는 파운데이션: ${unused.join(', ')}`)
   return { groups, foundations: FOUNDATIONS.length }
 }
+// ── 포커스 링 offset ──────────────────────────────────────────────
+// 링 색이 무채색이라(0-46) primary·negative 버튼 면과 라이트 1.35 · 다크 1.03~1.96 까지 붙는다.
+// `outline-offset` 이 링을 페이지 면 위로 밀어내는 것이 유일한 방어다 — 0 이 되는 순간
+// 그 버튼들의 포커스가 통째로 사라진다. 산문(4-3 · CLAUDE.md)만으로 막고 있던 것을 빌드로 옮긴다.
+function assertFocusRingOffset(){
+  const t = prim.focusRing && prim.focusRing.offset
+  if (!t) throw new Error('focusRing.offset 이 없다 — 링이 컴포넌트 면 위에 겹쳐 포커스가 사라진다(0-46)')
+  const v = deref(t).$value
+  if (!v || typeof v.value !== 'number' || v.value <= 0)
+    throw new Error(`focusRing.offset 은 0 보다 커야 한다(현재 ${JSON.stringify(v)}) — ` +
+      '링 색이 무채색이라 offset 이 없으면 primary·negative 버튼에서 포커스가 사라진다(0-46)')
+  return `${v.value}${v.unit}`
+}
+
 // ── 티어 스케일 순서 ──────────────────────────────────────────────
 // xs·sm·md·lg·xl 같은 티어 이름은 "값이 바뀌어도 이름이 유효하다"를 전제로 한다.
 // 그 전제가 성립하려면 최소한 값 순서가 이름 순서를 따라야 한다.
@@ -433,6 +447,7 @@ function assertRatioKeysMatchValues(){
 const ratioChecked = assertRatioKeysMatchValues()
 const tierScales = assertTierScalesOrdered()
 const fnd = assertFoundationsAssigned()
+const focusOffset = assertFocusRingOffset()
 // ── 자간 짝 ───────────────────────────────────────────────────────
 // 자간은 독립 축이 아니라 글자 크기의 종속 함수다(DECISIONS 2-2). 밴드 4개를 em 으로
 // 두던 시절에는 그 종속을 문서로만 말했고, 12px 토큰에 display 밴드를 물려도 빌드가 통과했다.
@@ -603,7 +618,7 @@ fs.writeFileSync(`${DIR}/tokens.js`, js)
 const nColor = (colorLines(L).match(/\n/g)||[]).length + 1
 const nPrim  = (primLines().match(/\n/g)||[]).length + 1
 console.log(`파운데이션 ${fnd.foundations}개 · 그룹 ${fnd.groups}개 배정 완료 · 티어 스케일 ${tierScales.length}개 순서 확인 · 종횡비 ${ratioChecked}개 키↔값 일치\n색 ${colorsChecked}건 components↔hex 일치 · 행간 ${lhPairsChecked}건 · 자간 ${lsPairsChecked}건 크기 짝 일치
-별칭 강제: semantic·typography·component 리프 전부 별칭 · 예외 ${aliasExempt}자리(shadow 기하)\ntokens.css: primitive ${nPrim}개 + 색 semantic ${nColor}개(×3 테마셀렉터)`)
+별칭 강제: semantic·typography·component 리프 전부 별칭 · 예외 ${aliasExempt}자리(shadow 기하)\n포커스 링 offset ${focusOffset} — 0 이면 빌드를 세운다(무채색 링이라 필수)\ntokens.css: primitive ${nPrim}개 + 색 semantic ${nColor}개(×3 테마셀렉터)`)
 console.log(`tokens.js : ${Object.keys(jsExports).length}개 export`)
 
 // ── 번들 — 테마별 단일 DTCG 문서 ───────────────────────────────────

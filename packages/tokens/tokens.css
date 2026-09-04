@@ -223,7 +223,7 @@ html, body, #root { margin: 0; padding: 0; }
   --color-fill-strong: rgba(113, 115, 121, 0.16);
   --color-interaction-inactive: #989BA1;
   --color-interaction-disable: #F4F4F4;
-  --color-interaction-focus: #1266E8;
+  --color-interaction-focus: #161617;
   --color-interaction-overlay-darken-hovered: rgba(0, 0, 0, 0.05);
   --color-interaction-overlay-darken-focused: rgba(0, 0, 0, 0.08);
   --color-interaction-overlay-darken-pressed: rgba(0, 0, 0, 0.12);
@@ -294,7 +294,7 @@ html, body, #root { margin: 0; padding: 0; }
   --color-fill-strong: rgba(113, 115, 121, 0.28);
   --color-interaction-inactive: #595B61;
   --color-interaction-disable: #2E2F32;
-  --color-interaction-focus: #4D8EFA;
+  --color-interaction-focus: #F4F4F4;
   --color-interaction-overlay-darken-hovered: rgba(0, 0, 0, 0.05);
   --color-interaction-overlay-darken-focused: rgba(0, 0, 0, 0.08);
   --color-interaction-overlay-darken-pressed: rgba(0, 0, 0, 0.12);
@@ -366,7 +366,7 @@ html, body, #root { margin: 0; padding: 0; }
     --color-fill-strong: rgba(113, 115, 121, 0.28);
     --color-interaction-inactive: #595B61;
     --color-interaction-disable: #2E2F32;
-    --color-interaction-focus: #4D8EFA;
+    --color-interaction-focus: #F4F4F4;
     --color-interaction-overlay-darken-hovered: rgba(0, 0, 0, 0.05);
     --color-interaction-overlay-darken-focused: rgba(0, 0, 0, 0.08);
     --color-interaction-overlay-darken-pressed: rgba(0, 0, 0, 0.12);

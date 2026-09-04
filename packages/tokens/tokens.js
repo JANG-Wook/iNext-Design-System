@@ -35,7 +35,7 @@ export const color = {
   "interaction": {
     "inactive": "#989BA1",
     "disable": "#F4F4F4",
-    "focus": "#1266E8",
+    "focus": "#161617",
     "overlay": {
       "darken": {
         "hovered": "rgba(0, 0, 0, 0.05)",
@@ -131,7 +131,7 @@ export const darkColor = {
   "interaction": {
     "inactive": "#595B61",
     "disable": "#2E2F32",
-    "focus": "#4D8EFA",
+    "focus": "#F4F4F4",
     "overlay": {
       "darken": {
         "hovered": "rgba(0, 0, 0, 0.05)",

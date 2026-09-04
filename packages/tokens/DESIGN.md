@@ -350,9 +350,9 @@ color:
     note: 비활성 컨트롤의 면색 — 눌리지 않는 버튼·입력 필드의 배경. 위에 올라가는 글자는 `label.disable` 이며, 둘 다 대비 검사 대상이 아니다.
     usedBy: [Button, Search, TextArea, TextField]
   interaction-focus:
-    light: "#1266E8"
-    dark: "#4D8EFA"
-    note: 키보드 포커스 링 색. KWCAG 6.1.2(초점은 시각적으로 구별) · WCAG 2.4.7 대응. 배경 대비 3:1 이상을 유지한다.
+    light: "#161617"
+    dark: "#F4F4F4"
+    note: 키보드 포커스 링 색. KWCAG 6.1.2(초점은 시각적으로 구별) · WCAG 2.4.7 대응. **무채색이다** — 우리 팔레트는 명도로 정규화돼 있어 색조를 바꿔도 대비가 같고, 그래서 색조 선택은 `어느 색조가 비어 있나` 라는 배정 문제가 된다. 무채색은 그 문제를 아예 피한다. **primary 가 바뀌어도 링은 그대로 쓸 수 있다**(0-46). 4개 면 최소 대비 라이트 16.89 · 다크 14.60 으로 계열 중 가장 또렷하다. **대가는 `focusRing.offset` 이 필수가 된다는 것** — primary 버튼과 라이트 1.35 · 다크 1.03, 다크 negative 와 1.96 이라 링이 컴포넌트 면 위에 겹치면 사라진다.
     usedBy: [Button, Search, TextArea, TextField]
   interaction-overlay-darken-hovered:
     light: rgba(0, 0, 0, 0.05)
