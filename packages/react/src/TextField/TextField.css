@@ -10,6 +10,8 @@
   /* height 가 아니라 min-height 다 — 1.4.12 (Button 과 같은 이유) */
   min-block-size: var(--control-min-height-md);
   padding-inline: var(--control-padding-inline-md);
+  /* 세로는 UA 기본값(input 은 1px)이 남아 있었다 — KWCAG 6.1.3 (0-48) */
+  padding-block: var(--control-min-inset);
   border-radius: var(--control-radius-md);
   /* 테두리가 입력을 식별하는 시각 정보라 WCAG 1.4.11(3:1) 대상이다.
      line.* 계열은 전부 3:1 에 못 미쳐(최고 1.97) label.alternative 를 쓴다.

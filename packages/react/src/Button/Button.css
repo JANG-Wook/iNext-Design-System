@@ -22,6 +22,8 @@
      글자를 자르고 WCAG 1.4.12 를 깬다. */
   min-height: var(--control-min-height-md);
   padding-inline: var(--control-padding-inline-md);
+  /* 세로는 UA 기본값(button 은 1px)이 남아 있었다. 우리 값으로 명시한다 — KWCAG 6.1.3 (0-48) */
+  padding-block: var(--control-min-inset);
   gap: var(--control-gap-md);
   border-radius: var(--control-radius-md);
 

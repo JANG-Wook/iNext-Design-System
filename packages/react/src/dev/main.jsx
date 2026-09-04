@@ -7,6 +7,9 @@ import Button from '../Button/Button.jsx'
 import TextField from '../TextField/TextField.jsx'
 import TextArea from '../TextArea/TextArea.jsx'
 import Search from '../Search/Search.jsx'
+// 실제 아이콘으로 본다 — 원형 플레이스홀더는 획 두께·여백이 진짜와 달라
+// 정렬과 시각 무게를 잘못 판단하게 만든다(0-47).
+import { Download, ExternalLink, Settings, PanelLeftClose, Plus } from 'lucide-react'
 
 const VARIANTS = ['primary', 'secondary', 'outline', 'text', 'negative']
 const STATES = [
@@ -15,7 +18,16 @@ const STATES = [
   { key: 'loading',  props: { loading: true } },
 ]
 const SIZES = ['sm', 'md', 'lg']
-const Dot = () => <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="currentColor"/></svg>
+// 아이콘 버튼 5종. 다섯 다 이미 있던 조합이고 이름만 붙였다 — 새 prop 은 없다(0-47).
+// 아이콘은 각 종류의 실제 용도에 맞춰 골랐다. 뒤 아이콘이 ExternalLink 인 것은
+// 그 자리가 KWCAG 7.2.1(새 창 예고) 때문에 남아 있기 때문이다.
+const ICON_KINDS = [
+  { key: '앞 아이콘',    label: '다운로드', props: { leadingIcon: <Download /> } },
+  { key: '뒤 아이콘',    label: '새 창에서 열기', props: { trailingIcon: <ExternalLink /> } },
+  { key: '아이콘만 면O',  label: '설정',    props: { iconOnly: true, leadingIcon: <Settings /> } },
+  { key: '아이콘만 면X',  label: '메뉴 접기', props: { iconOnly: true, leadingIcon: <PanelLeftClose />, variant: 'text' } },
+  { key: '플로팅',       label: '추가',    props: { iconOnly: true, circle: true, leadingIcon: <Plus /> } },
+]
 
 /* WCAG 1.4.12 는 사용자가 아래 값을 적용해도 콘텐츠가 잘리지 않을 것을 요구한다.
    실제 검사는 사용자 스타일시트를 !important 로 얹어 확인하므로 같은 방식으로 만든다. */
@@ -66,14 +78,23 @@ function App() {
         </div>
       ))}
 
-      <h2>아이콘</h2>
-      <div className="dev-row">
-        <Button label="앞 아이콘" leadingIcon={<Dot />} />
-        <Button label="뒤 아이콘" trailingIcon={<Dot />} />
-        <Button iconOnly label="아이콘 전용" leadingIcon={<Dot />} />
-        <Button iconOnly circle label="원형" leadingIcon={<Dot />} size="lg" />
-        <Button iconOnly label="작은 아이콘" leadingIcon={<Dot />} size="sm" />
+      {/* 아이콘 버튼 5종 × 3크기 — 가로로 크기가 커지는지, 세로로 종류가 구별되는지 본다.
+          정사각·조작영역·아이콘 크기를 여기서 실측한다(0-47). */}
+      <h2>아이콘 버튼 5종 × 크기</h2>
+      <div className="dev-row dev-matrix dev-head">
+        <code className="dev-key dev-key-wide" />
+        {SIZES.map(s => <code key={s} className="dev-cell">{s}</code>)}
       </div>
+      {ICON_KINDS.map(k => (
+        <div key={k.key} className="dev-row dev-matrix">
+          <code className="dev-key dev-key-wide">{k.key}</code>
+          {SIZES.map(s => (
+            <span key={s} className="dev-cell">
+              <Button size={s} label={k.label} {...k.props} />
+            </span>
+          ))}
+        </div>
+      ))}
 
       <h2>Text Field</h2>
       <div className="dev-stack">

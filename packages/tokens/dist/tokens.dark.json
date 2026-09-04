@@ -3664,6 +3664,11 @@
         "$description": "24px. `minHeight.lg` 와 짝이다. 48px 컨트롤용."
       }
     },
+    "minInset": {
+      "$type": "dimension",
+      "$value": "{spacing.1}",
+      "$description": "컨트롤 테두리 안쪽 최소 여백 1px — **KWCAG 6.1.3 (KR delta)**. 브라우저 UA 가 `button {padding: 1px 6px}` · `input {padding: 1px 2px}` 로 우연히 이 값을 주고 있었는데, 우리가 `padding-inline` 만 덮어 **세로는 UA 값이 남아 있었다**(0-48). 우연한 만족은 브라우저가 바뀌면 사라진다. `padding-block` 을 이 토큰으로 명시해 **의도해서** 만족시킨다. 이보다 큰 세로 여백을 이미 갖는 컨트롤(Text Area 10px)은 그대로 두면 된다 — **하한이다**. **주의: 6.1.3 은 그 여백이 포인터 조작에 반응하지 않을 것도 요구하는데, padding 만으로는 그 부분이 충족되지 않는다**(미결 25)."
+    },
     "minTarget": {
       "$type": "dimension",
       "$value": "{spacing.24}",

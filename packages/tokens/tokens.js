@@ -482,6 +482,7 @@ export const control = {
     "md": "20px",
     "lg": "24px"
   },
+  "minInset": "1px",
   "minTarget": "24px"
 }
 

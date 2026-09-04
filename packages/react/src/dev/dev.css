@@ -24,8 +24,10 @@ body {
    폭은 눈금(최대 56)으로 표현할 수 없다. 버튼 하나가 들어가는 열이면 되고
    컴포넌트 치수와는 무관하다. */
 .dev-head { color: var(--color-label-alternative); }
+/* 칸이 줄어들면 긴 라벨이 줄바꿈해 버튼 높이가 늘어난다 — 컴포넌트 문제가 아닌데
+   실측이 거짓말을 한다. 칸을 줄이지 말고 행을 넘치게 둔다. */
 /* ds-allow: 검증 페이지 열 폭 — 버튼 한 개가 들어가는 칸. 배포물이 아니다 */
-.dev-cell { display: inline-flex; min-width: 112px; }
-.dev-matrix { flex-wrap: nowrap; }
+.dev-cell { display: inline-flex; flex: none; min-width: 112px; }
+.dev-matrix { flex-wrap: nowrap; overflow-x: auto; }
 /* ds-allow: 같은 이유 — variant 이름이 들어가는 칸 */
 .dev-key-wide { width: 76px; }

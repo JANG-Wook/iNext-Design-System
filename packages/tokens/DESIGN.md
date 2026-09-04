@@ -6,8 +6,8 @@ spec: DTCG 2025.10 (Format · Color Module, Final Community Group Report)
 source: primitive.json + semantic.light.json + semantic.dark.json + typography.json (packages/tokens)
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
-scope: 색·그림자 66 · 그 외 185 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
-usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 51개 토큰이 쓰이고 있다.
+scope: 색·그림자 66 · 그 외 186 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
+usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 52개 토큰이 쓰이고 있다.
 typography:
   "base.display-lg":
     class: display-lg
@@ -1058,6 +1058,10 @@ control:
     value: "24px"
     note: "24px. `minHeight.lg` 와 짝이다. 48px 컨트롤용."
     usedBy: [Button]
+  minInset:
+    value: "1px"
+    note: "컨트롤 테두리 안쪽 최소 여백 1px — **KWCAG 6.1.3 (KR delta)**. 브라우저 UA 가 `button {padding: 1px 6px}` · `input {padding: 1px 2px}` 로 우연히 이 값을 주고 있었는데, 우리가 `padding-inline` 만 덮어 **세로는 UA 값이 남아 있었다**(0-48). 우연한 만족은 브라우저가 바뀌면 사라진다. `padding-block` 을 이 토큰으로 명시해 **의도해서** 만족시킨다. 이보다 큰 세로 여백을 이미 갖는 컨트롤(Text Area 10px)은 그대로 두면 된다 — **하한이다**. **주의: 6.1.3 은 그 여백이 포인터 조작에 반응하지 않을 것도 요구하는데, padding 만으로는 그 부분이 충족되지 않는다**(미결 25)."
+    usedBy: [Button, Search, TextField]
   minTarget:
     value: "24px"
     note: "조작 영역 하한 24px — WCAG 2.5.8. **KWCAG 6.1.3(대각 6.0mm)을 포함한다**: CSS 기준 픽셀(1px=1/96in)에서 24×24 의 대각은 8.98mm 이고, 6.0mm 대각을 만족하는 최소 정사각은 16.04px 다. **24 만 지키면 두 기준이 함께 닫힌다**(DECISIONS 0-30). 시각 크기가 이보다 작은 컨트롤은 히트박스를 이 값까지 넓힌다."
