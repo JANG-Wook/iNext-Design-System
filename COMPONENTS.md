@@ -978,3 +978,107 @@ Enter      onSearch 를 부른다. 폼 안이면 폼 제출이 우선이다
 조작 영역 11개 전부 **24×24**(24 미만 0건) · 네모 20×20 · 두 중심 어긋남 0 ·
 `id` 중복 0 · `<label for>` 미연결 0 · 도움말·오류가 `aria-describedby` 로 연결됨 ·
 오류 행만 `aria-invalid="true"` · 두 줄 라벨에서 네모가 첫 줄에 붙음.
+
+### 8-6. Radio
+
+**APG 패턴: Radio Group** — 키보드·ARIA 는 원문을 받아 대조했다.
+
+**8-5 Checkbox 와 같은 규약을 따른다** — 네이티브를 쓰고, `id` 는 생성 함수로 만들며,
+네모의 시각 크기와 조작 영역을 분리한다. **다른 점만 적는다.**
+
+```
+역할       네이티브 <input type="radio">. **같은 name 을 공유한다**
+           묶음은 <fieldset> + <legend> — legend 가 묶음의 접근 이름이 된다
+           div 에 role="radiogroup" / role="radio" 를 붙이지 않는다 —
+           네이티브가 **화살표 이동 · roving tabindex · Space 를 전부 갖고 있다**
+
+용도       **여럿 중 하나만 고른다.** 새로 고르면 이전 선택이 풀린다
+
+           갈림길
+           여러 개를 켠다       Checkbox (8-5)
+           고르는 대상이 카드    Select Button (8-8) — 동작은 이것과 같고 껍데기만 다르다
+           필터에서 하나        Chip Select (8-7)
+           선택지가 많다        Dropdown (P1-5) (새로 정함)
+                              — 이유: 라디오의 값은 선택지를 **전부 펼쳐 보여주는 것**이다.
+                                화면에 다 못 펼칠 만큼 많으면 그 값이 이미 사라졌고,
+                                자리만 먹는다
+
+           **선택을 비울 수 있어야 하면 라디오가 아니다** — 사용자는 한 번 고른 라디오를
+           네이티브 조작으로 되돌릴 수 없다. "선택 안 함" 이 필요하면 **그것도 선택지로 넣는다**
+
+이름       묶음  <legend>       · 항목  <label for> ↔ <input id>
+           name 은 묶음이 하나로 준다 — **name 이 다르면 화살표 이동이 동작하지 않는다.**
+           라디오는 혼자 쓸 수 없다: 묶음 컴포넌트가 name 을 소유한다
+
+키보드     **전부 네이티브가 준다. 우리가 만들지 않는다.**
+           Tab     묶음 전체가 **탭 정지 1개.** 체크박스(항목마다 1개)와 가장 다른 점이다
+                   APG: "If a radio button is checked, focus is set on the checked
+                   button. If none of the radio buttons are checked, focus is set on
+                   the first radio button in the group."
+           Space   "Checks the focused radio button if it is not already checked."
+           ↓ · →   "Move focus to the next radio button in the group, uncheck the
+                   previously focused button, and check the newly focused button.
+                   If focus is on the last button, focus moves to the first button."
+           ↑ · ←   같은 규칙, 반대 방향
+           **이동과 선택이 함께 일어난다** — 화살표로 훑기만 할 수 없다
+
+상태       unchecked / checked / disabled / error
+           **mixed 가 없다** — 부분 선택이라는 개념이 성립하지 않는다
+           error   묶음 단위다. fieldset 에 aria-describedby 로 붙인다
+                   — "하나를 고르세요" 는 항목이 아니라 묶음의 문제다
+           우선순위  disabled > error > 나머지
+
+모양       네모가 아니라 **원**이다 — radius.circle
+           선택 표시는 체크가 아니라 **가운데 점**이다
+           면·점의 색은 Checkbox 와 같게 쓴다 — 둘이 형제로 보여야 한다
+
+토큰       원          --control-box-size (20px) + --radius-circle   ← Checkbox 와 공유
+           나머지      Checkbox 와 동일 (line.strong · primary.normal · inverse.label ·
+                      interaction.disable · focus-ring · label-md · control.gap)
+           **새 토큰 없이 닫힌다**
+
+플랫폼     웹   <input type="radio"> · fieldset/legend · 공유 name
+           iOS  UISegmentedControl 이 아니다 — 세로 목록이면 테이블 셀 +
+                accessibilityTraits.selected 로 만든다
+
+오용       x 여러 개를 고를 수 있는 자리에 쓴다 — Checkbox 다 (8-5)
+           x 선택을 비울 수 있어야 하는데 라디오로 만든다 — 되돌릴 수 없다.
+             "선택 안 함" 을 선택지로 넣는다
+           x 선택지가 화면에 다 안 들어가는데 라디오로 만든다 — Dropdown 이다 (새로 정함)
+           x 항목마다 name 을 다르게 준다 — 화살표 이동이 죽고 여러 개가 동시에 켜진다
+           x 오류를 항목에 건다 — 묶음의 문제다
+
+금지       div + role="radio" 로 만들지 마라 — 화살표 이동을 직접 구현하게 된다
+           fieldset 없이 라디오만 나열하지 마라 — 묶음에 이름이 없어진다
+           화살표 키를 가로채지 마라 — 네이티브 동작을 덮어쓴다
+           id 를 손으로 짓지 마라 (8.1.1)
+
+미결       ① **항목별 설명(aria-describedby)을 넣지 않았다.** 지금은 묶음 단위 도움말·오류만
+             있다. 항목마다 부연이 필요한 자리는 Select Button(8-8)이 먼저 만난다
+```
+
+**실측 (2026-09-04)**
+
+APG 키보드 5종을 **실제 키 입력으로** 확인했다. 스크립트로 `focus()` 를 준 것이 아니라
+브라우저에 클릭·키를 넣어 네이티브 동작을 그대로 봤다.
+
+| 확인한 것 | 결과 |
+|---|---|
+| Tab 진입 — 체크된 항목으로 | 3번째를 선택해 두고 Tab → `pickup` 에 포커스 ✔ |
+| ↓ 이동 + 선택 동시 | `normal → fast → pickup`, 포커스와 선택이 항상 같음 ✔ |
+| 마지막에서 ↓ | 첫 항목으로 감쌈 ✔ |
+| 첫 항목에서 ↑ | 마지막으로 감쌈 ✔ |
+| → 도 ↓ 와 같게 | 같은 방향으로 이동 ✔ |
+| Tab 이탈 | **한 번에** 묶음 밖으로 ✔ (체크박스와 다른 지점) |
+
+| | 라이트 | 다크 | 기준 |
+|---|---|---|---|
+| 미선택 테두리 | 3.24 | 3.59 | 3:1 (1.4.11) |
+| 오류 테두리 | 5.10 | 8.01 | 3:1 |
+| 선택 면 | 13.39 | 16.11 | — |
+| 선택 점 | 12.50 | 16.89 | 3:1 (비텍스트) |
+| 라벨 · legend | 18.08 | 16.11 | 4.5:1 |
+
+묶음 6개 전부 `<fieldset>` · 항목 13개 조작 영역 **24×24**(24 미만 0건) · 원 20×20 ·
+묶음 안 `name` 공유 · 묶음끼리 `name` 중복 0 · `id` 중복 0 · `<label for>` 미연결 0 ·
+도움말·오류가 fieldset 의 `aria-describedby` 로 연결됨.

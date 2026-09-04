@@ -20,6 +20,8 @@ import TextField from '../TextField/TextField.jsx'
 import TextArea from '../TextArea/TextArea.jsx'
 import Search from '../Search/Search.jsx'
 import Checkbox from '../Checkbox/Checkbox.jsx'
+import Radio from '../Radio/Radio.jsx'
+import RadioGroup from '../Radio/RadioGroup.jsx'
 // 실제 아이콘으로 본다 — 원형 플레이스홀더는 획 두께·여백이 진짜와 달라
 // 정렬과 시각 무게를 잘못 판단하게 만든다(0-47).
 import { Download, ExternalLink, Settings, PanelLeftClose, Plus } from 'lucide-react'
@@ -181,6 +183,42 @@ function App() {
           <Checkbox label="푸시" />
         </div>
       </fieldset>
+
+      {/* Radio — 체크박스와 가장 다른 것은 **탭 정지가 묶음당 1개**라는 점이다.
+          화살표로 이동하면 선택도 함께 옮겨간다(APG). 둘 다 실측한다. */}
+      <h2>Radio</h2>
+      <div className="dev-stack">
+        <RadioGroup label="배송 방법" defaultValue="normal">
+          <Radio value="normal" label="일반 배송" />
+          <Radio value="fast" label="빠른 배송" />
+          <Radio value="pickup" label="매장 수령" />
+        </RadioGroup>
+
+        <RadioGroup label="도움말이 있다" helper="나중에 바꿀 수 있습니다." defaultValue="a">
+          <Radio value="a" label="선택 A" />
+          <Radio value="b" label="선택 B" />
+        </RadioGroup>
+
+        <RadioGroup label="오류" error="하나를 선택해야 합니다.">
+          <Radio value="a" label="선택 A" />
+          <Radio value="b" label="선택 B" />
+        </RadioGroup>
+
+        <RadioGroup label="항목 하나만 비활성" defaultValue="a">
+          <Radio value="a" label="고를 수 있다" />
+          <Radio value="b" label="이건 못 고른다" disabled />
+        </RadioGroup>
+
+        <RadioGroup label="묶음 전체 비활성" defaultValue="a" disabled>
+          <Radio value="a" label="선택 A" />
+          <Radio value="b" label="선택 B" />
+        </RadioGroup>
+
+        <RadioGroup label="긴 라벨">
+          <Radio value="a" label="라벨이 길어서 두 줄로 넘어가면 원이 첫 줄에 붙어 있는지 본다. 가운데로 내려가면 안 된다." />
+          <Radio value="b" label="짧은 것" />
+        </RadioGroup>
+      </div>
 
       <h2>폼 한 줄 — control.* 공유 검증</h2>
       <div className="dev-inline">

@@ -1,0 +1,148 @@
+/* ============================================================
+   Radio · RadioGroup — iNext Design System
+   값은 전부 토큰이다. 이 파일에 원시 값을 쓰지 않는다(npm run lint:hardcode).
+   명세는 COMPONENTS.md 8-6. Checkbox(8-5)와 같은 색·크기를 쓴다 — 둘이 형제로 보여야 한다.
+   ============================================================ */
+
+/* ── 묶음 ────────────────────────────────────────────────
+   <fieldset> 은 UA 기본 테두리·여백을 갖는다. 우리 값으로 덮는다. */
+.ds-radiogroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-inline-size: 0;   /* fieldset 의 UA 기본값이 flex/grid 안에서 줄어들지 않게 한다 */
+}
+.ds-radiogroup__legend {
+  padding: 0;
+  color: var(--color-label-normal);
+}
+.ds-radiogroup__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+.ds-radiogroup__help,
+.ds-radiogroup__error { margin: 0; }
+.ds-radiogroup__help { color: var(--color-label-alternative); }
+.ds-radiogroup__error { color: var(--color-status-negative); }
+
+/* ── 항목 ────────────────────────────────────────────────
+   align-items 는 start 다 — 라벨이 두 줄이 되면 원이 첫 줄에 붙어야 한다. */
+.ds-radio {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--control-gap-md);
+}
+
+/* ── 진짜 input ──────────────────────────────────────────
+   숨기지 않는다. 원 위에 투명하게 겹쳐 두고 **조작 영역을 여기서 만든다.**
+   원은 20px 이라 그대로 두면 WCAG 2.5.8(24×24)에 미달한다. */
+.ds-radio__input {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: var(--control-min-target);
+  block-size: var(--control-min-target);
+  margin: 0;
+  /* 원(20)과 중심을 맞춘다 */
+  transform: translate(calc(var(--control-box-size) / 2 - var(--control-min-target) / 2),
+                       calc(var(--control-box-size) / 2 - var(--control-min-target) / 2));
+  opacity: 0;
+  cursor: pointer;
+}
+.ds-radio__input:disabled { cursor: not-allowed; }
+
+/* ── 원 ──────────────────────────────────────────────────
+   Checkbox 의 네모와 같은 크기·색이고 모서리만 원이다. */
+.ds-radio__circle {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--control-box-size);
+  block-size: var(--control-box-size);
+  /* 라벨 첫 줄의 광학 중심에 맞춘다 */
+  margin-block-start: calc((var(--line-height-14-20) * var(--font-size-14) - var(--control-box-size)) / 2);
+  border-radius: var(--radius-circle);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-line-strong);
+  background-color: transparent;
+  color: transparent;
+  transition: background-color var(--transition-control), box-shadow var(--transition-control);
+}
+.ds-radio__mark { inline-size: 100%; block-size: 100%; display: block; }
+.ds-radio__dot { opacity: 0; }
+
+/* ── 선택 ────────────────────────────────────────────────
+   `:checked` 는 속성으로도 켜지므로 형제 선택자가 정상 동작한다.
+   Checkbox 의 부분 선택이 겪은 문제(0-56)는 여기 없다 — 라디오에는 mixed 가 없다. */
+.ds-radio__input:checked ~ .ds-radio__circle {
+  background-color: var(--color-primary-normal);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-primary-normal);
+  color: var(--color-inverse-label);
+}
+.ds-radio__input:checked ~ .ds-radio__circle .ds-radio__dot { opacity: 1; }
+
+/* ── 라벨 ────────────────────────────────────────────────
+   <label for> 라 라벨 전체가 조작 영역이다. 네이티브 동작이다. */
+.ds-radio__label {
+  color: var(--color-label-normal);
+  cursor: pointer;
+  user-select: none;
+}
+.ds-radio__input:disabled ~ .ds-radio__label { cursor: not-allowed; }
+
+/* ── 오류 ────────────────────────────────────────────────
+   묶음 단위다. 색만 바꾸지 않는다 — 아래 오류 문구가 함께 뜬다(KWCAG 5.4.1). */
+.ds-radio__input[aria-invalid='true'] ~ .ds-radio__circle {
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-status-negative);
+}
+
+/* ── 상태 오버레이 ───────────────────────────────────────
+   면을 직접 바꾸지 않고 얹는다. 밝은 면 위라 darken 이다(0-14). */
+@media (hover: hover) {
+  .ds-radio__input:hover:not(:disabled) ~ .ds-radio__circle {
+    background-color: var(--color-interaction-overlay-darken-hovered);
+  }
+  .ds-radio__input:checked:hover:not(:disabled) ~ .ds-radio__circle {
+    /* 선택된 원은 어두운 면이다 → lighten 으로 뒤집는다 */
+    background-color: var(--color-primary-normal);
+    box-shadow: inset 0 0 0 var(--control-box-size) var(--color-interaction-overlay-lighten-hovered);
+  }
+}
+
+/* ── 포커스 ──────────────────────────────────────────────
+   링은 원에 그리되 offset 을 둬 페이지 배경 위에 놓는다(0-46). */
+.ds-radio__input:focus-visible ~ .ds-radio__circle {
+  outline: var(--focus-ring-width) solid var(--color-interaction-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ── 비활성 ──────────────────────────────────────────────
+   포커스도 활성화도 안 되는 진짜 inactive 라 WCAG 1.4.3 예외가 적용된다(0-43). */
+.ds-radio__input:disabled ~ .ds-radio__circle {
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-line-alternative);
+  background-color: var(--color-interaction-disable);
+}
+.ds-radio__input:disabled:checked ~ .ds-radio__circle {
+  background-color: var(--color-interaction-disable);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-interaction-disable);
+  color: var(--color-label-disable);
+}
+.ds-radio__input:disabled ~ .ds-radio__label { color: var(--color-label-disable); }
+
+/* ── 사용자 환경 설정 (COMPONENTS.md 3-5) ───────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ds-radio__circle { transition-duration: var(--duration-0); }
+}
+@media (forced-colors: active) {
+  /* 고대비 모드에서 배경·그림자가 제거돼 원이 사라진다. 테두리로 형태를 남긴다. */
+  .ds-radio__circle { border: var(--divider-1) solid ButtonBorder; }
+  .ds-radio__input:checked ~ .ds-radio__circle { background-color: Highlight; color: HighlightText; }
+  .ds-radio__input:focus-visible ~ .ds-radio__circle { outline-color: Highlight; }
+  .ds-radio__input:disabled ~ .ds-radio__circle { border-color: GrayText; }
+  .ds-radio__input:disabled ~ .ds-radio__label { color: GrayText; }
+}
