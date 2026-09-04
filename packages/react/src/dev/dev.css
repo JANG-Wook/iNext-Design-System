@@ -44,3 +44,13 @@ body {
   margin: 0;
 }
 .dev-fieldset > legend { padding-inline: var(--spacing-6); }
+
+/* ── 칩 라벨 12px 비교 (임시) ─────────────────────────────
+   8-7 미결 ②를 눈으로 정하려고 둔다. **정해지면 이 블록과 검증 페이지의 비교 절을 지운다.**
+   컴포넌트에서는 타이포를 낱개로 조합하지 않는다(narrative/04-typography.md) —
+   여기는 검증 페이지이고 한쪽을 곧 버릴 임시 비교라 예외로 둔다. */
+.dev-chip12 .ds-chip__label {
+  font-size: var(--font-size-12);
+  line-height: var(--line-height-12-16);
+  letter-spacing: var(--letter-spacing-12);
+}

@@ -1,0 +1,192 @@
+/* ============================================================
+   Chip — iNext Design System
+   값은 전부 토큰이다. 이 파일에 원시 값을 쓰지 않는다(npm run lint:hardcode).
+   명세는 COMPONENTS.md 8-7.
+
+   **셋이 한 파일을 쓰지만 역할은 셋이다** — Select(라디오) · Filter(버튼) ·
+   Input(버튼, 또는 컨테이너 + 버튼 둘). 공유하는 것은 알약 모양과 색뿐이다.
+   ============================================================ */
+
+/* ── 공통 알약 ───────────────────────────────────────────
+   높이·좌우 여백은 Button sm 과 같은 control.* 를 쓴다 — 필터 줄에서 버튼과
+   나란히 설 때 높이가 어긋나면 안 된다. */
+.ds-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  /* height 가 아니라 min-height 다 — 고정 높이는 행간을 키운 사용자에게 글자를 자른다 */
+  min-block-size: var(--control-min-height-sm);
+  padding-inline: var(--control-padding-inline-sm);
+  padding-block: var(--control-min-inset);
+  gap: var(--control-gap-sm);
+  border-radius: var(--radius-full);
+  border: 0;
+  background-color: var(--color-fill-alternative);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-line-strong);
+  color: var(--color-label-normal);
+  font-family: inherit;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: background-color var(--transition-control), box-shadow var(--transition-control);
+}
+.ds-chip__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--control-icon-size-sm);
+  block-size: var(--control-icon-size-sm);
+}
+.ds-chip__icon > svg { inline-size: 100%; block-size: 100%; display: block; }
+
+/* ── Select — 라디오다 ───────────────────────────────────
+   진짜 input 을 숨기지 않고 알약 위에 투명하게 덮는다. 알약 전체가 조작 영역이다. */
+.ds-chip--select { padding: 0; }
+.ds-chip__input {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  border-radius: var(--radius-full);
+}
+.ds-chip__input:disabled { cursor: not-allowed; }
+.ds-chip__label {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--control-min-height-sm);
+  padding-inline: var(--control-padding-inline-sm);
+  cursor: pointer;
+  user-select: none;
+}
+.ds-chip__input:disabled ~ .ds-chip__label { cursor: not-allowed; }
+
+/* 선택 — Checkbox·Radio 와 같은 색 짝을 쓴다. 셋이 형제로 보여야 한다. */
+.ds-chip--select:has(.ds-chip__input:checked) {
+  background-color: var(--color-primary-normal);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-primary-normal);
+  color: var(--color-inverse-label);
+}
+
+/* ── Filter ──────────────────────────────────────────────
+   값이 들어가면 선택된 것으로 보인다 — 열려 있는 것과는 다른 상태다. */
+.ds-chip--filter[data-value] {
+  background-color: var(--color-primary-normal);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-primary-normal);
+  color: var(--color-inverse-label);
+}
+/* 열린 동안 화살표가 뒤집힌다 — 지금 열려 있다는 것을 모양으로도 알린다(5.4.1) */
+.ds-chip--filter[data-open] .ds-chip__icon { transform: rotate(180deg); }
+
+/* ── Input ───────────────────────────────────────────────
+   ✕ 가 있으면 칩은 버튼이 아니라 컨테이너다 — <button> 안에 <button> 을 못 넣는다. */
+.ds-chip--removable {
+  padding-inline-end: var(--spacing-2);
+  cursor: default;
+}
+.ds-chip__body {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+}
+/* ✕ 는 아이콘이 16px 이지만 히트박스는 24×24 다 — WCAG 2.5.8 · KWCAG 6.1.3 */
+.ds-chip__remove {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--control-min-target);
+  block-size: var(--control-min-target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-circle);
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+.ds-chip__remove:disabled,
+.ds-chip__body:disabled { cursor: not-allowed; }
+
+/* ── 상태 오버레이 ───────────────────────────────────────
+   면을 직접 바꾸지 않고 얹는다. 밝은 면 위라 darken 이다(0-14). */
+@media (hover: hover) {
+  .ds-chip:hover:not(:disabled):not(.ds-chip--removable),
+  .ds-chip--select:has(.ds-chip__input:hover:not(:disabled)) {
+    background-color: var(--color-interaction-overlay-darken-hovered);
+  }
+  /* 선택된 알약은 어두운 면이다 → lighten 으로 뒤집는다 */
+  .ds-chip--select:has(.ds-chip__input:checked:hover:not(:disabled)),
+  .ds-chip--filter[data-value]:hover:not(:disabled) {
+    background-color: var(--color-primary-normal);
+    box-shadow: inset 0 0 0 var(--control-min-height-sm) var(--color-interaction-overlay-lighten-hovered);
+  }
+  .ds-chip__remove:hover:not(:disabled) {
+    background-color: var(--color-interaction-overlay-darken-hovered);
+  }
+}
+
+/* ── 포커스 ──────────────────────────────────────────────
+   offset 을 둬 페이지 배경 위에 놓는다 — 알약 면 위에 그리면 대비가 사라진다(0-46). */
+.ds-chip:focus-visible,
+.ds-chip__body:focus-visible,
+.ds-chip__remove:focus-visible,
+.ds-chip--select:has(.ds-chip__input:focus-visible) {
+  outline: var(--focus-ring-width) solid var(--color-interaction-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ── 비활성 ──────────────────────────────────────────────
+   포커스도 활성화도 안 되는 진짜 inactive 라 WCAG 1.4.3 예외가 적용된다(0-43). */
+.ds-chip:disabled,
+.ds-chip--select:has(.ds-chip__input:disabled),
+.ds-chip--removable:has(.ds-chip__body:disabled) {
+  background-color: var(--color-interaction-disable);
+  box-shadow: inset 0 0 0 var(--divider-1) var(--color-interaction-disable);
+  color: var(--color-label-disable);
+}
+
+/* ── 묶음 ────────────────────────────────────────────────
+   fieldset 의 UA 기본 테두리·여백을 덮는다. 칩은 가로로 흐르고 감싼다. */
+.ds-chipgroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-inline-size: 0;
+}
+.ds-chipgroup__legend { padding: 0; color: var(--color-label-normal); }
+.ds-chipgroup__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-8);
+}
+
+/* ── 사용자 환경 설정 (COMPONENTS.md 3-5) ───────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ds-chip { transition-duration: var(--duration-0); }
+}
+@media (forced-colors: active) {
+  /* 고대비 모드에서 배경·그림자가 제거돼 알약이 사라진다. 테두리로 형태를 남긴다. */
+  .ds-chip { border: var(--divider-1) solid ButtonBorder; }
+  .ds-chip--select:has(.ds-chip__input:checked),
+  .ds-chip--filter[data-value] { background-color: Highlight; color: HighlightText; }
+  .ds-chip:focus-visible,
+  .ds-chip__body:focus-visible,
+  .ds-chip__remove:focus-visible,
+  .ds-chip--select:has(.ds-chip__input:focus-visible) { outline-color: Highlight; }
+  .ds-chip:disabled,
+  .ds-chip--select:has(.ds-chip__input:disabled) { color: GrayText; border-color: GrayText; }
+}

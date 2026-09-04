@@ -1082,3 +1082,116 @@ APG 키보드 5종을 **실제 키 입력으로** 확인했다. 스크립트로 
 묶음 6개 전부 `<fieldset>` · 항목 13개 조작 영역 **24×24**(24 미만 0건) · 원 20×20 ·
 묶음 안 `name` 공유 · 묶음끼리 `name` 중복 0 · `id` 중복 0 · `<label for>` 미연결 0 ·
 도움말·오류가 fieldset 의 `aria-describedby` 로 연결됨.
+
+### 8-7. Chip
+
+**APG 패턴: 종류마다 다르다** — 셋이 한 컴포넌트로 보이지만 **역할이 셋이다.**
+모양이 같다고 하나로 묶지 않는다.
+
+```
+종류       Select    여럿 중 하나를 고른다        →  Radio Group 패턴
+           Filter    눌러서 목록을 연다           →  버튼 + aria-expanded
+           Input     값을 담고, ✕ 로 지운다       →  버튼 (+ 삭제 버튼)
+
+용도       **필터 줄과 토큰 자리.** 본문에 섞여 들어가는 컨트롤이 아니다
+
+           갈림길
+           세로로 늘어놓는다        Radio (8-6) · Checkbox (8-5) — 칩은 가로로 흐른다
+           고르는 대상이 카드       Select Button (8-8)
+           그냥 실행하는 것         Button (8-1) — 칩 모양의 버튼을 만들지 않는다 (0-47)
+           본문 안 링크            <a> — 칩은 컨트롤이지 텍스트가 아니다
+
+           **Select 와 Input 을 한 줄에 섞지 않는다** (새로 정함)
+           — 이유: 생김새가 같은데 하나는 고르는 것이고 하나는 지우는 것이다.
+             같은 줄에 있으면 어느 것이 어느 쪽인지 눌러 봐야 안다
+
+이름       Select  <label for> ↔ <input id>. 묶음은 <fieldset> + <legend>
+           Filter  버튼 텍스트가 이름이다. **선택된 값을 이름에 포함한다**
+                   — "정렬" 이 아니라 "정렬, 리뷰 많은 순" 이라야 음성 제어로 짚을 수 있다 (2.5.3)
+           Input   본문 버튼이 이름이고, 삭제 버튼은 **대상을 이름에 넣는다**
+                   — "삭제" 가 아니라 "김부장 삭제". 8-4 Search 의 지우기와 같은 규칙
+
+키보드     Select  Radio 와 같다 — 묶음이 탭 정지 1개, 화살표가 이동 + 선택 (8-6)
+           Filter  Enter · Space 로 연다. **목록의 키보드는 우리 것이 아니다** — 미결 ①
+           Input   본문과 ✕ 가 **각각 탭 정지**다. 칩 하나에 2개
+                   — 수신자 10명이면 20번 탭이다. 그 대가를 알고 쓴다
+
+상태       Select  unselected / selected / disabled
+           Filter  closed / open / 값 있음 / disabled
+           Input   기본 / disabled.  ✕ 는 본문과 따로 비활성될 수 있다
+
+조작영역   칩 높이 32px 은 그 자체로 24 를 넘는다
+           **✕ 는 따로 확보한다** — 아이콘은 16px 이라 히트박스를 24×24 로 넓힌다
+           (--control-min-target · WCAG 2.5.8 · KWCAG 6.1.3)
+
+삭제 후    **컴포넌트가 포커스를 옮긴다.** 버튼이 사라지면 포커스가 body 로 떨어져
+포커스     키보드 사용자가 위치를 잃는다 — 8-4 Search 에서 겪은 그 문제다
+           onRemove 를 부르기 **전에** 옮긴다. 그 시점에는 아직 모든 칩이 DOM 에 있다
+           다음 칩 → 없으면 이전 칩. **마지막 하나를 지울 때만** 갈 곳이 없다 (미결 ②)
+
+모양       알약이다 — --radius-full
+           높이 --control-min-height-sm (32) · 좌우 --control-padding-inline-sm (12)
+           아이콘 --control-icon-size-sm (16)
+
+토큰       미선택   면 fill.alternative · 테두리 line.strong · 라벨 label.normal
+           선택     면 primary.normal · 라벨 inverse.label   (Checkbox·Radio 와 같은 짝)
+           비활성   interaction.disable + label.disable
+           포커스   focus-ring + interaction.focus
+           **새 토큰 없이 닫힌다**
+
+플랫폼     웹   Select=radio+fieldset · Filter=button[aria-expanded] · Input=span+button 둘
+           iOS  Select 는 UISegmentedControl 이 가깝고, Input 은 커스텀 뷰 +
+                accessibilityCustomActions 로 삭제를 노출한다
+
+오용       x 칩 모양의 버튼을 Button 대신 만든다 — Button 에 칩을 넣지 않기로 했다 (0-47)
+           x Input 칩의 ✕ 를 본문 버튼 안에 넣는다 — <button> 안에 <button> 은 못 넣는다
+           x 삭제 버튼 이름을 "삭제" 로만 짓는다 — 어느 칩인지 알 수 없다 (2.5.3)
+           x Filter 칩에 aria-haspopup="listbox" 를 붙인다 — 목록을 우리가 갖고 있지 않은데
+             그 규약을 약속하는 것이 된다 (미결 ①)
+           x Select 칩을 묶음 없이 낱개로 쓴다 — name 이 없으면 화살표 이동이 죽는다
+           x 선택을 비울 수 있어야 하는데 Select 칩으로 만든다 — Radio 와 같은 한계다 (8-6)
+
+금지       셋을 하나의 컴포넌트로 합치지 마라 — 역할이 다르다
+           ✕ 의 히트박스를 16px 로 두지 마라 — 2.5.8 미달이다
+           삭제 후 포커스를 놓치지 마라
+           id 를 손으로 짓지 마라 (8.1.1)
+
+미결       ① **Filter 칩은 트리거만 있다.** 목록은 Dropdown(P1-5)의 몫이라
+             `aria-expanded` 만 붙이고 `aria-haspopup` 은 붙이지 않았다.
+             **APG Combobox 의 키보드 규약(↓로 열기 · Esc · 목록 안 이동)을 지금은
+             보장하지 못한다.** Dropdown 착수 시 합류한다
+           ② **마지막 칩을 지우면 갈 곳이 없다.** 다음도 이전도 없으면 포커스가 떨어진다.
+             빈 상태에서 무엇에 포커스를 줄지는 그 자리를 아는 쪽(목록·폼)만 정할 수 있다.
+             Select Button(8-8)·Dropdown(P1-5)에서 같은 문제를 다시 만나면 그때 공통 규칙을 만든다
+           ③ **라벨 크기가 12 / 14 로 갈려 있다.** `label-sm` 의 `$description` 은 Chip 을
+             12px 로 적고 있는데 같은 32px 인 Button sm 은 14px 를 쓴다. 검증 페이지에
+             둘을 나란히 깔았다 — 정하면 한쪽을 지우고 토큰 설명도 함께 고친다
+           ④ **묶음 코드가 RadioGroup 과 겹친다.** name·선택값·fieldset 을 소유하는 구조가
+             같다. 지금은 레이아웃이 달라 따로 뒀다. **Select Button(8-8)이 세 번째 사례이므로
+             거기서 합칠지 정한다** — 두 번으로는 공통점을 잘못 뽑을 수 있다
+```
+
+**실측 (2026-09-04)**
+
+| | 라이트 | 다크 | 기준 |
+|---|---|---|---|
+| 미선택 테두리 | 3.24 | 3.59 | 3:1 (1.4.11) |
+| 미선택 라벨 | 17.03 | 14.20 | 4.5:1 |
+| 선택 면 | 13.39 | 16.11 | — |
+| 선택 라벨 · Filter 값 | 12.50 | 16.89 | 4.5:1 |
+
+칩 19개 전부 높이 **32** · `✕` 히트박스 **24×24**(아이콘은 16) · `id` 중복 0 ·
+`<label for>` 미연결 0 · Filter 에 `aria-haspopup` 없음(의도) ·
+Filter 접근 이름에 값이 들어감(`"지역, 서울"`) · 누르면 `aria-expanded` 가 `true` 로 바뀌고
+화살표가 뒤집힘.
+
+**삭제 후 포커스 — 실제 클릭으로 확인했다.**
+
+| | 결과 |
+|---|---|
+| 첫 칩 ✕ | 다음 칩(`이차장 삭제`)으로 이동 ✔ |
+| 마지막 칩 ✕ | 다음이 없어 이전 칩으로 이동 ✔ |
+
+**고치기 전에는 두 경우 다 `body` 로 떨어졌다.** 처음엔 호출자 몫으로 문서에 적었는데,
+실제로 눌러 보니 8-4 Search 에서 이미 해결한 문제를 그대로 다시 만든 것이었다 —
+컴포넌트가 처리하도록 바꿨다.

@@ -22,6 +22,10 @@ import Search from '../Search/Search.jsx'
 import Checkbox from '../Checkbox/Checkbox.jsx'
 import Radio from '../Radio/Radio.jsx'
 import RadioGroup from '../Radio/RadioGroup.jsx'
+import ChipGroup from '../Chip/ChipGroup.jsx'
+import ChipSelect from '../Chip/ChipSelect.jsx'
+import ChipFilter from '../Chip/ChipFilter.jsx'
+import ChipInput from '../Chip/ChipInput.jsx'
 // 실제 아이콘으로 본다 — 원형 플레이스홀더는 획 두께·여백이 진짜와 달라
 // 정렬과 시각 무게를 잘못 판단하게 만든다(0-47).
 import { Download, ExternalLink, Settings, PanelLeftClose, Plus } from 'lucide-react'
@@ -70,6 +74,33 @@ function MeasureSelfCheck() {
       측정기 자기검사 {r.ok ? `✔ ${r.results.length}건 통과` : `✘ 실패`}
       {!r.ok && r.results.filter(x => !x.ok).map(x => ` · ${x.name}: ${x.got}`)}
     </p>
+  )
+}
+
+/* 칩 데모 — Filter 는 열림 상태를, Input 은 목록을 소비자가 갖는다.
+   그 "소비자" 자리를 여기서 흉내낸다. */
+function ChipDemo() {
+  const [open, setOpen] = useState(false)
+  const [sort, setSort] = useState(null)
+  const [people, setPeople] = useState(['김부장', '이차장', '박대리'])
+  return (
+    <>
+      <div className="dev-row">
+        <ChipFilter label="가격" />
+        <ChipFilter label="정렬" selected={sort} open={open}
+                    onClick={() => { setOpen(o => !o); if (!sort) setSort('리뷰 많은 순') }} />
+        <ChipFilter label="지역" selected="서울" />
+        <ChipFilter label="비활성" disabled />
+      </div>
+      <div className="dev-row">
+        {people.map(p => (
+          <ChipInput key={p} label={p}
+                     onClick={() => {}}
+                     onRemove={() => setPeople(v => v.filter(x => x !== p))} />
+        ))}
+        {people.length === 0 && <span className="label-sm">전부 지웠다</span>}
+      </div>
+    </>
   )
 }
 
@@ -218,6 +249,44 @@ function App() {
           <Radio value="a" label="라벨이 길어서 두 줄로 넘어가면 원이 첫 줄에 붙어 있는지 본다. 가운데로 내려가면 안 된다." />
           <Radio value="b" label="짧은 것" />
         </RadioGroup>
+      </div>
+
+      {/* Chip — 셋이 한 컴포넌트로 보이지만 역할이 셋이다(8-7).
+          Select 는 라디오, Filter 는 버튼+aria-expanded, Input 은 ✕ 유무로 구조가 갈린다. */}
+      <h2>Chip — Select</h2>
+      <div className="dev-stack">
+        <ChipGroup label="음식 종류" defaultValue="all">
+          <ChipSelect value="all" label="전체" />
+          <ChipSelect value="kr" label="한식" />
+          <ChipSelect value="west" label="양식" />
+          <ChipSelect value="snack" label="분식" />
+          <ChipSelect value="bakery" label="빵집" />
+          <ChipSelect value="none" label="못 고름" disabled />
+        </ChipGroup>
+      </div>
+
+      <h2>Chip — Filter · Input</h2>
+      <div className="dev-stack"><ChipDemo /></div>
+
+      {/* 라벨 크기 12 / 14 비교 — 8-7 미결 ②. **정하면 이 절과 dev.css 블록을 지운다.** */}
+      <h2>Chip — 라벨 12 / 14 비교 (임시)</h2>
+      <div className="dev-stack">
+        <div>
+          <p className="label-sm">현재 = label-md (14)</p>
+          <ChipGroup label="14px" hideLabel defaultValue="kr">
+            <ChipSelect value="all" label="전체" />
+            <ChipSelect value="kr" label="한식" />
+            <ChipSelect value="west" label="양식" />
+          </ChipGroup>
+        </div>
+        <div className="dev-chip12">
+          <p className="label-sm">label-sm (12) — 토큰 설명이 말하는 값</p>
+          <ChipGroup label="12px" hideLabel defaultValue="kr">
+            <ChipSelect value="all" label="전체" />
+            <ChipSelect value="kr" label="한식" />
+            <ChipSelect value="west" label="양식" />
+          </ChipGroup>
+        </div>
       </div>
 
       <h2>폼 한 줄 — control.* 공유 검증</h2>

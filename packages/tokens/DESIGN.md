@@ -7,7 +7,7 @@ source: primitive.json + semantic.light.json + semantic.dark.json + typography.j
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
 scope: 색·그림자 66 · 그 외 195 · 타이포 클래스 36. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
-usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 56개 토큰이 쓰이고 있다.
+usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 58개 토큰이 쓰이고 있다.
 typography:
   "base.display-lg":
     class: display-lg
@@ -166,7 +166,7 @@ typography:
     fontWeight: 500
     letterSpacing: "0rem"
     note: UI 라벨(기본) — 라벨의 기준값. Button(sm)·Text Button, Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong.
-    usedBy: [Button, Checkbox, Radio, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Chip, Radio, Search, TextArea, TextField]
   "base.label-md-strong":
     class: label-md-strong
     fontSize: "0.875rem"
@@ -275,7 +275,7 @@ color:
     light: "#161617"
     dark: "#F7F7F8"
     note: 기본 글자 — 무엇을 쓸지 모르겠으면 이것. 본문·라벨·입력값에 쓴다. 4개 면 최소 대비 **라이트 16.89 · 다크 15.00**. Button · Text Field · Text Area · Search 가 쓴다.
-    usedBy: [Button, Checkbox, Field, Radio, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Chip, Field, Radio, Search, TextArea, TextField]
   label-neutral:
     light: rgba(46, 47, 50, 0.88)
     dark: rgba(193, 195, 199, 0.88)
@@ -293,7 +293,7 @@ color:
     light: rgba(55, 55, 58, 0.16)
     dark: rgba(152, 155, 161, 0.16)
     note: 비활성 컨트롤의 글자 — 4개 면 최소 대비 **라이트 1.33 · 다크 1.26** 으로 4.5:1 을 만족하지 않는다. 네이티브 `disabled` 는 포커스도 활성화도 안 되는 진짜 inactive 라 **WCAG 1.4.3 의 예외**가 적용된다(0-43). 면은 `interaction.disable` 이다. Button · Text Field · Text Area · Search 가 쓴다.
-    usedBy: [Button, Checkbox, Radio, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Chip, Radio, Search, TextArea, TextField]
   bg-normal:
     light: "#FFFFFF"
     dark: "#1A1B1C"
@@ -327,7 +327,7 @@ color:
     light: rgba(113, 115, 121, 0.8)
     dark: rgba(193, 195, 199, 0.52)
     note: "**컨트롤 경계선.** 입력·체크박스·라디오처럼 테두리가 곧 컴포넌트의 식별 정보인 자리에 쓴다 — `line.*` 일곱 중 WCAG 1.4.11 의 3:1 을 만족하는 **유일한 단계**다(4개 면 최소 라이트 3.09 · 다크 3.49 — `checks/surfaces.mjs` 가 매 빌드 검사한다). 구분선에는 `normal` 이하를 쓴다(DECISIONS 0-38)."
-    usedBy: [Button, Checkbox, Radio, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Chip, Radio, Search, TextArea, TextField]
   line-neutral:
     light: rgba(113, 115, 121, 0.16)
     dark: rgba(113, 115, 121, 0.28)
@@ -357,7 +357,7 @@ color:
     light: rgba(113, 115, 121, 0.05)
     dark: rgba(113, 115, 121, 0.12)
     note: 가장 옅은 채움 — `gray.550` 5%(라이트) / 12%(다크). 합성하면 라이트 `#F8F8F8` · 다크 `#242627` 이고 `bg.normal` 과 대비 **1.06 / 1.13**. Text Field · Text Area 가 쓴다.
-    usedBy: [TextArea, TextField]
+    usedBy: [Chip, TextArea, TextField]
   fill-strong:
     light: rgba(113, 115, 121, 0.16)
     dark: rgba(113, 115, 121, 0.28)
@@ -371,17 +371,17 @@ color:
     light: "#F4F4F4"
     dark: "#2E2F32"
     note: 비활성 컨트롤의 면색 — 눌리지 않는 버튼·입력 필드의 배경. 위에 올라가는 글자는 `label.disable` 이며, 둘 다 대비 검사 대상이 아니다.
-    usedBy: [Button, Checkbox, Radio, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Chip, Radio, Search, TextArea, TextField]
   interaction-focus:
     light: "#161617"
     dark: "#F4F4F4"
     note: 키보드 포커스 링 색. KWCAG 6.1.2(초점은 시각적으로 구별) · WCAG 2.4.7 대응. **무채색이다** — 우리 팔레트는 명도로 정규화돼 있어 색조를 바꿔도 대비가 같고, 그래서 색조 선택은 `어느 색조가 비어 있나` 라는 배정 문제가 된다. 무채색은 그 문제를 아예 피한다. **primary 가 바뀌어도 링은 그대로 쓸 수 있다**(0-46). 4개 면 최소 대비 라이트 16.89 · 다크 14.60 으로 계열 중 가장 또렷하다. **대가는 `focusRing.offset` 이 필수가 된다는 것** — primary 버튼과 라이트 1.35 · 다크 1.03, 다크 negative 와 1.96 이라 링이 컴포넌트 면 위에 겹치면 사라진다.
-    usedBy: [Button, Checkbox, Radio, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Chip, Radio, Search, TextArea, TextField]
   interaction-overlay-darken-hovered:
     light: rgba(0, 0, 0, 0.05)
     dark: rgba(0, 0, 0, 0.05)
     note: 밝은 면 위 hover 상태 오버레이. 면을 어둡게 한다. 강도는 `interaction.opacity.normal.hovered` 를 따른다.
-    usedBy: [Button, Checkbox, Radio, Search]
+    usedBy: [Button, Checkbox, Chip, Radio, Search]
   interaction-overlay-darken-focused:
     light: rgba(0, 0, 0, 0.08)
     dark: rgba(0, 0, 0, 0.08)
@@ -395,7 +395,7 @@ color:
     light: rgba(255, 255, 255, 0.05)
     dark: rgba(255, 255, 255, 0.05)
     note: 어두운 면 위 hover 상태 오버레이. 면을 밝게 한다. 강도는 `interaction.opacity.normal.hovered` 를 따른다.
-    usedBy: [Button, Checkbox, Radio, Search]
+    usedBy: [Button, Checkbox, Chip, Radio, Search]
   interaction-overlay-lighten-focused:
     light: rgba(255, 255, 255, 0.08)
     dark: rgba(255, 255, 255, 0.08)
@@ -409,7 +409,7 @@ color:
     light: "#2E2F32"
     dark: "#F7F7F8"
     note: 브랜드 기본색 — **무채색이다.** 라이트 `#2E2F32` · 다크 `#F7F7F8` 이고 `bg.normal` 과 대비 **13.39 / 16.11** 로 우리 면색 중 배경과 가장 세게 갈린다. Button 의 primary 면이며, 그래서 **화면당 하나**로 제한한다(COMPONENTS.md 8-1 용도). 위에 올라가는 글자는 `label.normal` 이 아니라 `inverse.label` 이다.
-    usedBy: [Button, Checkbox, Radio]
+    usedBy: [Button, Checkbox, Chip, Radio]
   primary-strong:
     light: "#212124"
     dark: "#E9EAEB"
@@ -515,7 +515,7 @@ color:
     light: "#F7F7F8"
     dark: "#161617"
     note: 반전 면 위의 글자 — 라이트에서는 어두운 면 위, 다크에서는 밝은 면 위에 얹힌다. **Button 의 primary · negative 라벨이 이것**이고 실측 대비 **라이트 12.50 · 다크 16.89** 다. `label.normal` 과 명도 방향이 반대라 같은 면에 섞어 쓰지 않는다.
-    usedBy: [Button, Checkbox, Radio]
+    usedBy: [Button, Checkbox, Chip, Radio]
   static-white:
     light: "#FFFFFF"
     dark: "#FFFFFF"
@@ -760,16 +760,18 @@ letterSpacing:
     note: "60px 전용 — display 밴드(-0.02em) 파생. 1개 토큰이 쓴다."
 spacing:
   1: "1px"
-  2: "2px"
+  2:
+    value: "2px"
+    usedBy: [Chip]
   4:
     value: "4px"
     usedBy: [Field, Search]
   6:
     value: "6px"
-    usedBy: [Checkbox, Field, Radio]
+    usedBy: [Checkbox, Chip, Field, Radio]
   8:
     value: "8px"
-    usedBy: [Field, Radio, Search]
+    usedBy: [Chip, Field, Radio, Search]
   10:
     value: "10px"
     usedBy: [TextArea]
@@ -826,10 +828,11 @@ radius:
   circle:
     value: "50%"
     note: 칩·인디케이터 같이 반원 형태가 필요할 때. 정사각형에 적용하면 원이 된다. `%` 는 DTCG dimension 이 담지 못해 CSS 문자열로 두고 예외 표시했다.
-    usedBy: [Button, Radio, Search]
+    usedBy: [Button, Chip, Radio, Search]
   full:
     value: "9999px"
     note: 완전히 둥근 모서리(알약 형태). 높이와 무관하게 양 끝이 반원이 된다.
+    usedBy: [Chip]
 ratio:
   1-2:
     value: 0.5
@@ -912,7 +915,7 @@ divider:
   1:
     value: "1px"
     note: 기본 구분선. 리스트 항목·섹션 사이의 얇은 선.
-    usedBy: [Button, Checkbox, Field, Radio, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Chip, Field, Radio, Search, TextArea, TextField]
   8:
     value: "8px"
     note: 굵은 구분선. 섹션을 크게 가르는 띠. 색은 line 토큰보다 면 색(bg.normalAlternative 등)이 자연스럽다.
@@ -920,16 +923,16 @@ focusRing:
   width:
     value: "2px"
     note: 링 두께. WCAG 2.4.13(AAA) 의 2px 기준을 따른다.
-    usedBy: [Button, Checkbox, Radio, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Chip, Radio, Search, TextArea, TextField]
   offset:
     value: "2px"
     note: 요소와 링 사이 간격. 링이 컴포넌트 색 위에 겹치지 않게 한다.
-    usedBy: [Button, Checkbox, Radio, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Chip, Radio, Search, TextArea, TextField]
 duration:
   0:
     value: "[object Object]"
     note: 지연 없음. DTCG `transition` 은 `delay` 를 필수로 요구하므로 지연이 없어도 쓸 값이 필요하다. 즉시 완료에도 쓴다.
-    usedBy: [Button, Checkbox, Radio]
+    usedBy: [Button, Checkbox, Chip, Radio]
   100:
     value: "[object Object]"
     note: 상태 오버레이(hover·press). 가장 빈번한 전환이라 가장 짧다.
@@ -1070,7 +1073,7 @@ control:
   minHeight-sm:
     value: "32px"
     note: "32px. 조밀한 툴바 · 테이블 행 내부 · Chip. 8px 등차라 세로 리듬이 유지된다. **가장 작은 단계도 24 를 넘어** WCAG 2.5.8(24×24 CSS px)을 자체로 만족한다 — 히트박스를 따로 넓히지 않아도 된다."
-    usedBy: [Button]
+    usedBy: [Button, Chip]
   minHeight-md:
     value: "40px"
     note: "40px. 기본값. 폼 · 다이얼로그 · 일반 화면. 8px 등차라 세로 리듬이 유지된다."
@@ -1082,7 +1085,7 @@ control:
   paddingInline-sm:
     value: "12px"
     note: "12px. `minHeight.sm` 와 짝이다."
-    usedBy: [Button]
+    usedBy: [Button, Chip]
   paddingInline-md:
     value: "16px"
     note: "16px. `minHeight.md` 와 짝이다."
@@ -1094,7 +1097,7 @@ control:
   gap-sm:
     value: "4px"
     note: "4px. `minHeight.sm` 와 짝이다."
-    usedBy: [Button]
+    usedBy: [Button, Chip]
   gap-md:
     value: "6px"
     note: "6px. `minHeight.md` 와 짝이다."
@@ -1118,7 +1121,7 @@ control:
   iconSize-sm:
     value: "16px"
     note: "16px. `minHeight.sm` 와 짝이다. 32px 컨트롤용. 위아래 8px 씩 남는다."
-    usedBy: [Button, Search]
+    usedBy: [Button, Chip, Search]
   iconSize-md:
     value: "20px"
     note: "20px. `minHeight.md` 와 짝이다. 40px 컨트롤용. 기본."
@@ -1134,16 +1137,16 @@ control:
   minInset:
     value: "1px"
     note: "컨트롤 테두리 안쪽 최소 여백 1px — **KWCAG 6.1.3 (KR delta)**. 브라우저 UA 가 `button {padding: 1px 6px}` · `input {padding: 1px 2px}` 로 우연히 이 값을 주고 있었는데, 우리가 `padding-inline` 만 덮어 **세로는 UA 값이 남아 있었다**(0-48). 우연한 만족은 브라우저가 바뀌면 사라진다. `padding-block` 을 이 토큰으로 명시해 **의도해서** 만족시킨다. 이보다 큰 세로 여백을 이미 갖는 컨트롤(Text Area 10px)은 그대로 두면 된다 — **하한이다**. **주의: 6.1.3 은 그 여백이 포인터 조작에 반응하지 않을 것도 요구하는데, padding 만으로는 그 부분이 충족되지 않는다**(미결 25)."
-    usedBy: [Button, Search, TextField]
+    usedBy: [Button, Chip, Search, TextField]
   minTarget:
     value: "24px"
     note: "조작 영역 하한 24px — WCAG 2.5.8. **KWCAG 6.1.3(대각 6.0mm)을 포함한다**: CSS 기준 픽셀(1px=1/96in)에서 24×24 의 대각은 8.98mm 이고, 6.0mm 대각을 만족하는 최소 정사각은 16.04px 다. **24 만 지키면 두 기준이 함께 닫힌다**(DECISIONS 0-30). 시각 크기가 이보다 작은 컨트롤은 히트박스를 이 값까지 넓힌다."
-    usedBy: [Checkbox, Radio, Search]
+    usedBy: [Checkbox, Chip, Radio, Search]
 transition:
   control:
     value: "[object Object]"
     note: 컨트롤 상태 전환 — hover·press 오버레이, 보더 색. 100ms · standard. 가장 빈번한 전환이라 가장 짧다.
-    usedBy: [Button, Checkbox, Radio, Search, TextArea, TextField]
+    usedBy: [Button, Checkbox, Chip, Radio, Search, TextArea, TextField]
 shadow:
   xs:
     light: "0px 1px 3px 0px rgba(19, 19, 20, 0.08), 0px 0px 1px 0px rgba(19, 19, 20, 0.04)"
@@ -2420,6 +2423,119 @@ APG 키보드 5종을 **실제 키 입력으로** 확인했다. 스크립트로 
 묶음 6개 전부 `<fieldset>` · 항목 13개 조작 영역 **24×24**(24 미만 0건) · 원 20×20 ·
 묶음 안 `name` 공유 · 묶음끼리 `name` 중복 0 · `id` 중복 0 · `<label for>` 미연결 0 ·
 도움말·오류가 fieldset 의 `aria-describedby` 로 연결됨.
+
+### 8-7. Chip
+
+**APG 패턴: 종류마다 다르다** — 셋이 한 컴포넌트로 보이지만 **역할이 셋이다.**
+모양이 같다고 하나로 묶지 않는다.
+
+```
+종류       Select    여럿 중 하나를 고른다        →  Radio Group 패턴
+           Filter    눌러서 목록을 연다           →  버튼 + aria-expanded
+           Input     값을 담고, ✕ 로 지운다       →  버튼 (+ 삭제 버튼)
+
+용도       **필터 줄과 토큰 자리.** 본문에 섞여 들어가는 컨트롤이 아니다
+
+           갈림길
+           세로로 늘어놓는다        Radio (8-6) · Checkbox (8-5) — 칩은 가로로 흐른다
+           고르는 대상이 카드       Select Button (8-8)
+           그냥 실행하는 것         Button (8-1) — 칩 모양의 버튼을 만들지 않는다 (0-47)
+           본문 안 링크            <a> — 칩은 컨트롤이지 텍스트가 아니다
+
+           **Select 와 Input 을 한 줄에 섞지 않는다** (새로 정함)
+           — 이유: 생김새가 같은데 하나는 고르는 것이고 하나는 지우는 것이다.
+             같은 줄에 있으면 어느 것이 어느 쪽인지 눌러 봐야 안다
+
+이름       Select  <label for> ↔ <input id>. 묶음은 <fieldset> + <legend>
+           Filter  버튼 텍스트가 이름이다. **선택된 값을 이름에 포함한다**
+                   — "정렬" 이 아니라 "정렬, 리뷰 많은 순" 이라야 음성 제어로 짚을 수 있다 (2.5.3)
+           Input   본문 버튼이 이름이고, 삭제 버튼은 **대상을 이름에 넣는다**
+                   — "삭제" 가 아니라 "김부장 삭제". 8-4 Search 의 지우기와 같은 규칙
+
+키보드     Select  Radio 와 같다 — 묶음이 탭 정지 1개, 화살표가 이동 + 선택 (8-6)
+           Filter  Enter · Space 로 연다. **목록의 키보드는 우리 것이 아니다** — 미결 ①
+           Input   본문과 ✕ 가 **각각 탭 정지**다. 칩 하나에 2개
+                   — 수신자 10명이면 20번 탭이다. 그 대가를 알고 쓴다
+
+상태       Select  unselected / selected / disabled
+           Filter  closed / open / 값 있음 / disabled
+           Input   기본 / disabled.  ✕ 는 본문과 따로 비활성될 수 있다
+
+조작영역   칩 높이 32px 은 그 자체로 24 를 넘는다
+           **✕ 는 따로 확보한다** — 아이콘은 16px 이라 히트박스를 24×24 로 넓힌다
+           (--control-min-target · WCAG 2.5.8 · KWCAG 6.1.3)
+
+삭제 후    **컴포넌트가 포커스를 옮긴다.** 버튼이 사라지면 포커스가 body 로 떨어져
+포커스     키보드 사용자가 위치를 잃는다 — 8-4 Search 에서 겪은 그 문제다
+           onRemove 를 부르기 **전에** 옮긴다. 그 시점에는 아직 모든 칩이 DOM 에 있다
+           다음 칩 → 없으면 이전 칩. **마지막 하나를 지울 때만** 갈 곳이 없다 (미결 ②)
+
+모양       알약이다 — --radius-full
+           높이 --control-min-height-sm (32) · 좌우 --control-padding-inline-sm (12)
+           아이콘 --control-icon-size-sm (16)
+
+토큰       미선택   면 fill.alternative · 테두리 line.strong · 라벨 label.normal
+           선택     면 primary.normal · 라벨 inverse.label   (Checkbox·Radio 와 같은 짝)
+           비활성   interaction.disable + label.disable
+           포커스   focus-ring + interaction.focus
+           **새 토큰 없이 닫힌다**
+
+플랫폼     웹   Select=radio+fieldset · Filter=button[aria-expanded] · Input=span+button 둘
+           iOS  Select 는 UISegmentedControl 이 가깝고, Input 은 커스텀 뷰 +
+                accessibilityCustomActions 로 삭제를 노출한다
+
+오용       x 칩 모양의 버튼을 Button 대신 만든다 — Button 에 칩을 넣지 않기로 했다 (0-47)
+           x Input 칩의 ✕ 를 본문 버튼 안에 넣는다 — <button> 안에 <button> 은 못 넣는다
+           x 삭제 버튼 이름을 "삭제" 로만 짓는다 — 어느 칩인지 알 수 없다 (2.5.3)
+           x Filter 칩에 aria-haspopup="listbox" 를 붙인다 — 목록을 우리가 갖고 있지 않은데
+             그 규약을 약속하는 것이 된다 (미결 ①)
+           x Select 칩을 묶음 없이 낱개로 쓴다 — name 이 없으면 화살표 이동이 죽는다
+           x 선택을 비울 수 있어야 하는데 Select 칩으로 만든다 — Radio 와 같은 한계다 (8-6)
+
+금지       셋을 하나의 컴포넌트로 합치지 마라 — 역할이 다르다
+           ✕ 의 히트박스를 16px 로 두지 마라 — 2.5.8 미달이다
+           삭제 후 포커스를 놓치지 마라
+           id 를 손으로 짓지 마라 (8.1.1)
+
+미결       ① **Filter 칩은 트리거만 있다.** 목록은 Dropdown(P1-5)의 몫이라
+             `aria-expanded` 만 붙이고 `aria-haspopup` 은 붙이지 않았다.
+             **APG Combobox 의 키보드 규약(↓로 열기 · Esc · 목록 안 이동)을 지금은
+             보장하지 못한다.** Dropdown 착수 시 합류한다
+           ② **마지막 칩을 지우면 갈 곳이 없다.** 다음도 이전도 없으면 포커스가 떨어진다.
+             빈 상태에서 무엇에 포커스를 줄지는 그 자리를 아는 쪽(목록·폼)만 정할 수 있다.
+             Select Button(8-8)·Dropdown(P1-5)에서 같은 문제를 다시 만나면 그때 공통 규칙을 만든다
+           ③ **라벨 크기가 12 / 14 로 갈려 있다.** `label-sm` 의 `$description` 은 Chip 을
+             12px 로 적고 있는데 같은 32px 인 Button sm 은 14px 를 쓴다. 검증 페이지에
+             둘을 나란히 깔았다 — 정하면 한쪽을 지우고 토큰 설명도 함께 고친다
+           ④ **묶음 코드가 RadioGroup 과 겹친다.** name·선택값·fieldset 을 소유하는 구조가
+             같다. 지금은 레이아웃이 달라 따로 뒀다. **Select Button(8-8)이 세 번째 사례이므로
+             거기서 합칠지 정한다** — 두 번으로는 공통점을 잘못 뽑을 수 있다
+```
+
+**실측 (2026-09-04)**
+
+| | 라이트 | 다크 | 기준 |
+|---|---|---|---|
+| 미선택 테두리 | 3.24 | 3.59 | 3:1 (1.4.11) |
+| 미선택 라벨 | 17.03 | 14.20 | 4.5:1 |
+| 선택 면 | 13.39 | 16.11 | — |
+| 선택 라벨 · Filter 값 | 12.50 | 16.89 | 4.5:1 |
+
+칩 19개 전부 높이 **32** · `✕` 히트박스 **24×24**(아이콘은 16) · `id` 중복 0 ·
+`<label for>` 미연결 0 · Filter 에 `aria-haspopup` 없음(의도) ·
+Filter 접근 이름에 값이 들어감(`"지역, 서울"`) · 누르면 `aria-expanded` 가 `true` 로 바뀌고
+화살표가 뒤집힘.
+
+**삭제 후 포커스 — 실제 클릭으로 확인했다.**
+
+| | 결과 |
+|---|---|
+| 첫 칩 ✕ | 다음 칩(`이차장 삭제`)으로 이동 ✔ |
+| 마지막 칩 ✕ | 다음이 없어 이전 칩으로 이동 ✔ |
+
+**고치기 전에는 두 경우 다 `body` 로 떨어졌다.** 처음엔 호출자 몫으로 문서에 적었는데,
+실제로 눌러 보니 8-4 Search 에서 이미 해결한 문제를 그대로 다시 만든 것이었다 —
+컴포넌트가 처리하도록 바꿨다.
 
 ## 가져다 쓰기
 
