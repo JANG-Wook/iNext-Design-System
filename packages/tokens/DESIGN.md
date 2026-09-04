@@ -6,8 +6,8 @@ spec: DTCG 2025.10 (Format · Color Module, Final Community Group Report)
 source: primitive.json + semantic.light.json + semantic.dark.json + typography.json (packages/tokens)
 generatedBy: tokens/build-design-md.mjs — 직접 편집하지 않는다
 themes: [light, dark]
-scope: 색·그림자 66 · 그 외 186 · 타이포 클래스 35. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
-usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 52개 토큰이 쓰이고 있다.
+scope: 색·그림자 66 · 그 외 194 · 타이포 클래스 36. primitive 팔레트는 CSS 로 나가지 않으므로 제외한다.
+usage: usedBy 는 packages/react/src 를 스캔한 **실제 사용처**다(검증 페이지 dev/ 제외). note 는 **의도**이고 usedBy 는 **현실**이라, 둘이 어긋나면 둘 중 하나가 틀린 것이다. 지금 53개 토큰이 쓰이고 있다.
 typography:
   "base.display-lg":
     class: display-lg
@@ -136,28 +136,36 @@ typography:
     fontWeight: 600
     letterSpacing: "0rem"
     note: body-sm 의 강조 변형(semibold). 용도 동일, 굵기만 다르다.
-  "base.label-lg":
-    class: label-lg
+  "base.label-xl":
+    class: label-xl
     fontSize: "1rem"
     lineHeight: 1.5
     fontWeight: 500
     letterSpacing: "-0.01rem"
-    note: UI 라벨(대). Button(md·lg), Bottom Sheet CTA. PC 권장. 기본 medium, 강조는 label-lg-strong.
+    note: UI 라벨(특대) — **16px**. Button(lg), Bottom Sheet CTA. PC 권장. **이전 이름은 `label-lg` 였다** — 라벨 사다리를 5티어로 다시 짜며 한 칸 올라왔다(DECISIONS 0-50). 기본 medium, 강조는 label-xl-strong.
     usedBy: [Button]
-  "base.label-lg-strong":
-    class: label-lg-strong
+  "base.label-xl-strong":
+    class: label-xl-strong
     fontSize: "1rem"
     lineHeight: 1.5
     fontWeight: 600
     letterSpacing: "-0.01rem"
-    note: label-lg 의 강조 변형(semibold). 용도 동일, 굵기만 다르다.
+    note: label-xl 의 강조 변형(semibold). 용도 동일, 굵기만 다르다. **이전 이름은 `label-lg-strong` 이다**(DECISIONS 0-50).
+  "base.label-lg":
+    class: label-lg
+    fontSize: "0.9375rem"
+    lineHeight: 1.466667
+    fontWeight: 500
+    letterSpacing: "-0.009375rem"
+    note: "UI 라벨(대) — **15px**. Button(md). 14 와 16 사이를 메우려고 만든 자리다: md(40px)와 lg(48px) 버튼이 같은 16px 라벨을 써서 md 쪽이 더 커 보였다 — 글자/높이가 40% 대 33%였다. 셋이 14·15·16 으로 갈리면서 비율이 43.8 → 37.5 → 33.3% 로 단조 감소한다(DECISIONS 0-50). 기본 medium. **`-strong` 은 수요가 확인되기 전까지 두지 않는다**(0-25 와 같은 원칙)."
+    usedBy: [Button]
   "base.label-md":
     class: label-md
     fontSize: "0.875rem"
     lineHeight: 1.428571
     fontWeight: 500
     letterSpacing: "0rem"
-    note: UI 라벨(기본) — 라벨의 기준값. Button·Text Button, Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong.
+    note: UI 라벨(기본) — 라벨의 기준값. Button(sm)·Text Button, Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong.
     usedBy: [Button, Search, TextArea, TextField]
   "base.label-md-strong":
     class: label-md-strong
@@ -589,9 +597,12 @@ fontSize:
   14:
     value: "0.875rem"
     note: "`body-md` · `label-md` · `link-md` — 5곳. 목록·표처럼 밀도가 필요한 본문."
+  15:
+    value: "0.9375rem"
+    note: "`label-lg` — 1곳. 14 와 16 사이를 메우려고 넣었다. 버튼 md(40px)가 lg(48px)와 같은 16px 라벨을 써서 md 쪽이 더 커 보였다 — 글자/높이가 40% 대 33%였다. 라벨 사다리를 5티어로 다시 짜며 생긴 자리다(DECISIONS 0-50)."
   16:
     value: "1rem"
-    note: "**가장 많이 쓰인다(7곳).** `title-sm` · `body-lg` · `label-lg` · `link-lg`. 기본 본문 크기이자 작은 제목 크기다."
+    note: "**가장 많이 쓰인다(7곳).** `title-sm` · `body-lg` · `label-xl` · `link-lg`. 기본 본문 크기이자 작은 제목 크기다."
   18:
     value: "1.125rem"
     note: "`title-md` 전용(2곳, 기본/강조). 16과 20 사이를 메운다."
@@ -636,6 +647,9 @@ lineHeight:
   14-22:
     value: 1.571429
     note: "14px 글자에 22px 행간. 3개 토큰이 쓴다."
+  15-22:
+    value: 1.466667
+    note: "15px 글자에 22px 행간. 1개 토큰이 쓴다."
   16-24:
     value: 1.5
     note: "16px 글자에 24px 행간. 4개 토큰이 쓴다."
@@ -679,6 +693,9 @@ letterSpacing:
   14:
     value: "0rem"
     note: "14px 전용 — none 밴드(0em) 파생. 5개 토큰이 쓴다."
+  15:
+    value: "-0.009375rem"
+    note: "15px 전용 — title 밴드(-0.01em) 파생. 1개 토큰이 쓴다. **밴드 범위를 15~20px 로 넓힌 자리다** — 2-2 는 `title` 을 16~20px 로 적어 15 를 덮지 않았고, `none` 의 천장(14px 이하)을 올리는 대신 빈칸을 옆 밴드로 메웠다(DECISIONS 0-50)."
   16:
     value: "-0.01rem"
     note: "16px 전용 — title 밴드(-0.01em) 파생. 7개 토큰이 쓴다."
@@ -732,6 +749,22 @@ spacing:
   40: "40px"
   48: "48px"
   56: "56px"
+iconSize:
+  16:
+    value: "16px"
+    note: "16px. 컨트롤 sm(32px) 안 — `control.iconSize.sm` 이 참조한다."
+  20:
+    value: "20px"
+    note: "20px. 컨트롤 md(40px) 안 — `control.iconSize.md` 가 참조한다. 기본."
+  24:
+    value: "24px"
+    note: "24px. 컨트롤 lg(48px) 안 — `control.iconSize.lg` 가 참조한다. lucide 가 그려진 원래 크기라 획이 정확히 2px 로 떨어진다."
+  28:
+    value: "28px"
+    note: "28px. 컨트롤 밖 단독 아이콘용. 아직 컴포넌트 소비자가 없다 — 크기 목록을 닫아두려고 함께 정의했다."
+  32:
+    value: "32px"
+    note: "32px. 컨트롤 밖 단독 아이콘용. 아직 컴포넌트 소비자가 없다 — 크기 목록을 닫아두려고 함께 정의했다."
 radius:
   0:
     value: "0px"

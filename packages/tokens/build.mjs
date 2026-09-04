@@ -155,7 +155,7 @@ function cssVar(pathArr){
 
 // ── CSS 생성 ───────────────────────────────────────────────────────
 // shadow 는 테마별 색을 쓰므로 primitive 가 아니라 semantic 에 있다(아래 semLines 참조).
-const NONCOLOR = ['fontFamily','fontWeight','fontSize','lineHeight','letterSpacing','spacing','radius','ratio','gradient','interaction','divider','focusRing','duration','cubicBezier','zIndex','breakpoint','layout','safeArea','opacity']
+const NONCOLOR = ['fontFamily','fontWeight','fontSize','lineHeight','letterSpacing','spacing','iconSize','radius','ratio','gradient','interaction','divider','focusRing','duration','cubicBezier','zIndex','breakpoint','layout','safeArea','opacity']
 // primitive 에 그룹을 추가하면 이 목록에도 넣어야 CSS·JS 로 나간다.
 for (const g of Object.keys(prim)) if (!g.startsWith('$') && g !== 'color' && !NONCOLOR.includes(g))
   throw new Error(`primitive.${g} 가 NONCOLOR 목록에 없어 산출물에서 누락된다`)

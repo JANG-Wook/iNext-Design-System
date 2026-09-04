@@ -2071,13 +2071,21 @@
       },
       "$description": "`body-md` · `label-md` · `link-md` — 5곳. 목록·표처럼 밀도가 필요한 본문."
     },
+    "15": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.9375,
+        "unit": "rem"
+      },
+      "$description": "`label-lg` — 1곳. 14 와 16 사이를 메우려고 넣었다. 버튼 md(40px)가 lg(48px)와 같은 16px 라벨을 써서 md 쪽이 더 커 보였다 — 글자/높이가 40% 대 33%였다. 라벨 사다리를 5티어로 다시 짜며 생긴 자리다(DECISIONS 0-50)."
+    },
     "16": {
       "$type": "dimension",
       "$value": {
         "value": 1,
         "unit": "rem"
       },
-      "$description": "**가장 많이 쓰인다(7곳).** `title-sm` · `body-lg` · `label-lg` · `link-lg`. 기본 본문 크기이자 작은 제목 크기다."
+      "$description": "**가장 많이 쓰인다(7곳).** `title-sm` · `body-lg` · `label-xl` · `link-lg`. 기본 본문 크기이자 작은 제목 크기다."
     },
     "18": {
       "$type": "dimension",
@@ -2182,6 +2190,11 @@
       "$value": 1.571429,
       "$description": "14px 글자에 22px 행간. 3개 토큰이 쓴다."
     },
+    "15-22": {
+      "$type": "number",
+      "$value": 1.466667,
+      "$description": "15px 글자에 22px 행간. 1개 토큰이 쓴다."
+    },
     "16-24": {
       "$type": "number",
       "$value": 1.5,
@@ -2270,6 +2283,14 @@
         "unit": "rem"
       },
       "$description": "14px 전용 — none 밴드(0em) 파생. 5개 토큰이 쓴다."
+    },
+    "15": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.009375,
+        "unit": "rem"
+      },
+      "$description": "15px 전용 — title 밴드(-0.01em) 파생. 1개 토큰이 쓴다. **밴드 범위를 15~20px 로 넓힌 자리다** — 2-2 는 `title` 을 16~20px 로 적어 15 를 덮지 않았고, `none` 의 천장(14px 이하)을 올리는 대신 빈칸을 옆 밴드로 메웠다(DECISIONS 0-50)."
     },
     "16": {
       "$type": "dimension",
@@ -2466,6 +2487,54 @@
     "$extensions": {
       "net.infobank.ds.foundation": [
         "Spacing"
+      ]
+    }
+  },
+  "iconSize": {
+    "16": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$description": "16px. 컨트롤 sm(32px) 안 — `control.iconSize.sm` 이 참조한다."
+    },
+    "20": {
+      "$type": "dimension",
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      },
+      "$description": "20px. 컨트롤 md(40px) 안 — `control.iconSize.md` 가 참조한다. 기본."
+    },
+    "24": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      },
+      "$description": "24px. 컨트롤 lg(48px) 안 — `control.iconSize.lg` 가 참조한다. lucide 가 그려진 원래 크기라 획이 정확히 2px 로 떨어진다."
+    },
+    "28": {
+      "$type": "dimension",
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      },
+      "$description": "28px. 컨트롤 밖 단독 아이콘용. 아직 컴포넌트 소비자가 없다 — 크기 목록을 닫아두려고 함께 정의했다."
+    },
+    "32": {
+      "$type": "dimension",
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      },
+      "$description": "32px. 컨트롤 밖 단독 아이콘용. 아직 컴포넌트 소비자가 없다 — 크기 목록을 닫아두려고 함께 정의했다."
+    },
+    "$description": "아이콘 한 변 — **허용된 다섯 크기만 쓴다.** `spacing` 을 쓰지 않는 이유는 둘이다: 28 이 `spacing` 에 없고(1·2·4·6·8·10·12·14·16·20·24·32·40·48·56), 아이콘 크기는 간격 눈금이 아니다. **획 두께는 토큰으로 두지 않는다** — lucide 가 viewBox 24 에 획 2 로 그려져 있어 상자를 줄이면 획이 `2 x 크기/24` 로 따라 줄고, 그래서 상자 대비 비율이 8.33% 로 저절로 일정하다. 값 다섯 개를 토큰에 베껴 두면 아이콘 세트를 바꿨을 때 조용히 틀린 값이 된다(DECISIONS 0-51).",
+    "$extensions": {
+      "net.infobank.ds.foundation": [
+        "Size"
       ]
     }
   },
@@ -3355,7 +3424,7 @@
         },
         "$description": "body-sm 의 강조 변형(semibold). 용도 동일, 굵기만 다르다."
       },
-      "label-lg": {
+      "label-xl": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.base}",
@@ -3364,9 +3433,9 @@
           "lineHeight": "{lineHeight.16-24}",
           "letterSpacing": "{letterSpacing.16}"
         },
-        "$description": "UI 라벨(대). Button(md·lg), Bottom Sheet CTA. PC 권장. 기본 medium, 강조는 label-lg-strong."
+        "$description": "UI 라벨(특대) — **16px**. Button(lg), Bottom Sheet CTA. PC 권장. **이전 이름은 `label-lg` 였다** — 라벨 사다리를 5티어로 다시 짜며 한 칸 올라왔다(DECISIONS 0-50). 기본 medium, 강조는 label-xl-strong."
       },
-      "label-lg-strong": {
+      "label-xl-strong": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.base}",
@@ -3375,7 +3444,18 @@
           "lineHeight": "{lineHeight.16-24}",
           "letterSpacing": "{letterSpacing.16}"
         },
-        "$description": "label-lg 의 강조 변형(semibold). 용도 동일, 굵기만 다르다."
+        "$description": "label-xl 의 강조 변형(semibold). 용도 동일, 굵기만 다르다. **이전 이름은 `label-lg-strong` 이다**(DECISIONS 0-50)."
+      },
+      "label-lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.15}",
+          "fontWeight": "{fontWeight.medium}",
+          "lineHeight": "{lineHeight.15-22}",
+          "letterSpacing": "{letterSpacing.15}"
+        },
+        "$description": "UI 라벨(대) — **15px**. Button(md). 14 와 16 사이를 메우려고 만든 자리다: md(40px)와 lg(48px) 버튼이 같은 16px 라벨을 써서 md 쪽이 더 커 보였다 — 글자/높이가 40% 대 33%였다. 셋이 14·15·16 으로 갈리면서 비율이 43.8 → 37.5 → 33.3% 로 단조 감소한다(DECISIONS 0-50). 기본 medium. **`-strong` 은 수요가 확인되기 전까지 두지 않는다**(0-25 와 같은 원칙)."
       },
       "label-md": {
         "$type": "typography",
@@ -3386,7 +3466,7 @@
           "lineHeight": "{lineHeight.14-20}",
           "letterSpacing": "{letterSpacing.14}"
         },
-        "$description": "UI 라벨(기본) — 라벨의 기준값. Button·Text Button, Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong."
+        "$description": "UI 라벨(기본) — 라벨의 기준값. Button(sm)·Text Button, Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong."
       },
       "label-md-strong": {
         "$type": "typography",
@@ -3570,7 +3650,8 @@
       "net.infobank.ds.foundation": [
         "Typography"
       ]
-    }
+    },
+    "$description": null
   },
   "control": {
     "$description": "컨트롤 치수 — **컴포넌트가 아니라 역할 단위**다. Button · Text Field · Search · Select Button 이 같은 값을 공유해야 폼 한 줄에서 높이가 맞는다(`button.height` 로 지으면 Text Field 가 같은 값을 다시 정의한다). 전부 기존 primitive 별칭이며 **새 원시 값을 만들지 않았다.** 기본 단계는 `md` 다. 티어 이름을 쓰므로 빌드가 값 순서를 검사한다(DECISIONS 0-30).",
@@ -3647,20 +3728,20 @@
       }
     },
     "iconSize": {
-      "$description": "컨트롤 안 아이콘의 한 변. **아이콘은 `currentColor` 를 따르므로 색 토큰은 두지 않는다** — 컨테이너의 `color` 가 제어한다. 래퍼에 이 크기를 주고 SVG 는 100% 로 채운다 — 아이콘 세트가 바뀌어도 CSS 가 그대로 동작한다(lucide 는 `size` prop 도 있지만 CSS 로 통일한다).",
+      "$description": "컨트롤 안 아이콘의 한 변 — **`iconSize` 눈금의 하위 셋**이다(전체는 16·20·24·28·32, 28·32 는 컨트롤 밖 단독 아이콘용). 예전에는 `spacing` 을 별칭했는데, 아이콘 크기는 간격 눈금이 아니고 28 이 `spacing` 에 없어 5단계를 만들 수 없었다(DECISIONS 0-51). **아이콘은 `currentColor` 를 따르므로 색 토큰은 두지 않는다** — 컨테이너의 `color` 가 제어한다. **획 두께 토큰도 두지 않는다** — 상자를 줄이면 획이 같은 비율로 따라 줄어든다. 래퍼에 이 크기를 주고 SVG 는 100% 로 채운다 — 아이콘 세트가 바뀌어도 CSS 가 그대로 동작한다.",
       "sm": {
         "$type": "dimension",
-        "$value": "{spacing.16}",
+        "$value": "{iconSize.16}",
         "$description": "16px. `minHeight.sm` 와 짝이다. 32px 컨트롤용. 위아래 8px 씩 남는다."
       },
       "md": {
         "$type": "dimension",
-        "$value": "{spacing.20}",
+        "$value": "{iconSize.20}",
         "$description": "20px. `minHeight.md` 와 짝이다. 40px 컨트롤용. 기본."
       },
       "lg": {
         "$type": "dimension",
-        "$value": "{spacing.24}",
+        "$value": "{iconSize.24}",
         "$description": "24px. `minHeight.lg` 와 짝이다. 48px 컨트롤용."
       }
     },

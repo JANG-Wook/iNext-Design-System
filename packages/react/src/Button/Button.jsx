@@ -25,9 +25,10 @@ import './Button.css'
  */
 /* 크기별 타이포 — 복합 토큰이라 유틸리티 클래스를 쓴다.
    낱개(font-size·line-height…)로 조합하지 않는다(narrative/04-typography.md).
-   lg 가 글자를 키우지 않는 것은 의도다 — 버튼이 커지는 이유는 누르기 쉬우라고지
-   읽기 쉬우라고가 아니다(COMPONENTS.md 8-1). */
-const TYPO = { sm: 'label-md', md: 'label-lg', lg: 'label-lg' }
+   14 · 15 · 16 으로 한 칸씩 오른다. 예전에는 md·lg 가 같은 16px 이었는데,
+   그러면 **md 쪽이 더 커 보인다** — 같은 글자가 40px 상자의 40%, 48px 상자의
+   33% 를 차지하기 때문이다. 셋으로 갈라 43.8 → 37.5 → 33.3% 로 눕혔다(0-50). */
+const TYPO = { sm: 'label-md', md: 'label-lg', lg: 'label-xl' }
 
 const Button = forwardRef(function Button({
   variant = 'primary',

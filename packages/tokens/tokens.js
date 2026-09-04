@@ -225,6 +225,7 @@ export const fontSize = {
   "11": "0.6875rem",
   "12": "0.75rem",
   "14": "0.875rem",
+  "15": "0.9375rem",
   "16": "1rem",
   "18": "1.125rem",
   "20": "1.25rem",
@@ -243,6 +244,7 @@ export const lineHeight = {
   "12-18": "1.5",
   "14-20": "1.428571",
   "14-22": "1.571429",
+  "15-22": "1.466667",
   "16-24": "1.5",
   "16-26": "1.625",
   "18-26": "1.444444",
@@ -260,6 +262,7 @@ export const letterSpacing = {
   "11": "0rem",
   "12": "0rem",
   "14": "0rem",
+  "15": "-0.009375rem",
   "16": "-0.01rem",
   "18": "-0.01125rem",
   "20": "-0.0125rem",
@@ -287,6 +290,14 @@ export const spacing = {
   "40": "40px",
   "48": "48px",
   "56": "56px"
+}
+
+export const iconSize = {
+  "16": "16px",
+  "20": "20px",
+  "24": "24px",
+  "28": "28px",
+  "32": "32px"
 }
 
 export const radius = {
@@ -618,19 +629,26 @@ export const typography = {
       "fontFamily": "'Pretendard JP Variable', 'Pretendard JP', sans-serif",
       "fontWeight": 600
     },
-    "label-lg": {
+    "label-xl": {
       "fontSize": "1rem",
       "lineHeight": "1.5",
       "letterSpacing": "-0.01rem",
       "fontFamily": "'Pretendard JP Variable', 'Pretendard JP', sans-serif",
       "fontWeight": 500
     },
-    "label-lg-strong": {
+    "label-xl-strong": {
       "fontSize": "1rem",
       "lineHeight": "1.5",
       "letterSpacing": "-0.01rem",
       "fontFamily": "'Pretendard JP Variable', 'Pretendard JP', sans-serif",
       "fontWeight": 600
+    },
+    "label-lg": {
+      "fontSize": "0.9375rem",
+      "lineHeight": "1.466667",
+      "letterSpacing": "-0.009375rem",
+      "fontFamily": "'Pretendard JP Variable', 'Pretendard JP', sans-serif",
+      "fontWeight": 500
     },
     "label-md": {
       "fontSize": "0.875rem",

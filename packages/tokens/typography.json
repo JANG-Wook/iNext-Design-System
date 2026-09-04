@@ -200,7 +200,7 @@
         },
         "$description": "body-sm 의 강조 변형(semibold). 용도 동일, 굵기만 다르다."
       },
-      "label-lg": {
+      "label-xl": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.base}",
@@ -209,9 +209,9 @@
           "lineHeight": "{lineHeight.16-24}",
           "letterSpacing": "{letterSpacing.16}"
         },
-        "$description": "UI 라벨(대). Button(md·lg), Bottom Sheet CTA. PC 권장. 기본 medium, 강조는 label-lg-strong."
+        "$description": "UI 라벨(특대) — **16px**. Button(lg), Bottom Sheet CTA. PC 권장. **이전 이름은 `label-lg` 였다** — 라벨 사다리를 5티어로 다시 짜며 한 칸 올라왔다(DECISIONS 0-50). 기본 medium, 강조는 label-xl-strong."
       },
-      "label-lg-strong": {
+      "label-xl-strong": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.base}",
@@ -220,7 +220,18 @@
           "lineHeight": "{lineHeight.16-24}",
           "letterSpacing": "{letterSpacing.16}"
         },
-        "$description": "label-lg 의 강조 변형(semibold). 용도 동일, 굵기만 다르다."
+        "$description": "label-xl 의 강조 변형(semibold). 용도 동일, 굵기만 다르다. **이전 이름은 `label-lg-strong` 이다**(DECISIONS 0-50)."
+      },
+      "label-lg": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.base}",
+          "fontSize": "{fontSize.15}",
+          "fontWeight": "{fontWeight.medium}",
+          "lineHeight": "{lineHeight.15-22}",
+          "letterSpacing": "{letterSpacing.15}"
+        },
+        "$description": "UI 라벨(대) — **15px**. Button(md). 14 와 16 사이를 메우려고 만든 자리다: md(40px)와 lg(48px) 버튼이 같은 16px 라벨을 써서 md 쪽이 더 커 보였다 — 글자/높이가 40% 대 33%였다. 셋이 14·15·16 으로 갈리면서 비율이 43.8 → 37.5 → 33.3% 로 단조 감소한다(DECISIONS 0-50). 기본 medium. **`-strong` 은 수요가 확인되기 전까지 두지 않는다**(0-25 와 같은 원칙)."
       },
       "label-md": {
         "$type": "typography",
@@ -231,7 +242,7 @@
           "lineHeight": "{lineHeight.14-20}",
           "letterSpacing": "{letterSpacing.14}"
         },
-        "$description": "UI 라벨(기본) — 라벨의 기준값. Button·Text Button, Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong."
+        "$description": "UI 라벨(기본) — 라벨의 기준값. Button(sm)·Text Button, Tab, Dropdown, Search, Text Field 레이블, Pagination. 기본 medium, 강조는 label-md-strong."
       },
       "label-md-strong": {
         "$type": "typography",
@@ -415,6 +426,7 @@
       "net.infobank.ds.foundation": [
         "Typography"
       ]
-    }
+    },
+    "$description": null
   }
 }
